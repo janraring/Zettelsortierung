@@ -1,0 +1,55 @@
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[project]
+name = "Zettelsortierung"
+version = "0.0.1"
+description = "Sortierung des dem Westf\u00e4lischen W\u00f6rterbuch zugrundeliegenden Zettelarchivs."
+authors = [
+  { name = "Jan Raring" },
+]
+license = { file = "LICENSE" }
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License"
+]
+dependencies = [
+    "ipython",
+    "jupyterlab",
+    "matplotlib",
+    "mkdocs",
+    "notebook",
+    "numpy",
+    "pandas",
+    "pip",
+    "pytest",
+    "python-dotenv",
+    "ruff",
+    "scikit-learn",
+    "torch (==2.7.1+xpu)",
+    "torchvision (==0.22.1+xpu)",
+    "torchaudio (==2.7.1+xpu)",
+]
+requires-python = ">=3.12.0"
+
+
+[tool.ruff]
+line-length = 99
+src = ["Zettelsortierung"]
+include = ["pyproject.toml", "Zettelsortierung/**/*.py"]
+
+[tool.ruff.lint]
+extend-select = ["I"]  # Add import sorting
+
+[tool.ruff.lint.isort]
+known-first-party = ["Zettelsortierung"]
+force-sort-within-sections = true
+
+
+[[tool.poetry.source]]
+name = "xpu"
+url = "https://download.pytorch.org/whl/xpu"
+priority = "supplemental"
+

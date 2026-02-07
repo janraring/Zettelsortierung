@@ -1,5 +1,5 @@
-# Data
-/data/
+# Data... should mostly not be ignored
+#/data/
 
 # Mac OS-specific storage files
 .DS_Store

@@ -31,6 +31,7 @@ dependencies = [
     "torch (==2.7.1+xpu)",
     "torchvision (==0.22.1+xpu)",
     "torchaudio (==2.7.1+xpu)",
+    "regex (>=2026.1.15,<2027.0.0)",
 ]
 requires-python = ">=3.12.0"
 

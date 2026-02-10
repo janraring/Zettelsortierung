@@ -10,8 +10,14 @@ load_dotenv()
 
 @dataclass
 class Zettel:
-    # meant to be the absolute file path
     def __init__(self, _file_path: str, /):
+        '''
+        Container for a Belegzettel.
+        
+        :param _file_path: The absolute path of the directory where
+        all the images live.
+        :type _file_path: str
+        '''
         self._file_path = _file_path
 
     @property
@@ -82,8 +88,11 @@ class Zettelsammlung(list):
         :return: A collection of Zettel (Zettelsammlung)
         :rtype: Zettelsammlung
         '''
-        sammlung = []
-        counter = 0
+        if k != 0:
+            sammlung = Zettelsammlung()
+        else:
+            sammlung = []
+
         for path, subdirs, files in tqdm(os.walk(root)):
             for name in files:
                 if name[-4:] == '.jpg':
@@ -93,8 +102,18 @@ class Zettelsammlung(list):
                         break
             else:
                 continue
-            break
-        return Zettelsammlung(sammlung)
+            # We only land here if the break the loop, i.e. if a
+            # maximum number of Zettel has been set, but if this
+            # is the case, then `sammlung` was initialized as a
+            # `Zettelsammlung` and so we don’t need to convert the
+            # sammlung.
+            return sammlung
+        else:
+            # When k==0, i.e. when no maximum number of zettel has
+            # been set, for performance reasons `sammlung` is
+            # initialized as an ordinary list and so at the end we
+            # need to convert this list into a `Zettelsammlung`.
+            return Zettelsammlung(sammlung)
 
 
 if __name__ == '__main__':

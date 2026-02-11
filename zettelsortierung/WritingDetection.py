@@ -66,13 +66,12 @@ def filter_geometrically(num_labels, stats, h_img: int, w_img: int) -> list[tupl
 
         boxes.append((x, y, w, h))
 
-    print(type(boxes[0]))
     return boxes
 
 def sort_boxes(boxes: list[tuple]) -> list[tuple]:
     return sorted(
         boxes,
-        key=lambda b: b[2] * b[3],
+        key=lambda b: b[0] * b[1],
         reverse=False
         #reverse=True
     )
@@ -118,19 +117,47 @@ def detect_code_regions(image: np.ndarray) -> list[tuple]:
     return boxes#[:5]
 
 def display_boxes(image: np.ndarray, boxes: list[tuple]):
-    for index, box in enumerate(boxes):
+    for box in boxes:
         x, y, w, h = box
-        aspect_ratio = w / float(h)
+        image = cv2.rectangle(
+            img=image,
+            pt1=(x, y),
+            pt2=(x+w, y+h),
+            color=(0, 0, 0),
+            thickness=10
+        )
 
-        stats = f'Box {index}: {aspect_ratio:.2f}'
+    image = cv2.resize(src=image, dsize=(1500, 1000))
 
-        image = cv2.rectangle(image, (x, y), (x+w, y+h), (0, 0, 0), 10)
-        image = cv2.putText(image, stats, (x-60, y-10), 0, 1.0, (0, 0, 0), 2)
-    image = cv2.resize(image, (1500, 1000))
-    cv2.imshow("image", image)
-    cv2.waitKey(0)
+    cv2.imshow(winname="image", mat=image)
+    cv2.waitKey(delay=0)
     cv2.destroyAllWindows()
 
+def display_labeled_boxes(image: np.ndarray, boxes: list[tuple], labels: list[str]):
+    assert len(boxes) == len(labels), 'Mismatch between length of boxes list and labels list.'
+
+    for index, box in enumerate(boxes):
+        x, y, w, h = box
+        image = cv2.rectangle(img=image,
+            pt1=(x, y),
+            pt2=(x+w, y+h),
+            color=(0, 0, 0),
+            thickness=10
+        )
+        image = cv2.putText(img=image,
+            text=labels[index],
+            org=(x, y-10),
+            fontFace=0,
+            fontScale=1.0,
+            color=(0, 0, 0),
+            thickness=2
+        )
+
+    image = cv2.resize(image, (1500, 1000))
+
+    cv2.imshow(winname="image", mat=image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
 class WritingDetector:
     pass

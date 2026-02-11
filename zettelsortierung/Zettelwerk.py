@@ -118,6 +118,6 @@ class Zettelsammlung(list):
 
 if __name__ == '__main__':
     root = os.getenv('ZETTELSAMMLUNG_ROOT')
-    zettelsammlung = Zettelsammlung.collect_zettel(root, 50)
-    print(len(zettelsammlung))
-    print(zettelsammlung[:10])
+    sammlung = Zettelsammlung.collect_zettel(root, 50)
+    print(len(sammlung))
+    print(sammlung[:10])

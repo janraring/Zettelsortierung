@@ -1,4 +1,6 @@
 site_name: Zettelsortierung
-# 
 site_author: Jan Raring
-# 
+theme: readthedocs
+nav:
+ - Home: index.md
+ - Orte: Landschaften-Kreise-Orte.md

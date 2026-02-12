@@ -1,6 +1,8 @@
 import os
 import numpy as np
 import openvino as ov
+import openvino.properties as props
+import openvino.properties.hint as hints
 from typing import Protocol
 from dotenv import load_dotenv
 
@@ -17,10 +19,15 @@ class PaddleOCR:
     def __init__(self):
         # Create OpenVINO Runtime Core
         self.core = ov.Core()
+        self.core.set_property(
+            "CPU",
+            {hints.execution_mode: hints.ExecutionMode.PERFORMANCE},
+        )
 
         # Compile the Model
         model_path = os.getenv('PADDLE_OCR_ONNX_MODEL_PATH')
-        self.compiled_model = self.core.compile_model(model_path, 'AUTO', {"PERFORMANCE_HINT": "THROUGHPUT"})
+        config = {hints.performance_mode: hints.PerformanceMode.THROUGHPUT}
+        self.compiled_model = self.core.compile_model(model_path, 'AUTO', config)
 
         # Gab Input Layer and Output Layer
         self.input_layer = self.compiled_model.input(0)
@@ -79,7 +86,7 @@ class PaddleOCR:
         chars.insert(len(chars), ' ')  # Space at last index
         return chars
     
-    # Should eventually be replaced by some kind of beamsearch
+    # Should maybe be replaced by some kind of beamsearch
     # Also, needs to be adjusted once we batch inputs
     @staticmethod
     def ctc_decode(preds: np.ndarray, characters: list[str]):

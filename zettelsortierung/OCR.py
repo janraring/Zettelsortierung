@@ -1,7 +1,6 @@
 import os
 import numpy as np
 import openvino as ov
-import openvino.properties as props
 import openvino.properties.hint as hints
 from typing import Protocol
 from dotenv import load_dotenv

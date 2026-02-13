@@ -9,17 +9,9 @@ from typing import Self
 load_dotenv()
 
 
-@dataclass
+@dataclass(frozen=True, slots=True)
 class Zettel:
-    def __init__(self, _file_path: str, /):
-        '''
-        Container for a Belegzettel.
-        
-        :param _file_path: The absolute path of the directory where
-        all the images live.
-        :type _file_path: str
-        '''
-        self._file_path = _file_path
+    _file_path: str
 
     @property
     def recto_file_path(self) -> str:
@@ -38,11 +30,11 @@ class Zettel:
         return re.findall(r'(gpj\..+?)/', self.verso_file_path[::-1])[0][::-1]
     
     @property
-    def parent_folder(self) -> str:
+    def parent_directory(self) -> str:
         return re.findall(r'(?:/[\w-]+){3}', self.recto_file_path[::-1])[0][::-1]
     
     @property
-    def number(self) -> str:
+    def id(self) -> str:
         return self.recto_file_name[:8]
 
     def __eq__(self, other):
@@ -52,10 +44,10 @@ class Zettel:
         return hash(self.recto_file_path)
     
     def __str__(self):
-        return self.recto_file_name
+        return self.id
 
     def __repr__(self):
-        return self.recto_file_name
+        return self.id
     
 
 

@@ -10,7 +10,7 @@ class RegionDetector(ABC):
         pass
 
 
-class CV2RegionDetector(RegionDetector):
+class OpenCVRegionDetector(RegionDetector):
     @staticmethod
     def to_grayscale(image: np.ndarray) -> np.ndarray:
         if len(image.shape) == 3:
@@ -84,7 +84,8 @@ class CV2RegionDetector(RegionDetector):
 
         return regions
 
-    def detect_regions(self, image: np.ndarray) -> list[BoundingBox]:
+    @classmethod
+    def detect_regions(cls, image: np.ndarray) -> list[BoundingBox]:
         """
         image: input page scan (BGR or grayscale)
         returns: list of bounding boxes [(x, y, w, h)]
@@ -92,30 +93,30 @@ class CV2RegionDetector(RegionDetector):
         # -------------------------
         # 1. Preprocessing
         # -------------------------
-        gray = self.to_grayscale(image)
-        norm = self.normalize(gray)
+        gray = cls.to_grayscale(image)
+        norm = cls.normalize(gray)
 
         # -------------------------
         # 2. Binarization
         # -------------------------
-        binary = self.binarize(norm)
+        binary = cls.binarize(norm)
 
         # -------------------------
         # 3. Morphological grouping
         # -------------------------
-        kernel = self.morph_rect_kernel()
-        grouped = self.extract_morphology(binary, kernel)
+        kernel = cls.morph_rect_kernel()
+        grouped = cls.extract_morphology(binary, kernel)
 
         # -------------------------
         # 4. Connected components
         # -------------------------
-        num_labels, labels, stats, centroids = self.get_connected_components(grouped)
+        num_labels, labels, stats, centroids = cls.get_connected_components(grouped)
         h_img, w_img = gray.shape
 
         # -------------------------
         # 5. Geometric filtering
         # -------------------------
-        boxes = self.filter_geometrically(num_labels, stats, h_img, w_img)
+        boxes = cls.filter_geometrically(num_labels, stats, h_img, w_img)
 
         return boxes
 

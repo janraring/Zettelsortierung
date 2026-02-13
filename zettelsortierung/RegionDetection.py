@@ -84,14 +84,6 @@ class CV2RegionDetector(RegionDetector):
 
         return regions
 
-    @staticmethod
-    def sort_regions(bounding_boxes: list[BoundingBox]) -> list[BoundingBox]:
-        return sorted(
-            bounding_boxes,
-            key=lambda bb: bb[0] * bb[1],
-            reverse=False
-        )
-
     def detect_regions(self, image: np.ndarray) -> list[BoundingBox]:
         """
         image: input page scan (BGR or grayscale)
@@ -125,11 +117,7 @@ class CV2RegionDetector(RegionDetector):
         # -------------------------
         boxes = self.filter_geometrically(num_labels, stats, h_img, w_img)
 
-        # Sort candidates by likelihood (example: area descending)
-        boxes = self.sort_regions(boxes)
-
-        # Return top N candidates
-        return boxes#[:5]
+        return boxes
 
 
 # Region methods

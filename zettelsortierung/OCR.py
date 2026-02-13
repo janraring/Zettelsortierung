@@ -10,7 +10,7 @@ load_dotenv()
 
 class OCRModel(Protocol):
     def __call__(self, image: np.ndarray) -> str:
-        ...
+        pass
 
 
 # Instructions from https://docs.openvino.ai/2025/openvino-workflow/running-inference.html

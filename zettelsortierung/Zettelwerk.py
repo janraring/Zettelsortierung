@@ -1,5 +1,6 @@
 import os
 import regex as re
+import pandas as pd
 from dotenv import load_dotenv
 from dataclasses import dataclass
 from tqdm import tqdm
@@ -38,7 +39,7 @@ class Zettel:
     
     @property
     def parent_folder(self) -> str:
-        return re.findall(r'(?:/\w+){3}', self.recto_file_path[::-1])[0][::-1]
+        return re.findall(r'(?:/[\w-]+){3}', self.recto_file_path[::-1])[0][::-1]
     
     @property
     def number(self) -> str:
@@ -57,67 +58,61 @@ class Zettel:
         return self.recto_file_name
     
 
-class Zettelsammlung(list):
-    def __init__(self, sammlung: list[Zettel]=None):
+
+class Zettelsammlung(set):
+    def __init__(self, sammlung: set[Zettel] | list[Zettel]=None):
         if sammlung is None:
-            sammlung = []
-        super().__init__(list(set(sammlung)))
-
-    def append(self, new_zettel):
-        if new_zettel not in self:
-            super().append(new_zettel)
-
-    def extend(self, other):
-        for zettel in other:
-            self.append(zettel)
-    
+            sammlung = {}
+        super().__init__(set(sammlung))
     
     @staticmethod
-    def collect_zettel(root: str, k: int=0) -> Self:
+    def from_path_list(paths: list[str]) -> Self:
+        sammlung = [Zettel(path) for path in paths]
+        return Zettelsammlung(sammlung)
+
+    @classmethod
+    def from_disc(cls, root: str, k: int=-1) -> Self:
         '''
         Given a root directory, this function collects all .jpg
         files found in the subdirectories of root. Those files
-        are returned as a Zettelsammlung. Optionally, one can
-        specify a maximum number of Zettel k that should be
-        collected.
-        
-        :param root: Path to the root directory
-        :type root: str
-        :param k: Maximal number of Zettel to collect
-        :type k: int
-        :return: A collection of Zettel (Zettelsammlung)
-        :rtype: Zettelsammlung
-        '''
-        if k != 0:
-            sammlung = Zettelsammlung()
-        else:
-            sammlung = []
+        are returned as a Zettelsammlung.
+        Optionally, one can specify a maximum number of Zettel k
+        that should be collected.
 
-        for path, subdirs, files in tqdm(os.walk(root)):
+        Args:
+            root (str): Path to the root directory.
+            k (int): Limit on number of Zettel to be collected.
+        '''
+        file_paths = []
+        for path, subdirs, files in os.walk(root):
             for name in files:
+                if len(file_paths) == k:
+                    break
                 if name[-4:] == '.jpg':
-                    new_zettel = Zettel(os.path.join(path, name))
-                    sammlung.append(new_zettel)
-                    if len(sammlung) == k:
-                        break
+                    file_paths.append(os.path.join(path, name))
             else:
                 continue
-            # We only land here if the break the loop, i.e. if a
-            # maximum number of Zettel has been set, but if this
-            # is the case, then `sammlung` was initialized as a
-            # `Zettelsammlung` and so we don’t need to convert the
-            # sammlung.
-            return sammlung
-        else:
-            # When k==0, i.e. when no maximum number of zettel has
-            # been set, for performance reasons `sammlung` is
-            # initialized as an ordinary list and so at the end we
-            # need to convert this list into a `Zettelsammlung`.
-            return Zettelsammlung(sammlung)
+            break
+        return cls.from_path_list(file_paths)
+    
+    @classmethod
+    def from_parquet(cls, path: str, k: int=None):
+        file_paths_df = pd.read_parquet(path)
+        file_paths = file_paths_df['file_path'].to_list()[:k]
+        return cls.from_path_list(file_paths)
+
+    def to_parquet(self, path):
+        file_paths = [zettel.recto_file_path for zettel in self]
+        file_paths_df = pd.DataFrame({'file_path': file_paths})
+        file_paths_df.to_parquet(path)
 
 
 if __name__ == '__main__':
     root = os.getenv('ZETTELSAMMLUNG_ROOT')
-    sammlung = Zettelsammlung.collect_zettel(root, 50)
+    sammlung = Zettelsammlung.from_disc(root, 40000)
     print(len(sammlung))
-    print(sammlung[:10])
+
+    path = 'data/interim/test_path_collection.parquet'
+    sammlung.to_parquet(path)
+    sammlung = Zettelsammlung.from_parquet(path)
+    print(len(sammlung))

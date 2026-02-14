@@ -59,10 +59,10 @@ class Zettel:
         return hash(self.recto_file_path)
     
     def __str__(self):
-        return self.id
+        return f'Zettel({self.id})'
 
     def __repr__(self):
-        return self.id
+        return f'Zettel({self.id})'
 
 
 class Zettelsammlung(set, Collection):

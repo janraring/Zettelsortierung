@@ -1,7 +1,6 @@
 from dataclasses import dataclass, field
-from typing import NamedTuple
+from zettelsortierung.Datatypes import BoundingBox
 import cv2
-from Datatypes import BoundingBox
 
 
 @dataclass

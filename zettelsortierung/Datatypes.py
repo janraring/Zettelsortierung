@@ -1,8 +1,10 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from functools import cached_property
 from typing import Any, NamedTuple, Self
-import regex as re
 import os
+import cv2
+import regex as re
 import pandas as pd
 
 
@@ -52,8 +54,12 @@ class Zettel:
     def id(self) -> str:
         return self.recto_file_name[:8]
 
+    @cached_property
+    def shape(self) -> tuple[int, int]:
+        return cv2.imread(self.recto_file_path).shape
+
     def __eq__(self, other):
-        return self.recto_file_path == other.recto_file_path
+        return self.id == other.id
     
     def __hash__(self):
         return hash(self.recto_file_path)
@@ -130,36 +136,40 @@ class BoundingBox(NamedTuple):
 
 @dataclass(frozen=True, slots=True)
 class DataPoint():
-    zettel_id: str
+    zettel: Zettel
     feature_id: int
     feature: Any
 
 
-#class Probe(Collection):
+@dataclass(frozen=True, slots=True)
+class DataPointBatch():
+    zettel_batch: list[Zettel]
+    feature_id_batch: list[int]
+    feature_batch: Any
+
+
 @dataclass(frozen=True)
 class Probe(list, Collection):
     def __init__(self, probe: list[DataPoint] | None = None):
         if probe is None:
-            probe = {}
+            probe = []
         super().__init__(list(probe))
-    #data_points: list[DataPoint] = field(default_factory=list)
-
-#    def __iter__(self):
-#        for data_point in self.data_points:
-#            yield data_point
-#
+    
     def add(self, data_point: DataPoint):
         self.append(data_point)
     
     def add_batch(self, data_points: list[DataPoint]):
         self.extend(data_points)
     
-    def clear(self):
-        self = []
-
     def to_parquet(self):
         ...
     
     @staticmethod
     def from_parquet():
         ...
+    
+    def __repr__(self):
+        repr = 'Probe(['
+        for i in range(min(10, len(self))):
+            repr += str(self[i]) + ',\n'
+        return repr + '...])'

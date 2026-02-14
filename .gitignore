@@ -1,6 +1,7 @@
 # Data... should mostly not be ignored
 #/data/
 /data/raw/zettelsammlung
+/data/interim/test_path_collection.parquet
 
 # experimental data
 /notebooks/output/

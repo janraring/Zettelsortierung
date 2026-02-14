@@ -1,13 +1,7 @@
 from dataclasses import dataclass, field
 from typing import NamedTuple
 import cv2
-
-
-class BoundingBox(NamedTuple):
-    x: int
-    y: int
-    w: int
-    h: int
+from Datatypes import BoundingBox
 
 
 @dataclass

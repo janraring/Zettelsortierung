@@ -1,25 +1,40 @@
-import os
-import regex as re
-import pandas as pd
-from dotenv import load_dotenv
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from tqdm import tqdm
-from typing import Self
+from typing import Any, NamedTuple, Self
+import regex as re
+import os
+import pandas as pd
 
-load_dotenv()
 
+#####################################################################
+# Base Classes
+#####################################################################
+
+class Collection(ABC):
+    @abstractmethod
+    def add(self):
+        pass
+
+    @abstractmethod
+    def clear(self):
+        pass
+
+
+#####################################################################
+# Zettelwerk
+#####################################################################
 
 @dataclass(frozen=True, slots=True)
 class Zettel:
-    _file_path: str
+    seed_file_path: str
 
     @property
     def recto_file_path(self) -> str:
-        return re.sub(r'_\d#', '_1#', self._file_path)
+        return re.sub(r'_\d#', '_1#', self.seed_file_path)
 
     @property
     def verso_file_path(self) -> str:
-        return re.sub(r'_\d#', '_2#', self._file_path)
+        return re.sub(r'_\d#', '_2#', self.seed_file_path)
 
     @property
     def recto_file_name(self) -> str:
@@ -48,11 +63,10 @@ class Zettel:
 
     def __repr__(self):
         return self.id
-    
 
 
-class Zettelsammlung(set):
-    def __init__(self, sammlung: set[Zettel] | list[Zettel]=None):
+class Zettelsammlung(set, Collection):
+    def __init__(self, sammlung: set[Zettel] | list[Zettel] | None = None):
         if sammlung is None:
             sammlung = {}
         super().__init__(set(sammlung))
@@ -99,12 +113,53 @@ class Zettelsammlung(set):
         file_paths_df.to_parquet(path)
 
 
-if __name__ == '__main__':
-    root = os.getenv('ZETTELSAMMLUNG_ROOT')
-    sammlung = Zettelsammlung.from_disc(root, 40000)
-    print(len(sammlung))
+#####################################################################
+# Image Processing
+#####################################################################
 
-    path = 'data/interim/test_path_collection.parquet'
-    sammlung.to_parquet(path)
-    sammlung = Zettelsammlung.from_parquet(path)
-    print(len(sammlung))
+class BoundingBox(NamedTuple):
+    x: int
+    y: int
+    w: int
+    h: int
+
+
+#####################################################################
+# Data Processing
+#####################################################################
+
+@dataclass(frozen=True, slots=True)
+class DataPoint():
+    zettel_id: str
+    feature_id: int
+    feature: Any
+
+
+#class Probe(Collection):
+@dataclass(frozen=True)
+class Probe(list, Collection):
+    def __init__(self, probe: list[DataPoint] | None = None):
+        if probe is None:
+            probe = {}
+        super().__init__(list(probe))
+    #data_points: list[DataPoint] = field(default_factory=list)
+
+#    def __iter__(self):
+#        for data_point in self.data_points:
+#            yield data_point
+#
+    def add(self, data_point: DataPoint):
+        self.append(data_point)
+    
+    def add_batch(self, data_points: list[DataPoint]):
+        self.extend(data_points)
+    
+    def clear(self):
+        self = []
+
+    def to_parquet(self):
+        ...
+    
+    @staticmethod
+    def from_parquet():
+        ...

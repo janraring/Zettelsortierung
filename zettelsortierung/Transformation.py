@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Iterable, Callable
+from typing import Iterable
 from itertools import chain
 from multiprocessing import Pool, cpu_count
 from dataclasses import replace
@@ -7,9 +7,8 @@ import cv2
 import numpy as np
 
 from zettelsortierung.ImageAnnotation import BoundingBox
-from zettelsortierung.RegionDetection import RegionDetector, OpenCVRegionDetector
-from zettelsortierung.Datatypes import Collection, DataPoint, DataPointBatch, Probe, Zettel, Zettelsammlung
-#from zettelsortierung.OCR import OCRModel, PaddleOCR
+from zettelsortierung.RegionDetection import RegionDetector
+from zettelsortierung.Datatypes import Collection, DataPoint, DataPointBatch, Probe, Zettel
 
 
 #####################################################################
@@ -79,16 +78,7 @@ class Batch(Application):
     def __init__(self, batch_size: int):
         self.batch_size = batch_size
     
-    def apply(self, collection: Zettelsammlung | Probe) -> list[Probe]:
-        aslist = list(collection)
-        length = len(aslist)
-        batches = []
-        index = 0
-        while index < length:
-            batches.append(type(collection)(aslist[index:index+self.batch_size]))
-            index += self.batch_size
-        return batches
-'''
+
 class Batch(Application):
     def __init__(self, batch_size: int):
         self.batch_size = batch_size
@@ -101,7 +91,6 @@ class Batch(Application):
             if count % self.batch_size == 0 or count == collection_len:
                 yield subcollection
                 subcollection.clear()
-'''
 
 
 class SortBoxWidth(Application):
@@ -204,41 +193,3 @@ class ResolveDPBatch(Transformation):
                                feature_id=dp_batch.feature_id_batch[i],
                                feature=dp_batch.feature_batch[i])
                 for i in range(len(dp_batch.zettel_batch))]
-
-
-
-#####################################################################
-# Testing Area
-#####################################################################
-
-if __name__ == '__main__':
-    sammlung = Zettelsammlung.from_parquet('./data/interim/test_path_collection.parquet', k=10)
-
-    detector = OpenCVRegionDetector()
-
-    pipeline = \
-    Composition(
-        Batch(1000),
-        SequentialApp(
-            ParallelApp(PatchDetect(detector)),
-            Flatten(),
-            ParallelApp(
-                BoundingBoxPad(10),
-                CutOutPatch(),
-                ResizePatch(),
-                BGR2RGB()
-            ),
-            SortPatchWidth(),
-            Batch(4),
-            ParallelApp(Stack()),
-            SequentialApp(
-                OCR(PaddleOCR())
-            ),
-            Flatten()
-        ),
-        Flatten()
-    )
-
-    result = pipeline(sammlung)
-    print(result)
-    print(len(result))

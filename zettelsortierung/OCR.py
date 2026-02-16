@@ -83,10 +83,9 @@ class OCRinference(Transformation):
 
     def transform(self, dp_batch: DataPointBatch):
         self.model.infer_request.set_input_tensor(dp_batch.feature_batch)
-        self.model.infer_request.start_async()
-        self.model.infer_request.wait()
-        predictions = self.model.infer_request.get_output_tensor().data.copy()
-        return replace(dp_batch, feature_batch=predictions)
+        self.model.infer_request.infer()  # synchronous
+        preds = self.model.infer_request.get_output_tensor().data.copy()
+        return replace(dp_batch, feature_batch=preds)
 
 
 class CTCdecode(Transformation):

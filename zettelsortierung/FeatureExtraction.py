@@ -2,13 +2,14 @@ from abc import ABC, abstractmethod
 from typing import Iterable, Callable
 from itertools import chain
 from multiprocessing import Pool, cpu_count
+from dataclasses import replace
 import cv2
 import numpy as np
 
 from zettelsortierung.ImageAnnotation import BoundingBox
 from zettelsortierung.RegionDetection import RegionDetector, OpenCVRegionDetector
 from zettelsortierung.Datatypes import Collection, DataPoint, DataPointBatch, Probe, Zettel, Zettelsammlung
-from zettelsortierung.OCR import OCRModel, PaddleOCR
+#from zettelsortierung.OCR import OCRModel, PaddleOCR
 
 
 #####################################################################
@@ -54,9 +55,8 @@ class SequentialApp(Application):
     def __init__(self, *transformations):
         self.sequence = Composition(*transformations)
     
-    def apply(self, collection: Collection) -> Iterable[DataPoint]:
-        for item in collection:
-            yield self.sequence(item)
+    def apply(self, collection: Collection) -> Probe:
+        return [self.sequence(item) for item in collection]
 
 
 class ParallelApp(Application):
@@ -64,18 +64,31 @@ class ParallelApp(Application):
         self.processes = cpu_count()
         self.sequence = Composition(*transformations)
     
-    def apply(self, collection: Collection) -> Iterable[DataPoint]:
+    def apply(self, collection: Collection) -> Probe:
         with Pool(self.processes) as pool:
-            for result in pool.imap_unordered(self.sequence, collection):
-                yield result
+            return Probe(pool.imap_unordered(self.sequence, collection))
 
 
 class Flatten(Application):
     @staticmethod
-    def apply(collection: Collection) -> Iterable[DataPoint]:
+    def apply(collection: Collection) -> Probe:
         return Probe(chain.from_iterable(collection))
 
 
+class Batch(Application):
+    def __init__(self, batch_size: int):
+        self.batch_size = batch_size
+    
+    def apply(self, collection: Zettelsammlung | Probe) -> list[Probe]:
+        aslist = list(collection)
+        length = len(aslist)
+        batches = []
+        index = 0
+        while index < length:
+            batches.append(type(collection)(aslist[index:index+self.batch_size]))
+            index += self.batch_size
+        return batches
+'''
 class Batch(Application):
     def __init__(self, batch_size: int):
         self.batch_size = batch_size
@@ -88,6 +101,7 @@ class Batch(Application):
             if count % self.batch_size == 0 or count == collection_len:
                 yield subcollection
                 subcollection.clear()
+'''
 
 
 class SortBoxWidth(Application):
@@ -137,16 +151,13 @@ class BoundingBoxPad(Transformation):
         self.padding = padding
         
     def transform(self, dp: DataPoint) -> DataPoint:
-        x_max = 10000  # To be changed! TODO
-        y_max = 10000  # To be changed! TODO
+        y_max, x_max, d_max = dp.zettel.shape
         x_old, y_old, w_old, h_old = dp.feature
         x = max(0, x_old-self.padding)
         y = max(0, y_old-self.padding)
         w = min(w_old+2*self.padding, x_max-x)
         h = min(h_old+2*self.padding, y_max-y)
-        return DataPoint(zettel=dp.zettel,
-                         feature_id=dp.feature_id,
-                         feature=BoundingBox(x, y, w, h))
+        return replace(dp, feature=BoundingBox(x, y, w, h))
 
 
 class CutOutPatch(Transformation):
@@ -154,7 +165,7 @@ class CutOutPatch(Transformation):
         image = cv2.imread(dp.zettel.recto_file_path)
         x, y, w, h = dp.feature
         patch = image[y:y+h, x:x+w]
-        return DataPoint(dp.zettel, dp.feature_id, patch)
+        return replace(dp, feature=patch)
 
 
 class ResizePatch(Transformation):
@@ -163,13 +174,13 @@ class ResizePatch(Transformation):
         h_new = 48
         w_new = int(w_old * h_new / h_old)
         patch = cv2.resize(dp.feature, (w_new, h_new))
-        return DataPoint(dp.zettel, dp.feature_id, patch)
+        return replace(dp, feature=patch)
 
 
 class BGR2RGB(Transformation):
     def transform(self, dp: DataPoint) -> DataPoint:
         converted = cv2.cvtColor(dp.feature, cv2.COLOR_BGR2RGB)
-        return DataPoint(dp.zettel, dp.feature_id, converted)
+        return replace(dp, feature=converted)
 
 
 class Stack(Transformation):
@@ -187,16 +198,13 @@ class Stack(Transformation):
                               np.stack(feature_batch))
 
 
-class OCR(Transformation):
-    def __init__(self, ocr_model: OCRModel):
-        self.ocr_model = ocr_model
-
+class ResolveDPBatch(Transformation):
     def transform(self, dp_batch: DataPointBatch) -> list[DataPoint]:
-        labels = self.ocr_model(dp_batch.feature_batch)
-        return [DataPoint(dp_batch.zettel_batch[i],
-                          dp_batch.feature_id_batch[i],
-                          labels[i])
-                for i in range(len(labels))]
+        return [DataPoint(zettel=dp_batch.zettel_batch[i],
+                               feature_id=dp_batch.feature_id_batch[i],
+                               feature=dp_batch.feature_batch[i])
+                for i in range(len(dp_batch.zettel_batch))]
+
 
 
 #####################################################################
@@ -204,17 +212,17 @@ class OCR(Transformation):
 #####################################################################
 
 if __name__ == '__main__':
-    sammlung = Zettelsammlung.from_parquet('./data/interim/test_path_collection.parquet', k=1000)
+    sammlung = Zettelsammlung.from_parquet('./data/interim/test_path_collection.parquet', k=10)
 
     detector = OpenCVRegionDetector()
 
     pipeline = \
     Composition(
-        Batch(100),
+        Batch(1000),
         SequentialApp(
-            ParallelApp(10, PatchDetect(detector)),
+            ParallelApp(PatchDetect(detector)),
             Flatten(),
-            ParallelApp(10,
+            ParallelApp(
                 BoundingBoxPad(10),
                 CutOutPatch(),
                 ResizePatch(),
@@ -222,7 +230,7 @@ if __name__ == '__main__':
             ),
             SortPatchWidth(),
             Batch(4),
-            ParallelApp(10, Stack()),
+            ParallelApp(Stack()),
             SequentialApp(
                 OCR(PaddleOCR())
             ),

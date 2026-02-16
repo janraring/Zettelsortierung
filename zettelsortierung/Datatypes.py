@@ -26,7 +26,7 @@ class Collection(ABC):
 # Zettelwerk
 #####################################################################
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True)
 class Zettel:
     seed_file_path: str
 
@@ -83,7 +83,7 @@ class Zettelsammlung(set, Collection):
         return Zettelsammlung(sammlung)
 
     @classmethod
-    def from_disc(cls, root: str, k: int=-1) -> Self:
+    def from_disc(cls, root: str='', k: int=-1) -> Self:
         '''
         Given a root directory, this function collects all .jpg
         files found in the subdirectories of root. Those files
@@ -95,6 +95,7 @@ class Zettelsammlung(set, Collection):
             root (str): Path to the root directory.
             k (int): Limit on number of Zettel to be collected.
         '''
+        root = os.getenv('ZETTELSAMMLUNG_ROOT')
         file_paths = []
         for path, subdirs, files in os.walk(root):
             for name in files:
@@ -153,7 +154,7 @@ class Probe(list, Collection):
     def __init__(self, probe: list[DataPoint] | None = None):
         if probe is None:
             probe = []
-        super().__init__(list(probe))
+        super().__init__(probe)
     
     def add(self, data_point: DataPoint):
         self.append(data_point)
@@ -170,6 +171,6 @@ class Probe(list, Collection):
     
     def __repr__(self):
         repr = 'Probe(['
-        for i in range(min(10, len(self))):
+        for i in range(min(100, len(self))):
             repr += str(self[i]) + ',\n'
         return repr + '...])'

@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Iterable
 from itertools import chain
 from multiprocessing import Pool, cpu_count
+import multiprocessing as mp
 from dataclasses import replace
 import cv2
 import numpy as np
@@ -10,6 +11,8 @@ from zettelsortierung.ImageAnnotation import BoundingBox
 from zettelsortierung.RegionDetection import RegionDetector
 from zettelsortierung.Datatypes import Collection, DataPoint, DataPointBatch, Probe, Zettel
 
+mp.set_start_method("spawn", force=True)
+#cv2.setNumThreads(0)
 
 #####################################################################
 # Composition

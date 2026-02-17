@@ -26,36 +26,76 @@ class Collection(ABC):
 # Scan
 #####################################################################
 
-@dataclass(frozen=True)
+#@dataclass(frozen=True)
 class Scan:
-    id: str                 # dddddddd_d
-    file_name: str          # dddddddd_d#Xdd_d_dd_<lemma>.jpg
-    relative_path: str      # /Xdd_<start>_<end>/d/dd_<lemma>
-    root_path: str          # /absolute/path/to/parant/directory
+    __slots__ = ('full_path',
+                 '_id',
+                 '_file_name',
+                 '_relative_path',
+                 '_root_path',
+                 '_shape')
 
-    @cached_property
-    def full_path(self) -> str:
-        return os.path.join(self.root_path,
-                            self.relative_path,
-                            self.file_name)
+    def __init__(self, full_path: str):
+        self.full_path = full_path
+        self._id = None             # Xdd-dddddddd_d
+        self._file_name = None      # dddddddd_d#Xdd_d_dd_<lemma>.jpg
+        self._relative_path = None  # /Xdd_<start>_<end>/d/dd_<lemma>
+        self._root_path = None      # /absolute/path/to/parant/directory
+        self._shape = None          # (w, h, c)
 
-    @cached_property
+    @property
     def shape(self) -> tuple[int, int, int]:
-        return cv2.imread(self.full_path).shape
+        shape = self._shape
+        if shape is None:
+            shape = cv2.imread(self.full_path).shape
+            self._shape = shape
+        return shape
     
+    @property
+    def file_name(self) -> str:
+        file_name = self._file_name
+        if file_name is None:
+            file_name = re.findall(r'[^/]+?\.jpg', self.full_path)[0]
+            self._file_name = file_name
+        return file_name
+
+    @property
+    def relative_path(self) -> str:
+        relative_path = self._relative_path
+        if relative_path is None:
+            relative_path = re.findall(r'((?:[^/]+?/){3})[^/]+?\.jpg', self.full_path)[0]
+            self._relative_path = relative_path
+        return relative_path
+
+    @property
+    def root_path(self) -> str:
+        root_path = self._root_path
+        if root_path is None:
+            root_path = re.findall(r'(.+?)(?:[^/]+?/){3}[^/]+?\.jpg', self.full_path)[0]
+            self._root_path = root_path
+        return root_path
+
+    @property
+    def id(self) -> str:
+        id = self._id
+        if id is None:
+            number = re.findall(r'(\d{8}_\d)#', self.full_path)[0]
+            prefix = re.findall(r'zettelsammlung/(...)', self.full_path)[0]
+            id = f'{prefix}-{number}'
+            self._id = id
+        return id
+
+    def __eq__(self, other):
+        return self.id == other.id
+    
+    def __hash__(self):
+        return hash(self.id)
+
     def __str__(self):
         return f'Scan({self.id, self.full_path})'
 
     def __repr__(self):
         return f'Scan({self.id, self.full_path})'
-
-    @staticmethod
-    def from_path(path: str):
-        id = re.findall(r'(\d{8}_\d)#', path)[0]
-        file_name = re.findall(r'[^/]+?\.jpg', path)[0]
-        relative_path = re.findall(r'((?:[\w-]+?/){3})[^/]+?\.jpg', path)[0]
-        root_path = re.findall(r'(.+?)(?:[\w-]+?/){3}[^/]+?\.jpg', path)[0]
-        return Scan(id, file_name, relative_path, root_path)
 
 
 #####################################################################
@@ -64,42 +104,18 @@ class Scan:
 
 #@dataclass(frozen=True)
 class Zettel:
+    __slots__ = ('id', 'recto', 'verso')
+
     def __init__(self, path, /):
+        number = re.findall(r'(\d{8})_\d#', path)[0]
+        prefix = re.findall(r'zettelsammlung/(...)', path)[0]
         recto_path = re.sub(r'_\d#', '_1#', path)
         verso_path = re.sub(r'_\d#', '_2#', path)
-        self.id = re.findall(r'(\d{8})_\d#', path)[0]
-        self.recto = Scan.from_path(recto_path)
-        self.verso = Scan.from_path(verso_path)
 
-    """
-    @property
-    def recto_file_path(self) -> str:
-        return re.sub(r'_\d#', '_1#', self.seed_file_path)
+        self.id = f'{prefix}-{number}'
+        self.recto = Scan(recto_path)
+        self.verso = Scan(verso_path)
 
-    @property
-    def verso_file_path(self) -> str:
-        return re.sub(r'_\d#', '_2#', self.seed_file_path)
-
-    @property
-    def recto_file_name(self) -> str:
-        return re.findall(r'(gpj\..+?)/', self.recto_file_path[::-1])[0][::-1]
-
-    @property
-    def verso_file_name(self) -> str:
-        return re.findall(r'(gpj\..+?)/', self.verso_file_path[::-1])[0][::-1]
-    
-    @property
-    def parent_directory(self) -> str:
-        return re.findall(r'(?:/[\w-]+){3}', self.recto_file_path[::-1])[0][::-1]
-    
-    @property
-    def id(self) -> str:
-        return self.recto_file_name[:8]
-
-    @cached_property
-    def shape(self) -> tuple[int, int]:
-        return cv2.imread(self.recto_file_path).shape
-    """
     def __eq__(self, other):
         return self.id == other.id
     
@@ -118,6 +134,8 @@ class Zettel:
 #####################################################################
 
 class Zettelsammlung(set, Collection):
+    __slots__ = ('sammlung')
+
     def __init__(self, sammlung: set[Zettel] | list[Zettel] | None = None):
         if sammlung is None:
             sammlung = {}
@@ -157,12 +175,12 @@ class Zettelsammlung(set, Collection):
     @classmethod
     def from_parquet(cls, path: str, k: int=None):
         file_paths_df = pd.read_parquet(path)
-        file_paths = file_paths_df['file_path'].to_list()[:k]
+        file_paths = file_paths_df['path'].to_list()[:k]
         return cls.from_path_list(file_paths)
 
     def to_parquet(self, path):
         file_paths = [zettel.recto_file_path for zettel in self]
-        file_paths_df = pd.DataFrame({'file_path': file_paths})
+        file_paths_df = pd.DataFrame({'path': file_paths})
         file_paths_df.to_parquet(path)
 
 
@@ -197,6 +215,8 @@ class DataPointBatch():
 
 @dataclass(frozen=True)
 class Probe(list, Collection):
+    __slots__ = ('probe')
+
     def __init__(self, probe: list[DataPoint] | None = None):
         if probe is None:
             probe = []

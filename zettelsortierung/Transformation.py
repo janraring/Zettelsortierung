@@ -130,7 +130,7 @@ class PatchDetect(Transformation):
         self.detector = detector
 
     def transform(self, zettel: Zettel) -> list[DataPoint]:
-        full_im = cv2.imread(zettel.recto_file_path)
+        full_im = cv2.imread(zettel.recto.full_path)
         boundingboxes = self.detector.detect_regions(full_im)
         data_points = [DataPoint(zettel, feature_id, bbox)
                        for feature_id, bbox
@@ -143,7 +143,7 @@ class BoundingBoxPad(Transformation):
         self.padding = padding
         
     def transform(self, dp: DataPoint) -> DataPoint:
-        y_max, x_max, d_max = dp.zettel.shape
+        y_max, x_max, d_max = dp.zettel.recto.shape
         x_old, y_old, w_old, h_old = dp.feature
         x = max(0, x_old-self.padding)
         y = max(0, y_old-self.padding)
@@ -154,7 +154,7 @@ class BoundingBoxPad(Transformation):
 
 class CutOutPatch(Transformation):
     def transform(self, dp: DataPoint) -> DataPoint:
-        image = cv2.imread(dp.zettel.recto_file_path)
+        image = cv2.imread(dp.zettel.recto.full_path)
         x, y, w, h = dp.feature
         patch = image[y:y+h, x:x+w]
         return replace(dp, feature=patch)

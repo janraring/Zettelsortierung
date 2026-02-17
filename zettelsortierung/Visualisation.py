@@ -27,6 +27,13 @@ def vis_image(im):
     cv2.waitKey(delay=0)
     cv2.destroyAllWindows()
 
+def vis_image_path(im_path):
+    print(im_path)
+    im = cv2.imread(im_path)
+    cv2.imshow(winname="region", mat=im)
+    cv2.waitKey(delay=0)
+    cv2.destroyAllWindows()
+
 def vis_anno(dp: DataPoint):
     image = cv2.imread(dp.zettel.recto_file_path)
     image = cv2.resize(image, (1500, 1000))

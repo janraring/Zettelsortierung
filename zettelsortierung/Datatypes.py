@@ -23,13 +23,55 @@ class Collection(ABC):
 
 
 #####################################################################
-# Zettelwerk
+# Scan
 #####################################################################
 
 @dataclass(frozen=True)
-class Zettel:
-    seed_file_path: str
+class Scan:
+    id: str                 # dddddddd_d
+    file_name: str          # dddddddd_d#Xdd_d_dd_<lemma>.jpg
+    relative_path: str      # /Xdd_<start>_<end>/d/dd_<lemma>
+    root_path: str          # /absolute/path/to/parant/directory
 
+    @cached_property
+    def full_path(self) -> str:
+        return os.path.join(self.root_path,
+                            self.relative_path,
+                            self.file_name)
+
+    @cached_property
+    def shape(self) -> tuple[int, int, int]:
+        return cv2.imread(self.full_path).shape
+    
+    def __str__(self):
+        return f'Scan({self.id, self.full_path})'
+
+    def __repr__(self):
+        return f'Scan({self.id, self.full_path})'
+
+    @staticmethod
+    def from_path(path: str):
+        id = re.findall(r'(\d{8}_\d)#', path)[0]
+        file_name = re.findall(r'[^/]+?\.jpg', path)[0]
+        relative_path = re.findall(r'((?:[\w-]+?/){3})[^/]+?\.jpg', path)[0]
+        root_path = re.findall(r'(.+?)(?:[\w-]+?/){3}[^/]+?\.jpg', path)[0]
+        return Scan(id, file_name, relative_path, root_path)
+
+
+#####################################################################
+# Zettel
+#####################################################################
+
+#@dataclass(frozen=True)
+class Zettel:
+    def __init__(self, path, /):
+        recto_path = re.sub(r'_\d#', '_1#', path)
+        verso_path = re.sub(r'_\d#', '_2#', path)
+        self.id = re.findall(r'(\d{8})_\d#', path)[0]
+        self.recto = Scan.from_path(recto_path)
+        self.verso = Scan.from_path(verso_path)
+
+    """
     @property
     def recto_file_path(self) -> str:
         return re.sub(r'_\d#', '_1#', self.seed_file_path)
@@ -57,12 +99,12 @@ class Zettel:
     @cached_property
     def shape(self) -> tuple[int, int]:
         return cv2.imread(self.recto_file_path).shape
-
+    """
     def __eq__(self, other):
         return self.id == other.id
     
     def __hash__(self):
-        return hash(self.recto_file_path)
+        return hash(self.id)
     
     def __str__(self):
         return f'Zettel({self.id})'
@@ -70,6 +112,10 @@ class Zettel:
     def __repr__(self):
         return f'Zettel({self.id})'
 
+
+#####################################################################
+# Zettelsammlung
+#####################################################################
 
 class Zettelsammlung(set, Collection):
     def __init__(self, sammlung: set[Zettel] | list[Zettel] | None = None):
@@ -79,7 +125,7 @@ class Zettelsammlung(set, Collection):
     
     @staticmethod
     def from_path_list(paths: list[str]) -> Self:
-        sammlung = [Zettel(path) for path in paths]
+        sammlung = {Zettel(path) for path in paths}
         return Zettelsammlung(sammlung)
 
     @classmethod

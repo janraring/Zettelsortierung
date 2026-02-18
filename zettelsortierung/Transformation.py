@@ -59,18 +59,26 @@ class ParallelApp(Application):
 
 
 class Print(Application):
-    def apply(self, collection: Collection) -> Iterable[DataPoint]:
+    def apply(self, collection: Collection) -> Collection:
         print(collection)
         return collection
 
 
 class Store(Application):
-    def __init__(self, storage_var: Probe):
-        self.storage_var: Probe = storage_var
+    def __init__(self, storage_container: Probe):
+        self.storage_var: Probe = storage_container
 
     def apply(self, probe: Probe) -> Probe:
         self.storage_var.add_batch(probe)
         return probe
+
+
+class Sort(Application):
+    def __init__(self, key):
+        self.key = key
+
+    def apply(self, collection: Collection) -> Probe:
+        return Probe(sorted(collection, key=self.key))
 
 
 class Flatten(Application):
@@ -78,11 +86,6 @@ class Flatten(Application):
     def apply(collection: Collection) -> Probe:
         return Probe(chain.from_iterable(collection))
 
-
-class Batch(Application):
-    def __init__(self, batch_size: int):
-        self.batch_size = batch_size
-    
 
 class Batch(Application):
     def __init__(self, batch_size: int):
@@ -98,16 +101,6 @@ class Batch(Application):
                 subcollection.clear()
 
 
-class SortBoxWidth(Application):
-    def apply(self, collection: Collection) -> Probe:
-        return Probe(sorted(collection, key=lambda item: item.feature[2]))
-
-
-class SortPatchWidth(Application):
-    def apply(self, collection: Collection) -> Probe:
-        return Probe(sorted(collection, key=lambda item: item.feature.shape[1]))
-
-
 #####################################################################
 # Transformation
 #####################################################################
@@ -121,18 +114,7 @@ class Transformation(ABC):
         return self.transform(dp)
 
 
-class StorePoint(Application):
-    def __init__(self, storage_var: Probe):
-        self.storage_var: Probe = storage_var
-
-    def apply(self, dp: DataPoint) -> DataPoint:
-        print(self.storage_var)
-        self.storage_var.add(dp)
-        print(self.storage_var)
-        return dp
-
-
-class DiagnosticsTransform(Transformation):
+class PrintDP(Transformation):
     def transform(self, dp: DataPoint) -> DataPoint:
         print(dp)
         return dp

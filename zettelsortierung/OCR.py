@@ -28,14 +28,21 @@ class PaddleOCR:
         # Compile the Model
         model_path = os.getenv('PADDLE_OCR_ONNX_MODEL_PATH')
         config = {hints.performance_mode: hints.PerformanceMode.THROUGHPUT}
-        self.compiled_model = self.core.compile_model(model_path, 'AUTO', config)
+        self.model = self.core.compile_model(model_path, 'AUTO', config)
 
         # Gab Input Layer and Output Layer
-        self.input_layer = self.compiled_model.input(0)
-        self.output_layer = self.compiled_model.output(0)
+        self.input_layer = self.model.input(0)
+        self.output_layer = self.model.output(0)
 
         # Create an Inference Request
-        self.infer_request = self.compiled_model.create_infer_request()
+        self.infer_request = self.model.create_infer_request()
+    
+    def __call__(self, dp_batch: DataPointBatch) -> DataPointBatch:
+        self.infer_request.set_input_tensor(dp_batch.feature_batch)
+        self.infer_request.infer()  # synchronous
+        preds = self.infer_request.get_output_tensor().data.copy()
+        return replace(dp_batch, feature_batch=preds)
+
 
     
 #####################################################################
@@ -51,7 +58,10 @@ class OCRstack(Transformation):
         w_max = max(dp.feature.shape[1] for dp in dp_batch)
         for dp in dp_batch:
             h, w, c = dp.feature.shape
-            padded_patch = np.pad(dp.feature, ((0, 0), (0, w_max-w), (0, 0)), mode='constant', constant_values=0)
+            padded_patch = np.pad(dp.feature,
+                                  ((0, 0), (0, w_max-w), (0, 0)),
+                                  mode='constant',
+                                  constant_values=0)
             feature_batch.append(padded_patch)
 
         stack = np.stack(feature_batch)
@@ -82,45 +92,45 @@ class OCRinference(Transformation):
         self.model = model
 
     def transform(self, dp_batch: DataPointBatch):
-        self.model.infer_request.set_input_tensor(dp_batch.feature_batch)
-        self.model.infer_request.infer()  # synchronous
-        preds = self.model.infer_request.get_output_tensor().data.copy()
-        return replace(dp_batch, feature_batch=preds)
+        return self.model(dp_batch)
 
 
 class CTCdecode(Transformation):
+    BLANK = 0
+
     def __init__(self):
         self.characters = self.load_character_dict()
     
     def transform(self, dp_batch: DataPointBatch) -> DataPointBatch:
-        labels = [self.ctc_decode(dp_batch.feature_batch[i]) for i in range(len(dp_batch.zettel_batch))]
+        labels = [self.ctc_decode(feature)
+                  for feature in dp_batch.feature_batch]
         return replace(dp_batch, feature_batch=labels)
 
-    @staticmethod
-    def load_character_dict() -> list[str]:
+    @classmethod
+    def load_character_dict(cls) -> list[str]:
         char_dict_path = os.getenv('PADDLE_OCR_CHAR_DICT_PATH')
         with open(char_dict_path, "r", encoding="utf-8") as f:
             chars = [line.strip("\n") for line in f]
-        chars.insert(0, "")            # CTC blank at index 0
+        chars.insert(cls.BLANK, "")    # CTC blank at index 0
         chars.insert(len(chars), ' ')  # Space at last index
         return chars
     
     def ctc_decode(self, preds: np.ndarray):
         """
-        preds: numpy array [T, C],
-        where T ^= number of predictions
-        C ^= number of characters
-        characters: list of vocab characters (with blank at index 0)
+        preds: numpy array [T, C], where
+                T ^= number of predictions
+                C ^= number of characters
         """
-        # Argmax across character dimension
         pred_indices = np.argmax(preds, axis=1)
-        text = []
-        prev_idx = -1
-        for idx in pred_indices:
-            if idx != 0 and idx != prev_idx:            # 0 = blank
-                text.append(self.characters[idx])
-            prev_idx = idx
-        return "".join(text)
+
+        change_mask = np.empty_like(pred_indices, dtype=bool)
+        change_mask[0] = True
+        change_mask[1:] = pred_indices[1:] != pred_indices[:-1]
+
+        indices = pred_indices[change_mask]
+        indices = indices[indices != self.BLANK]
+
+        return "".join(np.take(self.characters, indices))
 
 
 #####################################################################

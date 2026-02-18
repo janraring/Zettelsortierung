@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from zettelsortierung.ImageAnnotation import BoundingBox
+from zettelsortierung.Datatypes import BoundingBox
 from abc import ABC, abstractmethod
 
 

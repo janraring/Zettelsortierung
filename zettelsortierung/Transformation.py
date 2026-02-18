@@ -7,9 +7,8 @@ from dataclasses import replace
 import cv2
 import numpy as np
 
-from zettelsortierung.ImageAnnotation import BoundingBox
 from zettelsortierung.RegionDetection import RegionDetector
-from zettelsortierung.Datatypes import Collection, DataPoint, DataPointBatch, Probe, Zettel
+from zettelsortierung.Datatypes import Collection, DataPoint, DataPointBatch, Probe, Zettel, BoundingBox
 
 mp.set_start_method("spawn", force=True)
 #cv2.setNumThreads(0)
@@ -41,18 +40,6 @@ class Application(ABC):
         return self.apply(collection)
 
 
-# Brauche ich das überhaupt?
-class Collect(Application):
-    def apply(self, collection: Collection) -> Iterable[DataPoint]:
-        return Probe(collection)
-
-
-class DiagnosticsApp(Application):
-    def apply(self, collection: Collection) -> Iterable[DataPoint]:
-        print(collection)
-        return collection
-
-
 class SequentialApp(Application):
     def __init__(self, *transformations):
         self.sequence = Composition(*transformations)
@@ -69,6 +56,21 @@ class ParallelApp(Application):
     def apply(self, collection: Collection) -> Probe:
         with Pool(self.processes) as pool:
             return Probe(pool.imap_unordered(self.sequence, collection))
+
+
+class Print(Application):
+    def apply(self, collection: Collection) -> Iterable[DataPoint]:
+        print(collection)
+        return collection
+
+
+class Store(Application):
+    def __init__(self, storage_var: Probe):
+        self.storage_var: Probe = storage_var
+
+    def apply(self, probe: Probe) -> Probe:
+        self.storage_var.add_batch(probe)
+        return probe
 
 
 class Flatten(Application):
@@ -117,6 +119,17 @@ class Transformation(ABC):
 
     def __call__(self, dp: Zettel | DataPoint) -> DataPoint:
         return self.transform(dp)
+
+
+class StorePoint(Application):
+    def __init__(self, storage_var: Probe):
+        self.storage_var: Probe = storage_var
+
+    def apply(self, dp: DataPoint) -> DataPoint:
+        print(self.storage_var)
+        self.storage_var.add(dp)
+        print(self.storage_var)
+        return dp
 
 
 class DiagnosticsTransform(Transformation):

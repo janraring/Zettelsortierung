@@ -1,4 +1,4 @@
-from zettelsortierung.Datatypes import DataPoint, DataPointBatch
+from zettelsortierung.Datatypes import DataPoint, DataPointBatch, BoundingBox, Zettel
 import cv2
 
 def vis_boundingbox(dp: DataPoint):
@@ -44,3 +44,28 @@ def vis_anno(dp: DataPoint):
 def vis_batch(dpb: DataPointBatch):
     for i in range(len(dpb.feature_batch)):
         vis_image(dpb.feature_batch[i])
+
+def vis_boxes_labels(zettel: Zettel, boxes: list[BoundingBox], texts: list[str]):
+    image = cv2.imread(zettel.recto.full_path)
+    for box, text in zip(boxes, texts):
+        x, y, w, h = box
+        image = cv2.rectangle(img=image,
+            pt1=(x, y),
+            pt2=(x+w, y+h),
+            color=(0, 0, 0),
+            thickness=10
+        )
+        image = cv2.putText(img=image,
+            text=text,
+            org=(x, y-10),
+            fontFace=0,
+            fontScale=1.0,
+            color=(0, 0, 0),
+            thickness=2
+        )
+
+    resized_image = cv2.resize(image, (1500, 1000))
+
+    cv2.imshow(winname=zettel.id, mat=resized_image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()

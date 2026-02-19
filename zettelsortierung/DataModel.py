@@ -2,15 +2,23 @@ import os
 from sqlalchemy import Column, Integer, String, Table, ForeignKey, create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base#, relationship, backref
 
-from zettelsortierung.DataTypes import Scan, Zettel, BoundingBox, DataPoint
+from zettelsortierung.DataTypes import Scan, Zettel, BoundingBox, DataPoint, Probe
 from zettelsortierung.DataBase import *
 
 from dotenv import load_dotenv
 load_dotenv()
 
 
+#####################################################################
+# Base
+#####################################################################
+
 Base = declarative_base()
 
+
+#####################################################################
+# Tables
+#####################################################################
 
 class ScanModel(Base):
     __tablename__ = 'scans'
@@ -78,32 +86,93 @@ class OCRResultModel(Base):
         self.text = dp.feature
 
 
+#####################################################################
+# Database Interaction
+#####################################################################
 
-connection_string = os.getenv('DATABASE_CONNECTION_STRING')
-engine = create_engine(connection_string)
-Base.metadata.create_all(bind=engine)
+class DataBase():
+    def __init__(self):
+        connection_string = os.getenv('DATABASE_CONNECTION_STRING')
+        self.engine = create_engine(connection_string)
+        Base.metadata.create_all(bind=self.engine)
 
-Session = sessionmaker(bind=engine)
-session = Session()
+        Session = sessionmaker(bind=self.engine)
+        self.session = Session()
 
-def add_scan_list(scans: list[Scan]):
-    counter = 0
-    for scan in scans:
-        scan_model = ScanModel(Scan(scan))
-        session.add(scan_model)
 
-        counter += 1
-        if counter % 10000 == 0:
-            session.commit()
+    #################################################################
+    # Adding and Retrieving Scans
+
+    def add_scan(self, scan: Scan):
+        scan_model = ScanModel(scan)
+        self.session.add(scan_model)
+        self.session.commit()
+
+    def add_scan_list(self, paths: list[str]):
+        counter = 0
+        for path in paths:
+            scan_model = ScanModel(Scan(path))
+            self.session.add(scan_model)
+
+            counter += 1
+            if counter % 10000 == 0:
+                self.session.commit()
+                print(counter)
+        else:
+            self.session.commit()
             print(counter)
-    else:
-        session.commit()
-        print(counter)
 
-def add_scan(scan: Scan):
-    scan_model = ScanModel(scan)
-    session.add(scan_model)
-    session.commit()
+    def get_scans(self):
+        return self.session.query(ScanModel).all()
 
-def get_scans():
-    return session.query(ScanModel).all()
+
+    #################################################################
+    # Adding and Retrieving Bounding Boxes
+
+    def add_boundingbox(self, dp: DataPoint):
+        box_model = BoundingBoxModel(dp)
+        self.session.add(box_model)
+        self.session.commit()
+
+    def add_boundingbox_list(self, probe: Probe):
+        counter = 0
+        for dp in probe:
+            box_model = BoundingBoxModel(dp)
+            self.session.add(box_model)
+
+            counter += 1
+            if counter % 10000 == 0:
+                self.session.commit()
+                print(counter)
+        else:
+            self.session.commit()
+            print(counter)
+
+    def get_boundingboxes(self):
+        return self.session.query(BoundingBoxModel).all()
+
+
+    #################################################################
+    # Adding and Retrieving Bounding Boxes
+
+    def add_ocr_result(self, dp: DataPoint):
+        ocr_result_model = OCRResultModel(dp)
+        self.session.add(ocr_result_model)
+        self.session.commit()
+
+    def add_ocr_result_list(self, probe: Probe):
+        counter = 0
+        for dp in probe:
+            ocr_result_model = OCRResultModel(dp)
+            self.session.add(ocr_result_model)
+
+            counter += 1
+            if counter % 10000 == 0:
+                self.session.commit()
+                print(counter)
+        else:
+            self.session.commit()
+            print(counter)
+
+    def get_ocr_results(self):
+        return self.session.query(OCRResultModel).all()

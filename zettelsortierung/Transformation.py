@@ -73,6 +73,15 @@ class Store(Application):
         return probe
 
 
+class ToDataBase(Application):
+    def __init__(self, db_adder):
+        self.db_adder = db_adder
+    
+    def apply(self, probe: Probe) -> Probe:
+        self.db_adder(probe)
+        return probe
+
+
 class Sort(Application):
     def __init__(self, key):
         self.key = key

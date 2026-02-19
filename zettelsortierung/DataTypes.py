@@ -148,7 +148,7 @@ class Zettelsammlung(set, Collection):
     
     @staticmethod
     def from_path_list(paths: list[str]) -> Self:
-        sammlung = {Zettel(path) for path in paths}
+        sammlung = {Scan(path) for path in paths}
         return Zettelsammlung(sammlung)
 
     @classmethod

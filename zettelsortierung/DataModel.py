@@ -69,8 +69,11 @@ class BoundingBoxModel(Base):
 
     def __init__(self, dp: DataPoint):
         self.scan_id = dp.scan.id
-        self.id = dp.feature_id
-        self.x, self.y, self.w, self.h = dp.feature
+        self.feature_id = dp.feature_id
+        self.x = int(dp.feature[0])
+        self.y = int(dp.feature[1])
+        self.w = int(dp.feature[2])
+        self.h = int(dp.feature[3])
 
 
 class OCRResultModel(Base):
@@ -82,7 +85,7 @@ class OCRResultModel(Base):
 
     def __init__(self, dp: DataPoint):
         self.scan_id = dp.scan.id
-        self.id = dp.feature_id
+        self.feature_id = dp.feature_id
         self.text = dp.feature
 
 
@@ -91,9 +94,10 @@ class OCRResultModel(Base):
 #####################################################################
 
 class DataBase():
-    def __init__(self):
-        connection_string = os.getenv('DATABASE_CONNECTION_STRING')
-        self.engine = create_engine(connection_string)
+    def __init__(self, connection_string: str = None, echo: bool = False):
+        if connection_string is None:
+            connection_string = os.getenv('DATABASE_CONNECTION_STRING')
+        self.engine = create_engine(connection_string, echo=echo)
         Base.metadata.create_all(bind=self.engine)
 
         Session = sessionmaker(bind=self.engine)
@@ -103,12 +107,26 @@ class DataBase():
     #################################################################
     # Adding and Retrieving Scans
 
-    def add_scan(self, scan: Scan):
+    def _add_scan(self, scan: Scan):
         scan_model = ScanModel(scan)
         self.session.add(scan_model)
         self.session.commit()
 
-    def add_scan_list(self, paths: list[str]):
+    def add_scan_list(self, scans: list[Scan]):
+        counter = 0
+        for scan in scans:
+            scan_model = ScanModel(scan)
+            self.session.add(scan_model)
+
+            counter += 1
+            if counter % 10000 == 0:
+                self.session.commit()
+                print(counter)
+        else:
+            self.session.commit()
+            print(counter)
+
+    def add_path_list_as_scans(self, paths: list[str]):
         counter = 0
         for path in paths:
             scan_model = ScanModel(Scan(path))
@@ -129,12 +147,12 @@ class DataBase():
     #################################################################
     # Adding and Retrieving Bounding Boxes
 
-    def add_boundingbox(self, dp: DataPoint):
+    def _add_boundingbox(self, dp: DataPoint):
         box_model = BoundingBoxModel(dp)
         self.session.add(box_model)
         self.session.commit()
 
-    def add_boundingbox_list(self, probe: Probe):
+    def add_boundingbox_probe(self, probe: Probe):
         counter = 0
         for dp in probe:
             box_model = BoundingBoxModel(dp)
@@ -155,12 +173,12 @@ class DataBase():
     #################################################################
     # Adding and Retrieving Bounding Boxes
 
-    def add_ocr_result(self, dp: DataPoint):
+    def _add_ocr_result(self, dp: DataPoint):
         ocr_result_model = OCRResultModel(dp)
         self.session.add(ocr_result_model)
         self.session.commit()
 
-    def add_ocr_result_list(self, probe: Probe):
+    def add_ocr_probe(self, probe: Probe):
         counter = 0
         for dp in probe:
             ocr_result_model = OCRResultModel(dp)

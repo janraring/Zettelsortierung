@@ -8,7 +8,7 @@ import cv2
 import numpy as np
 
 from zettelsortierung.RegionDetection import RegionDetector
-from zettelsortierung.Datatypes import Collection, DataPoint, DataPointBatch, Probe, Zettel, BoundingBox
+from zettelsortierung.DataTypes import Collection, DataPoint, DataPointBatch, Probe, BoundingBox, Scan
 
 mp.set_start_method("spawn", force=True)
 #cv2.setNumThreads(0)
@@ -21,7 +21,7 @@ class Composition:
     def __init__(self, *transformations):
         self.sequence = transformations
     
-    def __call__(self, collection: Collection) -> Iterable[Zettel | DataPoint]:
+    def __call__(self, collection: Collection) -> Iterable[Scan | DataPoint]:
         for app in self.sequence:
             collection = app(collection)
         return collection
@@ -94,8 +94,8 @@ class Batch(Application):
     def apply(self, collection: Collection) -> Iterable[Collection]:
         collection_len = len(collection)
         subcollection = type(collection)()
-        for count, zettel in enumerate(collection, 1):
-            subcollection.add(zettel)
+        for count, scan in enumerate(collection, 1):
+            subcollection.add(scan)
             if count % self.batch_size == 0 or count == collection_len:
                 yield subcollection
                 subcollection.clear()
@@ -107,10 +107,10 @@ class Batch(Application):
 
 class Transformation(ABC):
     @abstractmethod
-    def transform(self, dp: Zettel | DataPoint) -> DataPoint:
+    def transform(self, dp: Scan | DataPoint) -> DataPoint:
         pass
 
-    def __call__(self, dp: Zettel | DataPoint) -> DataPoint:
+    def __call__(self, dp: Scan | DataPoint) -> DataPoint:
         return self.transform(dp)
 
 
@@ -124,10 +124,10 @@ class PatchDetect(Transformation):
     def __init__(self, detector: RegionDetector):
         self.detector = detector
 
-    def transform(self, zettel: Zettel) -> list[DataPoint]:
-        full_im = cv2.imread(zettel.recto.full_path)
+    def transform(self, scan: Scan) -> list[DataPoint]:
+        full_im = cv2.imread(scan.full_path)
         boundingboxes = self.detector.detect_regions(full_im)
-        data_points = [DataPoint(zettel, feature_id, bbox)
+        data_points = [DataPoint(scan, feature_id, bbox)
                        for feature_id, bbox
                        in enumerate(boundingboxes)]
         return data_points
@@ -138,7 +138,7 @@ class BoundingBoxPad(Transformation):
         self.padding = padding
         
     def transform(self, dp: DataPoint) -> DataPoint:
-        y_max, x_max, d_max = dp.zettel.recto.shape
+        y_max, x_max, d_max = dp.scan.shape
         x_old, y_old, w_old, h_old = dp.feature
         x = max(0, x_old-self.padding)
         y = max(0, y_old-self.padding)
@@ -149,7 +149,7 @@ class BoundingBoxPad(Transformation):
 
 class CutOutPatch(Transformation):
     def transform(self, dp: DataPoint) -> DataPoint:
-        image = cv2.imread(dp.zettel.recto.full_path)
+        image = cv2.imread(dp.scan.full_path)
         x, y, w, h = dp.feature
         patch = image[y:y+h, x:x+w]
         return replace(dp, feature=patch)
@@ -172,7 +172,7 @@ class BGR2RGB(Transformation):
 
 class Stack(Transformation):
     def transform(self, dp_batch: list[DataPoint]) -> DataPointBatch:
-        zettel_batch = [dp.zettel for dp in dp_batch]
+        scan_batch = [dp.scan for dp in dp_batch]
         feature_id_batch = [dp.feature_id for dp in dp_batch]
         feature_batch = []
         w_max = max(dp.feature.shape[1] for dp in dp_batch)
@@ -180,14 +180,14 @@ class Stack(Transformation):
             h, w, c = dp.feature.shape
             padded_patch = np.pad(dp.feature, ((0, 0), (0, w_max-w), (0, 0)), mode='constant', constant_values=0)
             feature_batch.append(padded_patch)
-        return DataPointBatch(zettel_batch,
+        return DataPointBatch(scan_batch,
                               feature_id_batch,
                               np.stack(feature_batch))
 
 
 class ResolveDPBatch(Transformation):
     def transform(self, dp_batch: DataPointBatch) -> list[DataPoint]:
-        return [DataPoint(zettel=dp_batch.zettel_batch[i],
+        return [DataPoint(scan=dp_batch.scan_batch[i],
                                feature_id=dp_batch.feature_id_batch[i],
                                feature=dp_batch.feature_batch[i])
-                for i in range(len(dp_batch.zettel_batch))]
+                for i in range(len(dp_batch.scan_batch))]

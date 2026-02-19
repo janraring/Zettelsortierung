@@ -6,7 +6,7 @@ from typing import Protocol
 from dotenv import load_dotenv
 from dataclasses import replace
 from zettelsortierung.Transformation import Transformation, Composition, ResolveDPBatch
-from zettelsortierung.Datatypes import DataPoint, DataPointBatch
+from zettelsortierung.DataTypes import DataPoint, DataPointBatch
 
 load_dotenv()
 
@@ -51,7 +51,7 @@ class PaddleOCR:
 
 class OCRstack(Transformation):
     def transform(self, dp_batch: list[DataPoint]) -> DataPointBatch:
-        zettel_batch = [dp.zettel for dp in dp_batch]
+        scan_batch = [dp.scan for dp in dp_batch]
         feature_id_batch = [dp.feature_id for dp in dp_batch]
         feature_batch = []
         
@@ -65,7 +65,7 @@ class OCRstack(Transformation):
             feature_batch.append(padded_patch)
 
         stack = np.stack(feature_batch)
-        return DataPointBatch(zettel_batch, feature_id_batch, stack)
+        return DataPointBatch(scan_batch, feature_id_batch, stack)
 
 
 class OCRnormalize(Transformation):

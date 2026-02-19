@@ -25,7 +25,6 @@ class Collection(ABC):
 # Scan
 #####################################################################
 
-#@dataclass(frozen=True)
 class Scan:
     __slots__ = ('full_path',
                  '_id',
@@ -96,11 +95,11 @@ class Scan:
         return hash(self.id)
 
     def __str__(self):
-        return f'Scan({self.id, self.full_path})'
+        return f'Scan({self.id}, {self.relative_path})'
 
     def __repr__(self):
-        return f'Scan({self.id, self.full_path})'
-
+        return f'Scan({self.id}, {self.relative_path})'
+    
 
 #####################################################################
 # Zettel
@@ -207,19 +206,19 @@ class BoundingBox(NamedTuple):
 
 @dataclass(frozen=True, slots=True)
 class DataPoint():
-    zettel: Zettel
+    scan: Scan
     feature_id: int
     feature: Any
 
     def __iter__(self):
-        yield self.zettel
+        yield self.scan
         yield self.feature_id
         yield self.feature
 
 
 @dataclass(frozen=True, slots=True)
 class DataPointBatch():
-    zettel_batch: list[Zettel]
+    scan_batch: list[Scan]
     feature_id_batch: list[int]
     feature_batch: Any
 

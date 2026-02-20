@@ -1,9 +1,8 @@
 import os
-from sqlalchemy import Column, Integer, String, Table, ForeignKey, create_engine
+from sqlalchemy import Column, Integer, String, Table, ForeignKey, create_engine, select, exists, func
 from sqlalchemy.orm import sessionmaker, declarative_base#, relationship, backref
 
 from zettelsortierung.DataTypes import Scan, Zettel, BoundingBox, DataPoint, Probe
-from zettelsortierung.DataBase import *
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -194,3 +193,29 @@ class DataBase():
 
     def get_ocr_results(self):
         return self.session.query(OCRResultModel).all()
+
+    #################################################################
+    # Quieries
+    #################################################################
+
+    def get_missing_ocrs(self):
+        stmt = (
+            select(ScanModel.full_path)
+            .where(
+                ~exists().where(OCRResultModel.scan_id == ScanModel.id)
+            )
+            .where(
+                ScanModel.id.endswith("_1")
+            )
+        )
+        return self.session.execute(stmt).scalars().all()
+    
+    def get_ocr_concat(self):
+        stmt = (
+            select(
+                OCRResultModel.scan_id,
+                func.group_concat(OCRResultModel.text, " | ").label("combined_text")
+            )
+            .group_by(OCRResultModel.scan_id)
+        )
+        return self.session.execute(stmt).all()

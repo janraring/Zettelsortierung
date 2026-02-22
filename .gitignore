@@ -2,8 +2,10 @@
 #/data/
 /data/raw/zettelsammlung
 /data/interim/
+/data/processed/zettel.db
 
 # experimental data
+/notebooks/input/
 /notebooks/output/
 
 # Mac OS-specific storage files

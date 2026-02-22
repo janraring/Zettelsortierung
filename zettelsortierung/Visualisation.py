@@ -1,4 +1,5 @@
 from zettelsortierung.DataTypes import DataPoint, DataPointBatch, BoundingBox, Scan
+from zettelsortierung.DataModel import DataBase
 import cv2
 
 def vis_boundingbox(dp: DataPoint):
@@ -68,4 +69,14 @@ def vis_boxes_labels(scan: Scan, boxes: list[BoundingBox], texts: list[str]):
 
     cv2.imshow(winname=scan.id, mat=resized_image)
     cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+db = DataBase()
+
+def vis_scan(scan_id: str):
+    path = db.get_full_path(scan_id)[0]
+    image = cv2.imread(path)
+    image = cv2.resize(image, (1500, 1000))
+    cv2.imshow(winname=scan_id, mat=image)
+    cv2.waitKey(delay=0)
     cv2.destroyAllWindows()

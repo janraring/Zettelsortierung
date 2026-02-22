@@ -1,8 +1,8 @@
 import os
-from sqlalchemy import Column, Integer, String, Table, ForeignKey, create_engine, select, exists, func
-from sqlalchemy.orm import sessionmaker, declarative_base#, relationship, backref
+from sqlalchemy import Column, Integer, String, ForeignKey, create_engine, select, exists, func
+from sqlalchemy.orm import sessionmaker, declarative_base
 
-from zettelsortierung.DataTypes import Scan, Zettel, BoundingBox, DataPoint, Probe
+from zettelsortierung.DataTypes import Scan, Zettel, DataPoint, Probe
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -16,7 +16,7 @@ Base = declarative_base()
 
 
 #####################################################################
-# Tables
+# Physical Entities
 #####################################################################
 
 class ScanModel(Base):
@@ -56,10 +56,61 @@ class ZettelModel(Base):
         return f'Zettel({self.id})'
 
 
+#####################################################################
+# Geographical Entities
+#####################################################################
+
+class LandschaftModel(Base):
+    __tablename__ = 'landschaften'
+
+    abbreviation = Column('abbreviation', String, primary_key=True)
+    name = Column('name', String)
+    description = Column('description', String)
+
+    def __init__(self,
+                 abbreviation: str,
+                 name: str,
+                 description: str):
+        self.abbreviation = abbreviation
+        self.name = name
+        self.description = description
+
+
+class KreisModel(Base):
+    __tablename__ = 'kreise'
+
+    abbreviation = Column('abbreviation', String, primary_key=True)
+    name = Column('name', String)
+
+    def __init__(self, abbreviation: str, name: str):
+        self.abbreviation = abbreviation
+        self.name = name
+
+
+class OrtModel(Base):
+    __tablename__ = 'orte'
+
+    kreis = Column('kreis', String, ForeignKey('kreise.abbreviation'), primary_key=True)
+    abbreviation = Column('abbreviation', String, primary_key=True)
+    name = Column('name', String)
+
+    def __init__(self, kreis: str, abbreviation: str, name: str):
+        self.kreis = kreis
+        self.abbreviation = abbreviation
+        self.name = name
+
+
+#####################################################################
+# Artefacts
+#####################################################################
+
 class BoundingBoxModel(Base):
     __tablename__ = 'bounding_boxes'
 
-    scan_id = Column('scan_id', String, ForeignKey('scans.id'), primary_key=True)
+    scan_id = Column('scan_id',
+                     String,
+                     ForeignKey('scans.id'),
+                     primary_key=True)
     feature_id = Column('feature_id', Integer, primary_key=True)
     x = Column('x', Integer)
     y = Column('y', Integer)
@@ -78,8 +129,14 @@ class BoundingBoxModel(Base):
 class OCRResultModel(Base):
     __tablename__ = 'ocr_results'
 
-    scan_id = Column('scan_id', String, ForeignKey('scans.id'), primary_key=True)
-    feature_id = Column('feature_id', Integer, ForeignKey('bounding_boxes.feature_id'), primary_key=True)
+    scan_id = Column('scan_id',
+                     String,
+                     ForeignKey('scans.id'),
+                     primary_key=True)
+    feature_id = Column('feature_id',
+                        Integer,
+                        ForeignKey('bounding_boxes.feature_id'),
+                        primary_key=True)
     text = Column('text', String)
 
     def __init__(self, dp: DataPoint):
@@ -87,20 +144,84 @@ class OCRResultModel(Base):
         self.feature_id = dp.feature_id
         self.text = dp.feature
 
+'''
+#####################################################################
+# Classifications
+#####################################################################
+
+class CategoryModel(Base):
+    __tablename__ = 'category'
+
+    category = Column('category', String, primary_key=True)
+    top_category = Column('top_category', String)
+    kreis = Column('kreis', String)
+    ort = Column('ort', String)
+    # Lautschrift
+    #   - Untersammlungen (z.B. Gütersloh Wix)
+    # Fragebogen
+    #   - Reihe (z.B. Baader)
+    # Wortschatz
+    #   - Autor (z.B. Dittmar)
+    # Aus Quelle
+    #   - die Quelle (z.B. WmWb)
+    # Sonstige
+    #   - z.B. Verweis
+
+
+class OCRClassification(Base):
+    __tablename__ = 'ocr_classifications'
+
+    zettel_id = Column('zettel_id', String, ForeignKey('zettel.id'), primary_key=True)
+    category = Column('category', String)
+    subcategory = Column('subcategory', String)
+'''
+
 
 #####################################################################
 # Database Interaction
 #####################################################################
 
 class DataBase():
-    def __init__(self, connection_string: str = None, echo: bool = False):
+    def __init__(self,
+                 connection_string: str = None,
+                 echo: bool = False):
         if connection_string is None:
-            connection_string = os.getenv('DATABASE_CONNECTION_STRING')
+            connection_string = \
+                os.getenv('DATABASE_CONNECTION_STRING')
         self.engine = create_engine(connection_string, echo=echo)
         Base.metadata.create_all(bind=self.engine)
 
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
+
+
+    #################################################################
+    # Adding and Retrieving Zettel
+
+    def _add_zettel(self, zettel: Zettel):
+        zettel_model = ZettelModel(zettel.id,
+                                   zettel.recto.id,
+                                   zettel.verso.id)
+        self.session.add(zettel_model)
+        self.session.commit()
+    
+    def add_zettel_list(self, zettel_list: list[Zettel]):
+        counter = 0
+        for zettel in zettel_list:
+            zettel_model = ZettelModel(zettel)
+            self.session.add(zettel_model)
+
+            counter += 1
+            if counter % 10000 == 0:
+                self.session.commit()
+                print(counter)
+
+        else:
+            self.session.commit()
+            print(counter)
+
+    def get_zettel(self):
+        return self.session.query(ZettelModel).all()
 
 
     #################################################################
@@ -121,6 +242,7 @@ class DataBase():
             if counter % 10000 == 0:
                 self.session.commit()
                 print(counter)
+
         else:
             self.session.commit()
             print(counter)
@@ -135,12 +257,69 @@ class DataBase():
             if counter % 10000 == 0:
                 self.session.commit()
                 print(counter)
+
         else:
             self.session.commit()
             print(counter)
 
     def get_scans(self):
         return self.session.query(ScanModel).all()
+
+
+    #################################################################
+    # Adding and Retrieving Landschaften
+
+    def _add_landschaft(self,
+                        abbreviation: str,
+                        name: str,
+                        description: str):
+        landschaft_model = LandschaftModel(abbreviation,
+                                           name,
+                                           description)
+        self.session.add(landschaft_model)
+        self.session.commit()
+    
+    def add_landschaften(self, landschaften: list[tuple]):
+        for landschaft in landschaften:
+            landschaft_model = LandschaftModel(*landschaft)
+            self.session.add(landschaft_model)
+        self.session.commit()
+
+
+    #################################################################
+    # Adding and Retrieving Kreise
+
+    def _add_kreis(self, abbreviation: str, name: str):
+        kreis_model = KreisModel(abbreviation, name)
+        self.session.add(kreis_model)
+        self.session.commit()
+    
+    def add_kreise(self, kreise: list[tuple]):
+        for kreis in kreise:
+            kreis_model = KreisModel(*kreis)
+            self.session.add(kreis_model)
+        self.session.commit()
+
+    def get_kreise(self):
+        return self.session.query(KreisModel).all()
+
+
+    #################################################################
+    # Adding and Retrieving Orte
+
+    def _add_ort(self, kreis: str, abbreviation: str, name: str):
+        ort_model = OrtModel(kreis, abbreviation, name)
+        self.session.add(ort_model)
+        self.session.commit()
+    
+    def add_orte(self, orte: list[tuple]):
+        for ort in orte:
+            ort_model = OrtModel(*ort)
+            self.session.add(ort_model)
+        self.session.commit()
+
+    def get_orte(self):
+        return self.session.query(OrtModel).all()
 
 
     #################################################################
@@ -194,6 +373,7 @@ class DataBase():
     def get_ocr_results(self):
         return self.session.query(OCRResultModel).all()
 
+
     #################################################################
     # Quieries
     #################################################################
@@ -202,10 +382,22 @@ class DataBase():
         stmt = (
             select(ScanModel.full_path)
             .where(
-                ~exists().where(OCRResultModel.scan_id == ScanModel.id)
+                ~exists().where(OCRResultModel.scan_id
+                                == ScanModel.id)
             )
             .where(
                 ScanModel.id.endswith("_1")
+            )
+        )
+        return self.session.execute(stmt).scalars().all()
+    
+    def get_full_path(self, scan_id):
+        stmt = (
+            select(
+                ScanModel.full_path
+            )
+            .where(
+                ScanModel.id == scan_id
             )
         )
         return self.session.execute(stmt).scalars().all()
@@ -219,3 +411,13 @@ class DataBase():
             .group_by(OCRResultModel.scan_id)
         )
         return self.session.execute(stmt).all()
+
+    def get_ocr_line_by_line(self):
+        stmt = (
+            select(
+                func.group_concat(OCRResultModel.text, "Æ").label("combined_text")
+            )
+            .group_by(OCRResultModel.scan_id)
+        )
+        return self.session.execute(stmt).all()
+    

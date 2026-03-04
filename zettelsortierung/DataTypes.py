@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Any, NamedTuple, Self
+from enum import Enum
 import os
 import cv2
 import regex as re
@@ -250,3 +251,16 @@ class Probe(list, Collection):
         for i in range(min(100, len(self))):
             repr += str(self[i]) + ',\n'
         return repr + '...])'
+
+
+#####################################################################
+# Classification
+#####################################################################
+
+class TopCategory(Enum):
+    UNSICHER = 0
+    FRAGEBOGEN = 1
+    LAUTSCHRIFT = 2
+    WORTSCHATZ = 3
+    EXZERPT = 4
+    SONSTIG = 5

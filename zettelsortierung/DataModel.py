@@ -378,6 +378,9 @@ class DataBase():
     # Quieries
     #################################################################
 
+    def quiery(self, stmt):
+        return self.session.execue(stmt).scalaers().all()
+
     def get_missing_ocrs(self):
         stmt = (
             select(ScanModel.full_path)

@@ -1,6 +1,14 @@
+# pyright: reportArgumentType=false
+# pyright: reportUnknownArgumentType=false
+# pyright: reportUnknownVariableType=false
+# pyright: reportUnknownParameterType=false
+# pyright: reportUnknownMemberType=false
+# pyright: reportCallIssue=false
+
 import os
 from sqlalchemy import Column, Integer, String, ForeignKey, create_engine, select, exists, func
 from sqlalchemy.orm import sessionmaker, declarative_base
+from collections.abc import Sequence
 
 from zettelsortierung.DataTypes import Scan, Zettel, DataPoint, Probe
 
@@ -27,17 +35,17 @@ class ScanModel(Base):
     relative_path = Column('relative_path', String)
     full_path = Column('full_path', String)
 
-    def __init__(self, scan: Scan):
+    def __init__(self, scan: Scan) -> None:
         self.id = scan.id
         self.file_name = scan.file_name
         self.relative_path = scan.relative_path
         self.full_path = scan.full_path
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'ScanModel({self.id}, {self.relative_path})'
     
     def to_domain(self) -> Scan:
-        return Scan(self.full_path)
+        return Scan(str(self.full_path))
 
 
 class ZettelModel(Base):
@@ -183,11 +191,14 @@ class OCRClassification(Base):
 
 class DataBase():
     def __init__(self,
-                 connection_string: str = None,
+                 connection_string: str | None = None,
                  echo: bool = False):
         if connection_string is None:
             connection_string = \
                 os.getenv('DATABASE_CONNECTION_STRING')
+        if connection_string is None:
+            raise ValueError("No connection string provided and "
+                             "DATABASE_CONNECTION_STRING env var is not set")
         self.engine = create_engine(connection_string, echo=echo)
         Base.metadata.create_all(bind=self.engine)
 
@@ -199,9 +210,7 @@ class DataBase():
     # Adding and Retrieving Zettel
 
     def _add_zettel(self, zettel: Zettel):
-        zettel_model = ZettelModel(zettel.id,
-                                   zettel.recto.id,
-                                   zettel.verso.id)
+        zettel_model = ZettelModel(zettel)
         self.session.add(zettel_model)
         self.session.commit()
     
@@ -279,7 +288,7 @@ class DataBase():
         self.session.add(landschaft_model)
         self.session.commit()
     
-    def add_landschaften(self, landschaften: list[tuple]):
+    def add_landschaften(self, landschaften: list[tuple[str, str, str]]):
         for landschaft in landschaften:
             landschaft_model = LandschaftModel(*landschaft)
             self.session.add(landschaft_model)
@@ -294,7 +303,7 @@ class DataBase():
         self.session.add(kreis_model)
         self.session.commit()
     
-    def add_kreise(self, kreise: list[tuple]):
+    def add_kreise(self, kreise: list[tuple[str, str]]):
         for kreis in kreise:
             kreis_model = KreisModel(*kreis)
             self.session.add(kreis_model)
@@ -312,7 +321,7 @@ class DataBase():
         self.session.add(ort_model)
         self.session.commit()
     
-    def add_orte(self, orte: list[tuple]):
+    def add_orte(self, orte: list[tuple[str, str, str]]):
         for ort in orte:
             ort_model = OrtModel(*ort)
             self.session.add(ort_model)
@@ -378,10 +387,7 @@ class DataBase():
     # Quieries
     #################################################################
 
-    def quiery(self, stmt):
-        return self.session.execue(stmt).scalaers().all()
-
-    def get_missing_ocrs(self):
+    def get_missing_ocrs(self) -> Sequence[str]:
         stmt = (
             select(ScanModel.full_path)
             .where(
@@ -394,7 +400,7 @@ class DataBase():
         )
         return self.session.execute(stmt).scalars().all()
     
-    def get_full_path(self, scan_id):
+    def get_full_path(self, scan_id: str) -> Sequence[str]:
         stmt = (
             select(
                 ScanModel.full_path
@@ -405,6 +411,7 @@ class DataBase():
         )
         return self.session.execute(stmt).scalars().all()
     
+
     def get_ocr_concat(self):
         stmt = (
             select(

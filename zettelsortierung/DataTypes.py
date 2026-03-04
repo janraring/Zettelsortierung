@@ -1,25 +1,10 @@
-from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Any, NamedTuple, Self
+from typing import Any, NamedTuple, Self, Protocol
 from enum import Enum
 import os
 import cv2
 import regex as re
 import pandas as pd
-
-
-#####################################################################
-# Base Classes
-#####################################################################
-
-class Collection(ABC):
-    @abstractmethod
-    def add(self):
-        pass
-
-    @abstractmethod
-    def clear(self):
-        pass
 
 
 #####################################################################
@@ -35,12 +20,12 @@ class Scan:
                  '_shape')
 
     def __init__(self, full_path: str):
-        self.full_path = full_path
-        self._id = None             # Xdd-dddddddd_d
-        self._file_name = None      # dddddddd_d#Xdd_d_dd_<lemma>.jpg
-        self._relative_path = None  # /Xdd_<start>_<end>/d/dd_<lemma>
-        self._root_path = None      # /absolute/path/to/parant/dir
-        self._shape = None          # (w, h, c)
+        self.full_path: str = full_path
+        self._id: str | None = None             # Xdd-dddddddd_d
+        self._file_name: str | None = None      # dddddddd_d#Xdd_d_dd_<lemma>.jpg
+        self._relative_path: str | None = None  # /Xdd_<start>_<end>/d/dd_<lemma>
+        self._root_path: str | None = None      # /absolute/path/to/parant/dir
+        self._shape: tuple[int, int, int] | None = None      # (w, h, c)
 
     @property
     def shape(self) -> tuple[int, int, int]:
@@ -89,8 +74,10 @@ class Scan:
             self._id = id
         return id
 
-    def __eq__(self, other):
-        return self.id == other.id
+    def __eq__(self, other: object) -> bool:
+        if isinstance(other, Scan):
+            return self.id == other.id
+        return False
     
     def __hash__(self):
         return hash(self.id)
@@ -110,19 +97,21 @@ class Scan:
 class Zettel:
     __slots__ = ('id', 'recto', 'verso')
 
-    def __init__(self, path, /):
-        number = re.findall(r'(\d{8})_\d#', path)[0]
-        prefix = re.findall(r'zettelsammlung/(...)', path)[0]
+    def __init__(self, path: str, /):
+        number: str = re.findall(r'(\d{8})_\d#', path)[0]
+        prefix: str = re.findall(r'zettelsammlung/(...)', path)[0]
 
-        recto_path = re.sub(r'_\d#', '_1#', path)
-        verso_path = re.sub(r'_\d#', '_2#', path)
+        recto_path: str = re.sub(r'_\d#', '_1#', path)
+        verso_path: str = re.sub(r'_\d#', '_2#', path)
 
-        self.id = f'{prefix}-{number}'
-        self.recto = Scan(recto_path)
-        self.verso = Scan(verso_path)
+        self.id: str = f'{prefix}-{number}'
+        self.recto: Scan = Scan(recto_path)
+        self.verso: Scan = Scan(verso_path)
 
-    def __eq__(self, other):
-        return self.id == other.id
+    def __eq__(self, other: object):
+        if isinstance(other, Zettel):
+            return self.id == other.id
+        return False
     
     def __hash__(self):
         return hash(self.id)
@@ -135,74 +124,7 @@ class Zettel:
 
 
 #####################################################################
-# Zettelsammlung
-#####################################################################
-
-class Zettelsammlung(set, Collection):
-    __slots__ = ('sammlung')
-
-    def __init__(self,
-                 sammlung: set[Zettel] | list[Zettel] | None = None):
-        if sammlung is None:
-            sammlung = {}
-        super().__init__(set(sammlung))
-    
-    @staticmethod
-    def from_path_list(paths: list[str]) -> Self:
-        sammlung = {Scan(path) for path in paths}
-        return Zettelsammlung(sammlung)
-
-    @classmethod
-    def from_disc(cls, root: str='', k: int=-1) -> Self:
-        '''
-        Given a root directory, this function collects all .jpg
-        files found in the subdirectories of root. Those files
-        are returned as a Zettelsammlung.
-        Optionally, one can specify a maximum number of Zettel k
-        that should be collected.
-
-        Args:
-            root (str): Path to the root directory.
-            k (int): Limit on number of Zettel to be collected.
-        '''
-        #root = os.getenv('ZETTELSAMMLUNG_ROOT')
-        file_paths = []
-        for path, subdirs, files in os.walk(root):
-            for name in files:
-                if len(file_paths) == k:
-                    break
-                if name[-4:] == '.jpg':
-                    file_paths.append(os.path.join(path, name))
-            else:
-                continue
-            break
-        return cls.from_path_list(file_paths)
-    
-    @classmethod
-    def from_parquet(cls, path: str, k: int=None):
-        file_paths_df = pd.read_parquet(path)
-        file_paths = file_paths_df['path'].to_list()[:k]
-        return cls.from_path_list(file_paths)
-
-    def to_parquet(self, path):
-        file_paths = [zettel.recto_file_path for zettel in self]
-        file_paths_df = pd.DataFrame({'path': file_paths})
-        file_paths_df.to_parquet(path)
-
-
-#####################################################################
-# Bounding Box
-#####################################################################
-
-class BoundingBox(NamedTuple):
-    x: int
-    y: int
-    w: int
-    h: int
-
-
-#####################################################################
-# Feature Extraction
+# DataPoint
 #####################################################################
 
 @dataclass(frozen=True, slots=True)
@@ -224,8 +146,87 @@ class DataPointBatch():
     feature_batch: Any
 
 
+#####################################################################
+# Base Classes
+#####################################################################
+
+class Collection(Protocol):
+    def add(self, item: Zettel | DataPoint):
+        pass
+
+    def clear(self):
+        pass
+
+
+#####################################################################
+# Zettelsammlung
+#####################################################################
+
+class Zettelsammlung(set[Zettel]):
+    __slots__ = ('sammlung',)
+
+    def __init__(self,
+                 sammlung: set[Zettel] | list[Zettel] | None = None) -> None:
+        if sammlung is None:
+            sammlung = set()
+        super().__init__(set(sammlung))
+    
+    @classmethod
+    def from_path_list(cls, paths: list[str]) -> Self:
+        sammlung = {Zettel(path) for path in paths}
+        return cls(sammlung)
+
+    @classmethod
+    def from_disc(cls, root: str='', k: int=-1) -> Self:
+        '''
+        Given a root directory, this function collects all .jpg
+        files found in the subdirectories of root. Those files
+        are returned as a Zettelsammlung.
+        Optionally, one can specify a maximum number of Zettel k
+        that should be collected.
+
+        Args:
+            root (str): Path to the root directory.
+            k (int): Limit on number of Zettel to be collected.
+        '''
+        #root = os.getenv('ZETTELSAMMLUNG_ROOT')
+        file_paths: list[str] = []
+        for path, _, files in os.walk(root):
+            for name in files:
+                if len(file_paths) == k:
+                    break
+                if name[-4:] == '.jpg':
+                    file_paths.append(os.path.join(path, name))
+            else:
+                continue
+            break
+        return cls.from_path_list(file_paths)
+    
+    @classmethod
+    def from_parquet(cls, path: str, k: int | None = None) -> Self:
+        file_paths_df = pd.read_parquet(path)
+        file_paths = file_paths_df['path'].to_list()[:k]
+        return cls.from_path_list(file_paths)
+
+    def to_parquet(self, path: str):
+        file_paths: list[str] = [zettel.recto.full_path for zettel in self]
+        file_paths_df = pd.DataFrame({'path': file_paths})
+        file_paths_df.to_parquet(path)
+
+
+#####################################################################
+# Bounding Box
+#####################################################################
+
+class BoundingBox(NamedTuple):
+    x: int
+    y: int
+    w: int
+    h: int
+
+
 @dataclass(frozen=True)
-class Probe(list, Collection):
+class Probe(list[DataPoint]):
     __slots__ = ('probe')
 
     def __init__(self, probe: list[DataPoint] | None = None):
@@ -233,10 +234,10 @@ class Probe(list, Collection):
             probe = []
         super().__init__(probe)
     
-    def add(self, data_point: DataPoint):
-        self.append(data_point)
+    def add(self, item: DataPoint) -> None:
+        self.append(item)
     
-    def add_batch(self, data_points: list[DataPoint]):
+    def add_batch(self, data_points: list[DataPoint]) -> None:
         self.extend(data_points)
     
     def to_parquet(self):

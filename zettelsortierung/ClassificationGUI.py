@@ -7,13 +7,13 @@ from zettelsortierung.DataTypes import Zettel, TopCategory
 
 
 class ManualClassification:
-    def __init__(self, zettels: list[Zettel], classes: Enum):
+    def __init__(self, zettels: list[Zettel], classes: type[Enum]):
         assert len(zettels) > 0
         
-        self.zettels = zettels
-        self.classes = classes
-        self.index = 0
-        self.classifications = dict()
+        self.zettels: list[Zettel] = zettels
+        self.classes: type[Enum] = classes
+        self.index: int = 0
+        self.classifications: dict[Zettel, str] = dict()
         self.done = asyncio.get_event_loop().create_future()
 
         with ui.row():
@@ -26,7 +26,7 @@ class ManualClassification:
 
         with ui.row():
             self.class_buttons = [ui.button(category.name,
-                                            on_click=lambda c=category: self.next_image(c))
+                                            on_click=lambda e, c=category: self.next_image(c.name))
                                   for category in classes]
         
         self.back_button.disable()
@@ -66,12 +66,12 @@ class ManualClassification:
 
 
 
-def run_classification(zettels: list[Zettel], classes: list[str]) -> dict:
+def run_classification(zettels: list[Zettel], classes: type[Enum]) -> dict[Zettel, str]:
     """Blocking call: opens a browser UI, returns results when the user is done."""
-    results = {}
+    results: dict[Zettel, str] = {}
 
     @ui.page('/')
-    async def page():
+    async def _():
         nonlocal results
         classifier = ManualClassification(zettels, classes)
 
@@ -83,7 +83,8 @@ def run_classification(zettels: list[Zettel], classes: list[str]) -> dict:
 
         asyncio.create_task(wait_for_results())
 
-    ui.run(dark=None, reload=False)  # blocks until app.shutdown() is called
+    # blocks until app.shutdown() is called
+    ui.run(dark=None, reload=False)  # type: ignore[reportUnknownMemberType]
     return results
 
     
@@ -95,7 +96,5 @@ if __name__ in {"__main__", "__mp_main__"}:
         Zettel('/home/jan/Dokumente/IT-Beratung Raring/Zettelsortierung/data/raw/zettelsammlung/A01_a-Adel/1/01_a/00000005_1#A01_1_01_a.jpg'),
         Zettel('/home/jan/Dokumente/IT-Beratung Raring/Zettelsortierung/data/raw/zettelsammlung/A01_a-Adel/1/01_a/00000007_1#A01_1_01_a.jpg')
     ]
-
-    #classes = ["Cat", "Dog", "Other"]
 
     print(run_classification(zettels, TopCategory))

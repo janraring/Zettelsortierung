@@ -1,9 +1,9 @@
 from zettelsortierung.DataTypes import DataPoint, DataPointBatch, BoundingBox, Scan
-from zettelsortierung.DataModel import DataBase
+from zettelsortierung.db import DataBase
 import cv2
 
 def vis_boundingbox(dp: DataPoint):
-    image = cv2.imread(dp.zettel.recto_file_path)
+    image = cv2.imread(dp.scan.full_path)
 
     x, y, w, h = dp.feature
     image = cv2.rectangle(img=image,
@@ -36,7 +36,7 @@ def vis_image_path(im_path):
     cv2.destroyAllWindows()
 
 def vis_anno(dp: DataPoint):
-    image = cv2.imread(dp.zettel.recto_file_path)
+    image = cv2.imread(dp.scan.full_path)
     image = cv2.resize(image, (1500, 1000))
     cv2.imshow(winname=dp.feature, mat=image)
     cv2.waitKey(delay=0)

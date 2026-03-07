@@ -9,6 +9,17 @@ from zettelsortierung.ClassificationGUI import run_classification
 db = DataBase()
 
 
+def get_stats() -> dict[str, int]:
+    classifications = db.get_classifications(Classifiers.GOLD, TopCategory)
+    counts: dict[str, int] = {cat.name: 0 for cat in TopCategory}
+    counts["Total"] = len(classifications)
+    for probs in classifications.values():
+        for cat, prob in probs.items():
+            if prob == 1.0:
+                counts[cat.name] += 1
+    return counts
+
+
 def get_unclassified() -> list[Zettel]:
     already_done = db.get_classified_ids(Classifiers.GOLD, TopCategory)
     zettels = [z for z in db.get_zettel() if z.id not in already_done]
@@ -36,7 +47,7 @@ def main():
     }
 
     callback = partial(db.save_classification, Classifiers.GOLD)
-    run_classification(queries, TopCategory, on_classify=callback)
+    run_classification(queries, TopCategory, callback, get_stats)
 
 if __name__ == '__main__':
     main()

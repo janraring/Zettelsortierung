@@ -2,6 +2,7 @@ from enum import Enum
 from typing import Callable, Optional
 
 from nicegui import ui, app, run
+import asyncio
 
 from zettelsortierung.DataTypes import Zettel#, Classifiers, TopCategory
 
@@ -11,26 +12,32 @@ class ManualClassification:
             self,
             queries: dict[str, Callable[[], list[Zettel]]],
             classes: type[Enum],
-            on_classify: Optional[Callable[[Zettel, dict[Enum, float]], None]] = None):
+            on_classify: Optional[Callable[[Zettel, dict[Enum, float]], None]] = None,
+            get_stats: Optional[Callable[[], dict[str, int]]] = None):
         
         self.queries = queries
         self.classes = classes
         self.on_classify = on_classify
+        self.get_stats = get_stats
 
         self.zettels: list[Zettel] = []
         self.index: int = 0
+
+        # -- Stats display --
+        with ui.row().classes('items-center'):
+            self.stats_label = ui.label('')
 
         # -- Top row --
         with ui.row().classes('items-center w-full'):
             self.prev_button = ui.button('Prev', on_click=lambda: self.decrement_index())
             self.next_button = ui.button('Next', on_click=lambda: self.increment_index())
+            self.stop_button = ui.button('Finish', on_click=lambda: app.shutdown())#self.abort())
             
             # -- Dropdown button for selecting a view--
             with ui.dropdown_button('Sammlung', auto_close=True):
                 for name, query in queries.items():
                     ui.item(name, on_click=lambda e, n=name, q=query: self.load_query(n, q))
                     
-            self.stop_button = ui.button('Finish', on_click=lambda: app.shutdown())#self.abort())
             self.progress_bar = ui.linear_progress(value=0, show_value=False).classes('w-md h-9')
             self.progress_label = ui.label(f'').classes('text-base font-bold')
             ui.space()
@@ -50,6 +57,16 @@ class ManualClassification:
         
         self.prev_button.disable()
         self.next_button.disable()
+
+        if self.get_stats:
+            asyncio.create_task(self.update_stats())
+    
+    async def update_stats(self):
+        if not self.get_stats:
+            return
+        stats = self.get_stats()
+        text = '   |   '.join(f'{name}: {count}' for name, count in stats.items())
+        self.stats_label.set_text(text)
     
     async def load_query(self, name: str, query: Callable[[], list[Zettel]]):
         ui.notify(f'Loading "{name}"...')
@@ -71,7 +88,7 @@ class ManualClassification:
         self.update_images()
         self.update_progress()
 
-        ui.notify(f'Loaded "{name}" — {len(zettels)} zettel')
+        ui.notify(f'Loaded "{name}" — {len(zettels)} Zettel')
     
     def update_images(self):
         self.recto_image.set_source(self.zettels[self.index].recto.full_path)
@@ -83,9 +100,10 @@ class ManualClassification:
         self.progress_bar.value = self.index/length
         self.progress_label.text = f'{self.index}/{length}'
     
-    def increment_index(self):
+    async def increment_index(self):
         self.index = min(self.index + 1, len(self.zettels))
         self.update_progress()
+        await self.update_stats()
 
         self.prev_button.enable()
         if self.index == len(self.zettels):
@@ -105,19 +123,21 @@ class ManualClassification:
             self.prev_button.disable()
         self.update_images()
 
-    def classify_image(self, selected: Enum):
+    async def classify_image(self, selected: Enum):
         zettel = self.zettels[self.index]
         probabilities = {selected: 1.0}
         if self.on_classify:
             self.on_classify(zettel, probabilities)
-        self.increment_index()
+        await self.increment_index()
 
 
 def run_classification(queries: dict[str, Callable[[], list[Zettel]]],
                        classes: type[Enum],
-                       on_classify: Optional[Callable[[Zettel, dict[Enum, float]], None]] = None) -> None:
+                       on_classify: Optional[Callable[[Zettel, dict[Enum, float]], None]] = None,
+                       get_stats: Optional[Callable[[], dict[str, int]]] = None
+        ) -> None:
     @ui.page('/')
     async def _():
-        ManualClassification(queries, classes, on_classify)
+        ManualClassification(queries, classes, on_classify, get_stats)
 
     ui.run(dark=None, reload=False)

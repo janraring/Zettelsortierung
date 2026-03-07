@@ -97,12 +97,12 @@ class Scan:
 class Zettel:
     __slots__ = ('id', 'recto', 'verso')
 
-    def __init__(self, path: str, /):
-        number: str = re.findall(r'(\d{8})_\d#', path)[0]
-        prefix: str = re.findall(r'zettelsammlung/(...)', path)[0]
+    def __init__(self, path_or_id: str, /):
+        number: str = re.findall(r'(\d{8})_\d#', path_or_id)[0]
+        prefix: str = re.findall(r'zettelsammlung/(...)', path_or_id)[0]
 
-        recto_path: str = re.sub(r'_\d#', '_1#', path)
-        verso_path: str = re.sub(r'_\d#', '_2#', path)
+        recto_path: str = re.sub(r'_\d#', '_1#', path_or_id)
+        verso_path: str = re.sub(r'_\d#', '_2#', path_or_id)
 
         self.id: str = f'{prefix}-{number}'
         self.recto: Scan = Scan(recto_path)
@@ -163,7 +163,7 @@ class Collection(Protocol):
 #####################################################################
 
 class Zettelsammlung(set[Zettel]):
-    __slots__ = ('sammlung',)
+    #__slots__ = ('sammlung',)
 
     def __init__(self,
                  sammlung: set[Zettel] | list[Zettel] | None = None) -> None:
@@ -225,10 +225,8 @@ class BoundingBox(NamedTuple):
     h: int
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class Probe(list[DataPoint]):
-    __slots__ = ('probe')
-
     def __init__(self, probe: list[DataPoint] | None = None):
         if probe is None:
             probe = []
@@ -239,13 +237,6 @@ class Probe(list[DataPoint]):
     
     def add_batch(self, data_points: list[DataPoint]) -> None:
         self.extend(data_points)
-    
-    def to_parquet(self):
-        ...
-    
-    @staticmethod
-    def from_parquet():
-        ...
     
     def __repr__(self):
         repr = 'Probe(['
@@ -258,10 +249,14 @@ class Probe(list[DataPoint]):
 # Classification
 #####################################################################
 
+class Classifiers(Enum):
+    GOLD = 'Grundwahrheit'
+    OCR = 'OCR-Auslesung'
+
 class TopCategory(Enum):
-    UNSICHER = 0
-    FRAGEBOGEN = 1
-    LAUTSCHRIFT = 2
-    WORTSCHATZ = 3
-    EXZERPT = 4
-    SONSTIG = 5
+    SKIP = 'skipped'
+    LAUTSCHRIFT = 'Lautschrift'
+    FRAGEBOGEN = 'Fragebogen'
+    WORTSCHATZ = 'Wortschatz'
+    EXZERPT = 'Exzerpt'
+    SONSTIGE = 'Sonstige'

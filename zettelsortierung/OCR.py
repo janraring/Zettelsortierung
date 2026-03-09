@@ -21,14 +21,14 @@ class PaddleOCR:
         # Create OpenVINO Runtime Core
         self.core = ov.Core()
         self.core.set_property(
-            'CPU',
+            "CPU",
             {hints.execution_mode: hints.ExecutionMode.PERFORMANCE},
         )
 
         # Compile the Model
-        model_path = os.getenv('PADDLE_OCR_ONNX_MODEL_PATH')
+        model_path = os.getenv("PADDLE_OCR_ONNX_MODEL_PATH")
         config = {hints.performance_mode: hints.PerformanceMode.THROUGHPUT}
-        self.model = self.core.compile_model(model_path, 'AUTO', config)
+        self.model = self.core.compile_model(model_path, "AUTO", config)
 
         # Gab Input Layer and Output Layer
         self.input_layer = self.model.input(0)
@@ -36,7 +36,7 @@ class PaddleOCR:
 
         # Create an Inference Request
         self.infer_request = self.model.create_infer_request()
-    
+
     def __call__(self, dp_batch: DataPointBatch) -> DataPointBatch:
         self.infer_request.set_input_tensor(dp_batch.feature_batch)
         self.infer_request.infer()  # synchronous
@@ -44,24 +44,26 @@ class PaddleOCR:
         return replace(dp_batch, feature_batch=preds)
 
 
-    
 #####################################################################
 # Low-Level OCR Transformations
 #####################################################################
+
 
 class OCRstack(Transformation):
     def transform(self, dp_batch: list[DataPoint]) -> DataPointBatch:
         scan_batch = [dp.scan for dp in dp_batch]
         feature_id_batch = [dp.feature_id for dp in dp_batch]
         feature_batch = []
-        
+
         w_max = max(dp.feature.shape[1] for dp in dp_batch)
         for dp in dp_batch:
             h, w, c = dp.feature.shape
-            padded_patch = np.pad(dp.feature,
-                                  ((0, 0), (0, w_max-w), (0, 0)),
-                                  mode='constant',
-                                  constant_values=0)
+            padded_patch = np.pad(
+                dp.feature,
+                ((0, 0), (0, w_max - w), (0, 0)),
+                mode="constant",
+                constant_values=0,
+            )
             feature_batch.append(padded_patch)
 
         stack = np.stack(feature_batch)
@@ -100,21 +102,20 @@ class CTCdecode(Transformation):
 
     def __init__(self):
         self.characters = self.load_character_dict()
-    
+
     def transform(self, dp_batch: DataPointBatch) -> DataPointBatch:
-        labels = [self.ctc_decode(feature)
-                  for feature in dp_batch.feature_batch]
+        labels = [self.ctc_decode(feature) for feature in dp_batch.feature_batch]
         return replace(dp_batch, feature_batch=labels)
 
     @classmethod
     def load_character_dict(cls) -> list[str]:
-        char_dict_path = os.getenv('PADDLE_OCR_CHAR_DICT_PATH')
+        char_dict_path = os.getenv("PADDLE_OCR_CHAR_DICT_PATH")
         with open(char_dict_path, "r", encoding="utf-8") as f:
             chars = [line.strip("\n") for line in f]
-        chars.insert(cls.BLANK, "")    # CTC blank at index 0
-        chars.insert(len(chars), ' ')  # Space at last index
+        chars.insert(cls.BLANK, "")  # CTC blank at index 0
+        chars.insert(len(chars), " ")  # Space at last index
         return chars
-    
+
     def ctc_decode(self, preds: np.ndarray):
         """
         preds: numpy array [T, C], where
@@ -137,14 +138,11 @@ class CTCdecode(Transformation):
 # High-Level OCR Transformations
 #####################################################################
 
+
 class OCRpreprocessing(Transformation):
     def __init__(self):
-        self.composition = \
-        Composition(
-            OCRstack(),
-            OCRnormalize(),
-            OCRtranspose()
-        )
+        self.composition = Composition(OCRstack(), OCRnormalize(), OCRtranspose())
+
     def transform(self, dp_batch: list[DataPoint]) -> DataPointBatch:
         return self.composition(dp_batch)
 
@@ -152,21 +150,15 @@ class OCRpreprocessing(Transformation):
 class OCR(Transformation):
     def __init__(self):
         self.model = PaddleOCR()
-        self.composition = \
-        Composition(
-            OCRtensorize(),
-            OCRinference(self.model)
-        )
+        self.composition = Composition(OCRtensorize(), OCRinference(self.model))
+
     def transform(self, dp_batch: list[DataPoint]) -> DataPointBatch:
         return self.composition(dp_batch)
 
 
 class OCRpostprocessing(Transformation):
     def __init__(self):
-        self.composition = \
-        Composition(
-            CTCdecode(),
-            ResolveDPBatch()
-        )
+        self.composition = Composition(CTCdecode(), ResolveDPBatch())
+
     def transform(self, dp_batch: list[DataPoint]) -> DataPointBatch:
         return self.composition(dp_batch)

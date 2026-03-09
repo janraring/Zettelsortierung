@@ -20,7 +20,7 @@ class OpenCVRegionDetector(RegionDetector):
     @staticmethod
     def normalize(image: np.ndarray) -> np.ndarray:
         return cv2.GaussianBlur(image, (25, 15), 0)
-        
+
     @staticmethod
     def binarize(image: np.ndarray) -> np.ndarray:
         return cv2.adaptiveThreshold(
@@ -29,34 +29,26 @@ class OpenCVRegionDetector(RegionDetector):
             adaptiveMethod=cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
             thresholdType=cv2.THRESH_BINARY_INV,
             blockSize=45,
-            C=10
+            C=10,
         )
 
     @staticmethod
     def morph_rect_kernel():
         # This kernel joins handwriting strokes horizontally
-        return cv2.getStructuringElement(
-            cv2.MORPH_RECT,
-            (100, 20) # width >> height
-        )
+        return cv2.getStructuringElement(cv2.MORPH_RECT, (100, 20))  # width >> height
 
     @staticmethod
     def extract_morphology(image: np.ndarray, kernel):
-        return cv2.morphologyEx(
-            image,
-            cv2.MORPH_CLOSE,
-            kernel
-        )
+        return cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel)
 
     @staticmethod
     def get_connected_components(grouped):
-        return cv2.connectedComponentsWithStats(
-            grouped,
-            connectivity=8
-        )
+        return cv2.connectedComponentsWithStats(grouped, connectivity=8)
 
     @staticmethod
-    def filter_geometrically(num_labels, stats, h_img: int, w_img: int) -> list[BoundingBox]:
+    def filter_geometrically(
+        num_labels, stats, h_img: int, w_img: int
+    ) -> list[BoundingBox]:
         regions = []
 
         for i in range(1, num_labels):  # skip background
@@ -65,19 +57,19 @@ class OpenCVRegionDetector(RegionDetector):
             fill_ratio = area / float(w * h)
 
             # Typical handwritten 5-letter code heuristics
-            if area < 1000:          # too small
+            if area < 1000:  # too small
                 continue
-            #if area > 20000:        # too big
+            # if area > 20000:        # too big
             #    continue
-            if aspect_ratio < 1.0:   # too narrow
+            if aspect_ratio < 1.0:  # too narrow
                 continue
             if aspect_ratio > 15.0:  # too wide
                 continue
-            if fill_ratio < 0.25:    # too sparse
+            if fill_ratio < 0.25:  # too sparse
                 continue
 
             # Optional: restrict search area
-            if x < w_img * 0.4 and y < h_img * 0.4:     # ignore upper left corner
+            if x < w_img * 0.4 and y < h_img * 0.4:  # ignore upper left corner
                 continue
 
             regions.append(BoundingBox(x, y, w, h))
@@ -125,4 +117,6 @@ class OpenCVRegionDetector(RegionDetector):
 def resize_region(im_region: np.ndarray, h_new: int) -> np.ndarray:
     h, w, d = im_region.shape
     w_new = int(w * 48 / h)
-    return cv2.resize(im_region, (w_new, h_new))  # TODO: try different methodes for interpolation
+    return cv2.resize(
+        im_region, (w_new, h_new)
+    )  # TODO: try different methodes for interpolation

@@ -6,20 +6,22 @@ from functools import partial
 from nicegui import ui, app, run
 import asyncio
 
-from zettelsortierung.DataTypes import Zettel#, Classifiers, TopCategory
+from zettelsortierung.DataTypes import Zettel
 
 
 class ManualClassification:
     def __init__(
-            self,
-            queries: dict[str, Callable[[], list[Zettel]]],
-            classes: type[Enum],
-            on_classify: Optional[Callable[[Zettel, dict[Enum, float]], None]] = None,
-            get_stats: Optional[Callable[[], dict[str, int]]] = None,
-            search_ocr_results: Optional[Callable[[str, Optional[bool]], list[Zettel]]] = None,
-            get_status: Optional[Callable[[Zettel], bool]] = None
-        ):
-        
+        self,
+        queries: dict[str, Callable[[], list[Zettel]]],
+        classes: type[Enum],
+        on_classify: Optional[Callable[[Zettel, dict[Enum, float]], None]] = None,
+        get_stats: Optional[Callable[[], dict[str, int]]] = None,
+        search_ocr_results: Optional[
+            Callable[[str, Optional[bool]], list[Zettel]]
+        ] = None,
+        get_status: Optional[Callable[[Zettel], bool]] = None,
+    ):
+
         self.queries = queries
         self.classes = classes
         self.on_classify = on_classify
@@ -27,36 +29,43 @@ class ManualClassification:
         self.search_ocr_results = search_ocr_results
         self.get_status = get_status
 
-        self.pattern = ''
+        self.pattern = ""
 
         self.zettels: list[Zettel] = []
         self.index: int = 0
 
         # -- Stats display --
-        with ui.row().classes('items-center'):
-            self.stats_label = ui.label('')
+        with ui.row().classes("items-center"):
+            self.stats_label = ui.label("")
 
         # -- Top row --
-        with ui.row().classes('items-center w-full'):
-            self.prev_button = ui.button('Prev', on_click=lambda: self.decrement_index())
-            self.next_button = ui.button('Next', on_click=lambda: self.increment_index())
-            self.stop_button = ui.button('Finish', on_click=lambda: app.shutdown())
-            self.shuffle_button = ui.button('Shuffle', on_click=self.shuffle_zettels)
-                    
+        with ui.row().classes("items-center w-full"):
+            self.prev_button = ui.button(
+                "Prev", on_click=lambda: self.decrement_index()
+            )
+            self.next_button = ui.button(
+                "Next", on_click=lambda: self.increment_index()
+            )
+            self.stop_button = ui.button("Finish", on_click=lambda: app.shutdown())
+            self.shuffle_button = ui.button("Shuffle", on_click=self.shuffle_zettels)
+
             # -- Dropdown button for selecting a view--
-            with ui.dropdown_button('Sammlung', auto_close=True):
+            with ui.dropdown_button("Sammlung", auto_close=True):
                 for name, query in queries.items():
-                    ui.item(name, on_click=lambda e, n=name, q=query: self.load_query(n, q))
-            
+                    ui.item(
+                        name, on_click=lambda e, n=name, q=query: self.load_query(n, q)
+                    )
+
             # -- Search bar --
-            self.input = ui.input(label='Schlagwort') \
-                .on('keydown.enter', self.on_enter)
-            self.fuzzy_cb = ui.checkbox('Fuzzy', value=True)
-            
-            self.progress_bar = ui.linear_progress(value=0, show_value=False).classes('w-md h-9')
-            self.progress_label = ui.label(f'').classes('text-base font-bold')
+            self.input = ui.input(label="Schlagwort").on("keydown.enter", self.on_enter)
+            self.fuzzy_cb = ui.checkbox("Fuzzy", value=True)
+
+            self.progress_bar = ui.linear_progress(value=0, show_value=False).classes(
+                "w-md h-9"
+            )
+            self.progress_label = ui.label(f"").classes("text-base font-bold")
             ui.space()
-            self.zettel_label = ui.label(f'').classes('text-base font-bold')
+            self.zettel_label = ui.label(f"").classes("text-base font-bold")
 
         # -- Images --
         with ui.row():
@@ -66,19 +75,27 @@ class ManualClassification:
         # --Class buttons --
         with ui.row():
             self.class_buttons = [
-                ui.button(category.name, on_click=lambda e, c=category: self.classify_image(c))
+                ui.button(
+                    category.name, on_click=lambda e, c=category: self.classify_image(c)
+                )
                 for category in classes
             ]
-        
+
         self.prev_button.disable()
         self.next_button.disable()
 
         if self.get_stats:
             asyncio.create_task(self.update_stats())
-        
+
         # -- Initial Zettel --
-        self.set_zettels([Zettel('/home/jan/Dokumente/IT-Beratung Raring/Zettelsortierung/data/raw/zettelsammlung/T11_Tref-I-Triasel/2/14_Trekkeharmonika/00726531_1#T11_2_14_Trekkeharmonika.jpg')])
-    
+        self.set_zettels(
+            [
+                Zettel(
+                    "/home/jan/Dokumente/IT-Beratung Raring/Zettelsortierung/data/raw/zettelsammlung/T11_Tref-I-Triasel/2/14_Trekkeharmonika/00726531_1#T11_2_14_Trekkeharmonika.jpg"
+                )
+            ]
+        )
+
     def set_zettels(self, zettels):
         self.zettels = zettels
         self.index = 0
@@ -91,8 +108,8 @@ class ManualClassification:
         self.update_images()
         self.update_progress()
 
-        ui.notify(f'Loaded {len(zettels)} Zettel')
-    
+        ui.notify(f"Loaded {len(zettels)} Zettel")
+
     def shuffle_zettels(self) -> None:
         shuffle(self.zettels)
         self.set_zettels(self.zettels)
@@ -104,9 +121,9 @@ class ManualClassification:
         callback = partial(self.search_ocr_results, input, self.fuzzy_cb.value)
         zettels = await run.io_bound(callback)
         self.set_zettels(zettels)
-    
+
     async def load_query(self, name: str, query: Callable[[], list[Zettel]]):
-        zettels = await run.io_bound(query)  # called fresh each time
+        zettels = await run.io_bound(query)
         if not zettels:
             ui.notify(f'"{name}" returned no results')
             return
@@ -116,27 +133,27 @@ class ManualClassification:
         if not self.get_stats:
             return
         stats = self.get_stats()
-        text = '   |   '.join(f'{name}: {count}' for name, count in stats.items())
+        text = "   |   ".join(f"{name}: {count}" for name, count in stats.items())
         self.stats_label.set_text(text)
-    
+
     def update_images(self):
         self.recto_image.set_source(self.zettels[self.index].recto.full_path)
         self.verso_image.set_source(self.zettels[self.index].verso.full_path)
         self.zettel_label.text = self.zettels[self.index].id
 
         if self.get_status is None:
-            self.zettel_label.classes('bg-transparent', remove='bg-green-700')
+            self.zettel_label.classes("bg-transparent", remove="bg-green-700")
             return
         if self.get_status(self.zettels[self.index]):
-            self.zettel_label.classes('bg-green-700', remove='bg-transparent')
+            self.zettel_label.classes("bg-green-700", remove="bg-transparent")
             return
-        self.zettel_label.classes('bg-transparent', remove='bg-green-700')
-    
+        self.zettel_label.classes("bg-transparent", remove="bg-green-700")
+
     def update_progress(self):
         length = len(self.zettels)
-        self.progress_bar.value = self.index/length
-        self.progress_label.text = f'{self.index}/{length}'
-    
+        self.progress_bar.value = self.index / length
+        self.progress_label.text = f"{self.index}/{length}"
+
     async def increment_index(self):
         self.index = min(self.index + 1, len(self.zettels))
         self.update_progress()
@@ -144,18 +161,20 @@ class ManualClassification:
 
         self.prev_button.enable()
         if self.index == len(self.zettels):
-            ui.notify('Reached End of Collection')
+            ui.notify("Reached End of Collection")
             self.next_button.disable()
-            for b in self.class_buttons: b.disable()
+            for b in self.class_buttons:
+                b.disable()
         else:
             self.update_images()
-    
+
     def decrement_index(self):
         self.index = max(self.index - 1, 0)
         self.update_progress()
 
         self.next_button.enable()
-        for b in self.class_buttons: b.enable()
+        for b in self.class_buttons:
+            b.enable()
         if self.index == 0:
             self.prev_button.disable()
         self.update_images()
@@ -168,15 +187,18 @@ class ManualClassification:
         await self.increment_index()
 
 
-def run_classification(queries: dict[str, Callable[[], list[Zettel]]],
-                       classes: type[Enum],
-                       on_classify: Optional[Callable[[Zettel, dict[Enum, float]], None]] = None,
-                       get_stats: Optional[Callable[[], dict[str, int]]] = None,
-                       search_ocr_results: Optional[Callable[[str, Optional[bool]], list[Zettel]]] = None,
-                       get_status: Optional[Callable[[Zettel], bool]] = None
-        ) -> None:
-    @ui.page('/')
+def run_classification(
+    queries: dict[str, Callable[[], list[Zettel]]],
+    classes: type[Enum],
+    on_classify: Optional[Callable[[Zettel, dict[Enum, float]], None]] = None,
+    get_stats: Optional[Callable[[], dict[str, int]]] = None,
+    search_ocr_results: Optional[Callable[[str, Optional[bool]], list[Zettel]]] = None,
+    get_status: Optional[Callable[[Zettel], bool]] = None,
+) -> None:
+    @ui.page("/")
     async def _():
-        ManualClassification(queries, classes, on_classify, get_stats, search_ocr_results, get_status)
+        ManualClassification(
+            queries, classes, on_classify, get_stats, search_ocr_results, get_status
+        )
 
     ui.run(dark=None, reload=False)

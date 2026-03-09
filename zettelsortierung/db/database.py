@@ -9,18 +9,26 @@ from sqlalchemy.orm import sessionmaker
 
 from zettelsortierung.DataTypes import Scan, Zettel, DataPoint, Probe
 from zettelsortierung.db.models import (
-    Base, ScanModel, ZettelModel, LandschaftModel, KreisModel,
-    OrtModel, BoundingBoxModel, OCRResultModel, ClassificationModel,
+    Base,
+    ScanModel,
+    ZettelModel,
+    LandschaftModel,
+    KreisModel,
+    OrtModel,
+    BoundingBoxModel,
+    OCRResultModel,
+    ClassificationModel,
 )
 
 from dotenv import load_dotenv
+
 load_dotenv()
 
 
 class DataBase:
     def __init__(self, connection_string: str | None = None, echo: bool = False):
         if connection_string is None:
-            connection_string = os.getenv('DATABASE_CONNECTION_STRING')
+            connection_string = os.getenv("DATABASE_CONNECTION_STRING")
         if connection_string is None:
             raise ValueError("No connection string provided")
 
@@ -45,10 +53,12 @@ class DataBase:
 
     def add_scans(self, scans: list[Scan]) -> None:
         self._bulk_add(
-            ScanModel(id=scan.id,
-                      file_name=scan.file_name,
-                      relative_path=scan.relative_path,
-                      full_path=scan.full_path)
+            ScanModel(
+                id=scan.id,
+                file_name=scan.file_name,
+                relative_path=scan.relative_path,
+                full_path=scan.full_path,
+            )
             for scan in scans
         )
 
@@ -60,9 +70,9 @@ class DataBase:
 
     def add_zettel(self, zettels: list[Zettel]) -> None:
         self._bulk_add(
-            ZettelModel(id=zettel.id,
-                        recto_id=zettel.recto.id,
-                        verso_id=zettel.verso.id)
+            ZettelModel(
+                id=zettel.id, recto_id=zettel.recto.id, verso_id=zettel.verso.id
+            )
             for zettel in zettels
         )
 
@@ -87,7 +97,9 @@ class DataBase:
 
     def add_landschaften(self, landschaften: list[tuple[str, str, str]]) -> None:
         for abbr, name, desc in landschaften:
-            self.session.add(LandschaftModel(abbreviation=abbr, name=name, description=desc))
+            self.session.add(
+                LandschaftModel(abbreviation=abbr, name=name, description=desc)
+            )
         self.session.commit()
 
     def add_kreise(self, kreise: list[tuple[str, str]]) -> None:
@@ -104,45 +116,48 @@ class DataBase:
 
     def add_bounding_boxes(self, probe: Probe) -> None:
         self._bulk_add(
-            BoundingBoxModel(scan_id=dp.scan.id, feature_id=dp.feature_id,
-                             x=int(dp.feature[0]), y=int(dp.feature[1]),
-                             w=int(dp.feature[2]), h=int(dp.feature[3]))
+            BoundingBoxModel(
+                scan_id=dp.scan.id,
+                feature_id=dp.feature_id,
+                x=int(dp.feature[0]),
+                y=int(dp.feature[1]),
+                w=int(dp.feature[2]),
+                h=int(dp.feature[3]),
+            )
             for dp in probe
         )
 
     def add_ocr_results(self, probe: Probe) -> None:
         self._bulk_add(
-            OCRResultModel(scan_id=dp.scan.id, feature_id=dp.feature_id,
-                           text=dp.feature)
+            OCRResultModel(
+                scan_id=dp.scan.id, feature_id=dp.feature_id, text=dp.feature
+            )
             for dp in probe
         )
 
     # ---- Classifications ----
 
     def save_classification(
-            self,
-            classifier: Enum,
-            zettel: Zettel,
-            probabilities: dict[Enum, float]
-        ) -> None:
+        self, classifier: Enum, zettel: Zettel, probabilities: dict[Enum, float]
+    ) -> None:
         """Save a single classification — used as GUI callback."""
         enum_class = type(next(iter(probabilities)))
         scheme = enum_class.__name__  # "TopCategory", "SubCategory", etc.
         for label in enum_class:
-            self.session.merge(ClassificationModel(
-                zettel_id=zettel.id,
-                scheme=scheme,
-                classifier=classifier.value,
-                label=label.value,
-                probability=probabilities.get(label, 0.0),
-            ))
+            self.session.merge(
+                ClassificationModel(
+                    zettel_id=zettel.id,
+                    scheme=scheme,
+                    classifier=classifier.value,
+                    label=label.value,
+                    probability=probabilities.get(label, 0.0),
+                )
+            )
         self.session.commit()
 
     def get_classified_zettels(
-            self,
-            classifier: Enum,
-            enum_class: type[Enum]
-        ) -> list[Zettel]:
+        self, classifier: Enum, enum_class: type[Enum]
+    ) -> list[Zettel]:
         stmt = (
             select(ClassificationModel.zettel_id)
             .where(ClassificationModel.scheme == enum_class.__name__)
@@ -152,11 +167,7 @@ class DataBase:
         result_ids = set(self.session.execute(stmt).scalars().all())
         return self.get_zettels_by_ids(result_ids)
 
-    def get_classified_ids(
-            self,
-            classifier: Enum,
-            enum_class: type[Enum]
-        ) -> set[str]:
+    def get_classified_ids(self, classifier: Enum, enum_class: type[Enum]) -> set[str]:
         """Return already-classified zettel IDs (for resuming)."""
         stmt = (
             select(ClassificationModel.zettel_id)
@@ -179,10 +190,10 @@ class DataBase:
         result: dict[str, dict[Enum, float]] = {}
         for row in rows:
             if row.zettel_id not in result:
-                result[row.zettel_id] = {c: 0.0 for c in enum_class} 
+                result[row.zettel_id] = {c: 0.0 for c in enum_class}
             result[row.zettel_id][enum_class(row.label)] = row.probability
         return result
-    
+
     def get_predicted_label(
         self, classifier: Enum, zettel_id: str, enum_class: type[Enum]
     ) -> Enum | None:
@@ -208,18 +219,12 @@ class DataBase:
         return self.session.execute(stmt).scalars().all()
 
     def get_full_path(self, scan_id: str) -> str:
-        stmt = (
-            select(ScanModel.full_path)
-            .where(ScanModel.id == scan_id)
-        )
+        stmt = select(ScanModel.full_path).where(ScanModel.id == scan_id)
         return self.session.execute(stmt).scalars().all()[0]
-    
+
     def get_ocr_concat(self):
-        stmt = (
-            select(
-                OCRResultModel.scan_id,
-                func.group_concat(OCRResultModel.text, " | ").label("combined_text")
-            )
-            .group_by(OCRResultModel.scan_id)
-        )
+        stmt = select(
+            OCRResultModel.scan_id,
+            func.group_concat(OCRResultModel.text, " | ").label("combined_text"),
+        ).group_by(OCRResultModel.scan_id)
         return self.session.execute(stmt).all()

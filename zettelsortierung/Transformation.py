@@ -8,19 +8,27 @@ import cv2
 import numpy as np
 
 from zettelsortierung.RegionDetection import RegionDetector
-from zettelsortierung.DataTypes import Collection, DataPoint, DataPointBatch, Probe, BoundingBox, Scan
+from zettelsortierung.DataTypes import (
+    Collection,
+    DataPoint,
+    DataPointBatch,
+    Probe,
+    BoundingBox,
+    Scan,
+)
 
 mp.set_start_method("spawn", force=True)
-#cv2.setNumThreads(0)
+# cv2.setNumThreads(0)
 
 #####################################################################
 # Composition
 #####################################################################
 
+
 class Composition:
     def __init__(self, *transformations):
         self.sequence = transformations
-    
+
     def __call__(self, collection: Collection) -> Iterable[Scan | DataPoint]:
         for app in self.sequence:
             collection = app(collection)
@@ -30,6 +38,7 @@ class Composition:
 #####################################################################
 # Application
 #####################################################################
+
 
 class Application(ABC):
     @abstractmethod
@@ -43,7 +52,7 @@ class Application(ABC):
 class SequentialApp(Application):
     def __init__(self, *transformations):
         self.sequence = Composition(*transformations)
-    
+
     def apply(self, collection: Collection) -> Probe:
         return [self.sequence(item) for item in collection]
 
@@ -52,7 +61,7 @@ class ParallelApp(Application):
     def __init__(self, *transformations):
         self.processes = cpu_count()
         self.sequence = Composition(*transformations)
-    
+
     def apply(self, collection: Collection) -> Probe:
         with Pool(self.processes) as pool:
             return Probe(pool.imap_unordered(self.sequence, collection))
@@ -76,7 +85,7 @@ class Store(Application):
 class ToDataBase(Application):
     def __init__(self, db_adder):
         self.db_adder = db_adder
-    
+
     def apply(self, probe: Probe) -> Probe:
         self.db_adder(probe)
         return probe
@@ -114,6 +123,7 @@ class Batch(Application):
 # Transformation
 #####################################################################
 
+
 class Transformation(ABC):
     @abstractmethod
     def transform(self, dp: Scan | DataPoint) -> DataPoint:
@@ -136,23 +146,24 @@ class PatchDetect(Transformation):
     def transform(self, scan: Scan) -> list[DataPoint]:
         full_im = cv2.imread(scan.full_path)
         boundingboxes = self.detector.detect_regions(full_im)
-        data_points = [DataPoint(scan, feature_id, bbox)
-                       for feature_id, bbox
-                       in enumerate(boundingboxes)]
+        data_points = [
+            DataPoint(scan, feature_id, bbox)
+            for feature_id, bbox in enumerate(boundingboxes)
+        ]
         return data_points
 
 
 class BoundingBoxPad(Transformation):
     def __init__(self, padding: int):
         self.padding = padding
-        
+
     def transform(self, dp: DataPoint) -> DataPoint:
         y_max, x_max, d_max = dp.scan.shape
         x_old, y_old, w_old, h_old = dp.feature
-        x = max(0, x_old-self.padding)
-        y = max(0, y_old-self.padding)
-        w = min(w_old+2*self.padding, x_max-x)
-        h = min(h_old+2*self.padding, y_max-y)
+        x = max(0, x_old - self.padding)
+        y = max(0, y_old - self.padding)
+        w = min(w_old + 2 * self.padding, x_max - x)
+        h = min(h_old + 2 * self.padding, y_max - y)
         return replace(dp, feature=BoundingBox(x, y, w, h))
 
 
@@ -160,7 +171,7 @@ class CutOutPatch(Transformation):
     def transform(self, dp: DataPoint) -> DataPoint:
         image = cv2.imread(dp.scan.full_path)
         x, y, w, h = dp.feature
-        patch = image[y:y+h, x:x+w]
+        patch = image[y : y + h, x : x + w]
         return replace(dp, feature=patch)
 
 
@@ -187,16 +198,23 @@ class Stack(Transformation):
         w_max = max(dp.feature.shape[1] for dp in dp_batch)
         for dp in dp_batch:
             h, w, c = dp.feature.shape
-            padded_patch = np.pad(dp.feature, ((0, 0), (0, w_max-w), (0, 0)), mode='constant', constant_values=0)
+            padded_patch = np.pad(
+                dp.feature,
+                ((0, 0), (0, w_max - w), (0, 0)),
+                mode="constant",
+                constant_values=0,
+            )
             feature_batch.append(padded_patch)
-        return DataPointBatch(scan_batch,
-                              feature_id_batch,
-                              np.stack(feature_batch))
+        return DataPointBatch(scan_batch, feature_id_batch, np.stack(feature_batch))
 
 
 class ResolveDPBatch(Transformation):
     def transform(self, dp_batch: DataPointBatch) -> list[DataPoint]:
-        return [DataPoint(scan=dp_batch.scan_batch[i],
-                               feature_id=dp_batch.feature_id_batch[i],
-                               feature=dp_batch.feature_batch[i])
-                for i in range(len(dp_batch.scan_batch))]
+        return [
+            DataPoint(
+                scan=dp_batch.scan_batch[i],
+                feature_id=dp_batch.feature_id_batch[i],
+                feature=dp_batch.feature_batch[i],
+            )
+            for i in range(len(dp_batch.scan_batch))
+        ]

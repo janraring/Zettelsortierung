@@ -31,7 +31,7 @@ class DataBase:
 
     # ---- generic bulk helper ----
 
-    def _bulk_add(self, items, batch_size: int = 10000):
+    def _bulk_add(self, items, batch_size: int = 10000) -> None:
         i = 0
         for i, item in enumerate(items, 1):
             self.session.add(item)
@@ -43,7 +43,7 @@ class DataBase:
 
     # ---- Scans ----
 
-    def add_scans(self, scans: list[Scan]):
+    def add_scans(self, scans: list[Scan]) -> None:
         self._bulk_add(
             ScanModel(id=scan.id,
                       file_name=scan.file_name,
@@ -58,7 +58,7 @@ class DataBase:
 
     # ---- Zettel ----
 
-    def add_zettel(self, zettels: list[Zettel]):
+    def add_zettel(self, zettels: list[Zettel]) -> None:
         self._bulk_add(
             ZettelModel(id=zettel.id,
                         recto_id=zettel.recto.id,
@@ -74,7 +74,7 @@ class DataBase:
         )
         return [Zettel(full_path) for _, full_path in rows]
 
-    def get_zettel_by_ids(self, ids: set[str]) -> list[Zettel]:
+    def get_zettels_by_ids(self, ids: set[str]) -> list[Zettel]:
         rows = (
             self.session.query(ZettelModel, ScanModel.full_path)
             .join(ScanModel, ZettelModel.recto_id == ScanModel.id)
@@ -85,24 +85,24 @@ class DataBase:
 
     # ---- Geography ----
 
-    def add_landschaften(self, landschaften: list[tuple[str, str, str]]):
+    def add_landschaften(self, landschaften: list[tuple[str, str, str]]) -> None:
         for abbr, name, desc in landschaften:
             self.session.add(LandschaftModel(abbreviation=abbr, name=name, description=desc))
         self.session.commit()
 
-    def add_kreise(self, kreise: list[tuple[str, str]]):
+    def add_kreise(self, kreise: list[tuple[str, str]]) -> None:
         for abbr, name in kreise:
             self.session.add(KreisModel(abbreviation=abbr, name=name))
         self.session.commit()
 
-    def add_orte(self, orte: list[tuple[str, str, str]]):
+    def add_orte(self, orte: list[tuple[str, str, str]]) -> None:
         for kreis, abbr, name in orte:
             self.session.add(OrtModel(kreis=kreis, abbreviation=abbr, name=name))
         self.session.commit()
 
     # ---- Bounding Boxes & OCR ----
 
-    def add_bounding_boxes(self, probe: Probe):
+    def add_bounding_boxes(self, probe: Probe) -> None:
         self._bulk_add(
             BoundingBoxModel(scan_id=dp.scan.id, feature_id=dp.feature_id,
                              x=int(dp.feature[0]), y=int(dp.feature[1]),
@@ -110,7 +110,7 @@ class DataBase:
             for dp in probe
         )
 
-    def add_ocr_results(self, probe: Probe):
+    def add_ocr_results(self, probe: Probe) -> None:
         self._bulk_add(
             OCRResultModel(scan_id=dp.scan.id, feature_id=dp.feature_id,
                            text=dp.feature)
@@ -119,7 +119,12 @@ class DataBase:
 
     # ---- Classifications ----
 
-    def save_classification(self, classifier: Enum, zettel: Zettel, probabilities: dict[Enum, float]):
+    def save_classification(
+            self,
+            classifier: Enum,
+            zettel: Zettel,
+            probabilities: dict[Enum, float]
+        ) -> None:
         """Save a single classification — used as GUI callback."""
         enum_class = type(next(iter(probabilities)))
         scheme = enum_class.__name__  # "TopCategory", "SubCategory", etc.
@@ -133,7 +138,25 @@ class DataBase:
             ))
         self.session.commit()
 
-    def get_classified_ids(self, classifier: Enum, enum_class: type[Enum]) -> set[str]:
+    def get_classified_zettels(
+            self,
+            classifier: Enum,
+            enum_class: type[Enum]
+        ) -> list[Zettel]:
+        stmt = (
+            select(ClassificationModel.zettel_id)
+            .where(ClassificationModel.scheme == enum_class.__name__)
+            .where(ClassificationModel.classifier == classifier.value)
+            .distinct()
+        )
+        result_ids = set(self.session.execute(stmt).scalars().all())
+        return self.get_zettels_by_ids(result_ids)
+
+    def get_classified_ids(
+            self,
+            classifier: Enum,
+            enum_class: type[Enum]
+        ) -> set[str]:
         """Return already-classified zettel IDs (for resuming)."""
         stmt = (
             select(ClassificationModel.zettel_id)

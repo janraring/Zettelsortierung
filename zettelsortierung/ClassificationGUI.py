@@ -1,5 +1,7 @@
 from enum import Enum
 from typing import Callable, Optional
+from random import shuffle
+from functools import partial
 
 from nicegui import ui, app, run
 import asyncio
@@ -13,12 +15,19 @@ class ManualClassification:
             queries: dict[str, Callable[[], list[Zettel]]],
             classes: type[Enum],
             on_classify: Optional[Callable[[Zettel, dict[Enum, float]], None]] = None,
-            get_stats: Optional[Callable[[], dict[str, int]]] = None):
+            get_stats: Optional[Callable[[], dict[str, int]]] = None,
+            search_ocr_results: Optional[Callable[[str, Optional[bool]], list[Zettel]]] = None,
+            get_status: Optional[Callable[[Zettel], bool]] = None
+        ):
         
         self.queries = queries
         self.classes = classes
         self.on_classify = on_classify
         self.get_stats = get_stats
+        self.search_ocr_results = search_ocr_results
+        self.get_status = get_status
+
+        self.pattern = ''
 
         self.zettels: list[Zettel] = []
         self.index: int = 0
@@ -31,13 +40,19 @@ class ManualClassification:
         with ui.row().classes('items-center w-full'):
             self.prev_button = ui.button('Prev', on_click=lambda: self.decrement_index())
             self.next_button = ui.button('Next', on_click=lambda: self.increment_index())
-            self.stop_button = ui.button('Finish', on_click=lambda: app.shutdown())#self.abort())
-            
+            self.stop_button = ui.button('Finish', on_click=lambda: app.shutdown())
+            self.shuffle_button = ui.button('Shuffle', on_click=self.shuffle_zettels)
+                    
             # -- Dropdown button for selecting a view--
             with ui.dropdown_button('Sammlung', auto_close=True):
                 for name, query in queries.items():
                     ui.item(name, on_click=lambda e, n=name, q=query: self.load_query(n, q))
-                    
+            
+            # -- Search bar --
+            self.input = ui.input(label='Schlagwort') \
+                .on('keydown.enter', self.on_enter)
+            self.fuzzy_cb = ui.checkbox('Fuzzy', value=True)
+            
             self.progress_bar = ui.linear_progress(value=0, show_value=False).classes('w-md h-9')
             self.progress_label = ui.label(f'').classes('text-base font-bold')
             ui.space()
@@ -60,23 +75,11 @@ class ManualClassification:
 
         if self.get_stats:
             asyncio.create_task(self.update_stats())
+        
+        # -- Initial Zettel --
+        self.set_zettels([Zettel('/home/jan/Dokumente/IT-Beratung Raring/Zettelsortierung/data/raw/zettelsammlung/T11_Tref-I-Triasel/2/14_Trekkeharmonika/00726531_1#T11_2_14_Trekkeharmonika.jpg')])
     
-    async def update_stats(self):
-        if not self.get_stats:
-            return
-        stats = self.get_stats()
-        text = '   |   '.join(f'{name}: {count}' for name, count in stats.items())
-        self.stats_label.set_text(text)
-    
-    async def load_query(self, name: str, query: Callable[[], list[Zettel]]):
-        ui.notify(f'Loading "{name}"...')
-
-        zettels = await run.io_bound(query)  # called fresh each time
-
-        if not zettels:
-            ui.notify(f'"{name}" returned no results')
-            return
-
+    def set_zettels(self, zettels):
         self.zettels = zettels
         self.index = 0
 
@@ -88,12 +91,46 @@ class ManualClassification:
         self.update_images()
         self.update_progress()
 
-        ui.notify(f'Loaded "{name}" — {len(zettels)} Zettel')
+        ui.notify(f'Loaded {len(zettels)} Zettel')
+    
+    def shuffle_zettels(self) -> None:
+        shuffle(self.zettels)
+        self.set_zettels(self.zettels)
+
+    async def on_enter(self, e):
+        if self.search_ocr_results is None:
+            return
+        input = e.sender.value
+        callback = partial(self.search_ocr_results, input, self.fuzzy_cb.value)
+        zettels = await run.io_bound(callback)
+        self.set_zettels(zettels)
+    
+    async def load_query(self, name: str, query: Callable[[], list[Zettel]]):
+        zettels = await run.io_bound(query)  # called fresh each time
+        if not zettels:
+            ui.notify(f'"{name}" returned no results')
+            return
+        self.set_zettels(zettels)
+
+    async def update_stats(self):
+        if not self.get_stats:
+            return
+        stats = self.get_stats()
+        text = '   |   '.join(f'{name}: {count}' for name, count in stats.items())
+        self.stats_label.set_text(text)
     
     def update_images(self):
         self.recto_image.set_source(self.zettels[self.index].recto.full_path)
         self.verso_image.set_source(self.zettels[self.index].verso.full_path)
         self.zettel_label.text = self.zettels[self.index].id
+
+        if self.get_status is None:
+            self.zettel_label.classes('bg-transparent', remove='bg-green-700')
+            return
+        if self.get_status(self.zettels[self.index]):
+            self.zettel_label.classes('bg-green-700', remove='bg-transparent')
+            return
+        self.zettel_label.classes('bg-transparent', remove='bg-green-700')
     
     def update_progress(self):
         length = len(self.zettels)
@@ -134,10 +171,12 @@ class ManualClassification:
 def run_classification(queries: dict[str, Callable[[], list[Zettel]]],
                        classes: type[Enum],
                        on_classify: Optional[Callable[[Zettel, dict[Enum, float]], None]] = None,
-                       get_stats: Optional[Callable[[], dict[str, int]]] = None
+                       get_stats: Optional[Callable[[], dict[str, int]]] = None,
+                       search_ocr_results: Optional[Callable[[str, Optional[bool]], list[Zettel]]] = None,
+                       get_status: Optional[Callable[[Zettel], bool]] = None
         ) -> None:
     @ui.page('/')
     async def _():
-        ManualClassification(queries, classes, on_classify, get_stats)
+        ManualClassification(queries, classes, on_classify, get_stats, search_ocr_results, get_status)
 
     ui.run(dark=None, reload=False)

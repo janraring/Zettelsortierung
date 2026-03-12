@@ -7,14 +7,15 @@ from nicegui import ui, app, run
 import asyncio
 
 from zettelsortierung.DataTypes import Zettel
+from zettelsortierung.Sammlungen import Label
 
 
 class ManualClassification:
     def __init__(
         self,
-        queries: dict[str, Callable[[], list[Zettel]]],
         classes: type[Enum],
-        on_classify: Optional[Callable[[Zettel, dict[Enum, float]], None]] = None,
+        on_classify: Optional[Callable[[Zettel, Label], None]] = None,
+        queries: Optional[dict[str, Callable[[], list[Zettel]]]] = None,
         get_stats: Optional[Callable[[], dict[str, int]]] = None,
         search_ocr_results: Optional[
             Callable[[str, Optional[bool]], list[Zettel]]
@@ -50,11 +51,13 @@ class ManualClassification:
             self.shuffle_button = ui.button("Shuffle", on_click=self.shuffle_zettels)
 
             # -- Dropdown button for selecting a view--
-            with ui.dropdown_button("Sammlung", auto_close=True):
-                for name, query in queries.items():
-                    ui.item(
-                        name, on_click=lambda e, n=name, q=query: self.load_query(n, q)
-                    )
+            if not queries is None:
+                with ui.dropdown_button("Sammlungen", auto_close=True):
+                    for name, query in queries.items():
+                        ui.item(
+                            name,
+                            on_click=lambda e, n=name, q=query: self.load_query(n, q),
+                        )
 
             # -- Search bar --
             self.input = ui.input(label="Schlagwort").on("keydown.enter", self.on_enter)
@@ -181,16 +184,16 @@ class ManualClassification:
 
     async def classify_image(self, selected: Enum):
         zettel = self.zettels[self.index]
-        probabilities = {selected: 1.0}
+        label = Label(selected, 1.0)
         if self.on_classify:
-            self.on_classify(zettel, probabilities)
+            self.on_classify(zettel, label)
         await self.increment_index()
 
 
 def run_classification(
-    queries: dict[str, Callable[[], list[Zettel]]],
     classes: type[Enum],
-    on_classify: Optional[Callable[[Zettel, dict[Enum, float]], None]] = None,
+    on_classify: Optional[Callable[[Zettel, Label], None]] = None,
+    queries: Optional[dict[str, Callable[[], list[Zettel]]]] = None,
     get_stats: Optional[Callable[[], dict[str, int]]] = None,
     search_ocr_results: Optional[Callable[[str, Optional[bool]], list[Zettel]]] = None,
     get_status: Optional[Callable[[Zettel], bool]] = None,
@@ -198,7 +201,7 @@ def run_classification(
     @ui.page("/")
     async def _():
         ManualClassification(
-            queries, classes, on_classify, get_stats, search_ocr_results, get_status
+            classes, on_classify, queries, get_stats, search_ocr_results, get_status
         )
 
     ui.run(dark=None, reload=False)

@@ -59,7 +59,6 @@ class OCRResultModel(Base):
 class ClassificationModel(Base):
     __tablename__ = "classifications"
     zettel_id = Column(String, ForeignKey("zettel.id"), primary_key=True)
-    scheme = Column(String, primary_key=True)
     classifier = Column(String, primary_key=True)
-    label = Column(String, primary_key=True)
-    probability = Column(Float, default=0.0)
+    label = Column(String)
+    confidence = Column(Float, default=0.0)

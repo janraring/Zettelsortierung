@@ -8,6 +8,7 @@ from sqlalchemy import create_engine, select, exists, func
 from sqlalchemy.orm import sessionmaker
 
 from zettelsortierung.DataTypes import Scan, Zettel, DataPoint, Probe
+from zettelsortierung.Sammlungen import Sammlungen, Label
 from zettelsortierung.db.models import (
     Base,
     ScanModel,
@@ -138,75 +139,63 @@ class DataBase:
     # ---- Classifications ----
 
     def save_classification(
-        self, classifier: Enum, zettel: Zettel, probabilities: dict[Enum, float]
+        self, zettel: Zettel, label: Label, classifier: Enum
     ) -> None:
         """Save a single classification — used as GUI callback."""
-        enum_class = type(next(iter(probabilities)))
-        scheme = enum_class.__name__  # "TopCategory", "SubCategory", etc.
-        for label in enum_class:
-            self.session.merge(
-                ClassificationModel(
-                    zettel_id=zettel.id,
-                    scheme=scheme,
-                    classifier=classifier.value,
-                    label=label.value,
-                    probability=probabilities.get(label, 0.0),
-                )
+        self.session.merge(
+            ClassificationModel(
+                zettel_id=zettel.id,
+                classifier=classifier.name,
+                label=label.sammlung.name,
+                confidence=label.confidence,
             )
+        )
         self.session.commit()
 
-    def get_classified_zettels(
-        self, classifier: Enum, enum_class: type[Enum]
-    ) -> list[Zettel]:
+    def get_classified(self, classifier: Enum) -> list[Zettel]:
+        """Return already-classified zettel (for resuming)."""
         stmt = (
             select(ClassificationModel.zettel_id)
-            .where(ClassificationModel.scheme == enum_class.__name__)
-            .where(ClassificationModel.classifier == classifier.value)
+            .where(ClassificationModel.classifier == classifier.name)
             .distinct()
         )
         result_ids = set(self.session.execute(stmt).scalars().all())
         return self.get_zettels_by_ids(result_ids)
 
-    def get_classified_ids(self, classifier: Enum, enum_class: type[Enum]) -> set[str]:
-        """Return already-classified zettel IDs (for resuming)."""
-        stmt = (
-            select(ClassificationModel.zettel_id)
-            .where(ClassificationModel.scheme == enum_class.__name__)
-            .where(ClassificationModel.classifier == classifier.value)
-            .distinct()
-        )
-        return set(self.session.execute(stmt).scalars().all())
+    #    def get_classified_ids(self, classifier: Enum, enum_class: type[Enum]) -> set[str]:
+    #        """Return already-classified zettel IDs (for resuming)."""
+    #        stmt = (
+    #            select(ClassificationModel.zettel_id)
+    #            .where(ClassificationModel.scheme == enum_class.__name__)
+    #            .where(ClassificationModel.classifier == classifier.value)
+    #            .distinct()
+    #        )
+    #        return set(self.session.execute(stmt).scalars().all())
 
-    def get_classifications(
-        self, classifier: Enum, enum_class: type[Enum]
-    ) -> dict[str, dict[Enum, float]]:
-        """Load all classifications back as {zettel_id: {EnumMember: prob}}."""
+    def get_classifications(self, classifier: Enum) -> dict[str, Label]:
+        """Load all classifications back as {zettel_id: label}."""
         rows = (
             self.session.query(ClassificationModel)
-            .filter(ClassificationModel.scheme == enum_class.__name__)
-            .filter(ClassificationModel.classifier == classifier.value)
+            .filter(ClassificationModel.classifier == classifier.name)
             .all()
         )
-        result: dict[str, dict[Enum, float]] = {}
+        result: dict[str, Label] = {}
         for row in rows:
-            if row.zettel_id not in result:
-                result[row.zettel_id] = {c: 0.0 for c in enum_class}
-            result[row.zettel_id][enum_class(row.label)] = row.probability
+            label = Label(Sammlungen[row.label], row.confidence)
+            result[row.zettel_id] = label
         return result
 
-    def get_predicted_label(
-        self, classifier: Enum, zettel_id: str, enum_class: type[Enum]
-    ) -> Enum | None:
+    def get_predicted_label(self, zettel: Zettel, classifier: Enum) -> Label | None:
         """Return the label with the highest probability."""
         stmt = (
-            select(ClassificationModel.label)
-            .where(ClassificationModel.zettel_id == zettel_id)
-            .where(ClassificationModel.classifier == classifier.value)
-            .order_by(ClassificationModel.probability.desc())
+            select(ClassificationModel.label, ClassificationModel.confidence)
+            .where(ClassificationModel.zettel_id == zettel.id)
+            .where(ClassificationModel.classifier == classifier.name)
+            .order_by(ClassificationModel.confidence.desc())
             .limit(1)
         )
-        value = self.session.execute(stmt).scalar()
-        return enum_class(value) if value else None
+        label = self.session.execute(stmt).one()
+        return Label(Sammlungen[label[0]], label[1]) if label else None
 
     # ---- Queries ----
 

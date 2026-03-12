@@ -253,15 +253,10 @@ class Probe(list[DataPoint]):
 #####################################################################
 
 
-class Classifiers(Enum):
-    GOLD = "Grundwahrheit"
-    OCR = "OCR-Auslesung"
-
-
-class TopCategory(Enum):
-    SKIP = "skipped"
-    LAUTSCHRIFT = "Lautschrift"
-    FRAGEBOGEN = "Fragebogen"
-    WORTSCHATZ = "Wortschatz"
-    EXZERPT = "Exzerpt"
-    SONSTIGE = "Sonstige"
+# class TopCategory(Enum):
+# SKIP = "skipped"
+# LAUTSCHRIFT = "Lautschrift"
+# FRAGEBOGEN = "Fragebogen"
+# WORTSCHATZ = "Wortschatz"
+# EXZERPT = "Exzerpt"
+# SONSTIGE = "Sonstige"

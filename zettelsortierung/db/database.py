@@ -3,6 +3,7 @@
 import os
 from typing import Sequence
 from enum import Enum
+from tqdm import tqdm
 
 from sqlalchemy import create_engine, select, exists, func
 from sqlalchemy.orm import sessionmaker
@@ -83,7 +84,7 @@ class DataBase:
             .join(ScanModel, ZettelModel.recto_id == ScanModel.id)
             .all()
         )
-        return [Zettel(full_path) for _, full_path in rows]
+        return [Zettel(full_path) for _, full_path in tqdm(rows)]
 
     def get_zettels_by_ids(self, ids: set[str]) -> list[Zettel]:
         rows = (

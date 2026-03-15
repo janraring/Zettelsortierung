@@ -78,9 +78,10 @@ def get_status(zettel: Zettel) -> bool:
 
 
 def get_unclassified() -> list[Zettel]:
-    already_done = db.get_classified(Classifiers.MANUELL)
-    zettels = [z for z in db.get_zettel() if z not in already_done]
-    return zettels
+    already_done = set(db.get_classified(Classifiers.MANUELL))
+    all_zettels = set(db.get_zettel())
+    unclassified = list(all_zettels - already_done)
+    return unclassified
 
 
 def get_previously_classified(sammlung: Enum) -> list[Zettel]:

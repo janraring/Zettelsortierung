@@ -86,7 +86,7 @@ class DataBase:
         )
         return [Zettel(full_path) for _, full_path in tqdm(rows)]
 
-    def get_zettels_by_ids(self, ids: set[str]) -> list[Zettel]:
+    def get_zettels_by_ids(self, ids: list[str]) -> list[Zettel]:
         rows = (
             self.session.query(ZettelModel, ScanModel.full_path)
             .join(ScanModel, ZettelModel.recto_id == ScanModel.id)

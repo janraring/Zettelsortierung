@@ -89,7 +89,7 @@ def get_previously_classified(sammlung: Enum) -> list[Zettel]:
     zettel_ids = {
         zid for zid, label in classifications.items() if label.sammlung == sammlung
     }
-    return db.get_zettels_by_ids(zettel_ids)
+    return db.get_zettels_by_ids(list(zettel_ids))
 
 
 def main():

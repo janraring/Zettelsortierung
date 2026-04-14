@@ -8,6 +8,9 @@
 /notebooks/input/
 /notebooks/output/
 
+# models
+/models/
+
 # Mac OS-specific storage files
 .DS_Store
 

@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 
 from zettelsortierung.db import DataBase
 from zettelsortierung import Classifiers
+from zettelsortierung import Sammlungen
 
 load_dotenv()
 
@@ -19,7 +20,7 @@ def load_df(path):
 def main():
     db = DataBase()
     root = os.getenv("PROJECT_ROOT")
-    target = f"{root}/data/interim/class_112x60.parquet"
+    target = f"{root}/data/interim/{len(Sammlungen)}_classes.parquet"
 
     classifications = db.get_classifications(Classifiers.MANUELL)
 

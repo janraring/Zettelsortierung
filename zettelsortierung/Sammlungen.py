@@ -51,9 +51,21 @@ class Sammlungen(Enum):
         description="Abhandlungen aus dem Westfälischen Provinzial-Museum für Naturkunde. Jg. 7 ff.: Abhandlungen aus dem Landesmuseum der Provinz Westfalen, Museum für Naturkunde",
         alias="Abh. Prov. Mus. f. Natrukde|Iserlohn Extbr",
     )
+    AFFERDE = Sammlung(
+        description="Afferde, Kr. Unna (August Ebbinghaus)",
+        alias="Afferde E",
+        kreis="Unn",
+        ort="Af",
+    )
     AHLING = Sammlung(
         description="Ahling",
         alias="Ahling",
+    )
+    ALT_HA = Sammlung(
+        description="Alt Ha",
+        alias="Alt Ha",
+        kreis="Alt",
+        ort="Ha",
     )
     ALTENA = Sammlung(
         description="Altena (Frau Karoline Krummenerl, * 1847, Fritz Künne, Fräulein Mina Künne, Frau Mina Vedder)",
@@ -69,6 +81,12 @@ class Sammlungen(Enum):
         description="Arens, J., Der Vokalismus der Mundarten im Kreise Olpe unter Zugrundelegung der Mundart von Elspe.",
         alias="Arens",
         kreis="Olp",
+    )
+    ASSINGHAUSEN = Sammlung(
+        description="Assinghausen, Kr. Brilon (Frau Knoche)",
+        alias="Bri Ah",
+        kreis="Bri",
+        ort="Ah",
     )
 
     BAADER = Sammlung(
@@ -87,6 +105,12 @@ class Sammlungen(Enum):
         kreis="Enr",
         ort="Sw",
     )
+    BARLO = Sammlung(
+        description="Barlo, Kr. Borken (Bauer Brake)",
+        alias="Bor Ba",
+        kreis="Bor",
+        ort="Ba",
+    )
     BAUER_C = Sammlung(
         description="Bauer, K., Waldeckisches Wörterbuch nebst Dialektproben, hrsg. v. H. Collitz.",
         alias="Bauer-C",
@@ -97,6 +121,12 @@ class Sammlungen(Enum):
         alias="Beesten Be",
         kreis="Lin",
         ort="Be",
+    )
+    BEISENHERZ = Sammlung(
+        description="Beisenherz, H., Vokalismus der Mundart des nordöstlichen Landkreises Dortmund.",
+        alias="Kurl Beis.",
+        kreis="Dor",
+        ort="Ku",
     )
     BERGER = Sammlung(
         description="Berger, A., Niederdeutsche technische Ausdrücke aus der Handwerkersprache des Kreises Lingen. ",
@@ -130,6 +160,18 @@ class Sammlungen(Enum):
         kreis="Enr",
         ort="Sw",
     )
+    BOR_KR = Sammlung(
+        description="Bor Kr",
+        alias="Bor Kr",
+        kreis="Bor",
+        ort="Kr",
+    )
+    BRAKEL_HOEX = Sammlung(
+        description="Brakel Höx",
+        alias="Brakel Höx",
+        kreis="Höx",
+        ort="Br",
+    )
     BUELD = Sammlung(
         description="Büld, H., Volk und Sprache im nördlichen Westfalen. Westfälische Ortschaften im Spiegel ihrer Sprache.",
         alias="Büld: Volk u. Spr.",
@@ -139,6 +181,12 @@ class Sammlungen(Enum):
         alias="Buldt|Aschend.-Ems|Asd Ad",
         kreis="Asd",
         ort="Ad",
+    )
+    BULMAHN = Sammlung(
+        description="H. Bulmahn",
+        alias="H. Bulmahn|Ilvese/Jlvese",
+        kreis="Min",
+        ort="Il",
     )
     BWPV = Sammlung(
         description="Jahres-Bericht des Westfälischen Provinzial-Vereins für Wissenschaft und Kunst.",
@@ -213,6 +261,12 @@ class Sammlungen(Enum):
         kreis="Kos",
         ort="Ge",
     )
+    GLAEN = Sammlung(
+        description="Glaen, K., Das Bild des Menschen in der Sprache von Dahl.",
+        alias="Glaen",
+        kreis="Pad",
+        ort="Da",
+    )
     GOEHNER = Sammlung(
         description="Lehrer A. Göhner (Gohfeld, Kr. Herford)",
         alias="Göhner",
@@ -240,9 +294,19 @@ class Sammlungen(Enum):
         ort="Wl",
     )
 
+    HANSES = Sammlung(
+        description="Anna Hanses",
+        alias="Anna Hanses",
+        kreis="Mes",
+        ort="Eh",
+    )
     HECKSCHER = Sammlung(
         description="Heckscher",
         alias="Heckscher",
+    )
+    HEIDE = Sammlung(
+        description="Iserlohn Heide M.",
+        alias="Jserl. Heide M.",
     )
     HEIERMEIER = Sammlung(
         description="Heiermeier, B., Die landwirtschaftlichen Fachausdrücke Westfalens auf Grund der Mundart des Kreises Wiedenbrück.",
@@ -254,11 +318,21 @@ class Sammlungen(Enum):
         kreis="Bor",
         ort="Bo",
     )
+    HERKHOFF = Sammlung(
+        description="Herkenhoff, H., Anhang von Wörtern, die sich nicht bei Woeste und Klöntrup finden.",
+        alias="Osn Hg: Herk/Seg",
+        kreis="Osn",
+        ort="Hg",
+    )
     HOLTHAUS = Sammlung(
         description="Holthaus, P. H., Materialien zu einer Schrift, betitelt: Süd-Westfälisches Wörterbuch",
         alias="Holthaus",
         kreis="Enr",
         ort="Hh",
+    )
+    HONCAMP = Sammlung(
+        description="Honcamp, F. C., Sprichwörter und sprichwörtliche Redeformen des westfälischen Volkes",
+        alias="Honc|Honc.-Anm.",
     )
     HUNOLD = Sammlung(
         description="Hunold, J. F., Mein Patterböarner Platt. Stalen van Reimels un Vertällekes in Spaß un Äerns.",
@@ -277,7 +351,7 @@ class Sammlungen(Enum):
 
     ISERLOHN = Sammlung(
         description="Iserlohn (Friedrich Fust, Frau Ittermann, Frau Sophie Aldenheuer, Herr und Frau Asmus, Herr und Frau Holwe, Herr und Frau Dühr)",
-        alias="Iserlohn",
+        alias="Iserlohn|Isl Is",
         kreis="Isl",
         ort="Is",
     )
@@ -382,6 +456,12 @@ class Sammlungen(Enum):
         ort="Mü",
     )
 
+    NATELN = Sammlung(
+        description="Nateln R",
+        alias="Nateln R",
+        kreis="Sos",
+        ort="Na",
+    )
     ND_KBL = Sammlung(
         description="Korrespondenzblatt des Vereins für niederdeutsche Sprachforschung.",
         alias="Nd. Kbl.|Korr.bl.",
@@ -406,6 +486,10 @@ class Sammlungen(Enum):
         alias="Drewer Oel",
         kreis="Lst",
         ort="Dr",
+    )
+    OSTENDORF = Sammlung(
+        description="Ostendorf, J., Den Wäwedamp. Ein Volksspiel in fünf Aufzügen.",
+        alias="Ost Wä",
     )
     OTTENSMEIER = Sammlung(
         description="Lehrer H. Ottensmeyer (Bischofshagen, Kr. Herford)",
@@ -495,6 +579,12 @@ class Sammlungen(Enum):
         description="Heimatblätter der Roten Erde. Monatshefte, hrsg. f. d. Westfälischen Heimatbund v. F. Castelle u. K. Wagenfeld.",
         alias="Rote Erde",
     )
+    ROTTMANN = Sammlung(
+        description="Rottmann",
+        alias="Rottmann",
+        kreis="Rek",
+        ort="Kh",
+    )
 
     SANDEBECK = Sammlung(
         description="Sandebeck, Kr. Höxter (stud. phil. Georg Müller und seine Mutter)",
@@ -505,6 +595,15 @@ class Sammlungen(Enum):
     SCHEPERS = Sammlung(
         description="Schepers, J., Westfalen-Lippe.",
         alias="Schepers",
+    )
+    SCHLEEF = Sammlung(
+        description="???Schleef, W., Dortmunder Wörterbuch.",
+        alias="Dor SL",
+        kreis="Dor",
+    )
+    SCHMIEDE = Sammlung(
+        description="Fragebogen zu besonderen Themen: Schmiede",
+        alias="Schmiede",
     )
     SCHMITZ = Sammlung(
         description="Studienrat B. Schmitz (Altenrheine, Kr. Steinfurt)",
@@ -545,10 +644,36 @@ class Sammlungen(Enum):
         kreis="Ahs",
         ort="St",
     )
+    SCHWAGMEYER = Sammlung(
+        description="Schwagmeyer, F., Der Lautstand der Ravensbergischen Mundart von Hiddenhausen.",
+        alias="Hiddenh. Schwagm.",
+        kreis="Hfd",
+        ort="Hi",
+    )
     SOESTER_BOERDE_WB = Sammlung(
         description="Schmoeckel, H., u. A. Blesken, Wörterbuch der Soester Börde, ein Beitrag zur westfälischen Mundartenforschung. Soest 1952",
         alias="Wb. Soester Börde",
         kreis="Sos",
+    )
+    SUTTMEYER = Sammlung(
+        description="J. Suttmeyer",
+        alias="Suttmeyer",
+        kreis="Osn",
+        ort="Kl",
+    )
+
+    TEK_RB = Sammlung(
+        description="Tek Rb",
+        alias="Tek Rb",
+        kreis="Tek",
+        ort="Rb",
+    )
+
+    UNN_AF = Sammlung(
+        description="Unna Afferde",
+        alias="Unn Af",
+        kreis="Unn",
+        ort="Af",
     )
 
     VEHSLAGE = Sammlung(
@@ -567,7 +692,6 @@ class Sammlungen(Enum):
         kreis="Bek",
         ort="Vh",
     )
-
     WAGENFELD = Sammlung(
         description="Wagenfeld, K., Volksmund. Plattdeutsche Sprichwörter und Redensarten des Münsterlandes in ihrer Anwendung.",
         alias="Wagenfeld Volksmund",

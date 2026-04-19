@@ -78,13 +78,24 @@ class DataBase:
             for zettel in zettels
         )
 
-    def get_zettel(self) -> list[Zettel]:
+    def get_zettel(self, limit: int | None = None) -> list[Zettel]:
         rows = (
             self.session.query(ZettelModel, ScanModel.full_path)
             .join(ScanModel, ZettelModel.recto_id == ScanModel.id)
+            .limit(limit)
             .all()
         )
         return [Zettel(full_path) for _, full_path in tqdm(rows)]
+
+    def get_random_zettel(self, limit: int = 1000) -> list[Zettel]:
+        rows = (
+            self.session.query(ZettelModel, ScanModel.full_path)
+            .join(ScanModel, ZettelModel.recto_id == ScanModel.id)
+            .order_by(func.random())
+            .limit(limit)
+            .all()
+        )
+        return [Zettel(full_path) for _, full_path in rows]
 
     def get_zettels_by_ids(self, ids: list[str]) -> list[Zettel]:
         rows = (

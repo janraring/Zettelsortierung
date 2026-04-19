@@ -21,6 +21,7 @@ class ManualClassification:
             Callable[[str, Optional[bool]], list[Zettel]]
         ] = None,
         get_status: Optional[Callable[[Zettel], bool]] = None,
+        get_predictions: Optional[Callable[[Zettel], list[tuple[str, float]]]] = None,
     ):
 
         self.queries = queries
@@ -29,15 +30,12 @@ class ManualClassification:
         self.get_stats = get_stats
         self.search_ocr_results = search_ocr_results
         self.get_status = get_status
+        self.get_predictions = get_predictions
 
         self.pattern = ""
 
         self.zettels: list[Zettel] = []
         self.index: int = 0
-
-        # -- Stats display --
-        with ui.row().classes("items-center"):
-            self.stats_label = ui.label("")
 
         # -- Top row --
         with ui.row().classes("items-center w-full"):
@@ -84,6 +82,10 @@ class ManualClassification:
                 for category in classes
             ]
 
+        # -- Stats display --
+        with ui.row().classes("items-center"):
+            self.stats_label = ui.label("")
+
         self.prev_button.disable()
         self.next_button.disable()
 
@@ -111,6 +113,8 @@ class ManualClassification:
         self.update_images()
         self.update_progress()
 
+        self.update_predictions()
+
         ui.notify(f"Loaded {len(zettels)} Zettel")
 
     def shuffle_zettels(self) -> None:
@@ -136,8 +140,11 @@ class ManualClassification:
         if not self.get_stats:
             return
         stats = self.get_stats()
-        text = "   |   ".join(f"{name}: {count}" for name, count in stats.items())
-        self.stats_label.set_text(text)
+        self.stats_label.set_text(f"Total: {stats.get('Total', 0)}")
+        for button in self.class_buttons:
+            category = button.text.split(" ")[0]  # Remove count from text
+            count = stats.get(category, 0)
+            button.set_text(f"{category} ({count})")
 
     def update_images(self):
         self.recto_image.set_source(self.zettels[self.index].recto.full_path)
@@ -157,6 +164,34 @@ class ManualClassification:
         self.progress_bar.value = self.index / length
         self.progress_label.text = f"{self.index}/{length}"
 
+    def confidence_to_color(self, confidence: float) -> str:
+        """Map confidence [0, 1] to a red→yellow→green RGB color."""
+        ui.notify(f"Confidence: {confidence:.2f}")
+        if confidence <= 0.5:
+            #  Red (150,0,0) → Yellow (150,150,0)
+            t = confidence / 0.5
+            r, g, b = 150, int(150 * t), 0
+        else:
+            #  Yellow (150,150,0) → Green (0,150,0)
+            t = (confidence - 0.5) / 0.5
+            r, g, b = int(150 - 150 * t), 150, 0
+        return f"rgb({r},{g},{b})"
+
+    def update_predictions(self):
+        if not self.get_predictions:
+            return
+        predictions = self.get_predictions(self.zettels[self.index])
+        for button in self.class_buttons:
+            category = button.text.split(" ")[0]
+            confidence = next(
+                (conf for cat, conf in predictions if cat == category), None
+            )
+            if confidence is not None:
+                color = self.confidence_to_color(confidence)
+                button.style(f"background-color: {color} !important; color: white;")
+            else:
+                button.style("background-color: transparent; color: inherit;")
+
     async def increment_index(self):
         self.index = min(self.index + 1, len(self.zettels))
         self.update_progress()
@@ -170,6 +205,7 @@ class ManualClassification:
                 b.disable()
         else:
             self.update_images()
+            self.update_predictions()
 
     def decrement_index(self):
         self.index = max(self.index - 1, 0)
@@ -181,6 +217,7 @@ class ManualClassification:
         if self.index == 0:
             self.prev_button.disable()
         self.update_images()
+        self.update_predictions()
 
     async def classify_image(self, selected: Enum):
         zettel = self.zettels[self.index]
@@ -197,11 +234,18 @@ def run_classification(
     get_stats: Optional[Callable[[], dict[str, int]]] = None,
     search_ocr_results: Optional[Callable[[str, Optional[bool]], list[Zettel]]] = None,
     get_status: Optional[Callable[[Zettel], bool]] = None,
+    get_predictions: Optional[Callable[[Zettel], list[tuple[str, float]]]] = None,
 ) -> None:
     @ui.page("/")
     async def _():
         ManualClassification(
-            classes, on_classify, queries, get_stats, search_ocr_results, get_status
+            classes,
+            on_classify,
+            queries,
+            get_stats,
+            search_ocr_results,
+            get_status,
+            get_predictions,
         )
 
     ui.run(dark=None, reload=False)

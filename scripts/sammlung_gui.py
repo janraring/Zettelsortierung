@@ -2,13 +2,26 @@ from functools import partial, cache
 from enum import Enum
 from tqdm import tqdm
 from typing import Optional
+from pathlib import Path
 import regex as re
+import os
+
+from dotenv import load_dotenv
+from PIL import Image
+import torch
 
 from zettelsortierung.db import DataBase
 from zettelsortierung.DataTypes import Zettel
 from zettelsortierung.ClassificationGUI import run_classification
 from zettelsortierung.Sammlungen import Sammlungen, Classifiers
+from zettelsortierung.nn import (
+    MobileNetV3ModelSmall,
+    TrainingConfig,
+    ParquetDataset,
+    mobile_net_infer_transform,
+)
 
+load_dotenv()
 db = DataBase()
 
 
@@ -92,10 +105,71 @@ def get_previously_classified(sammlung: Enum) -> list[Zettel]:
     return db.get_zettels_by_ids(list(zettel_ids))
 
 
+def get_random_sample(n: int = 100) -> list[Zettel]:
+    sample = db.get_random_zettel(limit=n)
+    predictions = {}
+    for zettel in tqdm(sample):
+        predictions[zettel] = get_predictions(zettel)
+    sample.sort(key=lambda z: predictions[z][0][1], reverse=False)
+    return sample
+
+
+#####################################################################
+# Predictions
+#####################################################################
+
+
+def load_model(path_str: str, config: TrainingConfig) -> MobileNetV3ModelSmall:
+    path = Path(path_str)
+    model = MobileNetV3ModelSmall(num_classes=config.num_classes)
+    model.load_state_dict(
+        torch.load(path / "model_weights.pt", map_location=config.device)
+    )
+    model.to(config.device)
+    model.eval()
+    return model
+
+
+def predict(model, image: Image.Image, config: TrainingConfig) -> dict:
+    tensor = mobile_net_infer_transform(image).unsqueeze(0).to(config.device)  # type: ignore
+
+    with torch.no_grad():
+        logits = model(tensor)
+        probs = torch.softmax(logits, dim=1)
+        probs = probs[0]
+
+    confidence = probs.max().item()
+    class_idx = probs.argmax().item()
+
+    return {
+        "class": class_idx,
+        "confidence": confidence,
+        "unknown": False,
+        "all_probs": probs,
+    }
+
+
+root = os.getenv("PROJECT_ROOT")
+dataset = ParquetDataset(f"{root}/data/interim/136_classes.parquet", train=False)
+config = TrainingConfig(num_classes=len(dataset.get_classes()))
+model = load_model(f"{root}/models/mobile_net_v3_small_30ep_on_136_classes", config)
+
+
+def get_predictions(zettel: Zettel) -> list[tuple[str, float]]:
+    # Return top 10 predictions
+    results = predict(model, Image.open(zettel.recto.full_path), config)
+    top_indices = torch.topk(results["all_probs"], k=10).indices.cpu().numpy()
+    top_probs = results["all_probs"][top_indices].cpu().numpy()
+    classes = dataset.get_classes()
+    predictions = [(classes[idx], prob) for idx, prob in zip(top_indices, top_probs)]
+    return predictions
+
+
 def main():
     queries = {
         "0_Classified": partial(db.get_classified, Classifiers.MANUELL),
         "0_Unclassified": get_unclassified,
+        "0_Random_Sample": partial(get_random_sample, n=100),
     }
     for sammlung in Sammlungen:
         queries[sammlung.name.title()] = partial(get_previously_classified, sammlung)
@@ -108,6 +182,7 @@ def main():
         search_ocr_results=search_ocr_results,
         get_status=get_status,
         get_stats=get_stats,
+        get_predictions=get_predictions,
         queries=sorted_queries,
     )
 

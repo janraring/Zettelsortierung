@@ -166,7 +166,6 @@ class ManualClassification:
 
     def confidence_to_color(self, confidence: float) -> str:
         """Map confidence [0, 1] to a red→yellow→green RGB color."""
-        ui.notify(f"Confidence: {confidence:.2f}")
         if confidence <= 0.5:
             #  Red (150,0,0) → Yellow (150,150,0)
             t = confidence / 0.5

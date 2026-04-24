@@ -105,7 +105,7 @@ def get_previously_classified(sammlung: Enum) -> list[Zettel]:
     return db.get_zettels_by_ids(list(zettel_ids))
 
 
-def get_random_sample(n: int = 100) -> list[Zettel]:
+def get_random_sample(n: int = 10000) -> list[Zettel]:
     sample = db.get_random_zettel(limit=n)
     predictions = {}
     for zettel in tqdm(sample):
@@ -150,9 +150,9 @@ def predict(model, image: Image.Image, config: TrainingConfig) -> dict:
 
 
 root = os.getenv("PROJECT_ROOT")
-dataset = ParquetDataset(f"{root}/data/interim/136_classes.parquet", train=False)
+dataset = ParquetDataset(f"{root}/data/interim/200_classes.parquet", train=True)
 config = TrainingConfig(num_classes=len(dataset.get_classes()))
-model = load_model(f"{root}/models/mobile_net_v3_small_30ep_on_136_classes", config)
+model = load_model(f"{root}/models/mobile_net_v3_small_50ep_on_200_classes", config)
 
 
 def get_predictions(zettel: Zettel) -> list[tuple[str, float]]:

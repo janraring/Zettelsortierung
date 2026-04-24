@@ -10,17 +10,11 @@ from zettelsortierung import Sammlungen
 
 load_dotenv()
 
-
-def load_df(path):
-    df = pd.read_parquet(path)
-    print(f"Loaded {len(df)} rows.")
-    return df
+TEST_SIZE = 0.1
 
 
 def main():
     db = DataBase()
-    root = os.getenv("PROJECT_ROOT")
-    target = f"{root}/data/interim/{len(Sammlungen)}_classes.parquet"
 
     classifications = db.get_classifications(Classifiers.MANUELL)
 
@@ -28,12 +22,19 @@ def main():
     labels = []
 
     for key, value in classifications.items():
-        if value.sammlung.name not in ["SKIPPED", "VERWEIS"]:
+        if value.sammlung.name not in [
+            "SKIPPED",
+            "OA",
+            "LST_RUE",
+            "BUER_TUE",
+            "OLPE_HB",
+            "WML_BB",
+        ]:
             ids.append(key)
             labels.append(value.sammlung.name)
 
     x_train, x_test, y_train, y_test = train_test_split(
-        ids, labels, test_size=0.2, stratify=labels
+        ids, labels, test_size=TEST_SIZE, stratify=labels
     )
 
     x = x_train + x_test
@@ -42,8 +43,14 @@ def main():
 
     df = pd.DataFrame({"zettel_id": x, "class": y, "train": train})
 
+    num_classes = len(set(labels))
+    root = os.getenv("PROJECT_ROOT")
+    target = f"{root}/data/interim/{num_classes}_classes.parquet"
+
     df.to_parquet(target)
-    load_df(target)
+
+    print(f"Number of classes: {num_classes}")
+    print(f"Number of examples: {len(df)}")
 
 
 if __name__ == "__main__":

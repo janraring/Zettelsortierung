@@ -117,7 +117,7 @@ class Trainer:
             loss.backward()
             self.optimizer.step()
 
-            total_loss += loss.item() + len(labels)
+            total_loss += loss.item() * len(labels)
             correct += (logits.argmax(dim=1) == labels).sum().item()
             total += len(labels)
 

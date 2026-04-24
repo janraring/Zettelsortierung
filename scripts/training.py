@@ -35,7 +35,7 @@ def run_training(dataset_name: str, num_epochs: int | None = None):
     trainer.save(f"{root}/models/{name}")
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(
         description="Trains a MobileNetV3ModelSmall on the specified dataset with the given parameters."
     )
@@ -47,3 +47,7 @@ if __name__ == "__main__":
     num_epochs = args.epochs
 
     run_training(dataset_name, num_epochs)
+
+
+if __name__ == "__main__":
+    main()

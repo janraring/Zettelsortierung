@@ -182,7 +182,7 @@ def main():
         search_ocr_results=search_ocr_results,
         get_status=get_status,
         get_stats=get_stats,
-        get_predictions=get_predictions,
+        # get_predictions=get_predictions,
         queries=sorted_queries,
     )
 

@@ -29,10 +29,8 @@ class ManualClassification:
         self.on_classify = on_classify
         self.get_stats = get_stats
         self.search_ocr_results = search_ocr_results
-        self.get_status = get_status
+        self.get_image_status = get_status
         self.get_predictions = get_predictions
-
-        self.pattern = ""
 
         self.zettels: list[Zettel] = []
         self.index: int = 0
@@ -48,17 +46,16 @@ class ManualClassification:
             self.stop_button = ui.button("Finish", on_click=lambda: app.shutdown())
             self.shuffle_button = ui.button("Shuffle", on_click=self.shuffle_zettels)
 
-            # -- Dropdown button for selecting a view--
-            if not queries is None:
-                with ui.dropdown_button("Sammlungen", auto_close=True):
-                    for name, query in queries.items():
-                        ui.item(
-                            name,
-                            on_click=lambda e, n=name, q=query: self.load_query(n, q),
-                        )
+            if queries is not None:
+                options = [name for name, _ in queries.items()]
+                ui.input("Sammlung", autocomplete=options).on(
+                    "keydown.enter", self.on_enter_sammlung
+                )
 
             # -- Search bar --
-            self.input = ui.input(label="Schlagwort").on("keydown.enter", self.on_enter)
+            self.input = ui.input(label="Schlagwort").on(
+                "keydown.enter", self.on_enter_search
+            )
             self.fuzzy_cb = ui.checkbox("Fuzzy", value=True)
 
             self.progress_bar = ui.linear_progress(value=0, show_value=False).classes(
@@ -110,8 +107,8 @@ class ManualClassification:
         for b in self.class_buttons:
             b.enable()
 
-        self.update_images()
-        self.update_progress()
+        self.update_image_display()
+        self.update_progress_bar()
 
         self.update_predictions()
 
@@ -121,12 +118,22 @@ class ManualClassification:
         shuffle(self.zettels)
         self.set_zettels(self.zettels)
 
-    async def on_enter(self, e):
+    async def on_enter_search(self, e):
         if self.search_ocr_results is None:
             return
         input = e.sender.value
         callback = partial(self.search_ocr_results, input, self.fuzzy_cb.value)
         zettels = await run.io_bound(callback)
+        self.set_zettels(zettels)
+
+    async def on_enter_sammlung(self, e):
+        if self.queries is None:
+            return
+        input = e.sender.value.title()
+        if input not in self.queries.keys():
+            ui.notify(f'There is no class named "{input}".')
+            return
+        zettels = await run.io_bound(self.queries[input])
         self.set_zettels(zettels)
 
     async def load_query(self, name: str, query: Callable[[], list[Zettel]]):
@@ -146,20 +153,22 @@ class ManualClassification:
             count = stats.get(category, 0)
             button.set_text(f"{category} ({count})")
 
-    def update_images(self):
-        self.recto_image.set_source(self.zettels[self.index].recto.full_path)
-        self.verso_image.set_source(self.zettels[self.index].verso.full_path)
-        self.zettel_label.text = self.zettels[self.index].id
+    def update_image_display(self):
+        new_zettel = self.zettels[self.index]
+        self.recto_image.set_source(new_zettel.recto.full_path)
+        self.verso_image.set_source(new_zettel.verso.full_path)
+        self.zettel_label.text = new_zettel.id
 
-        if self.get_status is None:
+    def update_image_status(self):
+        if self.get_image_status is None:
             self.zettel_label.classes("bg-transparent", remove="bg-green-700")
             return
-        if self.get_status(self.zettels[self.index]):
+        if self.get_image_status(self.zettels[self.index]):
             self.zettel_label.classes("bg-green-700", remove="bg-transparent")
             return
         self.zettel_label.classes("bg-transparent", remove="bg-green-700")
 
-    def update_progress(self):
+    def update_progress_bar(self):
         length = len(self.zettels)
         self.progress_bar.value = self.index / length
         self.progress_label.text = f"{self.index}/{length}"
@@ -191,39 +200,48 @@ class ManualClassification:
             else:
                 button.style("background-color: transparent; color: inherit;")
 
-    async def increment_index(self):
+    def increment_index(self):
         self.index = min(self.index + 1, len(self.zettels))
-        self.update_progress()
-        await self.update_stats()
+        self.update_progress_bar()
 
+        # Toggle buttons where necessary
         self.prev_button.enable()
         if self.index == len(self.zettels):
             ui.notify("Reached End of Collection")
             self.next_button.disable()
             for b in self.class_buttons:
                 b.disable()
-        else:
-            self.update_images()
-            self.update_predictions()
+
+        # Update UI elements
+        self.update_image_display()
+        self.update_image_status()
+        self.update_predictions()
 
     def decrement_index(self):
         self.index = max(self.index - 1, 0)
-        self.update_progress()
+        self.update_progress_bar()
 
+        # Toggle buttons where necessary
         self.next_button.enable()
         for b in self.class_buttons:
             b.enable()
         if self.index == 0:
             self.prev_button.disable()
-        self.update_images()
+
+        # Update UI elements
+        self.update_image_display()
+        self.update_image_status()
         self.update_predictions()
 
     async def classify_image(self, selected: Enum):
+        # Current Zettel
         zettel = self.zettels[self.index]
+        # Create label
         label = Label(selected, 1.0)
         if self.on_classify:
             self.on_classify(zettel, label)
-        await self.increment_index()
+            await self.update_stats()
+        self.increment_index()
 
 
 def run_classification(

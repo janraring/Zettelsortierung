@@ -1402,6 +1402,9 @@ class Sammlungen(Enum):
         kreis="Stf",
         ort="Ka",
     )
+    Rhoden = Sammlung(
+        description="WalRhoden",
+    )
 
     ##############################################################
     # Anonym

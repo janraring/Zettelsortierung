@@ -175,6 +175,7 @@ def main():
         queries[sammlung.name.title()] = partial(get_previously_classified, sammlung)
 
     sorted_queries = dict(sorted(queries.items()))
+    import cProfile
 
     run_classification(
         classes=Sammlungen,

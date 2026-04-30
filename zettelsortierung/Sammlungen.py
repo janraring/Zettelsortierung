@@ -204,43 +204,23 @@ class Sammlungen(Enum):
         kreis="Unn",
         ort="Af",
     )
-    ALTENA_CP = Sammlung(
+    ALTENA = Sammlung(
         trace="Altena|Alt Al",
-        groups="Lautschrift|Altena|Kopie",
+        groups="Lautschrift|Altena",
         description="Altena (Frau Karoline Krummenerl, * 1847, Fritz Künne, Fräulein Mina Künne, Frau Mina Vedder)",
         kreis="Alt",
         ort="Al",
     )
-    ALTENA_OG = Sammlung(
-        trace="Altena|Alt Al",
-        groups="Lautschrift|Altena|Original",
-        description="Altena (Frau Karoline Krummenerl, * 1847, Fritz Künne, Fräulein Mina Künne, Frau Mina Vedder)",
-        kreis="Alt",
-        ort="Al",
-    )
-    ASSINGHAUSEN_CP = Sammlung(
+    ASSINGHAUSEN = Sammlung(
         trace="Bri Ah",
-        groups="Lautschrift|Assinghausen|Kopie",
+        groups="Lautschrift|Assinghausen",
         description="Assinghausen, Kr. Brilon (Frau Knoche)",
         kreis="Bri",
         ort="Ah",
     )
-    ASSINGHAUSEN_OG = Sammlung(
-        trace="Bri Ah",
-        groups="Lautschrift|Assinghausen|Original",
-        description="Assinghausen, Kr. Brilon (Frau Knoche)",
-        kreis="Bri",
-        ort="Ah",
-    )
-    BANDWIRK_CP = Sammlung(
+    BANDWIRK = Sammlung(
         trace="Bandwirk.|Gegend Schwelm",
-        groups="Lautschrift|Bandwirk|Kopie",
-        kreis="Enr",
-        ort="Sw",
-    )
-    BANDWIRK_OG = Sammlung(
-        trace="Bandwirk.|Gegend Schwelm",
-        groups="Lautschrift|Bandwirk|Original",
+        groups="Lautschrift|Bandwirk",
         kreis="Enr",
         ort="Sw",
     )
@@ -393,18 +373,18 @@ class Sammlungen(Enum):
         kreis="Arn",
         ort="Wa",
     )
-    WULFTEN = Sammlung(
-        trace="BbrWu",
-        groups="Lautschrift|Wulften",
-        kreis="Bbr",
-        ort="Wu",
-    )
     WESSUM = Sammlung(
         trace="Wessum Gr",
         groups="Lautschrift|Wessum",
         description="Wessum, Kr. Ahaus (Geheimrat Grimmelt)",
         kreis="Ahs",
         ort="We",
+    )
+    WULFTEN = Sammlung(
+        trace="BbrWu",
+        groups="Lautschrift|Wulften",
+        kreis="Bbr",
+        ort="Wu",
     )
 
     ##############################################################
@@ -686,7 +666,7 @@ class Sammlungen(Enum):
         description="Seminaroberlehrer W. Oeke (Neuenheerse, Kr. Warburg, und Paderborner Land)",
     )
     OEL = Sammlung(
-        trace="Drewer Oel",
+        trace="Drewer Oel|Lst Dr",
         groups="Wortschatz|Oeke",
         description="Lehrer J. Oel (Drewer, Kr. Lippstadt)",
         kreis="Lst",
@@ -1386,8 +1366,7 @@ class Sammlungen(Enum):
     ##############################################################
 
     BRAKEL_HOEX = Sammlung(
-        description="Brakel Höx",
-        alias="Brakel Höx",
+        trace="Brakel Höx",
         kreis="Höx",
         ort="Br",
     )
@@ -1397,13 +1376,9 @@ class Sammlungen(Enum):
         ort="Ös",
     )
     STF_KA = Sammlung(
-        description="Stf Ka",
-        alias="Stf Ka",
+        trace="Stf Ka",
         kreis="Stf",
         ort="Ka",
-    )
-    Rhoden = Sammlung(
-        description="WalRhoden",
     )
 
     ##############################################################

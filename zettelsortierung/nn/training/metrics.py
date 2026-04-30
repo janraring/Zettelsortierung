@@ -22,6 +22,9 @@ def compute_metrics(
             labels=sorted(idx_to_class) if idx_to_class else None,
         ),
         "classification_report": classification_report(
-            known_labels, known_preds, target_names=target_names
+            known_labels,
+            known_preds,
+            labels=sorted(idx_to_class) if idx_to_class else None,
+            target_names=target_names,
         ),
     }

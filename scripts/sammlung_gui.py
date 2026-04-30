@@ -149,10 +149,14 @@ def predict(model, image: Image.Image, config: TrainingConfig) -> dict:
     }
 
 
+n_classes = 204
+n_epochs = 50
 root = os.getenv("PROJECT_ROOT")
-dataset = ParquetDataset(f"{root}/data/interim/200_classes.parquet", train=True)
+dataset = ParquetDataset(f"{root}/data/interim/{n_classes}_classes.parquet", train=True)
 config = TrainingConfig(num_classes=len(dataset.get_classes()))
-model = load_model(f"{root}/models/mobile_net_v3_small_50ep_on_200_classes", config)
+model = load_model(
+    f"{root}/models/mobile_net_v3_small_{n_epochs}ep_on_{n_classes}_classes", config
+)
 
 
 def get_predictions(zettel: Zettel) -> list[tuple[str, float]]:
@@ -183,7 +187,7 @@ def main():
         search_ocr_results=search_ocr_results,
         get_status=get_status,
         get_stats=get_stats,
-        # get_predictions=get_predictions,
+        get_predictions=get_predictions,
         queries=sorted_queries,
     )
 

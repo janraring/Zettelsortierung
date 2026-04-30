@@ -34,6 +34,7 @@ class ManualClassification:
 
         self.zettels: list[Zettel] = []
         self.index: int = 0
+        self.selector_class = None
 
         # -- Top row --
         with ui.row().classes("items-center w-full"):
@@ -53,7 +54,7 @@ class ManualClassification:
                 )
 
             # -- Search bar --
-            self.input = ui.input(label="Schlagwort").on(
+            self.input = ui.input(label="OCR-Suche").on(
                 "keydown.enter", self.on_enter_search
             )
             self.fuzzy_cb = ui.checkbox("Fuzzy", value=True)
@@ -62,26 +63,48 @@ class ManualClassification:
                 "w-md h-9"
             )
             self.progress_label = ui.label(f"").classes("text-base font-bold")
+
+            # -- Total stats --
+            self.total_stats_label = ui.label("")
+
             ui.space()
+
+            # -- Zettel status --
             self.zettel_label = ui.label(f"").classes("text-base font-bold")
 
-        # -- Images --
-        with ui.row():
-            self.recto_image = ui.image().props(f"width=750px height=500px")
-            self.verso_image = ui.image().props(f"width=750px height=500px")
+        with ui.grid(columns="auto auto"):
+            # -- Images --
+            with ui.column():
+                self.recto_image = ui.image().props(f"width=750px height=500px")
+                self.verso_image = ui.image().props(f"width=750px height=500px")
 
-        # --Class buttons --
-        with ui.row():
-            self.class_buttons = [
-                ui.button(
-                    category.name, on_click=lambda e, c=category: self.classify_image(c)
-                )
-                for category in classes
-            ]
+                with ui.row().classes("items-center w-full"):
+                    # -- Class selector --
+                    self.class_select = ui.select(
+                        options={category: category.name for category in classes},
+                        with_input=True,
+                        on_change=lambda e: self.set_selector_class(e.value),
+                    )
+                    # -- Classify button --
+                    ui.button(
+                        "Classify",
+                        on_click=lambda: self.classify_image(self.selector_class),
+                    )
 
-        # -- Stats display --
-        with ui.row().classes("items-center"):
-            self.stats_label = ui.label("")
+            # -- Class buttons --
+            with ui.row().style("column-gap: 5px; row-gap: 0px"):
+                self.class_buttons = [
+                    ui.button(
+                        category.name,
+                        on_click=lambda e, c=category: self.classify_image(c),
+                    ).style("padding: 0 5px; font-size: 16px")
+                    for category in classes
+                    if category.name[:4].upper() != "ANON"
+                ]
+
+            # -- Top prediction buttons --
+            if self.get_predictions:
+                self.top_predictions_buttons = ui.column()
 
         self.prev_button.disable()
         self.next_button.disable()
@@ -97,6 +120,9 @@ class ManualClassification:
                 )
             ]
         )
+
+    def set_selector_class(self, value):
+        self.selector_class = value
 
     def set_zettels(self, zettels):
         self.zettels = zettels
@@ -147,7 +173,7 @@ class ManualClassification:
         if not self.get_stats:
             return
         stats = self.get_stats()
-        self.stats_label.set_text(f"Total: {stats.get('Total', 0)}")
+        self.total_stats_label.set_text(f"Total: {stats.get('Total', 0)}")
         for button in self.class_buttons:
             category = button.text.split(" ")[0]  # Remove count from text
             count = stats.get(category, 0)
@@ -189,7 +215,30 @@ class ManualClassification:
         if not self.get_predictions:
             return
         predictions = self.get_predictions(self.zettels[self.index])
-        for button in self.class_buttons:
+
+        self.top_predictions_buttons.clear()
+        with self.top_predictions_buttons.style("column-gap: 5px; row-gap: 5px"):
+            classes = [self.classes[cat] for cat, _ in predictions]
+
+            with ui.row().style("column-gap: 5px; row-gap: 5px"):
+                top_buttons_1 = [
+                    ui.button(
+                        category.name,
+                        on_click=lambda e, c=category: self.classify_image(c),
+                    ).style("padding: 0 5px; font-size: 16px")
+                    for category in classes[:5]
+                ]
+            with ui.row().style("column-gap: 5px; row-gap: 5px"):
+                top_buttons_2 = [
+                    ui.button(
+                        category.name,
+                        on_click=lambda e, c=category: self.classify_image(c),
+                    ).style("padding: 0 5px; font-size: 16px")
+                    for category in classes[5:]
+                ]
+
+        # Colorize buttons
+        for button in self.class_buttons + top_buttons_1 + top_buttons_2:
             category = button.text.split(" ")[0]
             confidence = next(
                 (conf for cat, conf in predictions if cat == category), None
@@ -233,7 +282,9 @@ class ManualClassification:
         self.update_image_status()
         self.update_predictions()
 
-    async def classify_image(self, selected: Enum):
+    async def classify_image(self, selected: Enum | None):
+        if selected is None:
+            return
         # Current Zettel
         zettel = self.zettels[self.index]
         # Create label

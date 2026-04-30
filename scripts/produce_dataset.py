@@ -1,4 +1,5 @@
 import os
+from collections import Counter
 
 import pandas as pd
 from dotenv import load_dotenv
@@ -21,18 +22,22 @@ def main():
     ids = []
     labels = []
 
+    # Create list of ids and labels, filter out `SKIPPED` and `OA`
     for key, value in classifications.items():
         if value.sammlung.name not in [
             "SKIPPED",
             "OA",
-            "LST_RUE",
-            "BUER_TUE",
-            "OLPE_HB",
-            "WML_BB",
         ]:
             ids.append(key)
             labels.append(value.sammlung.name)
 
+    # Filter out those categories that only contain one Zettel
+    counts = Counter(labels)
+    ids, labels = zip(
+        *((id_, label) for id_, label in zip(ids, labels) if counts[label] > 1)
+    )
+
+    # Create train/test split
     x_train, x_test, y_train, y_test = train_test_split(
         ids, labels, test_size=TEST_SIZE, stratify=labels
     )

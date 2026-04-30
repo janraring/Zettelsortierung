@@ -5,6 +5,7 @@ import time
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, random_split
+from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 
 from ..models.base import BaseModel
@@ -39,6 +40,7 @@ class Trainer:
             self.optimizer, T_max=config.num_epochs
         )
 
+        self.writer: SummaryWriter = SummaryWriter()
         self.history: list[dict] = []
 
     @staticmethod
@@ -78,6 +80,8 @@ class Trainer:
             self.optimizer, T_max=self.config.num_epochs // 2
         )
         self._run_epochs(self.config.num_epochs // 2)
+        self.writer.flush()
+        self.writer.close()
 
     def _run_epochs(self, num_epochs: int):
         for epoch in range(num_epochs):
@@ -96,6 +100,10 @@ class Trainer:
                     "val_acc": val_acc,
                 }
             )
+            self.writer.add_scalar("loss/train", train_loss, epoch + 1)
+            self.writer.add_scalar("loss/val", val_loss, epoch + 1)
+            self.writer.add_scalar("acc/train", train_acc, epoch + 1)
+            self.writer.add_scalar("acc/val", val_acc, epoch + 1)
 
             print(
                 f"Epoch {epoch+1}/{num_epochs} — "

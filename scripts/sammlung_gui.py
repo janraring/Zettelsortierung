@@ -171,9 +171,9 @@ def get_predictions(zettel: Zettel) -> list[tuple[str, float]]:
 
 def main():
     queries = {
-        "0_Classified": partial(db.get_classified, Classifiers.MANUELL),
-        "0_Unclassified": get_unclassified,
-        "0_Random_Sample": partial(get_random_sample, n=100),
+        "Classified": partial(db.get_classified, Classifiers.MANUELL),
+        "Unclassified": get_unclassified,
+        "Random_Sample": partial(get_random_sample, n=1000),
     }
     for sammlung in Sammlungen:
         queries[sammlung.name.title()] = partial(get_previously_classified, sammlung)

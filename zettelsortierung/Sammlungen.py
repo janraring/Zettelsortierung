@@ -48,11 +48,11 @@ class Sammlungen(Enum):
     OA = Sammlung(
         description="Ohne Angabe",
     )
+    BLANK = Sammlung(
+        description="Vorderseite blank",
+    )
     PHONEM = Sammlung(
         description="Phonematische Notizen",
-    )
-    ARTIKEL_PREP = Sammlung(
-        description="Lautschriftliche Zusammenfassungen",
     )
 
     ##############################################################
@@ -84,6 +84,10 @@ class Sammlungen(Enum):
     FRAGEBOGEN = Sammlung(
         trace="Fragebogen",
         groups="Fragebögen|Allgemein",
+    )
+    HIAT = Sammlung(
+        trace="Hiatfrbg",
+        groups="Fragebögen|Hiatfragebogen",
     )
     HOLZSCHUH = Sammlung(
         trace="Holzschuh",
@@ -319,6 +323,13 @@ class Sammlungen(Enum):
         kreis="Ahs",
         ort="Gr",
     )
+    ISERLOHN = Sammlung(
+        trace="Iserlohn|Isl Is|Jsl Js",
+        groups="Lautschrift|Iserlohn",
+        description="Iserlohn (Friedrich Fust, Frau Ittermann, Frau Sophie Aldenheuer, Herr und Frau Asmus, Herr und Frau Holwe, Herr und Frau Dühr)",
+        kreis="Isl",
+        ort="Is",
+    )
     LIENEN = Sammlung(
         trace="Tek Li",
         groups="Lautschrift|Lienen",
@@ -329,18 +340,17 @@ class Sammlungen(Enum):
         trace="e1/ü1/etc",
         groups="Lautschrift|Sonstige",
     )
-    ISERLOHN = Sammlung(
-        trace="Iserlohn|Isl Is|Jsl Js",
-        groups="Lautschrift|Iserlohn",
-        description="Iserlohn (Friedrich Fust, Frau Ittermann, Frau Sophie Aldenheuer, Herr und Frau Asmus, Herr und Frau Holwe, Herr und Frau Dühr)",
-        kreis="Isl",
-        ort="Is",
-    )
     LIESBORN = Sammlung(
         trace="Bek Lb",
         groups="Lautschrift|Liesborn",
         kreis="Bek",
         ort="Lb",
+    )
+    LUECHTRINGEN = Sammlung(
+        trace="Lüchtr.",
+        groups="Lautschrift|Lüchtringen",
+        kreis="Höx",
+        ort="Lü",
     )
     METTINGEN = Sammlung(
         trace="Mettingen W",
@@ -421,6 +431,10 @@ class Sammlungen(Enum):
         groups="Lautschrift|Wulften",
         kreis="Bbr",
         ort="Wu",
+    )
+    X = Sammlung(
+        trace="///",
+        groups="Lautschrift|X",
     )
 
     ##############################################################
@@ -631,6 +645,12 @@ class Sammlungen(Enum):
         groups="Wortschatz|Hesemann",
         landschaft="Ravensbg",
     )
+    HILTRUP_W = Sammlung(
+        trace="Hiltrup W",
+        groups="Wortschatz|HiltrupW",
+        kreis="Mün",
+        ort="Hi",
+    )
     HOEMKEN = Sammlung(
         trace="Asd Vr=Hö",
         groups="Wortschatz|Hömken|Asd Vr",
@@ -721,7 +741,7 @@ class Sammlungen(Enum):
     )
     MISSGELD = Sammlung(
         trace="Recklh. M",
-        groups="Wortschatz|Mißgeld",
+        groups="Wortschatz|Misgeld",
         description="Medizinalrat H. Mißgeld (Recklinghausen)",
         kreis="Rek",
         ort="Rh",
@@ -917,7 +937,7 @@ class Sammlungen(Enum):
         groups="Wortschatz|Warning",
         description="Studienrat Dr. W. Warning (Versmold, Kr. Halle)",
         kreis="Hal",
-        ort="Lo",
+        # ort="Lo",  # and "Vm"
     )
     WIX = Sammlung(
         trace="Gütersloh Wix",
@@ -942,6 +962,12 @@ class Sammlungen(Enum):
         groups="Auszüge|AbhNat",
         sigle="AbhNat",
         description="Abhandlungen aus dem Westfälischen Provinzial-Museum für Naturkunde. Jg. 7 ff.: Abhandlungen aus dem Landesmuseum der Provinz Westfalen, Museum für Naturkunde; Jg. 11: Abhandlungen aus dem Landesmuseum für Naturkunde der Provinz Westfalen. Jg. 1—11 Münster 1930—1940. Jg. 12 ff.: Abhandlungen aus dem Landesmuseum für Naturkunde zu Münster in Westfalen. Münster 1949 ff.",
+    )
+    ALFERS = Sammlung(
+        trace="J. Alfers",
+        groups="Auszüge|Alfers",
+        kreis="Klo",
+        ort="We",
     )
     ARENS = Sammlung(
         trace="Kr. Olpe Arens",
@@ -1001,6 +1027,12 @@ class Sammlungen(Enum):
         kreis="Min",
         ort="Wt",
     )
+    BRUNK = Sammlung(
+        trace="Brunk",
+        groups="Auszüge|Brunk",
+        sigle="Brunk",
+        description="Brunk, A., Osnabrücker Rätselbüchlein. Osnabrück 1910",
+    )
     BUELD = Sammlung(
         trace="Büld: Volk u. Spr.|Ortsneckerei",
         groups="Auszüge|Büld",
@@ -1030,6 +1062,12 @@ class Sammlungen(Enum):
         description="Eggert, B., Vergleichende Dialektgeographie des Gebietes der Beckumer Berge und der Soester Börde. Phil. Diss. Münster [1921; Hs.]",
         kreis="Bek",
         ort="Hf",
+    )
+    FROMMANN = Sammlung(
+        trace="Frommann Maa",
+        groups="Auszüge|Frommann",
+        sigle="Frommann",
+        description="Die deutschen Mundarten, begr. v. J. A. Pangkofer, fortges. v. G. K. Frommann. Bd. I—IV Nürnberg 1854—1857, V—VI Nördlingen 1858—59, VII (N. F. I) Halle 1877",
     )
     GLAEN = Sammlung(
         trace="Glaen",
@@ -1124,6 +1162,10 @@ class Sammlungen(Enum):
         sigle="Heierm",
         description="Heiermeier, B., Die landwirtschaftlichen Fachausdrücke Westfalens auf Grund der Mundart des Kreises Wiedenbrück. Bielefeld 1914 (Phil. Diss. Münster 1914). Auch im 28. Jahresbericht d. Hist. Ver. f. d. Grafschaft Ravensberg, Bielefeld 1914, S. 39—96 [H. *1888 in Mastholte, Kr. Wiedenbrück]",
         kreis="Wie",
+    )
+    HENSSEN = Sammlung(
+        trace="Henssen|Uhlenflucht",
+        groups="Auszüge|Henssen",
     )
     HERDEMANN = Sammlung(
         trace="Borken Herdemann",
@@ -1281,6 +1323,13 @@ class Sammlungen(Enum):
         kreis="Min",
         ort="Wh",
     )
+    MISGELD_AR = Sammlung(
+        trace="Misg. AR",
+        groups="Auszüge|Misgeld",
+        sigle="Misgeld",
+        description="Misgeld, H., Aolt-Riackelkusen. Stadt un Land. Skizzen aus dem Leben einer alten Stadt in Recklinghäuser Platt. Berlin o. J.",
+        kreis="Rek",
+    )
     MOELLER = Sammlung(
         trace="Lhs Sm Möller",
         groups="Auszüge|Möller",
@@ -1315,6 +1364,18 @@ class Sammlungen(Enum):
         sigle="MünG",
         description="Münsterische Geschichten, Sagen und Legenden nebst einem Anhange von Volksliedern und Sprüchwörtern. Münster 1825",
     )
+    N_WESTF_MAG = Sammlung(
+        trace="N.Westf.Mag",
+        groups="Auszüge|NeuestWestphMag",
+        sigle="MagNW",
+        description="Neues Westphälisches Magazin zur Geographie, Historie und Statistik, hrsg. v. P. F. Weddigen. 3 Bde. Bd. 1 Bückeburg 1789; Bd. 2 Leipzig-Lemgo-Berlin-Bielefeld 1790; Bd. 3 Lemgo-Leipzig-Berlin-Bielefeld 1792",
+    )
+    ND_JB = Sammlung(
+        trace="Nd. Jb.",
+        groups="Auszüge|NiederdeutschesJahrbuch",
+        sigle="NdJb",
+        description="Jahrbuch des Vereins für niederdeutsche Sprachforschung (Niederdeutsches Jahrbuch). Jg. 1875 Bremen 1876 ff.; Bd. 7 ff., Jg. 1881, Norden-Leipzig 1882 ff.; Bd. 54 ff., Jg. 1928, Hamburg 1929 ff.; Bd. 57/58 ff., Jg. 1941/42, Neumünster 1943 ff.",
+    )
     ND_KBL = Sammlung(
         trace="Nd. Kbl.|Korr.bl.",
         groups="Auszüge|NdKbl",
@@ -1326,6 +1387,12 @@ class Sammlungen(Enum):
         groups="Auszüge|NdsWb",
         sigle="NdsWb",
         description="Niedersächsisches Wörterbuch. 1. Bd. hrsg. d. W. Jungandreas, Neumünster 1965; seit dem 2. Bd. hrsg. d. H. Wesche, Neumünster 1958 ff.",
+    )
+    NIBLETT = Sammlung(
+        trace="Niblett",
+        groups="Auszüge|Niblett",
+        sigle="Niblett",
+        description="Niblett, A. E., Grammatik der osnabrückischen Mundart. I. Teil. Osnabrück 1913 (Phil. Diss. München 1913) [Mundart der nächsten Umgebung Osnabrücks]",
     )
     NS = Sammlung(
         trace="Ns, X...",
@@ -1460,6 +1527,14 @@ class Sammlungen(Enum):
         kreis="Hfd",
         ort="Hi",
     )
+    SOEST_HOLTH = Sammlung(
+        trace="Soest Holth. D",
+        groups="Auszüge|SoestHolthausen",
+        sigle="HolthSos",
+        description="Holthausen, F., Die Soester Mundart. Laut- und Formenlehre nebst Texten. Norden-Leipzig 1886 (Forschungen, hrsg. v. Ver. f. Niederdeutsche Sprachforschung, 1)",
+        kreis="Sos",
+        ort="So",
+    )
     SOESTER_BOERDE_WB = Sammlung(
         trace="Wb. Soester Börde",
         groups="Auszüge|SoesterBördeWb",
@@ -1493,6 +1568,12 @@ class Sammlungen(Enum):
         description="Vehslage, H., Die Mundart des Artlandes auf der Grundlage der Mundart des Kirchspiels Badbergen. Borna-Leipzig 1908 (Phil. Diss. Münster 1908) [V. * in Grothe b. Badbergen]",
         kreis="Bbr",
         ort="Bb",
+    )
+    VEST_Z = Sammlung(
+        trace="Vest.Z.Jg.",
+        groups="Auszüge|VestischeZeitschrift",
+        sigle="VestZ",
+        description="Vestische Zeitschrift. Zeitschrift der Vereine für Orts- und Heimatkunde im Veste und Kreise Recklinghausen, begr. als Zeitschrift der Vereine ... Münster (u. a. Verlagsorte) 1904—1941",
     )
     VKL_ARCH = Sammlung(
         trace="Vkl. Arch.",
@@ -1576,6 +1657,10 @@ class Sammlungen(Enum):
         description="Westmünsterländisches Wörterbuch",
     )
     WML_BB = Sammlung(trace="W-münsterl. BüldB", groups="Auszüge|WmlBB")
+    WOE = Sammlung(
+        trace="Woe",
+        groups="Auszüge|Woe",
+    )
     WOESTE_GM = Sammlung(
         trace="WoeGM|WoeMG",
         groups="Auszüge|WoesteGM",

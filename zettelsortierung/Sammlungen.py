@@ -54,6 +54,12 @@ class Sammlungen(Enum):
     PHONEM = Sammlung(
         description="Phonematische Notizen",
     )
+    REF = Sammlung(
+        description="Referenz zu anderem Werk",
+    )
+    VERKEHRT = Sammlung(
+        description="Recto/Verso vertauscht",
+    )
 
     ##############################################################
     # Fragebögen
@@ -125,6 +131,10 @@ class Sammlungen(Enum):
     RHEIN_FRGB = Sammlung(
         trace="Rhein.-Frgb.",
         groups="Fragebögen|RheinFrgb",
+    )
+    ROGGENBROT = Sammlung(
+        trace="Roggenbrot",
+        groups="Fragebögen|Roggenbrot",
     )
     SCHMIEDE = Sammlung(
         trace="Schmiede",
@@ -700,12 +710,6 @@ class Sammlungen(Enum):
         kreis="Lst",
         ort="Ag",
     )
-    KAPPEN = Sammlung(
-        trace="Dreislar/Bri|Kappen",
-        groups="Wortschatz|Kappen",
-        kreis="Bri",
-        ort="Dr",
-    )
     KOCH_BRACHT = Sammlung(
         trace="Bracht K.",
         groups="Wortschatz|KochBracht",
@@ -831,13 +835,6 @@ class Sammlungen(Enum):
         groups="Wortschatz|Regeniter",
         kreis="Enr",
     )
-    REINKE = Sammlung(
-        trace="Reinke",
-        groups="Wortschatz|Reinke",
-        description="Frau Reinke, wohnh. Vechta|Hemmelsbüren Klo",
-        kreis="Klo",  # bzw. Vch Vh
-        ort="Hm",
-    )
     REINKEN = Sammlung(
         trace="Frau Lehrer Reinken 75 Jahr, Natrup-Hagen 1914-1925 ges.",
         groups="Wortschatz|Reinken",
@@ -849,12 +846,6 @@ class Sammlungen(Enum):
         groups="Wortschatz|Reurik",
         description="Rektor H. Reurik (Hilten, Kr. Grafschaft Bentheim)",
         kreis="Ben",
-    )
-    SCHEMANN = Sammlung(
-        trace="Hagen|Schemann",
-        groups="Wortschatz|Schemann",
-        kreis="Hag",
-        ort="Hg",
     )
     SCHMITZ = Sammlung(
         trace="Stf Ar|Schmitz",
@@ -890,29 +881,11 @@ class Sammlungen(Enum):
         kreis="Ahs",
         ort="St",
     )
-    SEEWALD = Sammlung(
-        trace="Legden, Kreis Ahaus|Franz Seewald sen.",
-        groups="Wortschatz|Seewald",
-        kreis="Ahs",
-        ort="Le",
-    )
     STOVER = Sammlung(
         trace="Stover",
         groups="Wortschatz|Stover",
         kreis="Kos",
         ort="Ge",
-    )
-    SUELHOP = Sammlung(
-        trace="Fritz Sülhop",
-        groups="Wortschatz|Sülhop",
-        kreis="Lst",
-        ort="Me",
-    )
-    WALTER = Sammlung(
-        trace="Walter",
-        groups="Wortschatz|Walter",
-        kreis="Tek",
-        ort="Hp",
     )
     WANNE_F = Sammlung(
         trace="Wanne F",
@@ -1013,11 +986,25 @@ class Sammlungen(Enum):
         kreis="Lin",
         ort="Pl",
     )
+    BEULE = Sammlung(
+        trace="Beule",
+        groups="Auszüge|Beule",
+        sigle="Beule",
+        description="Beule, A., Biärgwind. Gedichte un Geschichten iut dem Suerlanne. Bigge 1922 (Suerlänske Baikelkes) [Mundart von Ramsbeck, Kr. Meschede]",
+        kreis="Mes",
+        ort="Ra",
+    )
     BIRKENHAUER = Sammlung(
         trace="Birkenhauer",
         groups="Auszüge|Birkenhauer",
         sigle="Birk",
         description="Birkenhauer, J., Die Mundarten im Osten des Herzogtums Westfalen (die heutigen Kreise Brilon und Meschede umfassend). Phil. Diss. Münster 1921 [Hs.]",
+    )
+    BOENING = Sammlung(
+        trace="Bön",
+        groups="Auszüge|Böning",
+        sigle="Böning",
+        description="Böning, H., Plattdeutsches Wörterbuch für das Oldenburger Land. Oldenburg 1941 (Oldenburger Forschungen, 7) [Anhang, S. 136—153: II. Süd-Oldenburg. „Wörter, die in Nordoldenburg fehlen oder anders lauten.“]",
     )
     BREPOHL = Sammlung(
         trace="Min Wt|Brepohl",
@@ -1026,6 +1013,21 @@ class Sammlungen(Enum):
         description="Brepohl, W., Bäuerliche Heilkunde in einem Dorfe des Mindener Landes um die Jahrhundertwende. Ein Beitrag zur Volkskunde von Minden-Ravensberg. Mindener Jahrbuch N. F. H. 2, 1950",
         kreis="Min",
         ort="Wt",
+    )
+    BROCKSIEPEN = Sammlung(
+        trace="Brocks. Volkssp",
+        groups="Auszüge|Brocksiepen",
+        description="Brocksiepen (Hofschaft bei Halver)",
+        kreis="Alt",
+        ort="Ha",
+    )
+    BROECHER = Sammlung(
+        trace="Rhonard Bröcher",
+        groups="Auszüge|Bröcher",
+        sigle="Bröcher",
+        description="Bröcher, J., Die Sprache des Schmiedehandwerkes im Kreise Olpe auf Grund der Mundart von Rhonard. Berlin 1907 (Phil. Diss. Münster 1907)",
+        kreis="Olp",
+        ort="Ro",
     )
     BRUNK = Sammlung(
         trace="Brunk",
@@ -1050,10 +1052,6 @@ class Sammlungen(Enum):
         groups="Auszüge|DWA",
         sigle="DWA",
         description="Deutscher Wortatlas, hrsg. v. W. Mitzka u. L. E. Schmitt. Bd. 1 ff. Gießen 1951 ff.",
-    )
-    ELLING = Sammlung(
-        trace="Elling 1972",
-        groups="Auszüge|Elling",
     )
     EGGERT = Sammlung(
         trace="EGGERT",
@@ -1110,6 +1108,12 @@ class Sammlungen(Enum):
         description="Grupe, H., Dat Blüsenbook. Osnabrück 1926 [G. stammt aus Wellingen, Kr. Osnabrück]",
         kreis="Osn",
         ort="Wl",
+    )
+    HANSEN = Sammlung(
+        trace="Lip Hansen",
+        groups="Auszüge|Hansen",
+        sigle="Hansen",
+        description="Eine Wörtersammlung zur lippischen Mundart von W. Hansen [Zettelsammlung]",
     )
     HARTWIG_VOGELN = Sammlung(
         trace="Hartwig Vogeln.",
@@ -1223,6 +1227,16 @@ class Sammlungen(Enum):
         groups="Auszüge|Huntemann",
         description="Huntemann, J., Die plattdeutschen Namen unserer Kulturgewächse und der wildwachsenden Pflanzenarten. Oldenburg 21931",
     )
+    JB_EMSL = Sammlung(
+        trace="Jb. Emsl.",
+        groups="Auszüge|JahrbuchEmsland",
+        sigle="JbEmsl",
+        description="Jahrbuch des Emsländischen Heimatvereins. Bd. 1 ff. Meppen 1953 ff.; Bd. 11 ff. Lingen 1964 ff.",
+    )
+    JEURINK = Sammlung(
+        trace="Jeurink",
+        groups="Auszüge|Jeurink",
+    )
     KAHMANN = Sammlung(
         trace="Hs. Kahmann",
         groups="Auszüge|Kahmann",
@@ -1275,6 +1289,18 @@ class Sammlungen(Enum):
         description="Köppen, H., Verzeichniss der Idiotismen in plattdeutscher Mundart, volksthümlich in Dortmund und dessen Umgegend. Veröff. v. seinen Freunden u. Verehrern. Als Manuscript gedruckt. Dortmund 1877",
         kreis="Dor",
     )
+    KOESTER_BHF = Sammlung(
+        trace="Kös HF",
+        groups="Auszüge|KösterBurHollFast",
+        sigle="KösterB",
+        description="Köster, B., Bur, holl faste, wat du häst! Lingen a. d. Ems 1926 [Mundart d. Kr. Lingen. K. war Pfarrer in Glandorf, Kr. Osnabrück; *1869 in Lahn, Kr. Aschendorf; ^+ 1944 in Iburg, Kr. Osnabrück]",
+    )
+    KOESTER_JK = Sammlung(
+        trace="Kös JK",
+        groups="Auszüge|KösterJanKardel",
+        sigle="KösterJK",
+        description="Köster, B., Jan Kardel un siene Bande. Lingen a. d. Ems 1926 [Mundart des Hümmlings. Vgl. Bemerkungen zu KösterB]",
+    )
     KRAUTBUND = Sammlung(
         trace="Krautbund im Paderborner Gebiet",
         groups="Auszüge|Krautbund",
@@ -1290,6 +1316,11 @@ class Sammlungen(Enum):
         groups="Auszüge|LandoisEssink",
         sigle="LandoisFE",
         description="Landois, H., Frans Essink sien Liäwen un Driewen äs aolt Mönstersk Kind. Komischer Roman in 6 Abt. 1, Bi Liäwtieden. Leipzig 101905. 2, Nao sienen Daud. 101921. 3, Up de Tuckesburg. 21901. 4, Up de Seelenwanderung. 21909. 5, Prof. Dr. H. Landois. 1900 (Illustr. Bibliothek niederdeutscher Klassiker, 1—5)",
+    )
+    LEHNHOFF = Sammlung(
+        trace="Lehnhoff Spielbuch",
+        groups="Auszüge|Lehnhoff",
+        description="Westfälisches Spielbuch : 365 Jugend- und Volksspiele ; aus Wirklichkeit und Überlieferung gesammelt Wilhelm Lehnhoff",
     )
     LIN_BE_LW = Sammlung(
         trace="Lin Be|Lw",
@@ -1329,6 +1360,12 @@ class Sammlungen(Enum):
         sigle="Misgeld",
         description="Misgeld, H., Aolt-Riackelkusen. Stadt un Land. Skizzen aus dem Leben einer alten Stadt in Recklinghäuser Platt. Berlin o. J.",
         kreis="Rek",
+    )
+    MITT_HG = Sammlung(
+        trace="Mitt Hasegau",
+        groups="Auszüge|MitteilungenHasegau",
+        sigle="MittHg",
+        description="Mittheilungen des Vereins für Geschichte und Alterthumskunde des Hasegaues. H. 1 ff. Ankum, (später) Lingen 1887 ff.",
     )
     MOELLER = Sammlung(
         trace="Lhs Sm Möller",
@@ -1456,6 +1493,13 @@ class Sammlungen(Enum):
         trace="Raub Sp",
         groups="Auszüge|RaubSp",
     )
+    RAV_BL = Sammlung(
+        trace="Ravensb. Bl.",
+        groups="Auszüge|RavensbergerBlätter",
+        sigle="RavBl",
+        description="Ravensberger Blätter für Geschichts-, Volks- und Heimatkunde, hrsg. i. Auftr. d. Hist. Ver. f. d. Grafschaft Ravensberg. Jg. 1 ff. Bielefeld 1901 ff.; Jg. 50 ff.: Ravensberger Blätter. Organ d. Hist. Ver. f. d. Grafschaft Ravensberg. Bielefeld 1950 ff.",
+        landschaft="Ravensb",
+    )
     RECKELS = Sammlung(
         trace="Reckels",
         groups="Auszüge|Reckels",
@@ -1499,6 +1543,12 @@ class Sammlungen(Enum):
         sigle="Schlüter",
         description="Schlüter, J., Die niederländischen Wörter in der westmünsterländischen Mundart. Phil. Diss. Münster 1952 [Masch.-Schrift]",
     )
+    SCHMELZER = Sammlung(
+        trace="Schmelzer",
+        groups="Auszüge|Schmelzer",
+        sigle="Schmelzer",
+        description="Schmelzer, J., Unterschiede zwischen dem süderländischen und siegerländischen Wortschatz. Phil. Diss. Münster 1906",
+    )
     SCHOENHOFF = Sammlung(
         trace="Schönhoff Ems",
         groups="Auszüge|Schönhoff",
@@ -1519,6 +1569,13 @@ class Sammlungen(Enum):
         description="Schoppe, J., Die Mundart von Röckinghausen bei Wiedenbrück. 1930 [Unter Zugrundelegung der Arbeit von Wix. Hs. im Archiv des Westfälischen Wörterbuches]",
         kreis="Wie",
         ort="Rö",
+    )
+    SCHULHOF = Sammlung(
+        trace="Schulhof: Kr.Melle",
+        groups="Auszüge|Schulhof",
+        sigle="Schulhof",
+        description="Schulhof, F., Der Kreis Melle (Grönegau). Lingen a. d. Ems 1908 (Beiträge z. Heimatkunde d. Regierungsbezirks Osnabrück, 2)",
+        kreis="Mel",
     )
     SCHWAGMEYER = Sammlung(
         trace="Hiddenh. Schwagm.",
@@ -1585,6 +1642,10 @@ class Sammlungen(Enum):
         groups="Auszübe|VolkskundeAtlas",
         sigle="ADV",
         description="Atlas der Deutschen Volkskunde. Hrsg. von H. Harmjanz u. E. Röhr. 6. Lief. Leipzig 1937—1940. N. F. hrsg. v. M. Zender. Marburg 1958 ff.",
+    )
+    WA_KARTE = Sammlung(
+        trace="WA Karte",
+        groups="Auszüge|WAKArte",
     )
     WAGENFELD = Sammlung(
         trace="Wagenfeld Volksmund",
@@ -1678,26 +1739,6 @@ class Sammlungen(Enum):
         groups="Auszüge|ZrhwV",
         sigle="ZrhwV",
         description="Zeitschrift des Vereins für rheinische und westfälische Volkskunde. Jg. 1—30 Elberfeld 1904 bis 1933; Jg. 31—33: Westdeutsche Zeitschrift für Volkskunde. Zeitschrift des Vereins ... Wuppertal-Elberfeld 1934—1936",
-    )
-
-    ##############################################################
-    # Noch nicht überholt
-    ##############################################################
-
-    BRAKEL_HOEX = Sammlung(
-        trace="Brakel Höx",
-        kreis="Höx",
-        ort="Br",
-    )
-    OESEDE = Sammlung(  # Anonym
-        trace="Oesede, Kr. Ibrg",
-        kreis="Osn",
-        ort="Ös",
-    )
-    STF_KA = Sammlung(
-        trace="Stf Ka",
-        kreis="Stf",
-        ort="Ka",
     )
 
     ##############################################################
@@ -18092,6 +18133,16748 @@ class Sammlungen(Enum):
     ANON_WTG_NA = Sammlung(
         trace="Wtg Na",
         groups="Wortschatz|Anonym|Wtg Na",
+        kreis="Wtg",
+        ort="Na",
+    )
+
+    ##############################################################
+    # Unbestimmte Orte
+    ##############################################################
+    ANON_AHS_XY = Sammlung(
+        trace="Ahs Xy",
+        groups="Wortschatz|Anonym|Ahs Xy",
+        kreis="Ahs",
+        ort="Xy",
+    )
+    ANON_ALT_XY = Sammlung(
+        trace="Alt Xy",
+        groups="Wortschatz|Anonym|Alt Xy",
+        kreis="Alt",
+        ort="Xy",
+    )
+    ANON_ARN_XY = Sammlung(
+        trace="Arn Xy",
+        groups="Wortschatz|Anonym|Arn Xy",
+        kreis="Arn",
+        ort="Xy",
+    )
+    ANON_ASD_XY = Sammlung(
+        trace="Asd Xy",
+        groups="Wortschatz|Anonym|Asd Xy",
+        kreis="Asd",
+        ort="Xy",
+    )
+    ANON_BBR_XY = Sammlung(
+        trace="Bbr Xy",
+        groups="Wortschatz|Anonym|Bbr Xy",
+        kreis="Bbr",
+        ort="Xy",
+    )
+    ANON_BCH_XY = Sammlung(
+        trace="Bch Xy",
+        groups="Wortschatz|Anonym|Bch Xy",
+        kreis="Bch",
+        ort="Xy",
+    )
+    ANON_BEK_XY = Sammlung(
+        trace="Bek Xy",
+        groups="Wortschatz|Anonym|Bek Xy",
+        kreis="Bek",
+        ort="Xy",
+    )
+    ANON_BEN_XY = Sammlung(
+        trace="Ben Xy",
+        groups="Wortschatz|Anonym|Ben Xy",
+        kreis="Ben",
+        ort="Xy",
+    )
+    ANON_BIE_XY = Sammlung(
+        trace="Bie Xy",
+        groups="Wortschatz|Anonym|Bie Xy",
+        kreis="Bie",
+        ort="Xy",
+    )
+    ANON_BOR_XY = Sammlung(
+        trace="Bor Xy",
+        groups="Wortschatz|Anonym|Bor Xy",
+        kreis="Bor",
+        ort="Xy",
+    )
+    ANON_BRG_XY = Sammlung(
+        trace="Brg Xy",
+        groups="Wortschatz|Anonym|Brg Xy",
+        kreis="Brg",
+        ort="Xy",
+    )
+    ANON_BRI_XY = Sammlung(
+        trace="Bri Xy",
+        groups="Wortschatz|Anonym|Bri Xy",
+        kreis="Bri",
+        ort="Xy",
+    )
+    ANON_BÜK_XY = Sammlung(
+        trace="Bük Xy",
+        groups="Wortschatz|Anonym|Bük Xy",
+        kreis="Bük",
+        ort="Xy",
+    )
+    ANON_BÜR_XY = Sammlung(
+        trace="Bür Xy",
+        groups="Wortschatz|Anonym|Bür Xy",
+        kreis="Bür",
+        ort="Xy",
+    )
+    ANON_DET_XY = Sammlung(
+        trace="Det Xy",
+        groups="Wortschatz|Anonym|Det Xy",
+        kreis="Det",
+        ort="Xy",
+    )
+    ANON_DIE_XY = Sammlung(
+        trace="Die Xy",
+        groups="Wortschatz|Anonym|Die Xy",
+        kreis="Die",
+        ort="Xy",
+    )
+    ANON_DOR_XY = Sammlung(
+        trace="Dor Xy",
+        groups="Wortschatz|Anonym|Dor Xy",
+        kreis="Dor",
+        ort="Xy",
+    )
+    ANON_ENR_XY = Sammlung(
+        trace="Enr Xy",
+        groups="Wortschatz|Anonym|Enr Xy",
+        kreis="Enr",
+        ort="Xy",
+    )
+    ANON_ESS_XY = Sammlung(
+        trace="Ess Xy",
+        groups="Wortschatz|Anonym|Ess Xy",
+        kreis="Ess",
+        ort="Xy",
+    )
+    ANON_GEL_XY = Sammlung(
+        trace="Gel Xy",
+        groups="Wortschatz|Anonym|Gel Xy",
+        kreis="Gel",
+        ort="Xy",
+    )
+    ANON_HAG_XY = Sammlung(
+        trace="Hag Xy",
+        groups="Wortschatz|Anonym|Hag Xy",
+        kreis="Hag",
+        ort="Xy",
+    )
+    ANON_HAL_XY = Sammlung(
+        trace="Hal Xy",
+        groups="Wortschatz|Anonym|Hal Xy",
+        kreis="Hal",
+        ort="Xy",
+    )
+    ANON_HFD_XY = Sammlung(
+        trace="Hfd Xy",
+        groups="Wortschatz|Anonym|Hfd Xy",
+        kreis="Hfd",
+        ort="Xy",
+    )
+    ANON_HÖX_XY = Sammlung(
+        trace="Höx Xy",
+        groups="Wortschatz|Anonym|Höx Xy",
+        kreis="Höx",
+        ort="Xy",
+    )
+    ANON_ISL_XY = Sammlung(
+        trace="Isl Xy",
+        groups="Wortschatz|Anonym|Isl Xy",
+        kreis="Isl",
+        ort="Xy",
+    )
+    ANON_KLO_XY = Sammlung(
+        trace="Klo Xy",
+        groups="Wortschatz|Anonym|Klo Xy",
+        kreis="Klo",
+        ort="Xy",
+    )
+    ANON_KOS_XY = Sammlung(
+        trace="Kos Xy",
+        groups="Wortschatz|Anonym|Kos Xy",
+        kreis="Kos",
+        ort="Xy",
+    )
+    ANON_LEM_XY = Sammlung(
+        trace="Lem Xy",
+        groups="Wortschatz|Anonym|Lem Xy",
+        kreis="Lem",
+        ort="Xy",
+    )
+    ANON_LHS_XY = Sammlung(
+        trace="Lhs Xy",
+        groups="Wortschatz|Anonym|Lhs Xy",
+        kreis="Lhs",
+        ort="Xy",
+    )
+    ANON_LIN_XY = Sammlung(
+        trace="Lin Xy",
+        groups="Wortschatz|Anonym|Lin Xy",
+        kreis="Lin",
+        ort="Xy",
+    )
+    ANON_LST_XY = Sammlung(
+        trace="Lst Xy",
+        groups="Wortschatz|Anonym|Lst Xy",
+        kreis="Lst",
+        ort="Xy",
+    )
+    ANON_LÜB_XY = Sammlung(
+        trace="Lüb Xy",
+        groups="Wortschatz|Anonym|Lüb Xy",
+        kreis="Lüb",
+        ort="Xy",
+    )
+    ANON_MEL_XY = Sammlung(
+        trace="Mel Xy",
+        groups="Wortschatz|Anonym|Mel Xy",
+        kreis="Mel",
+        ort="Xy",
+    )
+    ANON_MEP_XY = Sammlung(
+        trace="Mep Xy",
+        groups="Wortschatz|Anonym|Mep Xy",
+        kreis="Mep",
+        ort="Xy",
+    )
+    ANON_MES_XY = Sammlung(
+        trace="Mes Xy",
+        groups="Wortschatz|Anonym|Mes Xy",
+        kreis="Mes",
+        ort="Xy",
+    )
+    ANON_MIN_XY = Sammlung(
+        trace="Min Xy",
+        groups="Wortschatz|Anonym|Min Xy",
+        kreis="Min",
+        ort="Xy",
+    )
+    ANON_MÜN_XY = Sammlung(
+        trace="Mün Xy",
+        groups="Wortschatz|Anonym|Mün Xy",
+        kreis="Mün",
+        ort="Xy",
+    )
+    ANON_NIE_XY = Sammlung(
+        trace="Nie Xy",
+        groups="Wortschatz|Anonym|Nie Xy",
+        kreis="Nie",
+        ort="Xy",
+    )
+    ANON_OLP_XY = Sammlung(
+        trace="Olp Xy",
+        groups="Wortschatz|Anonym|Olp Xy",
+        kreis="Olp",
+        ort="Xy",
+    )
+    ANON_OSN_XY = Sammlung(
+        trace="Osn Xy",
+        groups="Wortschatz|Anonym|Osn Xy",
+        kreis="Osn",
+        ort="Xy",
+    )
+    ANON_PAD_XY = Sammlung(
+        trace="Pad Xy",
+        groups="Wortschatz|Anonym|Pad Xy",
+        kreis="Pad",
+        ort="Xy",
+    )
+    ANON_REK_XY = Sammlung(
+        trace="Rek Xy",
+        groups="Wortschatz|Anonym|Rek Xy",
+        kreis="Rek",
+        ort="Xy",
+    )
+    ANON_SCH_XY = Sammlung(
+        trace="Sch Xy",
+        groups="Wortschatz|Anonym|Sch Xy",
+        kreis="Sch",
+        ort="Xy",
+    )
+    ANON_SOS_XY = Sammlung(
+        trace="Sos Xy",
+        groups="Wortschatz|Anonym|Sos Xy",
+        kreis="Sos",
+        ort="Xy",
+    )
+    ANON_STF_XY = Sammlung(
+        trace="Stf Xy",
+        groups="Wortschatz|Anonym|Stf Xy",
+        kreis="Stf",
+        ort="Xy",
+    )
+    ANON_STH_XY = Sammlung(
+        trace="Sth Xy",
+        groups="Wortschatz|Anonym|Sth Xy",
+        kreis="Sth",
+        ort="Xy",
+    )
+    ANON_TEK_XY = Sammlung(
+        trace="Tek Xy",
+        groups="Wortschatz|Anonym|Tek Xy",
+        kreis="Tek",
+        ort="Xy",
+    )
+    ANON_UNN_XY = Sammlung(
+        trace="Unn Xy",
+        groups="Wortschatz|Anonym|Unn Xy",
+        kreis="Unn",
+        ort="Xy",
+    )
+    ANON_VCH_XY = Sammlung(
+        trace="Vch Xy",
+        groups="Wortschatz|Anonym|Vch Xy",
+        kreis="Vch",
+        ort="Xy",
+    )
+    ANON_WAL_XY = Sammlung(
+        trace="Wal Xy",
+        groups="Wortschatz|Anonym|Wal Xy",
+        kreis="Wal",
+        ort="Xy",
+    )
+    ANON_WBG_XY = Sammlung(
+        trace="Wbg Xy",
+        groups="Wortschatz|Anonym|Wbg Xy",
+        kreis="Wbg",
+        ort="Xy",
+    )
+    ANON_WDF_XY = Sammlung(
+        trace="Wdf Xy",
+        groups="Wortschatz|Anonym|Wdf Xy",
+        kreis="Wdf",
+        ort="Xy",
+    )
+    ANON_WIE_XY = Sammlung(
+        trace="Wie Xy",
+        groups="Wortschatz|Anonym|Wie Xy",
+        kreis="Wie",
+        ort="Xy",
+    )
+    ANON_WIT_XY = Sammlung(
+        trace="Wit Xy",
+        groups="Wortschatz|Anonym|Wit Xy",
+        kreis="Wit",
+        ort="Xy",
+    )
+    ANON_WLG_XY = Sammlung(
+        trace="Wlg Xy",
+        groups="Wortschatz|Anonym|Wlg Xy",
+        kreis="Wlg",
+        ort="Xy",
+    )
+    ANON_WOL_XY = Sammlung(
+        trace="Wol Xy",
+        groups="Wortschatz|Anonym|Wol Xy",
+        kreis="Wol",
+        ort="Xy",
+    )
+    ANON_WTG_XY = Sammlung(
+        trace="Wtg Xy",
+        groups="Wortschatz|Anonym|Wtg Xy",
+        kreis="Wtg",
+        ort="Xy",
+    )
+
+    ##############################################################
+    # Weitere lautschriftliche Klassen
+    ##############################################################
+    LAUT_AHS_AB = Sammlung(
+        trace="Ahs Ab",
+        groups="Lautschrift|Ahs Ab",
+        kreis="Ahs",
+        ort="Ab",
+    )
+    LAUT_AHS_AE = Sammlung(
+        trace="Ahs Ae",
+        groups="Lautschrift|Ahs Ae",
+        kreis="Ahs",
+        ort="Ae",
+    )
+    LAUT_AHS_AH = Sammlung(
+        trace="Ahs Ah",
+        groups="Lautschrift|Ahs Ah",
+        kreis="Ahs",
+        ort="Ah",
+    )
+    LAUT_AHS_AL = Sammlung(
+        trace="Ahs Al",
+        groups="Lautschrift|Ahs Al",
+        kreis="Ahs",
+        ort="Al",
+    )
+    LAUT_AHS_AM = Sammlung(
+        trace="Ahs Am",
+        groups="Lautschrift|Ahs Am",
+        kreis="Ahs",
+        ort="Am",
+    )
+    LAUT_AHS_AO = Sammlung(
+        trace="Ahs Ao",
+        groups="Lautschrift|Ahs Ao",
+        kreis="Ahs",
+        ort="Ao",
+    )
+    LAUT_AHS_AS = Sammlung(
+        trace="Ahs As",
+        groups="Lautschrift|Ahs As",
+        kreis="Ahs",
+        ort="As",
+    )
+    LAUT_AHS_DÖ = Sammlung(
+        trace="Ahs Dö",
+        groups="Lautschrift|Ahs Dö",
+        kreis="Ahs",
+        ort="Dö",
+    )
+    LAUT_AHS_EG = Sammlung(
+        trace="Ahs Eg",
+        groups="Lautschrift|Ahs Eg",
+        kreis="Ahs",
+        ort="Eg",
+    )
+    LAUT_AHS_EP = Sammlung(
+        trace="Ahs Ep",
+        groups="Lautschrift|Ahs Ep",
+        kreis="Ahs",
+        ort="Ep",
+    )
+    LAUT_AHS_ES = Sammlung(
+        trace="Ahs Es",
+        groups="Lautschrift|Ahs Es",
+        kreis="Ahs",
+        ort="Es",
+    )
+    LAUT_AHS_GE = Sammlung(
+        trace="Ahs Ge",
+        groups="Lautschrift|Ahs Ge",
+        kreis="Ahs",
+        ort="Ge",
+    )
+    LAUT_AHS_GM = Sammlung(
+        trace="Ahs Gm",
+        groups="Lautschrift|Ahs Gm",
+        kreis="Ahs",
+        ort="Gm",
+    )
+    LAUT_AHS_GR = Sammlung(
+        trace="Ahs Gr",
+        groups="Lautschrift|Ahs Gr",
+        kreis="Ahs",
+        ort="Gr",
+    )
+    LAUT_AHS_GS = Sammlung(
+        trace="Ahs Gs",
+        groups="Lautschrift|Ahs Gs",
+        kreis="Ahs",
+        ort="Gs",
+    )
+    LAUT_AHS_GX = Sammlung(
+        trace="Ahs Gx",
+        groups="Lautschrift|Ahs Gx",
+        kreis="Ahs",
+        ort="Gx",
+    )
+    LAUT_AHS_HE = Sammlung(
+        trace="Ahs He",
+        groups="Lautschrift|Ahs He",
+        kreis="Ahs",
+        ort="He",
+    )
+    LAUT_AHS_HG = Sammlung(
+        trace="Ahs Hg",
+        groups="Lautschrift|Ahs Hg",
+        kreis="Ahs",
+        ort="Hg",
+    )
+    LAUT_AHS_HO = Sammlung(
+        trace="Ahs Ho",
+        groups="Lautschrift|Ahs Ho",
+        kreis="Ahs",
+        ort="Ho",
+    )
+    LAUT_AHS_HW = Sammlung(
+        trace="Ahs Hw",
+        groups="Lautschrift|Ahs Hw",
+        kreis="Ahs",
+        ort="Hw",
+    )
+    LAUT_AHS_KM = Sammlung(
+        trace="Ahs Km",
+        groups="Lautschrift|Ahs Km",
+        kreis="Ahs",
+        ort="Km",
+    )
+    LAUT_AHS_KW = Sammlung(
+        trace="Ahs Kw",
+        groups="Lautschrift|Ahs Kw",
+        kreis="Ahs",
+        ort="Kw",
+    )
+    LAUT_AHS_LE = Sammlung(
+        trace="Ahs Le",
+        groups="Lautschrift|Ahs Le",
+        kreis="Ahs",
+        ort="Le",
+    )
+    LAUT_AHS_LÜ = Sammlung(
+        trace="Ahs Lü",
+        groups="Lautschrift|Ahs Lü",
+        kreis="Ahs",
+        ort="Lü",
+    )
+    LAUT_AHS_NB = Sammlung(
+        trace="Ahs Nb",
+        groups="Lautschrift|Ahs Nb",
+        kreis="Ahs",
+        ort="Nb",
+    )
+    LAUT_AHS_ÖD = Sammlung(
+        trace="Ahs Öd",
+        groups="Lautschrift|Ahs Öd",
+        kreis="Ahs",
+        ort="Öd",
+    )
+    LAUT_AHS_OT = Sammlung(
+        trace="Ahs Ot",
+        groups="Lautschrift|Ahs Ot",
+        kreis="Ahs",
+        ort="Ot",
+    )
+    LAUT_AHS_QU = Sammlung(
+        trace="Ahs Qu",
+        groups="Lautschrift|Ahs Qu",
+        kreis="Ahs",
+        ort="Qu",
+    )
+    LAUT_AHS_RB = Sammlung(
+        trace="Ahs Rb",
+        groups="Lautschrift|Ahs Rb",
+        kreis="Ahs",
+        ort="Rb",
+    )
+    LAUT_AHS_SC = Sammlung(
+        trace="Ahs Sc",
+        groups="Lautschrift|Ahs Sc",
+        kreis="Ahs",
+        ort="Sc",
+    )
+    LAUT_AHS_SL = Sammlung(
+        trace="Ahs Sl",
+        groups="Lautschrift|Ahs Sl",
+        kreis="Ahs",
+        ort="Sl",
+    )
+    LAUT_AHS_ST = Sammlung(
+        trace="Ahs St",
+        groups="Lautschrift|Ahs St",
+        kreis="Ahs",
+        ort="St",
+    )
+    LAUT_AHS_VR = Sammlung(
+        trace="Ahs Vr",
+        groups="Lautschrift|Ahs Vr",
+        kreis="Ahs",
+        ort="Vr",
+    )
+    LAUT_AHS_WD = Sammlung(
+        trace="Ahs Wd",
+        groups="Lautschrift|Ahs Wd",
+        kreis="Ahs",
+        ort="Wd",
+    )
+    LAUT_AHS_WE = Sammlung(
+        trace="Ahs We",
+        groups="Lautschrift|Ahs We",
+        kreis="Ahs",
+        ort="We",
+    )
+    LAUT_AHS_WF = Sammlung(
+        trace="Ahs Wf",
+        groups="Lautschrift|Ahs Wf",
+        kreis="Ahs",
+        ort="Wf",
+    )
+    LAUT_AHS_WG = Sammlung(
+        trace="Ahs Wg",
+        groups="Lautschrift|Ahs Wg",
+        kreis="Ahs",
+        ort="Wg",
+    )
+    LAUT_AHS_WR = Sammlung(
+        trace="Ahs Wr",
+        groups="Lautschrift|Ahs Wr",
+        kreis="Ahs",
+        ort="Wr",
+    )
+    LAUT_AHS_WÜ = Sammlung(
+        trace="Ahs Wü",
+        groups="Lautschrift|Ahs Wü",
+        kreis="Ahs",
+        ort="Wü",
+    )
+    LAUT_AHS_WW = Sammlung(
+        trace="Ahs Ww",
+        groups="Lautschrift|Ahs Ww",
+        kreis="Ahs",
+        ort="Ww",
+    )
+    LAUT_AHS_ZW = Sammlung(
+        trace="Ahs Zw",
+        groups="Lautschrift|Ahs Zw",
+        kreis="Ahs",
+        ort="Zw",
+    )
+    LAUT_ALT_AH = Sammlung(
+        trace="Alt Ah",
+        groups="Lautschrift|Alt Ah",
+        kreis="Alt",
+        ort="Ah",
+    )
+    LAUT_ALT_AL = Sammlung(
+        trace="Alt Al",
+        groups="Lautschrift|Alt Al",
+        kreis="Alt",
+        ort="Al",
+    )
+    LAUT_ALT_AM = Sammlung(
+        trace="Alt Am",
+        groups="Lautschrift|Alt Am",
+        kreis="Alt",
+        ort="Am",
+    )
+    LAUT_ALT_AN = Sammlung(
+        trace="Alt An",
+        groups="Lautschrift|Alt An",
+        kreis="Alt",
+        ort="An",
+    )
+    LAUT_ALT_AU = Sammlung(
+        trace="Alt Au",
+        groups="Lautschrift|Alt Au",
+        kreis="Alt",
+        ort="Au",
+    )
+    LAUT_ALT_BÄ = Sammlung(
+        trace="Alt Bä",
+        groups="Lautschrift|Alt Bä",
+        kreis="Alt",
+        ort="Bä",
+    )
+    LAUT_ALT_BB = Sammlung(
+        trace="Alt Bb",
+        groups="Lautschrift|Alt Bb",
+        kreis="Alt",
+        ort="Bb",
+    )
+    LAUT_ALT_BF = Sammlung(
+        trace="Alt Bf",
+        groups="Lautschrift|Alt Bf",
+        kreis="Alt",
+        ort="Bf",
+    )
+    LAUT_ALT_BG = Sammlung(
+        trace="Alt Bg",
+        groups="Lautschrift|Alt Bg",
+        kreis="Alt",
+        ort="Bg",
+    )
+    LAUT_ALT_BH = Sammlung(
+        trace="Alt Bh",
+        groups="Lautschrift|Alt Bh",
+        kreis="Alt",
+        ort="Bh",
+    )
+    LAUT_ALT_BL = Sammlung(
+        trace="Alt Bl",
+        groups="Lautschrift|Alt Bl",
+        kreis="Alt",
+        ort="Bl",
+    )
+    LAUT_ALT_BR = Sammlung(
+        trace="Alt Br",
+        groups="Lautschrift|Alt Br",
+        kreis="Alt",
+        ort="Br",
+    )
+    LAUT_ALT_BW = Sammlung(
+        trace="Alt Bw",
+        groups="Lautschrift|Alt Bw",
+        kreis="Alt",
+        ort="Bw",
+    )
+    LAUT_ALT_DA = Sammlung(
+        trace="Alt Da",
+        groups="Lautschrift|Alt Da",
+        kreis="Alt",
+        ort="Da",
+    )
+    LAUT_ALT_DB = Sammlung(
+        trace="Alt Db",
+        groups="Lautschrift|Alt Db",
+        kreis="Alt",
+        ort="Db",
+    )
+    LAUT_ALT_EB = Sammlung(
+        trace="Alt Eb",
+        groups="Lautschrift|Alt Eb",
+        kreis="Alt",
+        ort="Eb",
+    )
+    LAUT_ALT_EG = Sammlung(
+        trace="Alt Eg",
+        groups="Lautschrift|Alt Eg",
+        kreis="Alt",
+        ort="Eg",
+    )
+    LAUT_ALT_EI = Sammlung(
+        trace="Alt Ei",
+        groups="Lautschrift|Alt Ei",
+        kreis="Alt",
+        ort="Ei",
+    )
+    LAUT_ALT_ES = Sammlung(
+        trace="Alt Es",
+        groups="Lautschrift|Alt Es",
+        kreis="Alt",
+        ort="Es",
+    )
+    LAUT_ALT_EV = Sammlung(
+        trace="Alt Ev",
+        groups="Lautschrift|Alt Ev",
+        kreis="Alt",
+        ort="Ev",
+    )
+    LAUT_ALT_FR = Sammlung(
+        trace="Alt Fr",
+        groups="Lautschrift|Alt Fr",
+        kreis="Alt",
+        ort="Fr",
+    )
+    LAUT_ALT_GL = Sammlung(
+        trace="Alt Gl",
+        groups="Lautschrift|Alt Gl",
+        kreis="Alt",
+        ort="Gl",
+    )
+    LAUT_ALT_GR = Sammlung(
+        trace="Alt Gr",
+        groups="Lautschrift|Alt Gr",
+        kreis="Alt",
+        ort="Gr",
+    )
+    LAUT_ALT_HA = Sammlung(
+        trace="Alt Ha",
+        groups="Lautschrift|Alt Ha",
+        kreis="Alt",
+        ort="Ha",
+    )
+    LAUT_ALT_HB = Sammlung(
+        trace="Alt Hb",
+        groups="Lautschrift|Alt Hb",
+        kreis="Alt",
+        ort="Hb",
+    )
+    LAUT_ALT_HC = Sammlung(
+        trace="Alt Hc",
+        groups="Lautschrift|Alt Hc",
+        kreis="Alt",
+        ort="Hc",
+    )
+    LAUT_ALT_HD = Sammlung(
+        trace="Alt Hd",
+        groups="Lautschrift|Alt Hd",
+        kreis="Alt",
+        ort="Hd",
+    )
+    LAUT_ALT_HE = Sammlung(
+        trace="Alt He",
+        groups="Lautschrift|Alt He",
+        kreis="Alt",
+        ort="He",
+    )
+    LAUT_ALT_HF = Sammlung(
+        trace="Alt Hf",
+        groups="Lautschrift|Alt Hf",
+        kreis="Alt",
+        ort="Hf",
+    )
+    LAUT_ALT_HH = Sammlung(
+        trace="Alt Hh",
+        groups="Lautschrift|Alt Hh",
+        kreis="Alt",
+        ort="Hh",
+    )
+    LAUT_ALT_HI = Sammlung(
+        trace="Alt Hi",
+        groups="Lautschrift|Alt Hi",
+        kreis="Alt",
+        ort="Hi",
+    )
+    LAUT_ALT_HL = Sammlung(
+        trace="Alt Hl",
+        groups="Lautschrift|Alt Hl",
+        kreis="Alt",
+        ort="Hl",
+    )
+    LAUT_ALT_HR = Sammlung(
+        trace="Alt Hr",
+        groups="Lautschrift|Alt Hr",
+        kreis="Alt",
+        ort="Hr",
+    )
+    LAUT_ALT_HS = Sammlung(
+        trace="Alt Hs",
+        groups="Lautschrift|Alt Hs",
+        kreis="Alt",
+        ort="Hs",
+    )
+    LAUT_ALT_HÜ = Sammlung(
+        trace="Alt Hü",
+        groups="Lautschrift|Alt Hü",
+        kreis="Alt",
+        ort="Hü",
+    )
+    LAUT_ALT_HW = Sammlung(
+        trace="Alt Hw",
+        groups="Lautschrift|Alt Hw",
+        kreis="Alt",
+        ort="Hw",
+    )
+    LAUT_ALT_HX = Sammlung(
+        trace="Alt Hx",
+        groups="Lautschrift|Alt Hx",
+        kreis="Alt",
+        ort="Hx",
+    )
+    LAUT_ALT_IM = Sammlung(
+        trace="Alt Im",
+        groups="Lautschrift|Alt Im",
+        kreis="Alt",
+        ort="Im",
+    )
+    LAUT_ALT_IN = Sammlung(
+        trace="Alt In",
+        groups="Lautschrift|Alt In",
+        kreis="Alt",
+        ort="In",
+    )
+    LAUT_ALT_KI = Sammlung(
+        trace="Alt Ki",
+        groups="Lautschrift|Alt Ki",
+        kreis="Alt",
+        ort="Ki",
+    )
+    LAUT_ALT_KL = Sammlung(
+        trace="Alt Kl",
+        groups="Lautschrift|Alt Kl",
+        kreis="Alt",
+        ort="Kl",
+    )
+    LAUT_ALT_LE = Sammlung(
+        trace="Alt Le",
+        groups="Lautschrift|Alt Le",
+        kreis="Alt",
+        ort="Le",
+    )
+    LAUT_ALT_LL = Sammlung(
+        trace="Alt Ll",
+        groups="Lautschrift|Alt Ll",
+        kreis="Alt",
+        ort="Ll",
+    )
+    LAUT_ALT_LÖ = Sammlung(
+        trace="Alt Lö",
+        groups="Lautschrift|Alt Lö",
+        kreis="Alt",
+        ort="Lö",
+    )
+    LAUT_ALT_LS = Sammlung(
+        trace="Alt Ls",
+        groups="Lautschrift|Alt Ls",
+        kreis="Alt",
+        ort="Ls",
+    )
+    LAUT_ALT_LÜ = Sammlung(
+        trace="Alt Lü",
+        groups="Lautschrift|Alt Lü",
+        kreis="Alt",
+        ort="Lü",
+    )
+    LAUT_ALT_ME = Sammlung(
+        trace="Alt Me",
+        groups="Lautschrift|Alt Me",
+        kreis="Alt",
+        ort="Me",
+    )
+    LAUT_ALT_MH = Sammlung(
+        trace="Alt Mh",
+        groups="Lautschrift|Alt Mh",
+        kreis="Alt",
+        ort="Mh",
+    )
+    LAUT_ALT_MR = Sammlung(
+        trace="Alt Mr",
+        groups="Lautschrift|Alt Mr",
+        kreis="Alt",
+        ort="Mr",
+    )
+    LAUT_ALT_MS = Sammlung(
+        trace="Alt Ms",
+        groups="Lautschrift|Alt Ms",
+        kreis="Alt",
+        ort="Ms",
+    )
+    LAUT_ALT_NA = Sammlung(
+        trace="Alt Na",
+        groups="Lautschrift|Alt Na",
+        kreis="Alt",
+        ort="Na",
+    )
+    LAUT_ALT_NE = Sammlung(
+        trace="Alt Ne",
+        groups="Lautschrift|Alt Ne",
+        kreis="Alt",
+        ort="Ne",
+    )
+    LAUT_ALT_NH = Sammlung(
+        trace="Alt Nh",
+        groups="Lautschrift|Alt Nh",
+        kreis="Alt",
+        ort="Nh",
+    )
+    LAUT_ALT_NM = Sammlung(
+        trace="Alt Nm",
+        groups="Lautschrift|Alt Nm",
+        kreis="Alt",
+        ort="Nm",
+    )
+    LAUT_ALT_NR = Sammlung(
+        trace="Alt Nr",
+        groups="Lautschrift|Alt Nr",
+        kreis="Alt",
+        ort="Nr",
+    )
+    LAUT_ALT_NS = Sammlung(
+        trace="Alt Ns",
+        groups="Lautschrift|Alt Ns",
+        kreis="Alt",
+        ort="Ns",
+    )
+    LAUT_ALT_OB = Sammlung(
+        trace="Alt Ob",
+        groups="Lautschrift|Alt Ob",
+        kreis="Alt",
+        ort="Ob",
+    )
+    LAUT_ALT_OE = Sammlung(
+        trace="Alt Oe",
+        groups="Lautschrift|Alt Oe",
+        kreis="Alt",
+        ort="Oe",
+    )
+    LAUT_ALT_ÖH = Sammlung(
+        trace="Alt Öh",
+        groups="Lautschrift|Alt Öh",
+        kreis="Alt",
+        ort="Öh",
+    )
+    LAUT_ALT_OL = Sammlung(
+        trace="Alt Ol",
+        groups="Lautschrift|Alt Ol",
+        kreis="Alt",
+        ort="Ol",
+    )
+    LAUT_ALT_OR = Sammlung(
+        trace="Alt Or",
+        groups="Lautschrift|Alt Or",
+        kreis="Alt",
+        ort="Or",
+    )
+    LAUT_ALT_PB = Sammlung(
+        trace="Alt Pb",
+        groups="Lautschrift|Alt Pb",
+        kreis="Alt",
+        ort="Pb",
+    )
+    LAUT_ALT_PL = Sammlung(
+        trace="Alt Pl",
+        groups="Lautschrift|Alt Pl",
+        kreis="Alt",
+        ort="Pl",
+    )
+    LAUT_ALT_RÄ = Sammlung(
+        trace="Alt Rä",
+        groups="Lautschrift|Alt Rä",
+        kreis="Alt",
+        ort="Rä",
+    )
+    LAUT_ALT_RM = Sammlung(
+        trace="Alt Rm",
+        groups="Lautschrift|Alt Rm",
+        kreis="Alt",
+        ort="Rm",
+    )
+    LAUT_ALT_RÖ = Sammlung(
+        trace="Alt Rö",
+        groups="Lautschrift|Alt Rö",
+        kreis="Alt",
+        ort="Rö",
+    )
+    LAUT_ALT_RS = Sammlung(
+        trace="Alt Rs",
+        groups="Lautschrift|Alt Rs",
+        kreis="Alt",
+        ort="Rs",
+    )
+    LAUT_ALT_RW = Sammlung(
+        trace="Alt Rw",
+        groups="Lautschrift|Alt Rw",
+        kreis="Alt",
+        ort="Rw",
+    )
+    LAUT_ALT_SB = Sammlung(
+        trace="Alt Sb",
+        groups="Lautschrift|Alt Sb",
+        kreis="Alt",
+        ort="Sb",
+    )
+    LAUT_ALT_SC = Sammlung(
+        trace="Alt Sc",
+        groups="Lautschrift|Alt Sc",
+        kreis="Alt",
+        ort="Sc",
+    )
+    LAUT_ALT_SE = Sammlung(
+        trace="Alt Se",
+        groups="Lautschrift|Alt Se",
+        kreis="Alt",
+        ort="Se",
+    )
+    LAUT_ALT_SM = Sammlung(
+        trace="Alt Sm",
+        groups="Lautschrift|Alt Sm",
+        kreis="Alt",
+        ort="Sm",
+    )
+    LAUT_ALT_SR = Sammlung(
+        trace="Alt Sr",
+        groups="Lautschrift|Alt Sr",
+        kreis="Alt",
+        ort="Sr",
+    )
+    LAUT_ALT_SU = Sammlung(
+        trace="Alt Su",
+        groups="Lautschrift|Alt Su",
+        kreis="Alt",
+        ort="Su",
+    )
+    LAUT_ALT_SW = Sammlung(
+        trace="Alt Sw",
+        groups="Lautschrift|Alt Sw",
+        kreis="Alt",
+        ort="Sw",
+    )
+    LAUT_ALT_VA = Sammlung(
+        trace="Alt Va",
+        groups="Lautschrift|Alt Va",
+        kreis="Alt",
+        ort="Va",
+    )
+    LAUT_ALT_VE = Sammlung(
+        trace="Alt Ve",
+        groups="Lautschrift|Alt Ve",
+        kreis="Alt",
+        ort="Ve",
+    )
+    LAUT_ALT_VS = Sammlung(
+        trace="Alt Vs",
+        groups="Lautschrift|Alt Vs",
+        kreis="Alt",
+        ort="Vs",
+    )
+    LAUT_ALT_WD = Sammlung(
+        trace="Alt Wd",
+        groups="Lautschrift|Alt Wd",
+        kreis="Alt",
+        ort="Wd",
+    )
+    LAUT_ALT_WI = Sammlung(
+        trace="Alt Wi",
+        groups="Lautschrift|Alt Wi",
+        kreis="Alt",
+        ort="Wi",
+    )
+    LAUT_ALT_WW = Sammlung(
+        trace="Alt Ww",
+        groups="Lautschrift|Alt Ww",
+        kreis="Alt",
+        ort="Ww",
+    )
+    LAUT_ARN_AD = Sammlung(
+        trace="Arn Ad",
+        groups="Lautschrift|Arn Ad",
+        kreis="Arn",
+        ort="Ad",
+    )
+    LAUT_ARN_AF = Sammlung(
+        trace="Arn Af",
+        groups="Lautschrift|Arn Af",
+        kreis="Arn",
+        ort="Af",
+    )
+    LAUT_ARN_AH = Sammlung(
+        trace="Arn Ah",
+        groups="Lautschrift|Arn Ah",
+        kreis="Arn",
+        ort="Ah",
+    )
+    LAUT_ARN_AL = Sammlung(
+        trace="Arn Al",
+        groups="Lautschrift|Arn Al",
+        kreis="Arn",
+        ort="Al",
+    )
+    LAUT_ARN_AM = Sammlung(
+        trace="Arn Am",
+        groups="Lautschrift|Arn Am",
+        kreis="Arn",
+        ort="Am",
+    )
+    LAUT_ARN_AR = Sammlung(
+        trace="Arn Ar",
+        groups="Lautschrift|Arn Ar",
+        kreis="Arn",
+        ort="Ar",
+    )
+    LAUT_ARN_BA = Sammlung(
+        trace="Arn Ba",
+        groups="Lautschrift|Arn Ba",
+        kreis="Arn",
+        ort="Ba",
+    )
+    LAUT_ARN_BB = Sammlung(
+        trace="Arn Bb",
+        groups="Lautschrift|Arn Bb",
+        kreis="Arn",
+        ort="Bb",
+    )
+    LAUT_ARN_BE = Sammlung(
+        trace="Arn Be",
+        groups="Lautschrift|Arn Be",
+        kreis="Arn",
+        ort="Be",
+    )
+    LAUT_ARN_BH = Sammlung(
+        trace="Arn Bh",
+        groups="Lautschrift|Arn Bh",
+        kreis="Arn",
+        ort="Bh",
+    )
+    LAUT_ARN_BK = Sammlung(
+        trace="Arn Bk",
+        groups="Lautschrift|Arn Bk",
+        kreis="Arn",
+        ort="Bk",
+    )
+    LAUT_ARN_BL = Sammlung(
+        trace="Arn Bl",
+        groups="Lautschrift|Arn Bl",
+        kreis="Arn",
+        ort="Bl",
+    )
+    LAUT_ARN_BM = Sammlung(
+        trace="Arn Bm",
+        groups="Lautschrift|Arn Bm",
+        kreis="Arn",
+        ort="Bm",
+    )
+    LAUT_ARN_BR = Sammlung(
+        trace="Arn Br",
+        groups="Lautschrift|Arn Br",
+        kreis="Arn",
+        ort="Br",
+    )
+    LAUT_ARN_EB = Sammlung(
+        trace="Arn Eb",
+        groups="Lautschrift|Arn Eb",
+        kreis="Arn",
+        ort="Eb",
+    )
+    LAUT_ARN_EC = Sammlung(
+        trace="Arn Ec",
+        groups="Lautschrift|Arn Ec",
+        kreis="Arn",
+        ort="Ec",
+    )
+    LAUT_ARN_EH = Sammlung(
+        trace="Arn Eh",
+        groups="Lautschrift|Arn Eh",
+        kreis="Arn",
+        ort="Eh",
+    )
+    LAUT_ARN_EN = Sammlung(
+        trace="Arn En",
+        groups="Lautschrift|Arn En",
+        kreis="Arn",
+        ort="En",
+    )
+    LAUT_ARN_ES = Sammlung(
+        trace="Arn Es",
+        groups="Lautschrift|Arn Es",
+        kreis="Arn",
+        ort="Es",
+    )
+    LAUT_ARN_FR = Sammlung(
+        trace="Arn Fr",
+        groups="Lautschrift|Arn Fr",
+        kreis="Arn",
+        ort="Fr",
+    )
+    LAUT_ARN_GB = Sammlung(
+        trace="Arn Gb",
+        groups="Lautschrift|Arn Gb",
+        kreis="Arn",
+        ort="Gb",
+    )
+    LAUT_ARN_GR = Sammlung(
+        trace="Arn Gr",
+        groups="Lautschrift|Arn Gr",
+        kreis="Arn",
+        ort="Gr",
+    )
+    LAUT_ARN_HA = Sammlung(
+        trace="Arn Ha",
+        groups="Lautschrift|Arn Ha",
+        kreis="Arn",
+        ort="Ha",
+    )
+    LAUT_ARN_HB = Sammlung(
+        trace="Arn Hb",
+        groups="Lautschrift|Arn Hb",
+        kreis="Arn",
+        ort="Hb",
+    )
+    LAUT_ARN_HE = Sammlung(
+        trace="Arn He",
+        groups="Lautschrift|Arn He",
+        kreis="Arn",
+        ort="He",
+    )
+    LAUT_ARN_HF = Sammlung(
+        trace="Arn Hf",
+        groups="Lautschrift|Arn Hf",
+        kreis="Arn",
+        ort="Hf",
+    )
+    LAUT_ARN_HG = Sammlung(
+        trace="Arn Hg",
+        groups="Lautschrift|Arn Hg",
+        kreis="Arn",
+        ort="Hg",
+    )
+    LAUT_ARN_HÖ = Sammlung(
+        trace="Arn Hö",
+        groups="Lautschrift|Arn Hö",
+        kreis="Arn",
+        ort="Hö",
+    )
+    LAUT_ARN_HÜ = Sammlung(
+        trace="Arn Hü",
+        groups="Lautschrift|Arn Hü",
+        kreis="Arn",
+        ort="Hü",
+    )
+    LAUT_ARN_HZ = Sammlung(
+        trace="Arn Hz",
+        groups="Lautschrift|Arn Hz",
+        kreis="Arn",
+        ort="Hz",
+    )
+    LAUT_ARN_KÜ = Sammlung(
+        trace="Arn Kü",
+        groups="Lautschrift|Arn Kü",
+        kreis="Arn",
+        ort="Kü",
+    )
+    LAUT_ARN_LI = Sammlung(
+        trace="Arn Li",
+        groups="Lautschrift|Arn Li",
+        kreis="Arn",
+        ort="Li",
+    )
+    LAUT_ARN_LS = Sammlung(
+        trace="Arn Ls",
+        groups="Lautschrift|Arn Ls",
+        kreis="Arn",
+        ort="Ls",
+    )
+    LAUT_ARN_MB = Sammlung(
+        trace="Arn Mb",
+        groups="Lautschrift|Arn Mb",
+        kreis="Arn",
+        ort="Mb",
+    )
+    LAUT_ARN_ME = Sammlung(
+        trace="Arn Me",
+        groups="Lautschrift|Arn Me",
+        kreis="Arn",
+        ort="Me",
+    )
+    LAUT_ARN_MH = Sammlung(
+        trace="Arn Mh",
+        groups="Lautschrift|Arn Mh",
+        kreis="Arn",
+        ort="Mh",
+    )
+    LAUT_ARN_MÜ = Sammlung(
+        trace="Arn Mü",
+        groups="Lautschrift|Arn Mü",
+        kreis="Arn",
+        ort="Mü",
+    )
+    LAUT_ARN_NH = Sammlung(
+        trace="Arn Nh",
+        groups="Lautschrift|Arn Nh",
+        kreis="Arn",
+        ort="Nh",
+    )
+    LAUT_ARN_NI = Sammlung(
+        trace="Arn Ni",
+        groups="Lautschrift|Arn Ni",
+        kreis="Arn",
+        ort="Ni",
+    )
+    LAUT_ARN_NN = Sammlung(
+        trace="Arn Nn",
+        groups="Lautschrift|Arn Nn",
+        kreis="Arn",
+        ort="Nn",
+    )
+    LAUT_ARN_OB = Sammlung(
+        trace="Arn Ob",
+        groups="Lautschrift|Arn Ob",
+        kreis="Arn",
+        ort="Ob",
+    )
+    LAUT_ARN_ÖH = Sammlung(
+        trace="Arn Öh",
+        groups="Lautschrift|Arn Öh",
+        kreis="Arn",
+        ort="Öh",
+    )
+    LAUT_ARN_ÖL = Sammlung(
+        trace="Arn Öl",
+        groups="Lautschrift|Arn Öl",
+        kreis="Arn",
+        ort="Öl",
+    )
+    LAUT_ARN_ÖV = Sammlung(
+        trace="Arn Öv",
+        groups="Lautschrift|Arn Öv",
+        kreis="Arn",
+        ort="Öv",
+    )
+    LAUT_ARN_RB = Sammlung(
+        trace="Arn Rb",
+        groups="Lautschrift|Arn Rb",
+        kreis="Arn",
+        ort="Rb",
+    )
+    LAUT_ARN_SF = Sammlung(
+        trace="Arn Sf",
+        groups="Lautschrift|Arn Sf",
+        kreis="Arn",
+        ort="Sf",
+    )
+    LAUT_ARN_SI = Sammlung(
+        trace="Arn Si",
+        groups="Lautschrift|Arn Si",
+        kreis="Arn",
+        ort="Si",
+    )
+    LAUT_ARN_SM = Sammlung(
+        trace="Arn Sm",
+        groups="Lautschrift|Arn Sm",
+        kreis="Arn",
+        ort="Sm",
+    )
+    LAUT_ARN_ST = Sammlung(
+        trace="Arn St",
+        groups="Lautschrift|Arn St",
+        kreis="Arn",
+        ort="St",
+    )
+    LAUT_ARN_SU = Sammlung(
+        trace="Arn Su",
+        groups="Lautschrift|Arn Su",
+        kreis="Arn",
+        ort="Su",
+    )
+    LAUT_ARN_ÜT = Sammlung(
+        trace="Arn Üt",
+        groups="Lautschrift|Arn Üt",
+        kreis="Arn",
+        ort="Üt",
+    )
+    LAUT_ARN_VI = Sammlung(
+        trace="Arn Vi",
+        groups="Lautschrift|Arn Vi",
+        kreis="Arn",
+        ort="Vi",
+    )
+    LAUT_ARN_VO = Sammlung(
+        trace="Arn Vo",
+        groups="Lautschrift|Arn Vo",
+        kreis="Arn",
+        ort="Vo",
+    )
+    LAUT_ARN_VW = Sammlung(
+        trace="Arn Vw",
+        groups="Lautschrift|Arn Vw",
+        kreis="Arn",
+        ort="Vw",
+    )
+    LAUT_ARN_WA = Sammlung(
+        trace="Arn Wa",
+        groups="Lautschrift|Arn Wa",
+        kreis="Arn",
+        ort="Wa",
+    )
+    LAUT_ARN_WD = Sammlung(
+        trace="Arn Wd",
+        groups="Lautschrift|Arn Wd",
+        kreis="Arn",
+        ort="Wd",
+    )
+    LAUT_ARN_WE = Sammlung(
+        trace="Arn We",
+        groups="Lautschrift|Arn We",
+        kreis="Arn",
+        ort="We",
+    )
+    LAUT_ARN_WF = Sammlung(
+        trace="Arn Wf",
+        groups="Lautschrift|Arn Wf",
+        kreis="Arn",
+        ort="Wf",
+    )
+    LAUT_ARN_WH = Sammlung(
+        trace="Arn Wh",
+        groups="Lautschrift|Arn Wh",
+        kreis="Arn",
+        ort="Wh",
+    )
+    LAUT_ARN_WW = Sammlung(
+        trace="Arn Ww",
+        groups="Lautschrift|Arn Ww",
+        kreis="Arn",
+        ort="Ww",
+    )
+    LAUT_ASD_AD = Sammlung(
+        trace="Asd Ad",
+        groups="Lautschrift|Asd Ad",
+        kreis="Asd",
+        ort="Ad",
+    )
+    LAUT_ASD_AL = Sammlung(
+        trace="Asd Al",
+        groups="Lautschrift|Asd Al",
+        kreis="Asd",
+        ort="Al",
+    )
+    LAUT_ASD_BB = Sammlung(
+        trace="Asd Bb",
+        groups="Lautschrift|Asd Bb",
+        kreis="Asd",
+        ort="Bb",
+    )
+    LAUT_ASD_BC = Sammlung(
+        trace="Asd Bc",
+        groups="Lautschrift|Asd Bc",
+        kreis="Asd",
+        ort="Bc",
+    )
+    LAUT_ASD_BE = Sammlung(
+        trace="Asd Be",
+        groups="Lautschrift|Asd Be",
+        kreis="Asd",
+        ort="Be",
+    )
+    LAUT_ASD_BH = Sammlung(
+        trace="Asd Bh",
+        groups="Lautschrift|Asd Bh",
+        kreis="Asd",
+        ort="Bh",
+    )
+    LAUT_ASD_BK = Sammlung(
+        trace="Asd Bk",
+        groups="Lautschrift|Asd Bk",
+        kreis="Asd",
+        ort="Bk",
+    )
+    LAUT_ASD_BM = Sammlung(
+        trace="Asd Bm",
+        groups="Lautschrift|Asd Bm",
+        kreis="Asd",
+        ort="Bm",
+    )
+    LAUT_ASD_BO = Sammlung(
+        trace="Asd Bo",
+        groups="Lautschrift|Asd Bo",
+        kreis="Asd",
+        ort="Bo",
+    )
+    LAUT_ASD_BÖ = Sammlung(
+        trace="Asd Bö",
+        groups="Lautschrift|Asd Bö",
+        kreis="Asd",
+        ort="Bö",
+    )
+    LAUT_ASD_BR = Sammlung(
+        trace="Asd Br",
+        groups="Lautschrift|Asd Br",
+        kreis="Asd",
+        ort="Br",
+    )
+    LAUT_ASD_BW = Sammlung(
+        trace="Asd Bw",
+        groups="Lautschrift|Asd Bw",
+        kreis="Asd",
+        ort="Bw",
+    )
+    LAUT_ASD_DE = Sammlung(
+        trace="Asd De",
+        groups="Lautschrift|Asd De",
+        kreis="Asd",
+        ort="De",
+    )
+    LAUT_ASD_DÖ = Sammlung(
+        trace="Asd Dö",
+        groups="Lautschrift|Asd Dö",
+        kreis="Asd",
+        ort="Dö",
+    )
+    LAUT_ASD_DÜ = Sammlung(
+        trace="Asd Dü",
+        groups="Lautschrift|Asd Dü",
+        kreis="Asd",
+        ort="Dü",
+    )
+    LAUT_ASD_EI = Sammlung(
+        trace="Asd Ei",
+        groups="Lautschrift|Asd Ei",
+        kreis="Asd",
+        ort="Ei",
+    )
+    LAUT_ASD_ES = Sammlung(
+        trace="Asd Es",
+        groups="Lautschrift|Asd Es",
+        kreis="Asd",
+        ort="Es",
+    )
+    LAUT_ASD_FB = Sammlung(
+        trace="Asd Fb",
+        groups="Lautschrift|Asd Fb",
+        kreis="Asd",
+        ort="Fb",
+    )
+    LAUT_ASD_GB = Sammlung(
+        trace="Asd Gb",
+        groups="Lautschrift|Asd Gb",
+        kreis="Asd",
+        ort="Gb",
+    )
+    LAUT_ASD_HA = Sammlung(
+        trace="Asd Ha",
+        groups="Lautschrift|Asd Ha",
+        kreis="Asd",
+        ort="Ha",
+    )
+    LAUT_ASD_HB = Sammlung(
+        trace="Asd Hb",
+        groups="Lautschrift|Asd Hb",
+        kreis="Asd",
+        ort="Hb",
+    )
+    LAUT_ASD_HE = Sammlung(
+        trace="Asd He",
+        groups="Lautschrift|Asd He",
+        kreis="Asd",
+        ort="He",
+    )
+    LAUT_ASD_HI = Sammlung(
+        trace="Asd Hi",
+        groups="Lautschrift|Asd Hi",
+        kreis="Asd",
+        ort="Hi",
+    )
+    LAUT_ASD_HÜ = Sammlung(
+        trace="Asd Hü",
+        groups="Lautschrift|Asd Hü",
+        kreis="Asd",
+        ort="Hü",
+    )
+    LAUT_ASD_LA = Sammlung(
+        trace="Asd La",
+        groups="Lautschrift|Asd La",
+        kreis="Asd",
+        ort="La",
+    )
+    LAUT_ASD_LE = Sammlung(
+        trace="Asd Le",
+        groups="Lautschrift|Asd Le",
+        kreis="Asd",
+        ort="Le",
+    )
+    LAUT_ASD_LN = Sammlung(
+        trace="Asd Ln",
+        groups="Lautschrift|Asd Ln",
+        kreis="Asd",
+        ort="Ln",
+    )
+    LAUT_ASD_LO = Sammlung(
+        trace="Asd Lo",
+        groups="Lautschrift|Asd Lo",
+        kreis="Asd",
+        ort="Lo",
+    )
+    LAUT_ASD_ME = Sammlung(
+        trace="Asd Me",
+        groups="Lautschrift|Asd Me",
+        kreis="Asd",
+        ort="Me",
+    )
+    LAUT_ASD_NB = Sammlung(
+        trace="Asd Nb",
+        groups="Lautschrift|Asd Nb",
+        kreis="Asd",
+        ort="Nb",
+    )
+    LAUT_ASD_ND = Sammlung(
+        trace="Asd Nd",
+        groups="Lautschrift|Asd Nd",
+        kreis="Asd",
+        ort="Nd",
+    )
+    LAUT_ASD_NE = Sammlung(
+        trace="Asd Ne",
+        groups="Lautschrift|Asd Ne",
+        kreis="Asd",
+        ort="Ne",
+    )
+    LAUT_ASD_NH = Sammlung(
+        trace="Asd Nh",
+        groups="Lautschrift|Asd Nh",
+        kreis="Asd",
+        ort="Nh",
+    )
+    LAUT_ASD_NI = Sammlung(
+        trace="Asd Ni",
+        groups="Lautschrift|Asd Ni",
+        kreis="Asd",
+        ort="Ni",
+    )
+    LAUT_ASD_NL = Sammlung(
+        trace="Asd Nl",
+        groups="Lautschrift|Asd Nl",
+        kreis="Asd",
+        ort="Nl",
+    )
+    LAUT_ASD_NR = Sammlung(
+        trace="Asd Nr",
+        groups="Lautschrift|Asd Nr",
+        kreis="Asd",
+        ort="Nr",
+    )
+    LAUT_ASD_NS = Sammlung(
+        trace="Asd Ns",
+        groups="Lautschrift|Asd Ns",
+        kreis="Asd",
+        ort="Ns",
+    )
+    LAUT_ASD_NV = Sammlung(
+        trace="Asd Nv",
+        groups="Lautschrift|Asd Nv",
+        kreis="Asd",
+        ort="Nv",
+    )
+    LAUT_ASD_NW = Sammlung(
+        trace="Asd Nw",
+        groups="Lautschrift|Asd Nw",
+        kreis="Asd",
+        ort="Nw",
+    )
+    LAUT_ASD_OL = Sammlung(
+        trace="Asd Ol",
+        groups="Lautschrift|Asd Ol",
+        kreis="Asd",
+        ort="Ol",
+    )
+    LAUT_ASD_PB = Sammlung(
+        trace="Asd Pb",
+        groups="Lautschrift|Asd Pb",
+        kreis="Asd",
+        ort="Pb",
+    )
+    LAUT_ASD_RD = Sammlung(
+        trace="Asd Rd",
+        groups="Lautschrift|Asd Rd",
+        kreis="Asd",
+        ort="Rd",
+    )
+    LAUT_ASD_RH = Sammlung(
+        trace="Asd Rh",
+        groups="Lautschrift|Asd Rh",
+        kreis="Asd",
+        ort="Rh",
+    )
+    LAUT_ASD_SÖ = Sammlung(
+        trace="Asd Sö",
+        groups="Lautschrift|Asd Sö",
+        kreis="Asd",
+        ort="Sö",
+    )
+    LAUT_ASD_SP = Sammlung(
+        trace="Asd Sp",
+        groups="Lautschrift|Asd Sp",
+        kreis="Asd",
+        ort="Sp",
+    )
+    LAUT_ASD_ST = Sammlung(
+        trace="Asd St",
+        groups="Lautschrift|Asd St",
+        kreis="Asd",
+        ort="St",
+    )
+    LAUT_ASD_SU = Sammlung(
+        trace="Asd Su",
+        groups="Lautschrift|Asd Su",
+        kreis="Asd",
+        ort="Su",
+    )
+    LAUT_ASD_SW = Sammlung(
+        trace="Asd Sw",
+        groups="Lautschrift|Asd Sw",
+        kreis="Asd",
+        ort="Sw",
+    )
+    LAUT_ASD_TD = Sammlung(
+        trace="Asd Td",
+        groups="Lautschrift|Asd Td",
+        kreis="Asd",
+        ort="Td",
+    )
+    LAUT_ASD_VR = Sammlung(
+        trace="Asd Vr",
+        groups="Lautschrift|Asd Vr",
+        kreis="Asd",
+        ort="Vr",
+    )
+    LAUT_ASD_WA = Sammlung(
+        trace="Asd Wa",
+        groups="Lautschrift|Asd Wa",
+        kreis="Asd",
+        ort="Wa",
+    )
+    LAUT_ASD_WC = Sammlung(
+        trace="Asd Wc",
+        groups="Lautschrift|Asd Wc",
+        kreis="Asd",
+        ort="Wc",
+    )
+    LAUT_ASD_WE = Sammlung(
+        trace="Asd We",
+        groups="Lautschrift|Asd We",
+        kreis="Asd",
+        ort="We",
+    )
+    LAUT_ASD_WI = Sammlung(
+        trace="Asd Wi",
+        groups="Lautschrift|Asd Wi",
+        kreis="Asd",
+        ort="Wi",
+    )
+    LAUT_ASD_WL = Sammlung(
+        trace="Asd Wl",
+        groups="Lautschrift|Asd Wl",
+        kreis="Asd",
+        ort="Wl",
+    )
+    LAUT_ASD_WM = Sammlung(
+        trace="Asd Wm",
+        groups="Lautschrift|Asd Wm",
+        kreis="Asd",
+        ort="Wm",
+    )
+    LAUT_ASD_WS = Sammlung(
+        trace="Asd Ws",
+        groups="Lautschrift|Asd Ws",
+        kreis="Asd",
+        ort="Ws",
+    )
+    LAUT_BBR_AC = Sammlung(
+        trace="Bbr Ac",
+        groups="Lautschrift|Bbr Ac",
+        kreis="Bbr",
+        ort="Ac",
+    )
+    LAUT_BBR_AD = Sammlung(
+        trace="Bbr Ad",
+        groups="Lautschrift|Bbr Ad",
+        kreis="Bbr",
+        ort="Ad",
+    )
+    LAUT_BBR_AH = Sammlung(
+        trace="Bbr Ah",
+        groups="Lautschrift|Bbr Ah",
+        kreis="Bbr",
+        ort="Ah",
+    )
+    LAUT_BBR_AL = Sammlung(
+        trace="Bbr Al",
+        groups="Lautschrift|Bbr Al",
+        kreis="Bbr",
+        ort="Al",
+    )
+    LAUT_BBR_AN = Sammlung(
+        trace="Bbr An",
+        groups="Lautschrift|Bbr An",
+        kreis="Bbr",
+        ort="An",
+    )
+    LAUT_BBR_AS = Sammlung(
+        trace="Bbr As",
+        groups="Lautschrift|Bbr As",
+        kreis="Bbr",
+        ort="As",
+    )
+    LAUT_BBR_BA = Sammlung(
+        trace="Bbr Ba",
+        groups="Lautschrift|Bbr Ba",
+        kreis="Bbr",
+        ort="Ba",
+    )
+    LAUT_BBR_BE = Sammlung(
+        trace="Bbr Be",
+        groups="Lautschrift|Bbr Be",
+        kreis="Bbr",
+        ort="Be",
+    )
+    LAUT_BBR_BG = Sammlung(
+        trace="Bbr Bg",
+        groups="Lautschrift|Bbr Bg",
+        kreis="Bbr",
+        ort="Bg",
+    )
+    LAUT_BBR_BH = Sammlung(
+        trace="Bbr Bh",
+        groups="Lautschrift|Bbr Bh",
+        kreis="Bbr",
+        ort="Bh",
+    )
+    LAUT_BBR_BI = Sammlung(
+        trace="Bbr Bi",
+        groups="Lautschrift|Bbr Bi",
+        kreis="Bbr",
+        ort="Bi",
+    )
+    LAUT_BBR_BK = Sammlung(
+        trace="Bbr Bk",
+        groups="Lautschrift|Bbr Bk",
+        kreis="Bbr",
+        ort="Bk",
+    )
+    LAUT_BBR_BO = Sammlung(
+        trace="Bbr Bo",
+        groups="Lautschrift|Bbr Bo",
+        kreis="Bbr",
+        ort="Bo",
+    )
+    LAUT_BBR_BR = Sammlung(
+        trace="Bbr Br",
+        groups="Lautschrift|Bbr Br",
+        kreis="Bbr",
+        ort="Br",
+    )
+    LAUT_BBR_BS = Sammlung(
+        trace="Bbr Bs",
+        groups="Lautschrift|Bbr Bs",
+        kreis="Bbr",
+        ort="Bs",
+    )
+    LAUT_BBR_DA = Sammlung(
+        trace="Bbr Da",
+        groups="Lautschrift|Bbr Da",
+        kreis="Bbr",
+        ort="Da",
+    )
+    LAUT_BBR_DH = Sammlung(
+        trace="Bbr Dh",
+        groups="Lautschrift|Bbr Dh",
+        kreis="Bbr",
+        ort="Dh",
+    )
+    LAUT_BBR_EN = Sammlung(
+        trace="Bbr En",
+        groups="Lautschrift|Bbr En",
+        kreis="Bbr",
+        ort="En",
+    )
+    LAUT_BBR_EP = Sammlung(
+        trace="Bbr Ep",
+        groups="Lautschrift|Bbr Ep",
+        kreis="Bbr",
+        ort="Ep",
+    )
+    LAUT_BBR_ET = Sammlung(
+        trace="Bbr Et",
+        groups="Lautschrift|Bbr Et",
+        kreis="Bbr",
+        ort="Et",
+    )
+    LAUT_BBR_EV = Sammlung(
+        trace="Bbr Ev",
+        groups="Lautschrift|Bbr Ev",
+        kreis="Bbr",
+        ort="Ev",
+    )
+    LAUT_BBR_FA = Sammlung(
+        trace="Bbr Fa",
+        groups="Lautschrift|Bbr Fa",
+        kreis="Bbr",
+        ort="Fa",
+    )
+    LAUT_BBR_FÜ = Sammlung(
+        trace="Bbr Fü",
+        groups="Lautschrift|Bbr Fü",
+        kreis="Bbr",
+        ort="Fü",
+    )
+    LAUT_BBR_GD = Sammlung(
+        trace="Bbr Gd",
+        groups="Lautschrift|Bbr Gd",
+        kreis="Bbr",
+        ort="Gd",
+    )
+    LAUT_BBR_GE = Sammlung(
+        trace="Bbr Ge",
+        groups="Lautschrift|Bbr Ge",
+        kreis="Bbr",
+        ort="Ge",
+    )
+    LAUT_BBR_GF = Sammlung(
+        trace="Bbr Gf",
+        groups="Lautschrift|Bbr Gf",
+        kreis="Bbr",
+        ort="Gf",
+    )
+    LAUT_BBR_GL = Sammlung(
+        trace="Bbr Gl",
+        groups="Lautschrift|Bbr Gl",
+        kreis="Bbr",
+        ort="Gl",
+    )
+    LAUT_BBR_GM = Sammlung(
+        trace="Bbr Gm",
+        groups="Lautschrift|Bbr Gm",
+        kreis="Bbr",
+        ort="Gm",
+    )
+    LAUT_BBR_GR = Sammlung(
+        trace="Bbr Gr",
+        groups="Lautschrift|Bbr Gr",
+        kreis="Bbr",
+        ort="Gr",
+    )
+    LAUT_BBR_HA = Sammlung(
+        trace="Bbr Ha",
+        groups="Lautschrift|Bbr Ha",
+        kreis="Bbr",
+        ort="Ha",
+    )
+    LAUT_BBR_HE = Sammlung(
+        trace="Bbr He",
+        groups="Lautschrift|Bbr He",
+        kreis="Bbr",
+        ort="He",
+    )
+    LAUT_BBR_HK = Sammlung(
+        trace="Bbr Hk",
+        groups="Lautschrift|Bbr Hk",
+        kreis="Bbr",
+        ort="Hk",
+    )
+    LAUT_BBR_HL = Sammlung(
+        trace="Bbr Hl",
+        groups="Lautschrift|Bbr Hl",
+        kreis="Bbr",
+        ort="Hl",
+    )
+    LAUT_BBR_HM = Sammlung(
+        trace="Bbr Hm",
+        groups="Lautschrift|Bbr Hm",
+        kreis="Bbr",
+        ort="Hm",
+    )
+    LAUT_BBR_HÖ = Sammlung(
+        trace="Bbr Hö",
+        groups="Lautschrift|Bbr Hö",
+        kreis="Bbr",
+        ort="Hö",
+    )
+    LAUT_BBR_HP = Sammlung(
+        trace="Bbr Hp",
+        groups="Lautschrift|Bbr Hp",
+        kreis="Bbr",
+        ort="Hp",
+    )
+    LAUT_BBR_HR = Sammlung(
+        trace="Bbr Hr",
+        groups="Lautschrift|Bbr Hr",
+        kreis="Bbr",
+        ort="Hr",
+    )
+    LAUT_BBR_HS = Sammlung(
+        trace="Bbr Hs",
+        groups="Lautschrift|Bbr Hs",
+        kreis="Bbr",
+        ort="Hs",
+    )
+    LAUT_BBR_HX = Sammlung(
+        trace="Bbr Hx",
+        groups="Lautschrift|Bbr Hx",
+        kreis="Bbr",
+        ort="Hx",
+    )
+    LAUT_BBR_KA = Sammlung(
+        trace="Bbr Ka",
+        groups="Lautschrift|Bbr Ka",
+        kreis="Bbr",
+        ort="Ka",
+    )
+    LAUT_BBR_KB = Sammlung(
+        trace="Bbr Kb",
+        groups="Lautschrift|Bbr Kb",
+        kreis="Bbr",
+        ort="Kb",
+    )
+    LAUT_BBR_KK = Sammlung(
+        trace="Bbr Kk",
+        groups="Lautschrift|Bbr Kk",
+        kreis="Bbr",
+        ort="Kk",
+    )
+    LAUT_BBR_KM = Sammlung(
+        trace="Bbr Km",
+        groups="Lautschrift|Bbr Km",
+        kreis="Bbr",
+        ort="Km",
+    )
+    LAUT_BBR_LA = Sammlung(
+        trace="Bbr La",
+        groups="Lautschrift|Bbr La",
+        kreis="Bbr",
+        ort="La",
+    )
+    LAUT_BBR_LB = Sammlung(
+        trace="Bbr Lb",
+        groups="Lautschrift|Bbr Lb",
+        kreis="Bbr",
+        ort="Lb",
+    )
+    LAUT_BBR_LE = Sammlung(
+        trace="Bbr Le",
+        groups="Lautschrift|Bbr Le",
+        kreis="Bbr",
+        ort="Le",
+    )
+    LAUT_BBR_LI = Sammlung(
+        trace="Bbr Li",
+        groups="Lautschrift|Bbr Li",
+        kreis="Bbr",
+        ort="Li",
+    )
+    LAUT_BBR_LO = Sammlung(
+        trace="Bbr Lo",
+        groups="Lautschrift|Bbr Lo",
+        kreis="Bbr",
+        ort="Lo",
+    )
+    LAUT_BBR_LT = Sammlung(
+        trace="Bbr Lt",
+        groups="Lautschrift|Bbr Lt",
+        kreis="Bbr",
+        ort="Lt",
+    )
+    LAUT_BBR_ME = Sammlung(
+        trace="Bbr Me",
+        groups="Lautschrift|Bbr Me",
+        kreis="Bbr",
+        ort="Me",
+    )
+    LAUT_BBR_MZ = Sammlung(
+        trace="Bbr Mz",
+        groups="Lautschrift|Bbr Mz",
+        kreis="Bbr",
+        ort="Mz",
+    )
+    LAUT_BBR_NK = Sammlung(
+        trace="Bbr Nk",
+        groups="Lautschrift|Bbr Nk",
+        kreis="Bbr",
+        ort="Nk",
+    )
+    LAUT_BBR_NO = Sammlung(
+        trace="Bbr No",
+        groups="Lautschrift|Bbr No",
+        kreis="Bbr",
+        ort="No",
+    )
+    LAUT_BBR_OM = Sammlung(
+        trace="Bbr Om",
+        groups="Lautschrift|Bbr Om",
+        kreis="Bbr",
+        ort="Om",
+    )
+    LAUT_BBR_OR = Sammlung(
+        trace="Bbr Or",
+        groups="Lautschrift|Bbr Or",
+        kreis="Bbr",
+        ort="Or",
+    )
+    LAUT_BBR_PL = Sammlung(
+        trace="Bbr Pl",
+        groups="Lautschrift|Bbr Pl",
+        kreis="Bbr",
+        ort="Pl",
+    )
+    LAUT_BBR_PR = Sammlung(
+        trace="Bbr Pr",
+        groups="Lautschrift|Bbr Pr",
+        kreis="Bbr",
+        ort="Pr",
+    )
+    LAUT_BBR_QU = Sammlung(
+        trace="Bbr Qu",
+        groups="Lautschrift|Bbr Qu",
+        kreis="Bbr",
+        ort="Qu",
+    )
+    LAUT_BBR_RE = Sammlung(
+        trace="Bbr Re",
+        groups="Lautschrift|Bbr Re",
+        kreis="Bbr",
+        ort="Re",
+    )
+    LAUT_BBR_RF = Sammlung(
+        trace="Bbr Rf",
+        groups="Lautschrift|Bbr Rf",
+        kreis="Bbr",
+        ort="Rf",
+    )
+    LAUT_BBR_RH = Sammlung(
+        trace="Bbr Rh",
+        groups="Lautschrift|Bbr Rh",
+        kreis="Bbr",
+        ort="Rh",
+    )
+    LAUT_BBR_RI = Sammlung(
+        trace="Bbr Ri",
+        groups="Lautschrift|Bbr Ri",
+        kreis="Bbr",
+        ort="Ri",
+    )
+    LAUT_BBR_RL = Sammlung(
+        trace="Bbr Rl",
+        groups="Lautschrift|Bbr Rl",
+        kreis="Bbr",
+        ort="Rl",
+    )
+    LAUT_BBR_RÜ = Sammlung(
+        trace="Bbr Rü",
+        groups="Lautschrift|Bbr Rü",
+        kreis="Bbr",
+        ort="Rü",
+    )
+    LAUT_BBR_SE = Sammlung(
+        trace="Bbr Se",
+        groups="Lautschrift|Bbr Se",
+        kreis="Bbr",
+        ort="Se",
+    )
+    LAUT_BBR_SL = Sammlung(
+        trace="Bbr Sl",
+        groups="Lautschrift|Bbr Sl",
+        kreis="Bbr",
+        ort="Sl",
+    )
+    LAUT_BBR_SM = Sammlung(
+        trace="Bbr Sm",
+        groups="Lautschrift|Bbr Sm",
+        kreis="Bbr",
+        ort="Sm",
+    )
+    LAUT_BBR_SÖ = Sammlung(
+        trace="Bbr Sö",
+        groups="Lautschrift|Bbr Sö",
+        kreis="Bbr",
+        ort="Sö",
+    )
+    LAUT_BBR_SU = Sammlung(
+        trace="Bbr Su",
+        groups="Lautschrift|Bbr Su",
+        kreis="Bbr",
+        ort="Su",
+    )
+    LAUT_BBR_SW = Sammlung(
+        trace="Bbr Sw",
+        groups="Lautschrift|Bbr Sw",
+        kreis="Bbr",
+        ort="Sw",
+    )
+    LAUT_BBR_TA = Sammlung(
+        trace="Bbr Ta",
+        groups="Lautschrift|Bbr Ta",
+        kreis="Bbr",
+        ort="Ta",
+    )
+    LAUT_BBR_ÜF = Sammlung(
+        trace="Bbr Üf",
+        groups="Lautschrift|Bbr Üf",
+        kreis="Bbr",
+        ort="Üf",
+    )
+    LAUT_BBR_VC = Sammlung(
+        trace="Bbr Vc",
+        groups="Lautschrift|Bbr Vc",
+        kreis="Bbr",
+        ort="Vc",
+    )
+    LAUT_BBR_VE = Sammlung(
+        trace="Bbr Ve",
+        groups="Lautschrift|Bbr Ve",
+        kreis="Bbr",
+        ort="Ve",
+    )
+    LAUT_BBR_VI = Sammlung(
+        trace="Bbr Vi",
+        groups="Lautschrift|Bbr Vi",
+        kreis="Bbr",
+        ort="Vi",
+    )
+    LAUT_BBR_VO = Sammlung(
+        trace="Bbr Vo",
+        groups="Lautschrift|Bbr Vo",
+        kreis="Bbr",
+        ort="Vo",
+    )
+    LAUT_BBR_VÖ = Sammlung(
+        trace="Bbr Vö",
+        groups="Lautschrift|Bbr Vö",
+        kreis="Bbr",
+        ort="Vö",
+    )
+    LAUT_BBR_WB = Sammlung(
+        trace="Bbr Wb",
+        groups="Lautschrift|Bbr Wb",
+        kreis="Bbr",
+        ort="Wb",
+    )
+    LAUT_BBR_WE = Sammlung(
+        trace="Bbr We",
+        groups="Lautschrift|Bbr We",
+        kreis="Bbr",
+        ort="We",
+    )
+    LAUT_BBR_WH = Sammlung(
+        trace="Bbr Wh",
+        groups="Lautschrift|Bbr Wh",
+        kreis="Bbr",
+        ort="Wh",
+    )
+    LAUT_BBR_WS = Sammlung(
+        trace="Bbr Ws",
+        groups="Lautschrift|Bbr Ws",
+        kreis="Bbr",
+        ort="Ws",
+    )
+    LAUT_BBR_WU = Sammlung(
+        trace="Bbr Wu",
+        groups="Lautschrift|Bbr Wu",
+        kreis="Bbr",
+        ort="Wu",
+    )
+    LAUT_BBR_WW = Sammlung(
+        trace="Bbr Ww",
+        groups="Lautschrift|Bbr Ww",
+        kreis="Bbr",
+        ort="Ww",
+    )
+    LAUT_BCH_AB = Sammlung(
+        trace="Bch Ab",
+        groups="Lautschrift|Bch Ab",
+        kreis="Bch",
+        ort="Ab",
+    )
+    LAUT_BCH_BO = Sammlung(
+        trace="Bch Bo",
+        groups="Lautschrift|Bch Bo",
+        kreis="Bch",
+        ort="Bo",
+    )
+    LAUT_BCH_BÖ = Sammlung(
+        trace="Bch Bö",
+        groups="Lautschrift|Bch Bö",
+        kreis="Bch",
+        ort="Bö",
+    )
+    LAUT_BCH_BR = Sammlung(
+        trace="Bch Br",
+        groups="Lautschrift|Bch Br",
+        kreis="Bch",
+        ort="Br",
+    )
+    LAUT_BCH_GE = Sammlung(
+        trace="Bch Ge",
+        groups="Lautschrift|Bch Ge",
+        kreis="Bch",
+        ort="Ge",
+    )
+    LAUT_BCH_HA = Sammlung(
+        trace="Bch Ha",
+        groups="Lautschrift|Bch Ha",
+        kreis="Bch",
+        ort="Ha",
+    )
+    LAUT_BCH_HE = Sammlung(
+        trace="Bch He",
+        groups="Lautschrift|Bch He",
+        kreis="Bch",
+        ort="He",
+    )
+    LAUT_BCH_HI = Sammlung(
+        trace="Bch Hi",
+        groups="Lautschrift|Bch Hi",
+        kreis="Bch",
+        ort="Hi",
+    )
+    LAUT_BCH_HO = Sammlung(
+        trace="Bch Ho",
+        groups="Lautschrift|Bch Ho",
+        kreis="Bch",
+        ort="Ho",
+    )
+    LAUT_BCH_HP = Sammlung(
+        trace="Bch Hp",
+        groups="Lautschrift|Bch Hp",
+        kreis="Bch",
+        ort="Hp",
+    )
+    LAUT_BCH_LD = Sammlung(
+        trace="Bch Ld",
+        groups="Lautschrift|Bch Ld",
+        kreis="Bch",
+        ort="Ld",
+    )
+    LAUT_BCH_LD1 = Sammlung(
+        trace="Bch Ld1",
+        groups="Lautschrift|Bch Ld1",
+        kreis="Bch",
+        ort="Ld1",
+    )
+    LAUT_BCH_LI = Sammlung(
+        trace="Bch Li",
+        groups="Lautschrift|Bch Li",
+        kreis="Bch",
+        ort="Li",
+    )
+    LAUT_BCH_LR = Sammlung(
+        trace="Bch Lr",
+        groups="Lautschrift|Bch Lr",
+        kreis="Bch",
+        ort="Lr",
+    )
+    LAUT_BCH_LT = Sammlung(
+        trace="Bch Lt",
+        groups="Lautschrift|Bch Lt",
+        kreis="Bch",
+        ort="Lt",
+    )
+    LAUT_BCH_SE = Sammlung(
+        trace="Bch Se",
+        groups="Lautschrift|Bch Se",
+        kreis="Bch",
+        ort="Se",
+    )
+    LAUT_BCH_SO = Sammlung(
+        trace="Bch So",
+        groups="Lautschrift|Bch So",
+        kreis="Bch",
+        ort="So",
+    )
+    LAUT_BCH_SP = Sammlung(
+        trace="Bch Sp",
+        groups="Lautschrift|Bch Sp",
+        kreis="Bch",
+        ort="Sp",
+    )
+    LAUT_BCH_ST = Sammlung(
+        trace="Bch St",
+        groups="Lautschrift|Bch St",
+        kreis="Bch",
+        ort="St",
+    )
+    LAUT_BCH_ST1 = Sammlung(
+        trace="Bch St1",
+        groups="Lautschrift|Bch St1",
+        kreis="Bch",
+        ort="St1",
+    )
+    LAUT_BCH_WA = Sammlung(
+        trace="Bch Wa",
+        groups="Lautschrift|Bch Wa",
+        kreis="Bch",
+        ort="Wa",
+    )
+    LAUT_BCH_WE = Sammlung(
+        trace="Bch We",
+        groups="Lautschrift|Bch We",
+        kreis="Bch",
+        ort="We",
+    )
+    LAUT_BCH_WT = Sammlung(
+        trace="Bch Wt",
+        groups="Lautschrift|Bch Wt",
+        kreis="Bch",
+        ort="Wt",
+    )
+    LAUT_BEK_AA = Sammlung(
+        trace="Bek Aa",
+        groups="Lautschrift|Bek Aa",
+        kreis="Bek",
+        ort="Aa",
+    )
+    LAUT_BEK_AC = Sammlung(
+        trace="Bek Ac",
+        groups="Lautschrift|Bek Ac",
+        kreis="Bek",
+        ort="Ac",
+    )
+    LAUT_BEK_AL = Sammlung(
+        trace="Bek Al",
+        groups="Lautschrift|Bek Al",
+        kreis="Bek",
+        ort="Al",
+    )
+    LAUT_BEK_BB = Sammlung(
+        trace="Bek Bb",
+        groups="Lautschrift|Bek Bb",
+        kreis="Bek",
+        ort="Bb",
+    )
+    LAUT_BEK_BE = Sammlung(
+        trace="Bek Be",
+        groups="Lautschrift|Bek Be",
+        kreis="Bek",
+        ort="Be",
+    )
+    LAUT_BEK_BF = Sammlung(
+        trace="Bek Bf",
+        groups="Lautschrift|Bek Bf",
+        kreis="Bek",
+        ort="Bf",
+    )
+    LAUT_BEK_BK = Sammlung(
+        trace="Bek Bk",
+        groups="Lautschrift|Bek Bk",
+        kreis="Bek",
+        ort="Bk",
+    )
+    LAUT_BEK_DB = Sammlung(
+        trace="Bek Db",
+        groups="Lautschrift|Bek Db",
+        kreis="Bek",
+        ort="Db",
+    )
+    LAUT_BEK_DI = Sammlung(
+        trace="Bek Di",
+        groups="Lautschrift|Bek Di",
+        kreis="Bek",
+        ort="Di",
+    )
+    LAUT_BEK_EK = Sammlung(
+        trace="Bek Ek",
+        groups="Lautschrift|Bek Ek",
+        kreis="Bek",
+        ort="Ek",
+    )
+    LAUT_BEK_EL = Sammlung(
+        trace="Bek El",
+        groups="Lautschrift|Bek El",
+        kreis="Bek",
+        ort="El",
+    )
+    LAUT_BEK_EN = Sammlung(
+        trace="Bek En",
+        groups="Lautschrift|Bek En",
+        kreis="Bek",
+        ort="En",
+    )
+    LAUT_BEK_GÖ = Sammlung(
+        trace="Bek Gö",
+        groups="Lautschrift|Bek Gö",
+        kreis="Bek",
+        ort="Gö",
+    )
+    LAUT_BEK_HE = Sammlung(
+        trace="Bek He",
+        groups="Lautschrift|Bek He",
+        kreis="Bek",
+        ort="He",
+    )
+    LAUT_BEK_HF = Sammlung(
+        trace="Bek Hf",
+        groups="Lautschrift|Bek Hf",
+        kreis="Bek",
+        ort="Hf",
+    )
+    LAUT_BEK_HI = Sammlung(
+        trace="Bek Hi",
+        groups="Lautschrift|Bek Hi",
+        kreis="Bek",
+        ort="Hi",
+    )
+    LAUT_BEK_HO = Sammlung(
+        trace="Bek Ho",
+        groups="Lautschrift|Bek Ho",
+        kreis="Bek",
+        ort="Ho",
+    )
+    LAUT_BEK_KE = Sammlung(
+        trace="Bek Ke",
+        groups="Lautschrift|Bek Ke",
+        kreis="Bek",
+        ort="Ke",
+    )
+    LAUT_BEK_LB = Sammlung(
+        trace="Bek Lb",
+        groups="Lautschrift|Bek Lb",
+        kreis="Bek",
+        ort="Lb",
+    )
+    LAUT_BEK_LI = Sammlung(
+        trace="Bek Li",
+        groups="Lautschrift|Bek Li",
+        kreis="Bek",
+        ort="Li",
+    )
+    LAUT_BEK_NB = Sammlung(
+        trace="Bek Nb",
+        groups="Lautschrift|Bek Nb",
+        kreis="Bek",
+        ort="Nb",
+    )
+    LAUT_BEK_ÖL = Sammlung(
+        trace="Bek Öl",
+        groups="Lautschrift|Bek Öl",
+        kreis="Bek",
+        ort="Öl",
+    )
+    LAUT_BEK_ÖS = Sammlung(
+        trace="Bek Ös",
+        groups="Lautschrift|Bek Ös",
+        kreis="Bek",
+        ort="Ös",
+    )
+    LAUT_BEK_SH = Sammlung(
+        trace="Bek Sh",
+        groups="Lautschrift|Bek Sh",
+        kreis="Bek",
+        ort="Sh",
+    )
+    LAUT_BEK_ST = Sammlung(
+        trace="Bek St",
+        groups="Lautschrift|Bek St",
+        kreis="Bek",
+        ort="St",
+    )
+    LAUT_BEK_SÜ = Sammlung(
+        trace="Bek Sü",
+        groups="Lautschrift|Bek Sü",
+        kreis="Bek",
+        ort="Sü",
+    )
+    LAUT_BEK_VE = Sammlung(
+        trace="Bek Ve",
+        groups="Lautschrift|Bek Ve",
+        kreis="Bek",
+        ort="Ve",
+    )
+    LAUT_BEK_VH = Sammlung(
+        trace="Bek Vh",
+        groups="Lautschrift|Bek Vh",
+        kreis="Bek",
+        ort="Vh",
+    )
+    LAUT_BEK_WL = Sammlung(
+        trace="Bek Wl",
+        groups="Lautschrift|Bek Wl",
+        kreis="Bek",
+        ort="Wl",
+    )
+    LAUT_BEN_AD = Sammlung(
+        trace="Ben Ad",
+        groups="Lautschrift|Ben Ad",
+        kreis="Ben",
+        ort="Ad",
+    )
+    LAUT_BEN_AL = Sammlung(
+        trace="Ben Al",
+        groups="Lautschrift|Ben Al",
+        kreis="Ben",
+        ort="Al",
+    )
+    LAUT_BEN_AP = Sammlung(
+        trace="Ben Ap",
+        groups="Lautschrift|Ben Ap",
+        kreis="Ben",
+        ort="Ap",
+    )
+    LAUT_BEN_AW = Sammlung(
+        trace="Ben Aw",
+        groups="Lautschrift|Ben Aw",
+        kreis="Ben",
+        ort="Aw",
+    )
+    LAUT_BEN_BA = Sammlung(
+        trace="Ben Ba",
+        groups="Lautschrift|Ben Ba",
+        kreis="Ben",
+        ort="Ba",
+    )
+    LAUT_BEN_BG = Sammlung(
+        trace="Ben Bg",
+        groups="Lautschrift|Ben Bg",
+        kreis="Ben",
+        ort="Bg",
+    )
+    LAUT_BEN_BH = Sammlung(
+        trace="Ben Bh",
+        groups="Lautschrift|Ben Bh",
+        kreis="Ben",
+        ort="Bh",
+    )
+    LAUT_BEN_BI = Sammlung(
+        trace="Ben Bi",
+        groups="Lautschrift|Ben Bi",
+        kreis="Ben",
+        ort="Bi",
+    )
+    LAUT_BEN_BM = Sammlung(
+        trace="Ben Bm",
+        groups="Lautschrift|Ben Bm",
+        kreis="Ben",
+        ort="Bm",
+    )
+    LAUT_BEN_BN = Sammlung(
+        trace="Ben Bn",
+        groups="Lautschrift|Ben Bn",
+        kreis="Ben",
+        ort="Bn",
+    )
+    LAUT_BEN_BR = Sammlung(
+        trace="Ben Br",
+        groups="Lautschrift|Ben Br",
+        kreis="Ben",
+        ort="Br",
+    )
+    LAUT_BEN_DR = Sammlung(
+        trace="Ben Dr",
+        groups="Lautschrift|Ben Dr",
+        kreis="Ben",
+        ort="Dr",
+    )
+    LAUT_BEN_EC = Sammlung(
+        trace="Ben Ec",
+        groups="Lautschrift|Ben Ec",
+        kreis="Ben",
+        ort="Ec",
+    )
+    LAUT_BEN_EG = Sammlung(
+        trace="Ben Eg",
+        groups="Lautschrift|Ben Eg",
+        kreis="Ben",
+        ort="Eg",
+    )
+    LAUT_BEN_EH = Sammlung(
+        trace="Ben Eh",
+        groups="Lautschrift|Ben Eh",
+        kreis="Ben",
+        ort="Eh",
+    )
+    LAUT_BEN_EM = Sammlung(
+        trace="Ben Em",
+        groups="Lautschrift|Ben Em",
+        kreis="Ben",
+        ort="Em",
+    )
+    LAUT_BEN_EN = Sammlung(
+        trace="Ben En",
+        groups="Lautschrift|Ben En",
+        kreis="Ben",
+        ort="En",
+    )
+    LAUT_BEN_ES = Sammlung(
+        trace="Ben Es",
+        groups="Lautschrift|Ben Es",
+        kreis="Ben",
+        ort="Es",
+    )
+    LAUT_BEN_EW = Sammlung(
+        trace="Ben Ew",
+        groups="Lautschrift|Ben Ew",
+        kreis="Ben",
+        ort="Ew",
+    )
+    LAUT_BEN_FH = Sammlung(
+        trace="Ben Fh",
+        groups="Lautschrift|Ben Fh",
+        kreis="Ben",
+        ort="Fh",
+    )
+    LAUT_BEN_GD = Sammlung(
+        trace="Ben Gd",
+        groups="Lautschrift|Ben Gd",
+        kreis="Ben",
+        ort="Gd",
+    )
+    LAUT_BEN_GE = Sammlung(
+        trace="Ben Ge",
+        groups="Lautschrift|Ben Ge",
+        kreis="Ben",
+        ort="Ge",
+    )
+    LAUT_BEN_GH = Sammlung(
+        trace="Ben Gh",
+        groups="Lautschrift|Ben Gh",
+        kreis="Ben",
+        ort="Gh",
+    )
+    LAUT_BEN_GK = Sammlung(
+        trace="Ben Gk",
+        groups="Lautschrift|Ben Gk",
+        kreis="Ben",
+        ort="Gk",
+    )
+    LAUT_BEN_GM = Sammlung(
+        trace="Ben Gm",
+        groups="Lautschrift|Ben Gm",
+        kreis="Ben",
+        ort="Gm",
+    )
+    LAUT_BEN_GR = Sammlung(
+        trace="Ben Gr",
+        groups="Lautschrift|Ben Gr",
+        kreis="Ben",
+        ort="Gr",
+    )
+    LAUT_BEN_GS = Sammlung(
+        trace="Ben Gs",
+        groups="Lautschrift|Ben Gs",
+        kreis="Ben",
+        ort="Gs",
+    )
+    LAUT_BEN_HA = Sammlung(
+        trace="Ben Ha",
+        groups="Lautschrift|Ben Ha",
+        kreis="Ben",
+        ort="Ha",
+    )
+    LAUT_BEN_HE = Sammlung(
+        trace="Ben He",
+        groups="Lautschrift|Ben He",
+        kreis="Ben",
+        ort="He",
+    )
+    LAUT_BEN_HF = Sammlung(
+        trace="Ben Hf",
+        groups="Lautschrift|Ben Hf",
+        kreis="Ben",
+        ort="Hf",
+    )
+    LAUT_BEN_HH = Sammlung(
+        trace="Ben Hh",
+        groups="Lautschrift|Ben Hh",
+        kreis="Ben",
+        ort="Hh",
+    )
+    LAUT_BEN_HI = Sammlung(
+        trace="Ben Hi",
+        groups="Lautschrift|Ben Hi",
+        kreis="Ben",
+        ort="Hi",
+    )
+    LAUT_BEN_HK = Sammlung(
+        trace="Ben Hk",
+        groups="Lautschrift|Ben Hk",
+        kreis="Ben",
+        ort="Hk",
+    )
+    LAUT_BEN_HL = Sammlung(
+        trace="Ben Hl",
+        groups="Lautschrift|Ben Hl",
+        kreis="Ben",
+        ort="Hl",
+    )
+    LAUT_BEN_HO = Sammlung(
+        trace="Ben Ho",
+        groups="Lautschrift|Ben Ho",
+        kreis="Ben",
+        ort="Ho",
+    )
+    LAUT_BEN_HÖ = Sammlung(
+        trace="Ben Hö",
+        groups="Lautschrift|Ben Hö",
+        kreis="Ben",
+        ort="Hö",
+    )
+    LAUT_BEN_HP = Sammlung(
+        trace="Ben Hp",
+        groups="Lautschrift|Ben Hp",
+        kreis="Ben",
+        ort="Hp",
+    )
+    LAUT_BEN_IT = Sammlung(
+        trace="Ben It",
+        groups="Lautschrift|Ben It",
+        kreis="Ben",
+        ort="It",
+    )
+    LAUT_BEN_KA = Sammlung(
+        trace="Ben Ka",
+        groups="Lautschrift|Ben Ka",
+        kreis="Ben",
+        ort="Ka",
+    )
+    LAUT_BEN_LA = Sammlung(
+        trace="Ben La",
+        groups="Lautschrift|Ben La",
+        kreis="Ben",
+        ort="La",
+    )
+    LAUT_BEN_LR = Sammlung(
+        trace="Ben Lr",
+        groups="Lautschrift|Ben Lr",
+        kreis="Ben",
+        ort="Lr",
+    )
+    LAUT_BEN_NG = Sammlung(
+        trace="Ben Ng",
+        groups="Lautschrift|Ben Ng",
+        kreis="Ben",
+        ort="Ng",
+    )
+    LAUT_BEN_NH = Sammlung(
+        trace="Ben Nh",
+        groups="Lautschrift|Ben Nh",
+        kreis="Ben",
+        ort="Nh",
+    )
+    LAUT_BEN_NL = Sammlung(
+        trace="Ben Nl",
+        groups="Lautschrift|Ben Nl",
+        kreis="Ben",
+        ort="Nl",
+    )
+    LAUT_BEN_NO = Sammlung(
+        trace="Ben No",
+        groups="Lautschrift|Ben No",
+        kreis="Ben",
+        ort="No",
+    )
+    LAUT_BEN_NR = Sammlung(
+        trace="Ben Nr",
+        groups="Lautschrift|Ben Nr",
+        kreis="Ben",
+        ort="Nr",
+    )
+    LAUT_BEN_OG = Sammlung(
+        trace="Ben Og",
+        groups="Lautschrift|Ben Og",
+        kreis="Ben",
+        ort="Og",
+    )
+    LAUT_BEN_ON = Sammlung(
+        trace="Ben On",
+        groups="Lautschrift|Ben On",
+        kreis="Ben",
+        ort="On",
+    )
+    LAUT_BEN_OW = Sammlung(
+        trace="Ben Ow",
+        groups="Lautschrift|Ben Ow",
+        kreis="Ben",
+        ort="Ow",
+    )
+    LAUT_BEN_QD = Sammlung(
+        trace="Ben Qd",
+        groups="Lautschrift|Ben Qd",
+        kreis="Ben",
+        ort="Qd",
+    )
+    LAUT_BEN_RA = Sammlung(
+        trace="Ben Ra",
+        groups="Lautschrift|Ben Ra",
+        kreis="Ben",
+        ort="Ra",
+    )
+    LAUT_BEN_SA = Sammlung(
+        trace="Ben Sa",
+        groups="Lautschrift|Ben Sa",
+        kreis="Ben",
+        ort="Sa",
+    )
+    LAUT_BEN_SC = Sammlung(
+        trace="Ben Sc",
+        groups="Lautschrift|Ben Sc",
+        kreis="Ben",
+        ort="Sc",
+    )
+    LAUT_BEN_SH = Sammlung(
+        trace="Ben Sh",
+        groups="Lautschrift|Ben Sh",
+        kreis="Ben",
+        ort="Sh",
+    )
+    LAUT_BEN_SI = Sammlung(
+        trace="Ben Si",
+        groups="Lautschrift|Ben Si",
+        kreis="Ben",
+        ort="Si",
+    )
+    LAUT_BEN_SU = Sammlung(
+        trace="Ben Su",
+        groups="Lautschrift|Ben Su",
+        kreis="Ben",
+        ort="Su",
+    )
+    LAUT_BEN_TH = Sammlung(
+        trace="Ben Th",
+        groups="Lautschrift|Ben Th",
+        kreis="Ben",
+        ort="Th",
+    )
+    LAUT_BEN_ÜL = Sammlung(
+        trace="Ben Ül",
+        groups="Lautschrift|Ben Ül",
+        kreis="Ben",
+        ort="Ül",
+    )
+    LAUT_BEN_VH = Sammlung(
+        trace="Ben Vh",
+        groups="Lautschrift|Ben Vh",
+        kreis="Ben",
+        ort="Vh",
+    )
+    LAUT_BEN_VW = Sammlung(
+        trace="Ben Vw",
+        groups="Lautschrift|Ben Vw",
+        kreis="Ben",
+        ort="Vw",
+    )
+    LAUT_BEN_WA = Sammlung(
+        trace="Ben Wa",
+        groups="Lautschrift|Ben Wa",
+        kreis="Ben",
+        ort="Wa",
+    )
+    LAUT_BEN_WI = Sammlung(
+        trace="Ben Wi",
+        groups="Lautschrift|Ben Wi",
+        kreis="Ben",
+        ort="Wi",
+    )
+    LAUT_BEN_WM = Sammlung(
+        trace="Ben Wm",
+        groups="Lautschrift|Ben Wm",
+        kreis="Ben",
+        ort="Wm",
+    )
+    LAUT_BEN_WS = Sammlung(
+        trace="Ben Ws",
+        groups="Lautschrift|Ben Ws",
+        kreis="Ben",
+        ort="Ws",
+    )
+    LAUT_BEN_WT = Sammlung(
+        trace="Ben Wt",
+        groups="Lautschrift|Ben Wt",
+        kreis="Ben",
+        ort="Wt",
+    )
+    LAUT_BIE_AH = Sammlung(
+        trace="Bie Ah",
+        groups="Lautschrift|Bie Ah",
+        kreis="Bie",
+        ort="Ah",
+    )
+    LAUT_BIE_BA = Sammlung(
+        trace="Bie Ba",
+        groups="Lautschrift|Bie Ba",
+        kreis="Bie",
+        ort="Ba",
+    )
+    LAUT_BIE_BE = Sammlung(
+        trace="Bie Be",
+        groups="Lautschrift|Bie Be",
+        kreis="Bie",
+        ort="Be",
+    )
+    LAUT_BIE_BF = Sammlung(
+        trace="Bie Bf",
+        groups="Lautschrift|Bie Bf",
+        kreis="Bie",
+        ort="Bf",
+    )
+    LAUT_BIE_BH = Sammlung(
+        trace="Bie Bh",
+        groups="Lautschrift|Bie Bh",
+        kreis="Bie",
+        ort="Bh",
+    )
+    LAUT_BIE_BR = Sammlung(
+        trace="Bie Br",
+        groups="Lautschrift|Bie Br",
+        kreis="Bie",
+        ort="Br",
+    )
+    LAUT_BIE_BW = Sammlung(
+        trace="Bie Bw",
+        groups="Lautschrift|Bie Bw",
+        kreis="Bie",
+        ort="Bw",
+    )
+    LAUT_BIE_DB = Sammlung(
+        trace="Bie Db",
+        groups="Lautschrift|Bie Db",
+        kreis="Bie",
+        ort="Db",
+    )
+    LAUT_BIE_DD = Sammlung(
+        trace="Bie Dd",
+        groups="Lautschrift|Bie Dd",
+        kreis="Bie",
+        ort="Dd",
+    )
+    LAUT_BIE_EB = Sammlung(
+        trace="Bie Eb",
+        groups="Lautschrift|Bie Eb",
+        kreis="Bie",
+        ort="Eb",
+    )
+    LAUT_BIE_GB = Sammlung(
+        trace="Bie Gb",
+        groups="Lautschrift|Bie Gb",
+        kreis="Bie",
+        ort="Gb",
+    )
+    LAUT_BIE_GH = Sammlung(
+        trace="Bie Gh",
+        groups="Lautschrift|Bie Gh",
+        kreis="Bie",
+        ort="Gh",
+    )
+    LAUT_BIE_GR = Sammlung(
+        trace="Bie Gr",
+        groups="Lautschrift|Bie Gr",
+        kreis="Bie",
+        ort="Gr",
+    )
+    LAUT_BIE_HB = Sammlung(
+        trace="Bie Hb",
+        groups="Lautschrift|Bie Hb",
+        kreis="Bie",
+        ort="Hb",
+    )
+    LAUT_BIE_HE = Sammlung(
+        trace="Bie He",
+        groups="Lautschrift|Bie He",
+        kreis="Bie",
+        ort="He",
+    )
+    LAUT_BIE_HI = Sammlung(
+        trace="Bie Hi",
+        groups="Lautschrift|Bie Hi",
+        kreis="Bie",
+        ort="Hi",
+    )
+    LAUT_BIE_HK = Sammlung(
+        trace="Bie Hk",
+        groups="Lautschrift|Bie Hk",
+        kreis="Bie",
+        ort="Hk",
+    )
+    LAUT_BIE_HO = Sammlung(
+        trace="Bie Ho",
+        groups="Lautschrift|Bie Ho",
+        kreis="Bie",
+        ort="Ho",
+    )
+    LAUT_BIE_JÖ = Sammlung(
+        trace="Bie Jö",
+        groups="Lautschrift|Bie Jö",
+        kreis="Bie",
+        ort="Jö",
+    )
+    LAUT_BIE_IS = Sammlung(
+        trace="Bie Is",
+        groups="Lautschrift|Bie Is",
+        kreis="Bie",
+        ort="Is",
+    )
+    LAUT_BIE_KD = Sammlung(
+        trace="Bie Kd",
+        groups="Lautschrift|Bie Kd",
+        kreis="Bie",
+        ort="Kd",
+    )
+    LAUT_BIE_LH = Sammlung(
+        trace="Bie Lh",
+        groups="Lautschrift|Bie Lh",
+        kreis="Bie",
+        ort="Lh",
+    )
+    LAUT_BIE_MI = Sammlung(
+        trace="Bie Mi",
+        groups="Lautschrift|Bie Mi",
+        kreis="Bie",
+        ort="Mi",
+    )
+    LAUT_BIE_ND = Sammlung(
+        trace="Bie Nd",
+        groups="Lautschrift|Bie Nd",
+        kreis="Bie",
+        ort="Nd",
+    )
+    LAUT_BIE_NH = Sammlung(
+        trace="Bie Nh",
+        groups="Lautschrift|Bie Nh",
+        kreis="Bie",
+        ort="Nh",
+    )
+    LAUT_BIE_NI = Sammlung(
+        trace="Bie Ni",
+        groups="Lautschrift|Bie Ni",
+        kreis="Bie",
+        ort="Ni",
+    )
+    LAUT_BIE_NJ = Sammlung(
+        trace="Bie Nj",
+        groups="Lautschrift|Bie Nj",
+        kreis="Bie",
+        ort="Nj",
+    )
+    LAUT_BIE_OJ = Sammlung(
+        trace="Bie Oj",
+        groups="Lautschrift|Bie Oj",
+        kreis="Bie",
+        ort="Oj",
+    )
+    LAUT_BIE_OT = Sammlung(
+        trace="Bie Ot",
+        groups="Lautschrift|Bie Ot",
+        kreis="Bie",
+        ort="Ot",
+    )
+    LAUT_BIE_QU = Sammlung(
+        trace="Bie Qu",
+        groups="Lautschrift|Bie Qu",
+        kreis="Bie",
+        ort="Qu",
+    )
+    LAUT_BIE_SC = Sammlung(
+        trace="Bie Sc",
+        groups="Lautschrift|Bie Sc",
+        kreis="Bie",
+        ort="Sc",
+    )
+    LAUT_BIE_SE = Sammlung(
+        trace="Bie Se",
+        groups="Lautschrift|Bie Se",
+        kreis="Bie",
+        ort="Se",
+    )
+    LAUT_BIE_SI = Sammlung(
+        trace="Bie Si",
+        groups="Lautschrift|Bie Si",
+        kreis="Bie",
+        ort="Si",
+    )
+    LAUT_BIE_ST = Sammlung(
+        trace="Bie St",
+        groups="Lautschrift|Bie St",
+        kreis="Bie",
+        ort="St",
+    )
+    LAUT_BIE_SZ = Sammlung(
+        trace="Bie Sz",
+        groups="Lautschrift|Bie Sz",
+        kreis="Bie",
+        ort="Sz",
+    )
+    LAUT_BIE_TH = Sammlung(
+        trace="Bie Th",
+        groups="Lautschrift|Bie Th",
+        kreis="Bie",
+        ort="Th",
+    )
+    LAUT_BIE_UD = Sammlung(
+        trace="Bie Ud",
+        groups="Lautschrift|Bie Ud",
+        kreis="Bie",
+        ort="Ud",
+    )
+    LAUT_BIE_UT = Sammlung(
+        trace="Bie Ut",
+        groups="Lautschrift|Bie Ut",
+        kreis="Bie",
+        ort="Ut",
+    )
+    LAUT_BIE_VD = Sammlung(
+        trace="Bie Vd",
+        groups="Lautschrift|Bie Vd",
+        kreis="Bie",
+        ort="Vd",
+    )
+    LAUT_BIE_VS = Sammlung(
+        trace="Bie Vs",
+        groups="Lautschrift|Bie Vs",
+        kreis="Bie",
+        ort="Vs",
+    )
+    LAUT_BOR_AN = Sammlung(
+        trace="Bor An",
+        groups="Lautschrift|Bor An",
+        kreis="Bor",
+        ort="An",
+    )
+    LAUT_BOR_BA = Sammlung(
+        trace="Bor Ba",
+        groups="Lautschrift|Bor Ba",
+        kreis="Bor",
+        ort="Ba",
+    )
+    LAUT_BOR_BE = Sammlung(
+        trace="Bor Be",
+        groups="Lautschrift|Bor Be",
+        kreis="Bor",
+        ort="Be",
+    )
+    LAUT_BOR_BH = Sammlung(
+        trace="Bor Bh",
+        groups="Lautschrift|Bor Bh",
+        kreis="Bor",
+        ort="Bh",
+    )
+    LAUT_BOR_BI = Sammlung(
+        trace="Bor Bi",
+        groups="Lautschrift|Bor Bi",
+        kreis="Bor",
+        ort="Bi",
+    )
+    LAUT_BOR_BO = Sammlung(
+        trace="Bor Bo",
+        groups="Lautschrift|Bor Bo",
+        kreis="Bor",
+        ort="Bo",
+    )
+    LAUT_BOR_BÜ = Sammlung(
+        trace="Bor Bü",
+        groups="Lautschrift|Bor Bü",
+        kreis="Bor",
+        ort="Bü",
+    )
+    LAUT_BOR_BW = Sammlung(
+        trace="Bor Bw",
+        groups="Lautschrift|Bor Bw",
+        kreis="Bor",
+        ort="Bw",
+    )
+    LAUT_BOR_DI = Sammlung(
+        trace="Bor Di",
+        groups="Lautschrift|Bor Di",
+        kreis="Bor",
+        ort="Di",
+    )
+    LAUT_BOR_GE = Sammlung(
+        trace="Bor Ge",
+        groups="Lautschrift|Bor Ge",
+        kreis="Bor",
+        ort="Ge",
+    )
+    LAUT_BOR_GL = Sammlung(
+        trace="Bor Gl",
+        groups="Lautschrift|Bor Gl",
+        kreis="Bor",
+        ort="Gl",
+    )
+    LAUT_BOR_GR = Sammlung(
+        trace="Bor Gr",
+        groups="Lautschrift|Bor Gr",
+        kreis="Bor",
+        ort="Gr",
+    )
+    LAUT_BOR_GW = Sammlung(
+        trace="Bor Gw",
+        groups="Lautschrift|Bor Gw",
+        kreis="Bor",
+        ort="Gw",
+    )
+    LAUT_BOR_HD = Sammlung(
+        trace="Bor Hd",
+        groups="Lautschrift|Bor Hd",
+        kreis="Bor",
+        ort="Hd",
+    )
+    LAUT_BOR_HE = Sammlung(
+        trace="Bor He",
+        groups="Lautschrift|Bor He",
+        kreis="Bor",
+        ort="He",
+    )
+    LAUT_BOR_HF = Sammlung(
+        trace="Bor Hf",
+        groups="Lautschrift|Bor Hf",
+        kreis="Bor",
+        ort="Hf",
+    )
+    LAUT_BOR_HL = Sammlung(
+        trace="Bor Hl",
+        groups="Lautschrift|Bor Hl",
+        kreis="Bor",
+        ort="Hl",
+    )
+    LAUT_BOR_HO = Sammlung(
+        trace="Bor Ho",
+        groups="Lautschrift|Bor Ho",
+        kreis="Bor",
+        ort="Ho",
+    )
+    LAUT_BOR_HÜ = Sammlung(
+        trace="Bor Hü",
+        groups="Lautschrift|Bor Hü",
+        kreis="Bor",
+        ort="Hü",
+    )
+    LAUT_BOR_HW = Sammlung(
+        trace="Bor Hw",
+        groups="Lautschrift|Bor Hw",
+        kreis="Bor",
+        ort="Hw",
+    )
+    LAUT_BOR_KG = Sammlung(
+        trace="Bor Kg",
+        groups="Lautschrift|Bor Kg",
+        kreis="Bor",
+        ort="Kg",
+    )
+    LAUT_BOR_KL = Sammlung(
+        trace="Bor Kl",
+        groups="Lautschrift|Bor Kl",
+        kreis="Bor",
+        ort="Kl",
+    )
+    LAUT_BOR_KR = Sammlung(
+        trace="Bor Kr",
+        groups="Lautschrift|Bor Kr",
+        kreis="Bor",
+        ort="Kr",
+    )
+    LAUT_BOR_KT = Sammlung(
+        trace="Bor Kt",
+        groups="Lautschrift|Bor Kt",
+        kreis="Bor",
+        ort="Kt",
+    )
+    LAUT_BOR_LI = Sammlung(
+        trace="Bor Li",
+        groups="Lautschrift|Bor Li",
+        kreis="Bor",
+        ort="Li",
+    )
+    LAUT_BOR_LO = Sammlung(
+        trace="Bor Lo",
+        groups="Lautschrift|Bor Lo",
+        kreis="Bor",
+        ort="Lo",
+    )
+    LAUT_BOR_MB = Sammlung(
+        trace="Bor Mb",
+        groups="Lautschrift|Bor Mb",
+        kreis="Bor",
+        ort="Mb",
+    )
+    LAUT_BOR_MU = Sammlung(
+        trace="Bor Mu",
+        groups="Lautschrift|Bor Mu",
+        kreis="Bor",
+        ort="Mu",
+    )
+    LAUT_BOR_MV = Sammlung(
+        trace="Bor Mv",
+        groups="Lautschrift|Bor Mv",
+        kreis="Bor",
+        ort="Mv",
+    )
+    LAUT_BOR_NB = Sammlung(
+        trace="Bor Nb",
+        groups="Lautschrift|Bor Nb",
+        kreis="Bor",
+        ort="Nb",
+    )
+    LAUT_BOR_ND = Sammlung(
+        trace="Bor Nd",
+        groups="Lautschrift|Bor Nd",
+        kreis="Bor",
+        ort="Nd",
+    )
+    LAUT_BOR_NV = Sammlung(
+        trace="Bor Nv",
+        groups="Lautschrift|Bor Nv",
+        kreis="Bor",
+        ort="Nv",
+    )
+    LAUT_BOR_PH = Sammlung(
+        trace="Bor Ph",
+        groups="Lautschrift|Bor Ph",
+        kreis="Bor",
+        ort="Ph",
+    )
+    LAUT_BOR_RB = Sammlung(
+        trace="Bor Rb",
+        groups="Lautschrift|Bor Rb",
+        kreis="Bor",
+        ort="Rb",
+    )
+    LAUT_BOR_RD = Sammlung(
+        trace="Bor Rd",
+        groups="Lautschrift|Bor Rd",
+        kreis="Bor",
+        ort="Rd",
+    )
+    LAUT_BOR_RF = Sammlung(
+        trace="Bor Rf",
+        groups="Lautschrift|Bor Rf",
+        kreis="Bor",
+        ort="Rf",
+    )
+    LAUT_BOR_RH = Sammlung(
+        trace="Bor Rh",
+        groups="Lautschrift|Bor Rh",
+        kreis="Bor",
+        ort="Rh",
+    )
+    LAUT_BOR_RK = Sammlung(
+        trace="Bor Rk",
+        groups="Lautschrift|Bor Rk",
+        kreis="Bor",
+        ort="Rk",
+    )
+    LAUT_BOR_SP = Sammlung(
+        trace="Bor Sp",
+        groups="Lautschrift|Bor Sp",
+        kreis="Bor",
+        ort="Sp",
+    )
+    LAUT_BOR_SS = Sammlung(
+        trace="Bor Ss",
+        groups="Lautschrift|Bor Ss",
+        kreis="Bor",
+        ort="Ss",
+    )
+    LAUT_BOR_SU = Sammlung(
+        trace="Bor Su",
+        groups="Lautschrift|Bor Su",
+        kreis="Bor",
+        ort="Su",
+    )
+    LAUT_BOR_VE = Sammlung(
+        trace="Bor Ve",
+        groups="Lautschrift|Bor Ve",
+        kreis="Bor",
+        ort="Ve",
+    )
+    LAUT_BOR_VH = Sammlung(
+        trace="Bor Vh",
+        groups="Lautschrift|Bor Vh",
+        kreis="Bor",
+        ort="Vh",
+    )
+    LAUT_BOR_WE = Sammlung(
+        trace="Bor We",
+        groups="Lautschrift|Bor We",
+        kreis="Bor",
+        ort="We",
+    )
+    LAUT_BOR_WS = Sammlung(
+        trace="Bor Ws",
+        groups="Lautschrift|Bor Ws",
+        kreis="Bor",
+        ort="Ws",
+    )
+    LAUT_BRG_HE = Sammlung(
+        trace="Brg He",
+        groups="Lautschrift|Brg He",
+        kreis="Brg",
+        ort="He",
+    )
+    LAUT_BRG_HW = Sammlung(
+        trace="Brg Hw",
+        groups="Lautschrift|Brg Hw",
+        kreis="Brg",
+        ort="Hw",
+    )
+    LAUT_BRG_LF = Sammlung(
+        trace="Brg Lf",
+        groups="Lautschrift|Brg Lf",
+        kreis="Brg",
+        ort="Lf",
+    )
+    LAUT_BRG_NB = Sammlung(
+        trace="Brg Nb",
+        groups="Lautschrift|Brg Nb",
+        kreis="Brg",
+        ort="Nb",
+    )
+    LAUT_BRG_RW = Sammlung(
+        trace="Brg Rw",
+        groups="Lautschrift|Brg Rw",
+        kreis="Brg",
+        ort="Rw",
+    )
+    LAUT_BRG_WS = Sammlung(
+        trace="Brg Ws",
+        groups="Lautschrift|Brg Ws",
+        kreis="Brg",
+        ort="Ws",
+    )
+    LAUT_BRI_AA = Sammlung(
+        trace="Bri Aa",
+        groups="Lautschrift|Bri Aa",
+        kreis="Bri",
+        ort="Aa",
+    )
+    LAUT_BRI_AB = Sammlung(
+        trace="Bri Ab",
+        groups="Lautschrift|Bri Ab",
+        kreis="Bri",
+        ort="Ab",
+    )
+    LAUT_BRI_AF = Sammlung(
+        trace="Bri Af",
+        groups="Lautschrift|Bri Af",
+        kreis="Bri",
+        ort="Af",
+    )
+    LAUT_BRI_AH = Sammlung(
+        trace="Bri Ah",
+        groups="Lautschrift|Bri Ah",
+        kreis="Bri",
+        ort="Ah",
+    )
+    LAUT_BRI_AL = Sammlung(
+        trace="Bri Al",
+        groups="Lautschrift|Bri Al",
+        kreis="Bri",
+        ort="Al",
+    )
+    LAUT_BRI_BE = Sammlung(
+        trace="Bri Be",
+        groups="Lautschrift|Bri Be",
+        kreis="Bri",
+        ort="Be",
+    )
+    LAUT_BRI_BH = Sammlung(
+        trace="Bri Bh",
+        groups="Lautschrift|Bri Bh",
+        kreis="Bri",
+        ort="Bh",
+    )
+    LAUT_BRI_BI = Sammlung(
+        trace="Bri Bi",
+        groups="Lautschrift|Bri Bi",
+        kreis="Bri",
+        ort="Bi",
+    )
+    LAUT_BRI_BK = Sammlung(
+        trace="Bri Bk",
+        groups="Lautschrift|Bri Bk",
+        kreis="Bri",
+        ort="Bk",
+    )
+    LAUT_BRI_BO = Sammlung(
+        trace="Bri Bo",
+        groups="Lautschrift|Bri Bo",
+        kreis="Bri",
+        ort="Bo",
+    )
+    LAUT_BRI_BR = Sammlung(
+        trace="Bri Br",
+        groups="Lautschrift|Bri Br",
+        kreis="Bri",
+        ort="Br",
+    )
+    LAUT_BRI_DF = Sammlung(
+        trace="Bri Df",
+        groups="Lautschrift|Bri Df",
+        kreis="Bri",
+        ort="Df",
+    )
+    LAUT_BRI_DR = Sammlung(
+        trace="Bri Dr",
+        groups="Lautschrift|Bri Dr",
+        kreis="Bri",
+        ort="Dr",
+    )
+    LAUT_BRI_DÜ = Sammlung(
+        trace="Bri Dü",
+        groups="Lautschrift|Bri Dü",
+        kreis="Bri",
+        ort="Dü",
+    )
+    LAUT_BRI_EH = Sammlung(
+        trace="Bri Eh",
+        groups="Lautschrift|Bri Eh",
+        kreis="Bri",
+        ort="Eh",
+    )
+    LAUT_BRI_EL = Sammlung(
+        trace="Bri El",
+        groups="Lautschrift|Bri El",
+        kreis="Bri",
+        ort="El",
+    )
+    LAUT_BRI_EP = Sammlung(
+        trace="Bri Ep",
+        groups="Lautschrift|Bri Ep",
+        kreis="Bri",
+        ort="Ep",
+    )
+    LAUT_BRI_ER = Sammlung(
+        trace="Bri Er",
+        groups="Lautschrift|Bri Er",
+        kreis="Bri",
+        ort="Er",
+    )
+    LAUT_BRI_ES = Sammlung(
+        trace="Bri Es",
+        groups="Lautschrift|Bri Es",
+        kreis="Bri",
+        ort="Es",
+    )
+    LAUT_BRI_GB = Sammlung(
+        trace="Bri Gb",
+        groups="Lautschrift|Bri Gb",
+        kreis="Bri",
+        ort="Gb",
+    )
+    LAUT_BRI_GH = Sammlung(
+        trace="Bri Gh",
+        groups="Lautschrift|Bri Gh",
+        kreis="Bri",
+        ort="Gh",
+    )
+    LAUT_BRI_HA = Sammlung(
+        trace="Bri Ha",
+        groups="Lautschrift|Bri Ha",
+        kreis="Bri",
+        ort="Ha",
+    )
+    LAUT_BRI_HE = Sammlung(
+        trace="Bri He",
+        groups="Lautschrift|Bri He",
+        kreis="Bri",
+        ort="He",
+    )
+    LAUT_BRI_HF = Sammlung(
+        trace="Bri Hf",
+        groups="Lautschrift|Bri Hf",
+        kreis="Bri",
+        ort="Hf",
+    )
+    LAUT_BRI_HH = Sammlung(
+        trace="Bri Hh",
+        groups="Lautschrift|Bri Hh",
+        kreis="Bri",
+        ort="Hh",
+    )
+    LAUT_BRI_HL = Sammlung(
+        trace="Bri Hl",
+        groups="Lautschrift|Bri Hl",
+        kreis="Bri",
+        ort="Hl",
+    )
+    LAUT_BRI_HO = Sammlung(
+        trace="Bri Ho",
+        groups="Lautschrift|Bri Ho",
+        kreis="Bri",
+        ort="Ho",
+    )
+    LAUT_BRI_KA = Sammlung(
+        trace="Bri Ka",
+        groups="Lautschrift|Bri Ka",
+        kreis="Bri",
+        ort="Ka",
+    )
+    LAUT_BRI_KB = Sammlung(
+        trace="Bri Kb",
+        groups="Lautschrift|Bri Kb",
+        kreis="Bri",
+        ort="Kb",
+    )
+    LAUT_BRI_KS = Sammlung(
+        trace="Bri Ks",
+        groups="Lautschrift|Bri Ks",
+        kreis="Bri",
+        ort="Ks",
+    )
+    LAUT_BRI_LI = Sammlung(
+        trace="Bri Li",
+        groups="Lautschrift|Bri Li",
+        kreis="Bri",
+        ort="Li",
+    )
+    LAUT_BRI_LM = Sammlung(
+        trace="Bri Lm",
+        groups="Lautschrift|Bri Lm",
+        kreis="Bri",
+        ort="Lm",
+    )
+    LAUT_BRI_MA = Sammlung(
+        trace="Bri Ma",
+        groups="Lautschrift|Bri Ma",
+        kreis="Bri",
+        ort="Ma",
+    )
+    LAUT_BRI_MB = Sammlung(
+        trace="Bri Mb",
+        groups="Lautschrift|Bri Mb",
+        kreis="Bri",
+        ort="Mb",
+    )
+    LAUT_BRI_MF = Sammlung(
+        trace="Bri Mf",
+        groups="Lautschrift|Bri Mf",
+        kreis="Bri",
+        ort="Mf",
+    )
+    LAUT_BRI_MH = Sammlung(
+        trace="Bri Mh",
+        groups="Lautschrift|Bri Mh",
+        kreis="Bri",
+        ort="Mh",
+    )
+    LAUT_BRI_ML = Sammlung(
+        trace="Bri Ml",
+        groups="Lautschrift|Bri Ml",
+        kreis="Bri",
+        ort="Ml",
+    )
+    LAUT_BRI_NA = Sammlung(
+        trace="Bri Na",
+        groups="Lautschrift|Bri Na",
+        kreis="Bri",
+        ort="Na",
+    )
+    LAUT_BRI_NE = Sammlung(
+        trace="Bri Ne",
+        groups="Lautschrift|Bri Ne",
+        kreis="Bri",
+        ort="Ne",
+    )
+    LAUT_BRI_NF = Sammlung(
+        trace="Bri Nf",
+        groups="Lautschrift|Bri Nf",
+        kreis="Bri",
+        ort="Nf",
+    )
+    LAUT_BRI_NM = Sammlung(
+        trace="Bri Nm",
+        groups="Lautschrift|Bri Nm",
+        kreis="Bri",
+        ort="Nm",
+    )
+    LAUT_BRI_OB = Sammlung(
+        trace="Bri Ob",
+        groups="Lautschrift|Bri Ob",
+        kreis="Bri",
+        ort="Ob",
+    )
+    LAUT_BRI_OM = Sammlung(
+        trace="Bri Om",
+        groups="Lautschrift|Bri Om",
+        kreis="Bri",
+        ort="Om",
+    )
+    LAUT_BRI_OS = Sammlung(
+        trace="Bri Os",
+        groups="Lautschrift|Bri Os",
+        kreis="Bri",
+        ort="Os",
+    )
+    LAUT_BRI_PA = Sammlung(
+        trace="Bri Pa",
+        groups="Lautschrift|Bri Pa",
+        kreis="Bri",
+        ort="Pa",
+    )
+    LAUT_BRI_PB = Sammlung(
+        trace="Bri Pb",
+        groups="Lautschrift|Bri Pb",
+        kreis="Bri",
+        ort="Pb",
+    )
+    LAUT_BRI_RA = Sammlung(
+        trace="Bri Ra",
+        groups="Lautschrift|Bri Ra",
+        kreis="Bri",
+        ort="Ra",
+    )
+    LAUT_BRI_RB = Sammlung(
+        trace="Bri Rb",
+        groups="Lautschrift|Bri Rb",
+        kreis="Bri",
+        ort="Rb",
+    )
+    LAUT_BRI_RF = Sammlung(
+        trace="Bri Rf",
+        groups="Lautschrift|Bri Rf",
+        kreis="Bri",
+        ort="Rf",
+    )
+    LAUT_BRI_RI = Sammlung(
+        trace="Bri Ri",
+        groups="Lautschrift|Bri Ri",
+        kreis="Bri",
+        ort="Ri",
+    )
+    LAUT_BRI_SB = Sammlung(
+        trace="Bri Sb",
+        groups="Lautschrift|Bri Sb",
+        kreis="Bri",
+        ort="Sb",
+    )
+    LAUT_BRI_SH = Sammlung(
+        trace="Bri Sh",
+        groups="Lautschrift|Bri Sh",
+        kreis="Bri",
+        ort="Sh",
+    )
+    LAUT_BRI_SI = Sammlung(
+        trace="Bri Si",
+        groups="Lautschrift|Bri Si",
+        kreis="Bri",
+        ort="Si",
+    )
+    LAUT_BRI_TI = Sammlung(
+        trace="Bri Ti",
+        groups="Lautschrift|Bri Ti",
+        kreis="Bri",
+        ort="Ti",
+    )
+    LAUT_BRI_TÜ = Sammlung(
+        trace="Bri Tü",
+        groups="Lautschrift|Bri Tü",
+        kreis="Bri",
+        ort="Tü",
+    )
+    LAUT_BRI_UD = Sammlung(
+        trace="Bri Ud",
+        groups="Lautschrift|Bri Ud",
+        kreis="Bri",
+        ort="Ud",
+    )
+    LAUT_BRI_WB = Sammlung(
+        trace="Bri Wb",
+        groups="Lautschrift|Bri Wb",
+        kreis="Bri",
+        ort="Wb",
+    )
+    LAUT_BRI_WH = Sammlung(
+        trace="Bri Wh",
+        groups="Lautschrift|Bri Wh",
+        kreis="Bri",
+        ort="Wh",
+    )
+    LAUT_BRI_WU = Sammlung(
+        trace="Bri Wu",
+        groups="Lautschrift|Bri Wu",
+        kreis="Bri",
+        ort="Wu",
+    )
+    LAUT_BRI_ZÜ = Sammlung(
+        trace="Bri Zü",
+        groups="Lautschrift|Bri Zü",
+        kreis="Bri",
+        ort="Zü",
+    )
+    LAUT_BÜK_AH = Sammlung(
+        trace="Bük Ah",
+        groups="Lautschrift|Bük Ah",
+        kreis="Bük",
+        ort="Ah",
+    )
+    LAUT_BÜK_BÜ = Sammlung(
+        trace="Bük Bü",
+        groups="Lautschrift|Bük Bü",
+        kreis="Bük",
+        ort="Bü",
+    )
+    LAUT_BÜK_EV = Sammlung(
+        trace="Bük Ev",
+        groups="Lautschrift|Bük Ev",
+        kreis="Bük",
+        ort="Ev",
+    )
+    LAUT_BÜK_GD = Sammlung(
+        trace="Bük Gd",
+        groups="Lautschrift|Bük Gd",
+        kreis="Bük",
+        ort="Gd",
+    )
+    LAUT_BÜK_HE = Sammlung(
+        trace="Bük He",
+        groups="Lautschrift|Bük He",
+        kreis="Bük",
+        ort="He",
+    )
+    LAUT_BÜK_KH = Sammlung(
+        trace="Bük Kh",
+        groups="Lautschrift|Bük Kh",
+        kreis="Bük",
+        ort="Kh",
+    )
+    LAUT_BÜK_LU = Sammlung(
+        trace="Bük Lu",
+        groups="Lautschrift|Bük Lu",
+        kreis="Bük",
+        ort="Lu",
+    )
+    LAUT_BÜK_ME = Sammlung(
+        trace="Bük Me",
+        groups="Lautschrift|Bük Me",
+        kreis="Bük",
+        ort="Me",
+    )
+    LAUT_BÜK_PE = Sammlung(
+        trace="Bük Pe",
+        groups="Lautschrift|Bük Pe",
+        kreis="Bük",
+        ort="Pe",
+    )
+    LAUT_BÜK_RÖ = Sammlung(
+        trace="Bük Rö",
+        groups="Lautschrift|Bük Rö",
+        kreis="Bük",
+        ort="Rö",
+    )
+    LAUT_BÜK_RU = Sammlung(
+        trace="Bük Ru",
+        groups="Lautschrift|Bük Ru",
+        kreis="Bük",
+        ort="Ru",
+    )
+    LAUT_BÜK_SB = Sammlung(
+        trace="Bük Sb",
+        groups="Lautschrift|Bük Sb",
+        kreis="Bük",
+        ort="Sb",
+    )
+    LAUT_BÜK_SC = Sammlung(
+        trace="Bük Sc",
+        groups="Lautschrift|Bük Sc",
+        kreis="Bük",
+        ort="Sc",
+    )
+    LAUT_BÜK_SH = Sammlung(
+        trace="Bük Sh",
+        groups="Lautschrift|Bük Sh",
+        kreis="Bük",
+        ort="Sh",
+    )
+    LAUT_BÜK_ST = Sammlung(
+        trace="Bük St",
+        groups="Lautschrift|Bük St",
+        kreis="Bük",
+        ort="St",
+    )
+    LAUT_BÜK_VE = Sammlung(
+        trace="Bük Ve",
+        groups="Lautschrift|Bük Ve",
+        kreis="Bük",
+        ort="Ve",
+    )
+    LAUT_BÜK_WI = Sammlung(
+        trace="Bük Wi",
+        groups="Lautschrift|Bük Wi",
+        kreis="Bük",
+        ort="Wi",
+    )
+    LAUT_BÜR_AD = Sammlung(
+        trace="Bür Ad",
+        groups="Lautschrift|Bür Ad",
+        kreis="Bür",
+        ort="Ad",
+    )
+    LAUT_BÜR_AN = Sammlung(
+        trace="Bür An",
+        groups="Lautschrift|Bür An",
+        kreis="Bür",
+        ort="An",
+    )
+    LAUT_BÜR_AS = Sammlung(
+        trace="Bür As",
+        groups="Lautschrift|Bür As",
+        kreis="Bür",
+        ort="As",
+    )
+    LAUT_BÜR_AT = Sammlung(
+        trace="Bür At",
+        groups="Lautschrift|Bür At",
+        kreis="Bür",
+        ort="At",
+    )
+    LAUT_BÜR_BE = Sammlung(
+        trace="Bür Be",
+        groups="Lautschrift|Bür Be",
+        kreis="Bür",
+        ort="Be",
+    )
+    LAUT_BÜR_BH = Sammlung(
+        trace="Bür Bh",
+        groups="Lautschrift|Bür Bh",
+        kreis="Bür",
+        ort="Bh",
+    )
+    LAUT_BÜR_BL = Sammlung(
+        trace="Bür Bl",
+        groups="Lautschrift|Bür Bl",
+        kreis="Bür",
+        ort="Bl",
+    )
+    LAUT_BÜR_BN = Sammlung(
+        trace="Bür Bn",
+        groups="Lautschrift|Bür Bn",
+        kreis="Bür",
+        ort="Bn",
+    )
+    LAUT_BÜR_BO = Sammlung(
+        trace="Bür Bo",
+        groups="Lautschrift|Bür Bo",
+        kreis="Bür",
+        ort="Bo",
+    )
+    LAUT_BÜR_BR = Sammlung(
+        trace="Bür Br",
+        groups="Lautschrift|Bür Br",
+        kreis="Bür",
+        ort="Br",
+    )
+    LAUT_BÜR_BÜ = Sammlung(
+        trace="Bür Bü",
+        groups="Lautschrift|Bür Bü",
+        kreis="Bür",
+        ort="Bü",
+    )
+    LAUT_BÜR_DH = Sammlung(
+        trace="Bür Dh",
+        groups="Lautschrift|Bür Dh",
+        kreis="Bür",
+        ort="Dh",
+    )
+    LAUT_BÜR_EB = Sammlung(
+        trace="Bür Eb",
+        groups="Lautschrift|Bür Eb",
+        kreis="Bür",
+        ort="Eb",
+    )
+    LAUT_BÜR_EI = Sammlung(
+        trace="Bür Ei",
+        groups="Lautschrift|Bür Ei",
+        kreis="Bür",
+        ort="Ei",
+    )
+    LAUT_BÜR_EL = Sammlung(
+        trace="Bür El",
+        groups="Lautschrift|Bür El",
+        kreis="Bür",
+        ort="El",
+    )
+    LAUT_BÜR_ES = Sammlung(
+        trace="Bür Es",
+        groups="Lautschrift|Bür Es",
+        kreis="Bür",
+        ort="Es",
+    )
+    LAUT_BÜR_ET = Sammlung(
+        trace="Bür Et",
+        groups="Lautschrift|Bür Et",
+        kreis="Bür",
+        ort="Et",
+    )
+    LAUT_BÜR_FÜ = Sammlung(
+        trace="Bür Fü",
+        groups="Lautschrift|Bür Fü",
+        kreis="Bür",
+        ort="Fü",
+    )
+    LAUT_BÜR_GA = Sammlung(
+        trace="Bür Ga",
+        groups="Lautschrift|Bür Ga",
+        kreis="Bür",
+        ort="Ga",
+    )
+    LAUT_BÜR_GR = Sammlung(
+        trace="Bür Gr",
+        groups="Lautschrift|Bür Gr",
+        kreis="Bür",
+        ort="Gr",
+    )
+    LAUT_BÜR_HA = Sammlung(
+        trace="Bür Ha",
+        groups="Lautschrift|Bür Ha",
+        kreis="Bür",
+        ort="Ha",
+    )
+    LAUT_BÜR_HB = Sammlung(
+        trace="Bür Hb",
+        groups="Lautschrift|Bür Hb",
+        kreis="Bür",
+        ort="Hb",
+    )
+    LAUT_BÜR_HD = Sammlung(
+        trace="Bür Hd",
+        groups="Lautschrift|Bür Hd",
+        kreis="Bür",
+        ort="Hd",
+    )
+    LAUT_BÜR_HE = Sammlung(
+        trace="Bür He",
+        groups="Lautschrift|Bür He",
+        kreis="Bür",
+        ort="He",
+    )
+    LAUT_BÜR_HG = Sammlung(
+        trace="Bür Hg",
+        groups="Lautschrift|Bür Hg",
+        kreis="Bür",
+        ort="Hg",
+    )
+    LAUT_BÜR_HH = Sammlung(
+        trace="Bür Hh",
+        groups="Lautschrift|Bür Hh",
+        kreis="Bür",
+        ort="Hh",
+    )
+    LAUT_BÜR_HL = Sammlung(
+        trace="Bür Hl",
+        groups="Lautschrift|Bür Hl",
+        kreis="Bür",
+        ort="Hl",
+    )
+    LAUT_BÜR_HO = Sammlung(
+        trace="Bür Ho",
+        groups="Lautschrift|Bür Ho",
+        kreis="Bür",
+        ort="Ho",
+    )
+    LAUT_BÜR_HÖ = Sammlung(
+        trace="Bür Hö",
+        groups="Lautschrift|Bür Hö",
+        kreis="Bür",
+        ort="Hö",
+    )
+    LAUT_BÜR_HR = Sammlung(
+        trace="Bür Hr",
+        groups="Lautschrift|Bür Hr",
+        kreis="Bür",
+        ort="Hr",
+    )
+    LAUT_BÜR_IH = Sammlung(
+        trace="Bür Ih",
+        groups="Lautschrift|Bür Ih",
+        kreis="Bür",
+        ort="Ih",
+    )
+    LAUT_BÜR_KL = Sammlung(
+        trace="Bür Kl",
+        groups="Lautschrift|Bür Kl",
+        kreis="Bür",
+        ort="Kl",
+    )
+    LAUT_BÜR_LB = Sammlung(
+        trace="Bür Lb",
+        groups="Lautschrift|Bür Lb",
+        kreis="Bür",
+        ort="Lb",
+    )
+    LAUT_BÜR_LI = Sammlung(
+        trace="Bür Li",
+        groups="Lautschrift|Bür Li",
+        kreis="Bür",
+        ort="Li",
+    )
+    LAUT_BÜR_MA = Sammlung(
+        trace="Bür Ma",
+        groups="Lautschrift|Bür Ma",
+        kreis="Bür",
+        ort="Ma",
+    )
+    LAUT_BÜR_ME = Sammlung(
+        trace="Bür Me",
+        groups="Lautschrift|Bür Me",
+        kreis="Bür",
+        ort="Me",
+    )
+    LAUT_BÜR_MH = Sammlung(
+        trace="Bür Mh",
+        groups="Lautschrift|Bür Mh",
+        kreis="Bür",
+        ort="Mh",
+    )
+    LAUT_BÜR_NT = Sammlung(
+        trace="Bür Nt",
+        groups="Lautschrift|Bür Nt",
+        kreis="Bür",
+        ort="Nt",
+    )
+    LAUT_BÜR_ÖD = Sammlung(
+        trace="Bür Öd",
+        groups="Lautschrift|Bür Öd",
+        kreis="Bür",
+        ort="Öd",
+    )
+    LAUT_BÜR_OT = Sammlung(
+        trace="Bür Ot",
+        groups="Lautschrift|Bür Ot",
+        kreis="Bür",
+        ort="Ot",
+    )
+    LAUT_BÜR_RE = Sammlung(
+        trace="Bür Re",
+        groups="Lautschrift|Bür Re",
+        kreis="Bür",
+        ort="Re",
+    )
+    LAUT_BÜR_RI = Sammlung(
+        trace="Bür Ri",
+        groups="Lautschrift|Bür Ri",
+        kreis="Bür",
+        ort="Ri",
+    )
+    LAUT_BÜR_SC = Sammlung(
+        trace="Bür Sc",
+        groups="Lautschrift|Bür Sc",
+        kreis="Bür",
+        ort="Sc",
+    )
+    LAUT_BÜR_SH = Sammlung(
+        trace="Bür Sh",
+        groups="Lautschrift|Bür Sh",
+        kreis="Bür",
+        ort="Sh",
+    )
+    LAUT_BÜR_SI = Sammlung(
+        trace="Bür Si",
+        groups="Lautschrift|Bür Si",
+        kreis="Bür",
+        ort="Si",
+    )
+    LAUT_BÜR_SK = Sammlung(
+        trace="Bür Sk",
+        groups="Lautschrift|Bür Sk",
+        kreis="Bür",
+        ort="Sk",
+    )
+    LAUT_BÜR_TH = Sammlung(
+        trace="Bür Th",
+        groups="Lautschrift|Bür Th",
+        kreis="Bür",
+        ort="Th",
+    )
+    LAUT_BÜR_UP = Sammlung(
+        trace="Bür Up",
+        groups="Lautschrift|Bür Up",
+        kreis="Bür",
+        ort="Up",
+    )
+    LAUT_BÜR_VE = Sammlung(
+        trace="Bür Ve",
+        groups="Lautschrift|Bür Ve",
+        kreis="Bür",
+        ort="Ve",
+    )
+    LAUT_BÜR_VN = Sammlung(
+        trace="Bür Vn",
+        groups="Lautschrift|Bür Vn",
+        kreis="Bür",
+        ort="Vn",
+    )
+    LAUT_BÜR_WB = Sammlung(
+        trace="Bür Wb",
+        groups="Lautschrift|Bür Wb",
+        kreis="Bür",
+        ort="Wb",
+    )
+    LAUT_BÜR_WE = Sammlung(
+        trace="Bür We",
+        groups="Lautschrift|Bür We",
+        kreis="Bür",
+        ort="We",
+    )
+    LAUT_BÜR_WH = Sammlung(
+        trace="Bür Wh",
+        groups="Lautschrift|Bür Wh",
+        kreis="Bür",
+        ort="Wh",
+    )
+    LAUT_BÜR_WI = Sammlung(
+        trace="Bür Wi",
+        groups="Lautschrift|Bür Wi",
+        kreis="Bür",
+        ort="Wi",
+    )
+    LAUT_BÜR_WÜ = Sammlung(
+        trace="Bür Wü",
+        groups="Lautschrift|Bür Wü",
+        kreis="Bür",
+        ort="Wü",
+    )
+    LAUT_BÜR_WW = Sammlung(
+        trace="Bür Ww",
+        groups="Lautschrift|Bür Ww",
+        kreis="Bür",
+        ort="Ww",
+    )
+    LAUT_DET_AU = Sammlung(
+        trace="Det Au",
+        groups="Lautschrift|Det Au",
+        kreis="Det",
+        ort="Au",
+    )
+    LAUT_DET_BB = Sammlung(
+        trace="Det Bb",
+        groups="Lautschrift|Det Bb",
+        kreis="Det",
+        ort="Bb",
+    )
+    LAUT_DET_BE = Sammlung(
+        trace="Det Be",
+        groups="Lautschrift|Det Be",
+        kreis="Det",
+        ort="Be",
+    )
+    LAUT_DET_BH = Sammlung(
+        trace="Det Bh",
+        groups="Lautschrift|Det Bh",
+        kreis="Det",
+        ort="Bh",
+    )
+    LAUT_DET_BI = Sammlung(
+        trace="Det Bi",
+        groups="Lautschrift|Det Bi",
+        kreis="Det",
+        ort="Bi",
+    )
+    LAUT_DET_BK = Sammlung(
+        trace="Det Bk",
+        groups="Lautschrift|Det Bk",
+        kreis="Det",
+        ort="Bk",
+    )
+    LAUT_DET_BL = Sammlung(
+        trace="Det Bl",
+        groups="Lautschrift|Det Bl",
+        kreis="Det",
+        ort="Bl",
+    )
+    LAUT_DET_BM = Sammlung(
+        trace="Det Bm",
+        groups="Lautschrift|Det Bm",
+        kreis="Det",
+        ort="Bm",
+    )
+    LAUT_DET_BR = Sammlung(
+        trace="Det Br",
+        groups="Lautschrift|Det Br",
+        kreis="Det",
+        ort="Br",
+    )
+    LAUT_DET_BS = Sammlung(
+        trace="Det Bs",
+        groups="Lautschrift|Det Bs",
+        kreis="Det",
+        ort="Bs",
+    )
+    LAUT_DET_BY = Sammlung(
+        trace="Det By",
+        groups="Lautschrift|Det By",
+        kreis="Det",
+        ort="By",
+    )
+    LAUT_DET_DA = Sammlung(
+        trace="Det Da",
+        groups="Lautschrift|Det Da",
+        kreis="Det",
+        ort="Da",
+    )
+    LAUT_DET_DB = Sammlung(
+        trace="Det Db",
+        groups="Lautschrift|Det Db",
+        kreis="Det",
+        ort="Db",
+    )
+    LAUT_DET_DE = Sammlung(
+        trace="Det De",
+        groups="Lautschrift|Det De",
+        kreis="Det",
+        ort="De",
+    )
+    LAUT_DET_DO = Sammlung(
+        trace="Det Do",
+        groups="Lautschrift|Det Do",
+        kreis="Det",
+        ort="Do",
+    )
+    LAUT_DET_EB = Sammlung(
+        trace="Det Eb",
+        groups="Lautschrift|Det Eb",
+        kreis="Det",
+        ort="Eb",
+    )
+    LAUT_DET_EH = Sammlung(
+        trace="Det Eh",
+        groups="Lautschrift|Det Eh",
+        kreis="Det",
+        ort="Eh",
+    )
+    LAUT_DET_EL = Sammlung(
+        trace="Det El",
+        groups="Lautschrift|Det El",
+        kreis="Det",
+        ort="El",
+    )
+    LAUT_DET_ER = Sammlung(
+        trace="Det Er",
+        groups="Lautschrift|Det Er",
+        kreis="Det",
+        ort="Er",
+    )
+    LAUT_DET_FA = Sammlung(
+        trace="Det Fa",
+        groups="Lautschrift|Det Fa",
+        kreis="Det",
+        ort="Fa",
+    )
+    LAUT_DET_FH = Sammlung(
+        trace="Det Fh",
+        groups="Lautschrift|Det Fh",
+        kreis="Det",
+        ort="Fh",
+    )
+    LAUT_DET_GB = Sammlung(
+        trace="Det Gb",
+        groups="Lautschrift|Det Gb",
+        kreis="Det",
+        ort="Gb",
+    )
+    LAUT_DET_GR = Sammlung(
+        trace="Det Gr",
+        groups="Lautschrift|Det Gr",
+        kreis="Det",
+        ort="Gr",
+    )
+    LAUT_DET_HB = Sammlung(
+        trace="Det Hb",
+        groups="Lautschrift|Det Hb",
+        kreis="Det",
+        ort="Hb",
+    )
+    LAUT_DET_HD = Sammlung(
+        trace="Det Hd",
+        groups="Lautschrift|Det Hd",
+        kreis="Det",
+        ort="Hd",
+    )
+    LAUT_DET_HE = Sammlung(
+        trace="Det He",
+        groups="Lautschrift|Det He",
+        kreis="Det",
+        ort="He",
+    )
+    LAUT_DET_HH = Sammlung(
+        trace="Det Hh",
+        groups="Lautschrift|Det Hh",
+        kreis="Det",
+        ort="Hh",
+    )
+    LAUT_DET_HI = Sammlung(
+        trace="Det Hi",
+        groups="Lautschrift|Det Hi",
+        kreis="Det",
+        ort="Hi",
+    )
+    LAUT_DET_HK = Sammlung(
+        trace="Det Hk",
+        groups="Lautschrift|Det Hk",
+        kreis="Det",
+        ort="Hk",
+    )
+    LAUT_DET_HM = Sammlung(
+        trace="Det Hm",
+        groups="Lautschrift|Det Hm",
+        kreis="Det",
+        ort="Hm",
+    )
+    LAUT_DET_HN = Sammlung(
+        trace="Det Hn",
+        groups="Lautschrift|Det Hn",
+        kreis="Det",
+        ort="Hn",
+    )
+    LAUT_DET_HO = Sammlung(
+        trace="Det Ho",
+        groups="Lautschrift|Det Ho",
+        kreis="Det",
+        ort="Ho",
+    )
+    LAUT_DET_HÖ = Sammlung(
+        trace="Det Hö",
+        groups="Lautschrift|Det Hö",
+        kreis="Det",
+        ort="Hö",
+    )
+    LAUT_DET_HR = Sammlung(
+        trace="Det Hr",
+        groups="Lautschrift|Det Hr",
+        kreis="Det",
+        ort="Hr",
+    )
+    LAUT_DET_HU = Sammlung(
+        trace="Det Hu",
+        groups="Lautschrift|Det Hu",
+        kreis="Det",
+        ort="Hu",
+    )
+    LAUT_DET_JE = Sammlung(
+        trace="Det Je",
+        groups="Lautschrift|Det Je",
+        kreis="Det",
+        ort="Je",
+    )
+    LAUT_DET_IH = Sammlung(
+        trace="Det Ih",
+        groups="Lautschrift|Det Ih",
+        kreis="Det",
+        ort="Ih",
+    )
+    LAUT_DET_IS = Sammlung(
+        trace="Det Is",
+        groups="Lautschrift|Det Is",
+        kreis="Det",
+        ort="Is",
+    )
+    LAUT_DET_KA = Sammlung(
+        trace="Det Ka",
+        groups="Lautschrift|Det Ka",
+        kreis="Det",
+        ort="Ka",
+    )
+    LAUT_DET_KL = Sammlung(
+        trace="Det Kl",
+        groups="Lautschrift|Det Kl",
+        kreis="Det",
+        ort="Kl",
+    )
+    LAUT_DET_KO = Sammlung(
+        trace="Det Ko",
+        groups="Lautschrift|Det Ko",
+        kreis="Det",
+        ort="Ko",
+    )
+    LAUT_DET_KT = Sammlung(
+        trace="Det Kt",
+        groups="Lautschrift|Det Kt",
+        kreis="Det",
+        ort="Kt",
+    )
+    LAUT_DET_LA = Sammlung(
+        trace="Det La",
+        groups="Lautschrift|Det La",
+        kreis="Det",
+        ort="La",
+    )
+    LAUT_DET_LO = Sammlung(
+        trace="Det Lo",
+        groups="Lautschrift|Det Lo",
+        kreis="Det",
+        ort="Lo",
+    )
+    LAUT_DET_LT = Sammlung(
+        trace="Det Lt",
+        groups="Lautschrift|Det Lt",
+        kreis="Det",
+        ort="Lt",
+    )
+    LAUT_DET_MA = Sammlung(
+        trace="Det Ma",
+        groups="Lautschrift|Det Ma",
+        kreis="Det",
+        ort="Ma",
+    )
+    LAUT_DET_MB = Sammlung(
+        trace="Det Mb",
+        groups="Lautschrift|Det Mb",
+        kreis="Det",
+        ort="Mb",
+    )
+    LAUT_DET_MF = Sammlung(
+        trace="Det Mf",
+        groups="Lautschrift|Det Mf",
+        kreis="Det",
+        ort="Mf",
+    )
+    LAUT_DET_MO = Sammlung(
+        trace="Det Mo",
+        groups="Lautschrift|Det Mo",
+        kreis="Det",
+        ort="Mo",
+    )
+    LAUT_DET_NH = Sammlung(
+        trace="Det Nh",
+        groups="Lautschrift|Det Nh",
+        kreis="Det",
+        ort="Nh",
+    )
+    LAUT_DET_NI = Sammlung(
+        trace="Det Ni",
+        groups="Lautschrift|Det Ni",
+        kreis="Det",
+        ort="Ni",
+    )
+    LAUT_DET_OB = Sammlung(
+        trace="Det Ob",
+        groups="Lautschrift|Det Ob",
+        kreis="Det",
+        ort="Ob",
+    )
+    LAUT_DET_OS = Sammlung(
+        trace="Det Os",
+        groups="Lautschrift|Det Os",
+        kreis="Det",
+        ort="Os",
+    )
+    LAUT_DET_PI = Sammlung(
+        trace="Det Pi",
+        groups="Lautschrift|Det Pi",
+        kreis="Det",
+        ort="Pi",
+    )
+    LAUT_DET_PO = Sammlung(
+        trace="Det Po",
+        groups="Lautschrift|Det Po",
+        kreis="Det",
+        ort="Po",
+    )
+    LAUT_DET_RH = Sammlung(
+        trace="Det Rh",
+        groups="Lautschrift|Det Rh",
+        kreis="Det",
+        ort="Rh",
+    )
+    LAUT_DET_RI = Sammlung(
+        trace="Det Ri",
+        groups="Lautschrift|Det Ri",
+        kreis="Det",
+        ort="Ri",
+    )
+    LAUT_DET_RK = Sammlung(
+        trace="Det Rk",
+        groups="Lautschrift|Det Rk",
+        kreis="Det",
+        ort="Rk",
+    )
+    LAUT_DET_RÖ = Sammlung(
+        trace="Det Rö",
+        groups="Lautschrift|Det Rö",
+        kreis="Det",
+        ort="Rö",
+    )
+    LAUT_DET_SC = Sammlung(
+        trace="Det Sc",
+        groups="Lautschrift|Det Sc",
+        kreis="Det",
+        ort="Sc",
+    )
+    LAUT_DET_SH = Sammlung(
+        trace="Det Sh",
+        groups="Lautschrift|Det Sh",
+        kreis="Det",
+        ort="Sh",
+    )
+    LAUT_DET_SL = Sammlung(
+        trace="Det Sl",
+        groups="Lautschrift|Det Sl",
+        kreis="Det",
+        ort="Sl",
+    )
+    LAUT_DET_SM = Sammlung(
+        trace="Det Sm",
+        groups="Lautschrift|Det Sm",
+        kreis="Det",
+        ort="Sm",
+    )
+    LAUT_DET_ST = Sammlung(
+        trace="Det St",
+        groups="Lautschrift|Det St",
+        kreis="Det",
+        ort="St",
+    )
+    LAUT_DET_SW = Sammlung(
+        trace="Det Sw",
+        groups="Lautschrift|Det Sw",
+        kreis="Det",
+        ort="Sw",
+    )
+    LAUT_DET_VA = Sammlung(
+        trace="Det Va",
+        groups="Lautschrift|Det Va",
+        kreis="Det",
+        ort="Va",
+    )
+    LAUT_DET_VR = Sammlung(
+        trace="Det Vr",
+        groups="Lautschrift|Det Vr",
+        kreis="Det",
+        ort="Vr",
+    )
+    LAUT_DET_WF = Sammlung(
+        trace="Det Wf",
+        groups="Lautschrift|Det Wf",
+        kreis="Det",
+        ort="Wf",
+    )
+    LAUT_DET_WH = Sammlung(
+        trace="Det Wh",
+        groups="Lautschrift|Det Wh",
+        kreis="Det",
+        ort="Wh",
+    )
+    LAUT_DET_WÖ = Sammlung(
+        trace="Det Wö",
+        groups="Lautschrift|Det Wö",
+        kreis="Det",
+        ort="Wö",
+    )
+    LAUT_DIE_AS = Sammlung(
+        trace="Die As",
+        groups="Lautschrift|Die As",
+        kreis="Die",
+        ort="As",
+    )
+    LAUT_DIE_BA = Sammlung(
+        trace="Die Ba",
+        groups="Lautschrift|Die Ba",
+        kreis="Die",
+        ort="Ba",
+    )
+    LAUT_DIE_BB = Sammlung(
+        trace="Die Bb",
+        groups="Lautschrift|Die Bb",
+        kreis="Die",
+        ort="Bb",
+    )
+    LAUT_DIE_BV = Sammlung(
+        trace="Die Bv",
+        groups="Lautschrift|Die Bv",
+        kreis="Die",
+        ort="Bv",
+    )
+    LAUT_DIE_DI = Sammlung(
+        trace="Die Di",
+        groups="Lautschrift|Die Di",
+        kreis="Die",
+        ort="Di",
+    )
+    LAUT_DIE_DÖ = Sammlung(
+        trace="Die Dö",
+        groups="Lautschrift|Die Dö",
+        kreis="Die",
+        ort="Dö",
+    )
+    LAUT_DIE_HE = Sammlung(
+        trace="Die He",
+        groups="Lautschrift|Die He",
+        kreis="Die",
+        ort="He",
+    )
+    LAUT_DIE_HF = Sammlung(
+        trace="Die Hf",
+        groups="Lautschrift|Die Hf",
+        kreis="Die",
+        ort="Hf",
+    )
+    LAUT_DIE_HH = Sammlung(
+        trace="Die Hh",
+        groups="Lautschrift|Die Hh",
+        kreis="Die",
+        ort="Hh",
+    )
+    LAUT_DIE_HÜ = Sammlung(
+        trace="Die Hü",
+        groups="Lautschrift|Die Hü",
+        kreis="Die",
+        ort="Hü",
+    )
+    LAUT_DIE_KI = Sammlung(
+        trace="Die Ki",
+        groups="Lautschrift|Die Ki",
+        kreis="Die",
+        ort="Ki",
+    )
+    LAUT_DIE_LB = Sammlung(
+        trace="Die Lb",
+        groups="Lautschrift|Die Lb",
+        kreis="Die",
+        ort="Lb",
+    )
+    LAUT_DIE_LE = Sammlung(
+        trace="Die Le",
+        groups="Lautschrift|Die Le",
+        kreis="Die",
+        ort="Le",
+    )
+    LAUT_DIE_MA = Sammlung(
+        trace="Die Ma",
+        groups="Lautschrift|Die Ma",
+        kreis="Die",
+        ort="Ma",
+    )
+    LAUT_DIE_ST = Sammlung(
+        trace="Die St",
+        groups="Lautschrift|Die St",
+        kreis="Die",
+        ort="St",
+    )
+    LAUT_DIE_VA = Sammlung(
+        trace="Die Va",
+        groups="Lautschrift|Die Va",
+        kreis="Die",
+        ort="Va",
+    )
+    LAUT_DIE_WH = Sammlung(
+        trace="Die Wh",
+        groups="Lautschrift|Die Wh",
+        kreis="Die",
+        ort="Wh",
+    )
+    LAUT_DIE_WF = Sammlung(
+        trace="Die Wf",
+        groups="Lautschrift|Die Wf",
+        kreis="Die",
+        ort="Wf",
+    )
+    LAUT_DOR_AP = Sammlung(
+        trace="Dor Ap",
+        groups="Lautschrift|Dor Ap",
+        kreis="Dor",
+        ort="Ap",
+    )
+    LAUT_DOR_AS = Sammlung(
+        trace="Dor As",
+        groups="Lautschrift|Dor As",
+        kreis="Dor",
+        ort="As",
+    )
+    LAUT_DOR_BA = Sammlung(
+        trace="Dor Ba",
+        groups="Lautschrift|Dor Ba",
+        kreis="Dor",
+        ort="Ba",
+    )
+    LAUT_DOR_BB = Sammlung(
+        trace="Dor Bb",
+        groups="Lautschrift|Dor Bb",
+        kreis="Dor",
+        ort="Bb",
+    )
+    LAUT_DOR_BH = Sammlung(
+        trace="Dor Bh",
+        groups="Lautschrift|Dor Bh",
+        kreis="Dor",
+        ort="Bh",
+    )
+    LAUT_DOR_BK = Sammlung(
+        trace="Dor Bk",
+        groups="Lautschrift|Dor Bk",
+        kreis="Dor",
+        ort="Bk",
+    )
+    LAUT_DOR_BO = Sammlung(
+        trace="Dor Bo",
+        groups="Lautschrift|Dor Bo",
+        kreis="Dor",
+        ort="Bo",
+    )
+    LAUT_DOR_BÖ = Sammlung(
+        trace="Dor Bö",
+        groups="Lautschrift|Dor Bö",
+        kreis="Dor",
+        ort="Bö",
+    )
+    LAUT_DOR_BR = Sammlung(
+        trace="Dor Br",
+        groups="Lautschrift|Dor Br",
+        kreis="Dor",
+        ort="Br",
+    )
+    LAUT_DOR_DD = Sammlung(
+        trace="Dor Dd",
+        groups="Lautschrift|Dor Dd",
+        kreis="Dor",
+        ort="Dd",
+    )
+    LAUT_DOR_DE = Sammlung(
+        trace="Dor De",
+        groups="Lautschrift|Dor De",
+        kreis="Dor",
+        ort="De",
+    )
+    LAUT_DOR_DO = Sammlung(
+        trace="Dor Do",
+        groups="Lautschrift|Dor Do",
+        kreis="Dor",
+        ort="Do",
+    )
+    LAUT_DOR_EI = Sammlung(
+        trace="Dor Ei",
+        groups="Lautschrift|Dor Ei",
+        kreis="Dor",
+        ort="Ei",
+    )
+    LAUT_DOR_EV = Sammlung(
+        trace="Dor Ev",
+        groups="Lautschrift|Dor Ev",
+        kreis="Dor",
+        ort="Ev",
+    )
+    LAUT_DOR_GB = Sammlung(
+        trace="Dor Gb",
+        groups="Lautschrift|Dor Gb",
+        kreis="Dor",
+        ort="Gb",
+    )
+    LAUT_DOR_GV = Sammlung(
+        trace="Dor Gv",
+        groups="Lautschrift|Dor Gv",
+        kreis="Dor",
+        ort="Gv",
+    )
+    LAUT_DOR_HA = Sammlung(
+        trace="Dor Ha",
+        groups="Lautschrift|Dor Ha",
+        kreis="Dor",
+        ort="Ha",
+    )
+    LAUT_DOR_HH = Sammlung(
+        trace="Dor Hh",
+        groups="Lautschrift|Dor Hh",
+        kreis="Dor",
+        ort="Hh",
+    )
+    LAUT_DOR_HN = Sammlung(
+        trace="Dor Hn",
+        groups="Lautschrift|Dor Hn",
+        kreis="Dor",
+        ort="Hn",
+    )
+    LAUT_DOR_HÖ = Sammlung(
+        trace="Dor Hö",
+        groups="Lautschrift|Dor Hö",
+        kreis="Dor",
+        ort="Hö",
+    )
+    LAUT_DOR_HS = Sammlung(
+        trace="Dor Hs",
+        groups="Lautschrift|Dor Hs",
+        kreis="Dor",
+        ort="Hs",
+    )
+    LAUT_DOR_HU = Sammlung(
+        trace="Dor Hu",
+        groups="Lautschrift|Dor Hu",
+        kreis="Dor",
+        ort="Hu",
+    )
+    LAUT_DOR_KA = Sammlung(
+        trace="Dor Ka",
+        groups="Lautschrift|Dor Ka",
+        kreis="Dor",
+        ort="Ka",
+    )
+    LAUT_DOR_KI = Sammlung(
+        trace="Dor Ki",
+        groups="Lautschrift|Dor Ki",
+        kreis="Dor",
+        ort="Ki",
+    )
+    LAUT_DOR_KL = Sammlung(
+        trace="Dor Kl",
+        groups="Lautschrift|Dor Kl",
+        kreis="Dor",
+        ort="Kl",
+    )
+    LAUT_DOR_KN = Sammlung(
+        trace="Dor Kn",
+        groups="Lautschrift|Dor Kn",
+        kreis="Dor",
+        ort="Kn",
+    )
+    LAUT_DOR_KR = Sammlung(
+        trace="Dor Kr",
+        groups="Lautschrift|Dor Kr",
+        kreis="Dor",
+        ort="Kr",
+    )
+    LAUT_DOR_KU = Sammlung(
+        trace="Dor Ku",
+        groups="Lautschrift|Dor Ku",
+        kreis="Dor",
+        ort="Ku",
+    )
+    LAUT_DOR_LÖ = Sammlung(
+        trace="Dor Lö",
+        groups="Lautschrift|Dor Lö",
+        kreis="Dor",
+        ort="Lö",
+    )
+    LAUT_DOR_LÜ = Sammlung(
+        trace="Dor Lü",
+        groups="Lautschrift|Dor Lü",
+        kreis="Dor",
+        ort="Lü",
+    )
+    LAUT_DOR_MA = Sammlung(
+        trace="Dor Ma",
+        groups="Lautschrift|Dor Ma",
+        kreis="Dor",
+        ort="Ma",
+    )
+    LAUT_DOR_ME = Sammlung(
+        trace="Dor Me",
+        groups="Lautschrift|Dor Me",
+        kreis="Dor",
+        ort="Me",
+    )
+    LAUT_DOR_ÖS = Sammlung(
+        trace="Dor Ös",
+        groups="Lautschrift|Dor Ös",
+        kreis="Dor",
+        ort="Ös",
+    )
+    LAUT_DOR_PÖ = Sammlung(
+        trace="Dor Pö",
+        groups="Lautschrift|Dor Pö",
+        kreis="Dor",
+        ort="Pö",
+    )
+    LAUT_DOR_RA = Sammlung(
+        trace="Dor Ra",
+        groups="Lautschrift|Dor Ra",
+        kreis="Dor",
+        ort="Ra",
+    )
+    LAUT_DOR_SB = Sammlung(
+        trace="Dor Sb",
+        groups="Lautschrift|Dor Sb",
+        kreis="Dor",
+        ort="Sb",
+    )
+    LAUT_DOR_SC = Sammlung(
+        trace="Dor Sc",
+        groups="Lautschrift|Dor Sc",
+        kreis="Dor",
+        ort="Sc",
+    )
+    LAUT_DOR_SO = Sammlung(
+        trace="Dor So",
+        groups="Lautschrift|Dor So",
+        kreis="Dor",
+        ort="So",
+    )
+    LAUT_DOR_SO1 = Sammlung(
+        trace="Dor So1",
+        groups="Lautschrift|Dor So1",
+        kreis="Dor",
+        ort="So1",
+    )
+    LAUT_DOR_SÖ = Sammlung(
+        trace="Dor Sö",
+        groups="Lautschrift|Dor Sö",
+        kreis="Dor",
+        ort="Sö",
+    )
+    LAUT_DOR_SÜ = Sammlung(
+        trace="Dor Sü",
+        groups="Lautschrift|Dor Sü",
+        kreis="Dor",
+        ort="Sü",
+    )
+    LAUT_DOR_WH = Sammlung(
+        trace="Dor Wh",
+        groups="Lautschrift|Dor Wh",
+        kreis="Dor",
+        ort="Wh",
+    )
+    LAUT_DOR_WI = Sammlung(
+        trace="Dor Wi",
+        groups="Lautschrift|Dor Wi",
+        kreis="Dor",
+        ort="Wi",
+    )
+    LAUT_DOR_WL = Sammlung(
+        trace="Dor Wl",
+        groups="Lautschrift|Dor Wl",
+        kreis="Dor",
+        ort="Wl",
+    )
+    LAUT_ENR_AD = Sammlung(
+        trace="Enr Ad",
+        groups="Lautschrift|Enr Ad",
+        kreis="Enr",
+        ort="Ad",
+    )
+    LAUT_ENR_AH = Sammlung(
+        trace="Enr Ah",
+        groups="Lautschrift|Enr Ah",
+        kreis="Enr",
+        ort="Ah",
+    )
+    LAUT_ENR_BA = Sammlung(
+        trace="Enr Ba",
+        groups="Lautschrift|Enr Ba",
+        kreis="Enr",
+        ort="Ba",
+    )
+    LAUT_ENR_BE = Sammlung(
+        trace="Enr Be",
+        groups="Lautschrift|Enr Be",
+        kreis="Enr",
+        ort="Be",
+    )
+    LAUT_ENR_BF = Sammlung(
+        trace="Enr Bf",
+        groups="Lautschrift|Enr Bf",
+        kreis="Enr",
+        ort="Bf",
+    )
+    LAUT_ENR_BH = Sammlung(
+        trace="Enr Bh",
+        groups="Lautschrift|Enr Bh",
+        kreis="Enr",
+        ort="Bh",
+    )
+    LAUT_ENR_BL = Sammlung(
+        trace="Enr Bl",
+        groups="Lautschrift|Enr Bl",
+        kreis="Enr",
+        ort="Bl",
+    )
+    LAUT_ENR_BO = Sammlung(
+        trace="Enr Bo",
+        groups="Lautschrift|Enr Bo",
+        kreis="Enr",
+        ort="Bo",
+    )
+    LAUT_ENR_BÖ = Sammlung(
+        trace="Enr Bö",
+        groups="Lautschrift|Enr Bö",
+        kreis="Enr",
+        ort="Bö",
+    )
+    LAUT_ENR_BR = Sammlung(
+        trace="Enr Br",
+        groups="Lautschrift|Enr Br",
+        kreis="Enr",
+        ort="Br",
+    )
+    LAUT_ENR_BW = Sammlung(
+        trace="Enr Bw",
+        groups="Lautschrift|Enr Bw",
+        kreis="Enr",
+        ort="Bw",
+    )
+    LAUT_ENR_DA = Sammlung(
+        trace="Enr Da",
+        groups="Lautschrift|Enr Da",
+        kreis="Enr",
+        ort="Da",
+    )
+    LAUT_ENR_DH = Sammlung(
+        trace="Enr Dh",
+        groups="Lautschrift|Enr Dh",
+        kreis="Enr",
+        ort="Dh",
+    )
+    LAUT_ENR_DU = Sammlung(
+        trace="Enr Du",
+        groups="Lautschrift|Enr Du",
+        kreis="Enr",
+        ort="Du",
+    )
+    LAUT_ENR_EB = Sammlung(
+        trace="Enr Eb",
+        groups="Lautschrift|Enr Eb",
+        kreis="Enr",
+        ort="Eb",
+    )
+    LAUT_ENR_EH = Sammlung(
+        trace="Enr Eh",
+        groups="Lautschrift|Enr Eh",
+        kreis="Enr",
+        ort="Eh",
+    )
+    LAUT_ENR_EN = Sammlung(
+        trace="Enr En",
+        groups="Lautschrift|Enr En",
+        kreis="Enr",
+        ort="En",
+    )
+    LAUT_ENR_ES = Sammlung(
+        trace="Enr Es",
+        groups="Lautschrift|Enr Es",
+        kreis="Enr",
+        ort="Es",
+    )
+    LAUT_ENR_ET = Sammlung(
+        trace="Enr Et",
+        groups="Lautschrift|Enr Et",
+        kreis="Enr",
+        ort="Et",
+    )
+    LAUT_ENR_GB = Sammlung(
+        trace="Enr Gb",
+        groups="Lautschrift|Enr Gb",
+        kreis="Enr",
+        ort="Gb",
+    )
+    LAUT_ENR_GR = Sammlung(
+        trace="Enr Gr",
+        groups="Lautschrift|Enr Gr",
+        kreis="Enr",
+        ort="Gr",
+    )
+    LAUT_ENR_HA = Sammlung(
+        trace="Enr Ha",
+        groups="Lautschrift|Enr Ha",
+        kreis="Enr",
+        ort="Ha",
+    )
+    LAUT_ENR_HB = Sammlung(
+        trace="Enr Hb",
+        groups="Lautschrift|Enr Hb",
+        kreis="Enr",
+        ort="Hb",
+    )
+    LAUT_ENR_HD = Sammlung(
+        trace="Enr Hd",
+        groups="Lautschrift|Enr Hd",
+        kreis="Enr",
+        ort="Hd",
+    )
+    LAUT_ENR_HE = Sammlung(
+        trace="Enr He",
+        groups="Lautschrift|Enr He",
+        kreis="Enr",
+        ort="He",
+    )
+    LAUT_ENR_HH = Sammlung(
+        trace="Enr Hh",
+        groups="Lautschrift|Enr Hh",
+        kreis="Enr",
+        ort="Hh",
+    )
+    LAUT_ENR_HK = Sammlung(
+        trace="Enr Hk",
+        groups="Lautschrift|Enr Hk",
+        kreis="Enr",
+        ort="Hk",
+    )
+    LAUT_ENR_HO = Sammlung(
+        trace="Enr Ho",
+        groups="Lautschrift|Enr Ho",
+        kreis="Enr",
+        ort="Ho",
+    )
+    LAUT_ENR_HR = Sammlung(
+        trace="Enr Hr",
+        groups="Lautschrift|Enr Hr",
+        kreis="Enr",
+        ort="Hr",
+    )
+    LAUT_ENR_HT = Sammlung(
+        trace="Enr Ht",
+        groups="Lautschrift|Enr Ht",
+        kreis="Enr",
+        ort="Ht",
+    )
+    LAUT_ENR_HU = Sammlung(
+        trace="Enr Hu",
+        groups="Lautschrift|Enr Hu",
+        kreis="Enr",
+        ort="Hu",
+    )
+    LAUT_ENR_KH = Sammlung(
+        trace="Enr Kh",
+        groups="Lautschrift|Enr Kh",
+        kreis="Enr",
+        ort="Kh",
+    )
+    LAUT_ENR_LD = Sammlung(
+        trace="Enr Ld",
+        groups="Lautschrift|Enr Ld",
+        kreis="Enr",
+        ort="Ld",
+    )
+    LAUT_ENR_LI = Sammlung(
+        trace="Enr Li",
+        groups="Lautschrift|Enr Li",
+        kreis="Enr",
+        ort="Li",
+    )
+    LAUT_ENR_MI = Sammlung(
+        trace="Enr Mi",
+        groups="Lautschrift|Enr Mi",
+        kreis="Enr",
+        ort="Mi",
+    )
+    LAUT_ENR_MK = Sammlung(
+        trace="Enr Mk",
+        groups="Lautschrift|Enr Mk",
+        kreis="Enr",
+        ort="Mk",
+    )
+    LAUT_ENR_NB = Sammlung(
+        trace="Enr Nb",
+        groups="Lautschrift|Enr Nb",
+        kreis="Enr",
+        ort="Nb",
+    )
+    LAUT_ENR_NH = Sammlung(
+        trace="Enr Nh",
+        groups="Lautschrift|Enr Nh",
+        kreis="Enr",
+        ort="Nh",
+    )
+    LAUT_ENR_NS = Sammlung(
+        trace="Enr Ns",
+        groups="Lautschrift|Enr Ns",
+        kreis="Enr",
+        ort="Ns",
+    )
+    LAUT_ENR_NW = Sammlung(
+        trace="Enr Nw",
+        groups="Lautschrift|Enr Nw",
+        kreis="Enr",
+        ort="Nw",
+    )
+    LAUT_ENR_OB = Sammlung(
+        trace="Enr Ob",
+        groups="Lautschrift|Enr Ob",
+        kreis="Enr",
+        ort="Ob",
+    )
+    LAUT_ENR_OE = Sammlung(
+        trace="Enr Oe",
+        groups="Lautschrift|Enr Oe",
+        kreis="Enr",
+        ort="Oe",
+    )
+    LAUT_ENR_OS = Sammlung(
+        trace="Enr Os",
+        groups="Lautschrift|Enr Os",
+        kreis="Enr",
+        ort="Os",
+    )
+    LAUT_ENR_PR = Sammlung(
+        trace="Enr Pr",
+        groups="Lautschrift|Enr Pr",
+        kreis="Enr",
+        ort="Pr",
+    )
+    LAUT_ENR_RB = Sammlung(
+        trace="Enr Rb",
+        groups="Lautschrift|Enr Rb",
+        kreis="Enr",
+        ort="Rb",
+    )
+    LAUT_ENR_RU = Sammlung(
+        trace="Enr Ru",
+        groups="Lautschrift|Enr Ru",
+        kreis="Enr",
+        ort="Ru",
+    )
+    LAUT_ENR_SC = Sammlung(
+        trace="Enr Sc",
+        groups="Lautschrift|Enr Sc",
+        kreis="Enr",
+        ort="Sc",
+    )
+    LAUT_ENR_SI = Sammlung(
+        trace="Enr Si",
+        groups="Lautschrift|Enr Si",
+        kreis="Enr",
+        ort="Si",
+    )
+    LAUT_ENR_SP = Sammlung(
+        trace="Enr Sp",
+        groups="Lautschrift|Enr Sp",
+        kreis="Enr",
+        ort="Sp",
+    )
+    LAUT_ENR_ST = Sammlung(
+        trace="Enr St",
+        groups="Lautschrift|Enr St",
+        kreis="Enr",
+        ort="St",
+    )
+    LAUT_ENR_SW = Sammlung(
+        trace="Enr Sw",
+        groups="Lautschrift|Enr Sw",
+        kreis="Enr",
+        ort="Sw",
+    )
+    LAUT_ENR_VE = Sammlung(
+        trace="Enr Ve",
+        groups="Lautschrift|Enr Ve",
+        kreis="Enr",
+        ort="Ve",
+    )
+    LAUT_ENR_VH = Sammlung(
+        trace="Enr Vh",
+        groups="Lautschrift|Enr Vh",
+        kreis="Enr",
+        ort="Vh",
+    )
+    LAUT_ENR_VO = Sammlung(
+        trace="Enr Vo",
+        groups="Lautschrift|Enr Vo",
+        kreis="Enr",
+        ort="Vo",
+    )
+    LAUT_ENR_VÖ = Sammlung(
+        trace="Enr Vö",
+        groups="Lautschrift|Enr Vö",
+        kreis="Enr",
+        ort="Vö",
+    )
+    LAUT_ENR_VS = Sammlung(
+        trace="Enr Vs",
+        groups="Lautschrift|Enr Vs",
+        kreis="Enr",
+        ort="Vs",
+    )
+    LAUT_ENR_WA = Sammlung(
+        trace="Enr Wa",
+        groups="Lautschrift|Enr Wa",
+        kreis="Enr",
+        ort="Wa",
+    )
+    LAUT_ENR_WE = Sammlung(
+        trace="Enr We",
+        groups="Lautschrift|Enr We",
+        kreis="Enr",
+        ort="We",
+    )
+    LAUT_ENR_WP = Sammlung(
+        trace="Enr Wp",
+        groups="Lautschrift|Enr Wp",
+        kreis="Enr",
+        ort="Wp",
+    )
+    LAUT_ENR_WT = Sammlung(
+        trace="Enr Wt",
+        groups="Lautschrift|Enr Wt",
+        kreis="Enr",
+        ort="Wt",
+    )
+    LAUT_ENR_ZS = Sammlung(
+        trace="Enr Zs",
+        groups="Lautschrift|Enr Zs",
+        kreis="Enr",
+        ort="Zs",
+    )
+    LAUT_ESS_AE = Sammlung(
+        trace="Ess Ae",
+        groups="Lautschrift|Ess Ae",
+        kreis="Ess",
+        ort="Ae",
+    )
+    LAUT_ESS_BB = Sammlung(
+        trace="Ess Bb",
+        groups="Lautschrift|Ess Bb",
+        kreis="Ess",
+        ort="Bb",
+    )
+    LAUT_ESS_BE = Sammlung(
+        trace="Ess Be",
+        groups="Lautschrift|Ess Be",
+        kreis="Ess",
+        ort="Be",
+    )
+    LAUT_ESS_BF = Sammlung(
+        trace="Ess Bf",
+        groups="Lautschrift|Ess Bf",
+        kreis="Ess",
+        ort="Bf",
+    )
+    LAUT_ESS_BH = Sammlung(
+        trace="Ess Bh",
+        groups="Lautschrift|Ess Bh",
+        kreis="Ess",
+        ort="Bh",
+    )
+    LAUT_ESS_ES = Sammlung(
+        trace="Ess Es",
+        groups="Lautschrift|Ess Es",
+        kreis="Ess",
+        ort="Es",
+    )
+    LAUT_ESS_FB = Sammlung(
+        trace="Ess Fb",
+        groups="Lautschrift|Ess Fb",
+        kreis="Ess",
+        ort="Fb",
+    )
+    LAUT_ESS_FR = Sammlung(
+        trace="Ess Fr",
+        groups="Lautschrift|Ess Fr",
+        kreis="Ess",
+        ort="Fr",
+    )
+    LAUT_ESS_HE = Sammlung(
+        trace="Ess He",
+        groups="Lautschrift|Ess He",
+        kreis="Ess",
+        ort="He",
+    )
+    LAUT_ESS_HH = Sammlung(
+        trace="Ess Hh",
+        groups="Lautschrift|Ess Hh",
+        kreis="Ess",
+        ort="Hh",
+    )
+    LAUT_ESS_KS = Sammlung(
+        trace="Ess Ks",
+        groups="Lautschrift|Ess Ks",
+        kreis="Ess",
+        ort="Ks",
+    )
+    LAUT_ESS_KP = Sammlung(
+        trace="Ess Kp",
+        groups="Lautschrift|Ess Kp",
+        kreis="Ess",
+        ort="Kp",
+    )
+    LAUT_ESS_OF = Sammlung(
+        trace="Ess Of",
+        groups="Lautschrift|Ess Of",
+        kreis="Ess",
+        ort="Of",
+    )
+    LAUT_ESS_OH = Sammlung(
+        trace="Ess Oh",
+        groups="Lautschrift|Ess Oh",
+        kreis="Ess",
+        ort="Oh",
+    )
+    LAUT_ESS_RE = Sammlung(
+        trace="Ess Re",
+        groups="Lautschrift|Ess Re",
+        kreis="Ess",
+        ort="Re",
+    )
+    LAUT_ESS_SB = Sammlung(
+        trace="Ess Sb",
+        groups="Lautschrift|Ess Sb",
+        kreis="Ess",
+        ort="Sb",
+    )
+    LAUT_ESS_SR = Sammlung(
+        trace="Ess Sr",
+        groups="Lautschrift|Ess Sr",
+        kreis="Ess",
+        ort="Sr",
+    )
+    LAUT_ESS_ST = Sammlung(
+        trace="Ess St",
+        groups="Lautschrift|Ess St",
+        kreis="Ess",
+        ort="St",
+    )
+    LAUT_ESS_ÜR = Sammlung(
+        trace="Ess Ür",
+        groups="Lautschrift|Ess Ür",
+        kreis="Ess",
+        ort="Ür",
+    )
+    LAUT_GEL_BK = Sammlung(
+        trace="Gel Bk",
+        groups="Lautschrift|Gel Bk",
+        kreis="Gel",
+        ort="Bk",
+    )
+    LAUT_GEL_BS = Sammlung(
+        trace="Gel Bs",
+        groups="Lautschrift|Gel Bs",
+        kreis="Gel",
+        ort="Bs",
+    )
+    LAUT_GEL_BU = Sammlung(
+        trace="Gel Bu",
+        groups="Lautschrift|Gel Bu",
+        kreis="Gel",
+        ort="Bu",
+    )
+    LAUT_GEL_BX = Sammlung(
+        trace="Gel Bx",
+        groups="Lautschrift|Gel Bx",
+        kreis="Gel",
+        ort="Bx",
+    )
+    LAUT_GEL_GK = Sammlung(
+        trace="Gel Gk",
+        groups="Lautschrift|Gel Gk",
+        kreis="Gel",
+        ort="Gk",
+    )
+    LAUT_GEL_HA = Sammlung(
+        trace="Gel Ha",
+        groups="Lautschrift|Gel Ha",
+        kreis="Gel",
+        ort="Ha",
+    )
+    LAUT_GEL_HE = Sammlung(
+        trace="Gel He",
+        groups="Lautschrift|Gel He",
+        kreis="Gel",
+        ort="He",
+    )
+    LAUT_GEL_HH = Sammlung(
+        trace="Gel Hh",
+        groups="Lautschrift|Gel Hh",
+        kreis="Gel",
+        ort="Hh",
+    )
+    LAUT_GEL_HM = Sammlung(
+        trace="Gel Hm",
+        groups="Lautschrift|Gel Hm",
+        kreis="Gel",
+        ort="Hm",
+    )
+    LAUT_GEL_LT = Sammlung(
+        trace="Gel Lt",
+        groups="Lautschrift|Gel Lt",
+        kreis="Gel",
+        ort="Lt",
+    )
+    LAUT_GEL_RH = Sammlung(
+        trace="Gel Rh",
+        groups="Lautschrift|Gel Rh",
+        kreis="Gel",
+        ort="Rh",
+    )
+    LAUT_GEL_ST = Sammlung(
+        trace="Gel St",
+        groups="Lautschrift|Gel St",
+        kreis="Gel",
+        ort="St",
+    )
+    LAUT_GEL_ÜD = Sammlung(
+        trace="Gel Üd",
+        groups="Lautschrift|Gel Üd",
+        kreis="Gel",
+        ort="Üd",
+    )
+    LAUT_GEL_WA = Sammlung(
+        trace="Gel Wa",
+        groups="Lautschrift|Gel Wa",
+        kreis="Gel",
+        ort="Wa",
+    )
+    LAUT_GEL_WE = Sammlung(
+        trace="Gel We",
+        groups="Lautschrift|Gel We",
+        kreis="Gel",
+        ort="We",
+    )
+    LAUT_HAG_BO = Sammlung(
+        trace="Hag Bo",
+        groups="Lautschrift|Hag Bo",
+        kreis="Hag",
+        ort="Bo",
+    )
+    LAUT_HAG_EI = Sammlung(
+        trace="Hag Ei",
+        groups="Lautschrift|Hag Ei",
+        kreis="Hag",
+        ort="Ei",
+    )
+    LAUT_HAG_EP = Sammlung(
+        trace="Hag Ep",
+        groups="Lautschrift|Hag Ep",
+        kreis="Hag",
+        ort="Ep",
+    )
+    LAUT_HAG_HA = Sammlung(
+        trace="Hag Ha",
+        groups="Lautschrift|Hag Ha",
+        kreis="Hag",
+        ort="Ha",
+    )
+    LAUT_HAG_HG = Sammlung(
+        trace="Hag Hg",
+        groups="Lautschrift|Hag Hg",
+        kreis="Hag",
+        ort="Hg",
+    )
+    LAUT_HAG_HS = Sammlung(
+        trace="Hag Hs",
+        groups="Lautschrift|Hag Hs",
+        kreis="Hag",
+        ort="Hs",
+    )
+    LAUT_HAG_VH = Sammlung(
+        trace="Hag Vh",
+        groups="Lautschrift|Hag Vh",
+        kreis="Hag",
+        ort="Vh",
+    )
+    LAUT_HAL_AH = Sammlung(
+        trace="Hal Ah",
+        groups="Lautschrift|Hal Ah",
+        kreis="Hal",
+        ort="Ah",
+    )
+    LAUT_HAL_BC = Sammlung(
+        trace="Hal Bc",
+        groups="Lautschrift|Hal Bc",
+        kreis="Hal",
+        ort="Bc",
+    )
+    LAUT_HAL_BH = Sammlung(
+        trace="Hal Bh",
+        groups="Lautschrift|Hal Bh",
+        kreis="Hal",
+        ort="Bh",
+    )
+    LAUT_HAL_BK = Sammlung(
+        trace="Hal Bk",
+        groups="Lautschrift|Hal Bk",
+        kreis="Hal",
+        ort="Bk",
+    )
+    LAUT_HAL_BO = Sammlung(
+        trace="Hal Bo",
+        groups="Lautschrift|Hal Bo",
+        kreis="Hal",
+        ort="Bo",
+    )
+    LAUT_HAL_BV = Sammlung(
+        trace="Hal Bv",
+        groups="Lautschrift|Hal Bv",
+        kreis="Hal",
+        ort="Bv",
+    )
+    LAUT_HAL_EB = Sammlung(
+        trace="Hal Eb",
+        groups="Lautschrift|Hal Eb",
+        kreis="Hal",
+        ort="Eb",
+    )
+    LAUT_HAL_GA = Sammlung(
+        trace="Hal Ga",
+        groups="Lautschrift|Hal Ga",
+        kreis="Hal",
+        ort="Ga",
+    )
+    LAUT_HAL_HA = Sammlung(
+        trace="Hal Ha",
+        groups="Lautschrift|Hal Ha",
+        kreis="Hal",
+        ort="Ha",
+    )
+    LAUT_HAL_HE = Sammlung(
+        trace="Hal He",
+        groups="Lautschrift|Hal He",
+        kreis="Hal",
+        ort="He",
+    )
+    LAUT_HAL_HG = Sammlung(
+        trace="Hal Hg",
+        groups="Lautschrift|Hal Hg",
+        kreis="Hal",
+        ort="Hg",
+    )
+    LAUT_HAL_HÖ = Sammlung(
+        trace="Hal Hö",
+        groups="Lautschrift|Hal Hö",
+        kreis="Hal",
+        ort="Hö",
+    )
+    LAUT_HAL_HT = Sammlung(
+        trace="Hal Ht",
+        groups="Lautschrift|Hal Ht",
+        kreis="Hal",
+        ort="Ht",
+    )
+    LAUT_HAL_IS = Sammlung(
+        trace="Hal Is",
+        groups="Lautschrift|Hal Is",
+        kreis="Hal",
+        ort="Is",
+    )
+    LAUT_HAL_KA = Sammlung(
+        trace="Hal Ka",
+        groups="Lautschrift|Hal Ka",
+        kreis="Hal",
+        ort="Ka",
+    )
+    LAUT_HAL_KK = Sammlung(
+        trace="Hal Kk",
+        groups="Lautschrift|Hal Kk",
+        kreis="Hal",
+        ort="Kk",
+    )
+    LAUT_HAL_KL = Sammlung(
+        trace="Hal Kl",
+        groups="Lautschrift|Hal Kl",
+        kreis="Hal",
+        ort="Kl",
+    )
+    LAUT_HAL_KO = Sammlung(
+        trace="Hal Ko",
+        groups="Lautschrift|Hal Ko",
+        kreis="Hal",
+        ort="Ko",
+    )
+    LAUT_HAL_KÜ = Sammlung(
+        trace="Hal Kü",
+        groups="Lautschrift|Hal Kü",
+        kreis="Hal",
+        ort="Kü",
+    )
+    LAUT_HAL_LH = Sammlung(
+        trace="Hal Lh",
+        groups="Lautschrift|Hal Lh",
+        kreis="Hal",
+        ort="Lh",
+    )
+    LAUT_HAL_LO = Sammlung(
+        trace="Hal Lo",
+        groups="Lautschrift|Hal Lo",
+        kreis="Hal",
+        ort="Lo",
+    )
+    LAUT_HAL_OD = Sammlung(
+        trace="Hal Od",
+        groups="Lautschrift|Hal Od",
+        kreis="Hal",
+        ort="Od",
+    )
+    LAUT_HAL_ÖW = Sammlung(
+        trace="Hal Öw",
+        groups="Lautschrift|Hal Öw",
+        kreis="Hal",
+        ort="Öw",
+    )
+    LAUT_HAL_PH = Sammlung(
+        trace="Hal Ph",
+        groups="Lautschrift|Hal Ph",
+        kreis="Hal",
+        ort="Ph",
+    )
+    LAUT_HAL_PL = Sammlung(
+        trace="Hal Pl",
+        groups="Lautschrift|Hal Pl",
+        kreis="Hal",
+        ort="Pl",
+    )
+    LAUT_HAL_RA = Sammlung(
+        trace="Hal Ra",
+        groups="Lautschrift|Hal Ra",
+        kreis="Hal",
+        ort="Ra",
+    )
+    LAUT_HAL_SF = Sammlung(
+        trace="Hal Sf",
+        groups="Lautschrift|Hal Sf",
+        kreis="Hal",
+        ort="Sf",
+    )
+    LAUT_HAL_SH = Sammlung(
+        trace="Hal Sh",
+        groups="Lautschrift|Hal Sh",
+        kreis="Hal",
+        ort="Sh",
+    )
+    LAUT_HAL_SI = Sammlung(
+        trace="Hal Si",
+        groups="Lautschrift|Hal Si",
+        kreis="Hal",
+        ort="Si",
+    )
+    LAUT_HAL_SR = Sammlung(
+        trace="Hal Sr",
+        groups="Lautschrift|Hal Sr",
+        kreis="Hal",
+        ort="Sr",
+    )
+    LAUT_HAL_ST = Sammlung(
+        trace="Hal St",
+        groups="Lautschrift|Hal St",
+        kreis="Hal",
+        ort="St",
+    )
+    LAUT_HAL_TH = Sammlung(
+        trace="Hal Th",
+        groups="Lautschrift|Hal Th",
+        kreis="Hal",
+        ort="Th",
+    )
+    LAUT_HAL_VM = Sammlung(
+        trace="Hal Vm",
+        groups="Lautschrift|Hal Vm",
+        kreis="Hal",
+        ort="Vm",
+    )
+    LAUT_HAL_WE = Sammlung(
+        trace="Hal We",
+        groups="Lautschrift|Hal We",
+        kreis="Hal",
+        ort="We",
+    )
+    LAUT_HFD_AL = Sammlung(
+        trace="Hfd Al",
+        groups="Lautschrift|Hfd Al",
+        kreis="Hfd",
+        ort="Al",
+    )
+    LAUT_HFD_BB = Sammlung(
+        trace="Hfd Bb",
+        groups="Lautschrift|Hfd Bb",
+        kreis="Hfd",
+        ort="Bb",
+    )
+    LAUT_HFD_BI = Sammlung(
+        trace="Hfd Bi",
+        groups="Lautschrift|Hfd Bi",
+        kreis="Hfd",
+        ort="Bi",
+    )
+    LAUT_HFD_BK = Sammlung(
+        trace="Hfd Bk",
+        groups="Lautschrift|Hfd Bk",
+        kreis="Hfd",
+        ort="Bk",
+    )
+    LAUT_HFD_BO = Sammlung(
+        trace="Hfd Bo",
+        groups="Lautschrift|Hfd Bo",
+        kreis="Hfd",
+        ort="Bo",
+    )
+    LAUT_HFD_BR = Sammlung(
+        trace="Hfd Br",
+        groups="Lautschrift|Hfd Br",
+        kreis="Hfd",
+        ort="Br",
+    )
+    LAUT_HFD_BU = Sammlung(
+        trace="Hfd Bu",
+        groups="Lautschrift|Hfd Bu",
+        kreis="Hfd",
+        ort="Bu",
+    )
+    LAUT_HFD_BÜ = Sammlung(
+        trace="Hfd Bü",
+        groups="Lautschrift|Hfd Bü",
+        kreis="Hfd",
+        ort="Bü",
+    )
+    LAUT_HFD_DB = Sammlung(
+        trace="Hfd Db",
+        groups="Lautschrift|Hfd Db",
+        kreis="Hfd",
+        ort="Db",
+    )
+    LAUT_HFD_DD = Sammlung(
+        trace="Hfd Dd",
+        groups="Lautschrift|Hfd Dd",
+        kreis="Hfd",
+        ort="Dd",
+    )
+    LAUT_HFD_DH = Sammlung(
+        trace="Hfd Dh",
+        groups="Lautschrift|Hfd Dh",
+        kreis="Hfd",
+        ort="Dh",
+    )
+    LAUT_HFD_DO = Sammlung(
+        trace="Hfd Do",
+        groups="Lautschrift|Hfd Do",
+        kreis="Hfd",
+        ort="Do",
+    )
+    LAUT_HFD_DR = Sammlung(
+        trace="Hfd Dr",
+        groups="Lautschrift|Hfd Dr",
+        kreis="Hfd",
+        ort="Dr",
+    )
+    LAUT_HFD_DÜ = Sammlung(
+        trace="Hfd Dü",
+        groups="Lautschrift|Hfd Dü",
+        kreis="Hfd",
+        ort="Dü",
+    )
+    LAUT_HFD_EB = Sammlung(
+        trace="Hfd Eb",
+        groups="Lautschrift|Hfd Eb",
+        kreis="Hfd",
+        ort="Eb",
+    )
+    LAUT_HFD_ED = Sammlung(
+        trace="Hfd Ed",
+        groups="Lautschrift|Hfd Ed",
+        kreis="Hfd",
+        ort="Ed",
+    )
+    LAUT_HFD_EH = Sammlung(
+        trace="Hfd Eh",
+        groups="Lautschrift|Hfd Eh",
+        kreis="Hfd",
+        ort="Eh",
+    )
+    LAUT_HFD_EI = Sammlung(
+        trace="Hfd Ei",
+        groups="Lautschrift|Hfd Ei",
+        kreis="Hfd",
+        ort="Ei",
+    )
+    LAUT_HFD_EL = Sammlung(
+        trace="Hfd El",
+        groups="Lautschrift|Hfd El",
+        kreis="Hfd",
+        ort="El",
+    )
+    LAUT_HFD_EN = Sammlung(
+        trace="Hfd En",
+        groups="Lautschrift|Hfd En",
+        kreis="Hfd",
+        ort="En",
+    )
+    LAUT_HFD_EX = Sammlung(
+        trace="Hfd Ex",
+        groups="Lautschrift|Hfd Ex",
+        kreis="Hfd",
+        ort="Ex",
+    )
+    LAUT_HFD_FA = Sammlung(
+        trace="Hfd Fa",
+        groups="Lautschrift|Hfd Fa",
+        kreis="Hfd",
+        ort="Fa",
+    )
+    LAUT_HFD_FD = Sammlung(
+        trace="Hfd Fd",
+        groups="Lautschrift|Hfd Fd",
+        kreis="Hfd",
+        ort="Fd",
+    )
+    LAUT_HFD_GO = Sammlung(
+        trace="Hfd Go",
+        groups="Lautschrift|Hfd Go",
+        kreis="Hfd",
+        ort="Go",
+    )
+    LAUT_HFD_HA = Sammlung(
+        trace="Hfd Ha",
+        groups="Lautschrift|Hfd Ha",
+        kreis="Hfd",
+        ort="Ha",
+    )
+    LAUT_HFD_HÄ = Sammlung(
+        trace="Hfd Hä",
+        groups="Lautschrift|Hfd Hä",
+        kreis="Hfd",
+        ort="Hä",
+    )
+    LAUT_HFD_HB = Sammlung(
+        trace="Hfd Hb",
+        groups="Lautschrift|Hfd Hb",
+        kreis="Hfd",
+        ort="Hb",
+    )
+    LAUT_HFD_HF = Sammlung(
+        trace="Hfd Hf",
+        groups="Lautschrift|Hfd Hf",
+        kreis="Hfd",
+        ort="Hf",
+    )
+    LAUT_HFD_HH = Sammlung(
+        trace="Hfd Hh",
+        groups="Lautschrift|Hfd Hh",
+        kreis="Hfd",
+        ort="Hh",
+    )
+    LAUT_HFD_HI = Sammlung(
+        trace="Hfd Hi",
+        groups="Lautschrift|Hfd Hi",
+        kreis="Hfd",
+        ort="Hi",
+    )
+    LAUT_HFD_HO = Sammlung(
+        trace="Hfd Ho",
+        groups="Lautschrift|Hfd Ho",
+        kreis="Hfd",
+        ort="Ho",
+    )
+    LAUT_HFD_HS = Sammlung(
+        trace="Hfd Hs",
+        groups="Lautschrift|Hfd Hs",
+        kreis="Hfd",
+        ort="Hs",
+    )
+    LAUT_HFD_HU = Sammlung(
+        trace="Hfd Hu",
+        groups="Lautschrift|Hfd Hu",
+        kreis="Hfd",
+        ort="Hu",
+    )
+    LAUT_HFD_HÜ = Sammlung(
+        trace="Hfd Hü",
+        groups="Lautschrift|Hfd Hü",
+        kreis="Hfd",
+        ort="Hü",
+    )
+    LAUT_HFD_HW = Sammlung(
+        trace="Hfd Hw",
+        groups="Lautschrift|Hfd Hw",
+        kreis="Hfd",
+        ort="Hw",
+    )
+    LAUT_HFD_KL = Sammlung(
+        trace="Hfd Kl",
+        groups="Lautschrift|Hfd Kl",
+        kreis="Hfd",
+        ort="Kl",
+    )
+    LAUT_HFD_LA = Sammlung(
+        trace="Hfd La",
+        groups="Lautschrift|Hfd La",
+        kreis="Hfd",
+        ort="La",
+    )
+    LAUT_HFD_LH = Sammlung(
+        trace="Hfd Lh",
+        groups="Lautschrift|Hfd Lh",
+        kreis="Hfd",
+        ort="Lh",
+    )
+    LAUT_HFD_LÖ = Sammlung(
+        trace="Hfd Lö",
+        groups="Lautschrift|Hfd Lö",
+        kreis="Hfd",
+        ort="Lö",
+    )
+    LAUT_HFD_LZ = Sammlung(
+        trace="Hfd Lz",
+        groups="Lautschrift|Hfd Lz",
+        kreis="Hfd",
+        ort="Lz",
+    )
+    LAUT_HFD_MA = Sammlung(
+        trace="Hfd Ma",
+        groups="Lautschrift|Hfd Ma",
+        kreis="Hfd",
+        ort="Ma",
+    )
+    LAUT_HFD_MB = Sammlung(
+        trace="Hfd Mb",
+        groups="Lautschrift|Hfd Mb",
+        kreis="Hfd",
+        ort="Mb",
+    )
+    LAUT_HFD_MC = Sammlung(
+        trace="Hfd Mc",
+        groups="Lautschrift|Hfd Mc",
+        kreis="Hfd",
+        ort="Mc",
+    )
+    LAUT_HFD_MH = Sammlung(
+        trace="Hfd Mh",
+        groups="Lautschrift|Hfd Mh",
+        kreis="Hfd",
+        ort="Mh",
+    )
+    LAUT_HFD_MT = Sammlung(
+        trace="Hfd Mt",
+        groups="Lautschrift|Hfd Mt",
+        kreis="Hfd",
+        ort="Mt",
+    )
+    LAUT_HFD_NS = Sammlung(
+        trace="Hfd Ns",
+        groups="Lautschrift|Hfd Ns",
+        kreis="Hfd",
+        ort="Ns",
+    )
+    LAUT_HFD_OB = Sammlung(
+        trace="Hfd Ob",
+        groups="Lautschrift|Hfd Ob",
+        kreis="Hfd",
+        ort="Ob",
+    )
+    LAUT_HFD_OH = Sammlung(
+        trace="Hfd Oh",
+        groups="Lautschrift|Hfd Oh",
+        kreis="Hfd",
+        ort="Oh",
+    )
+    LAUT_HFD_ÖH = Sammlung(
+        trace="Hfd Öh",
+        groups="Lautschrift|Hfd Öh",
+        kreis="Hfd",
+        ort="Öh",
+    )
+    LAUT_HFD_OK = Sammlung(
+        trace="Hfd Ok",
+        groups="Lautschrift|Hfd Ok",
+        kreis="Hfd",
+        ort="Ok",
+    )
+    LAUT_HFD_OS = Sammlung(
+        trace="Hfd Os",
+        groups="Lautschrift|Hfd Os",
+        kreis="Hfd",
+        ort="Os",
+    )
+    LAUT_HFD_PH = Sammlung(
+        trace="Hfd Ph",
+        groups="Lautschrift|Hfd Ph",
+        kreis="Hfd",
+        ort="Ph",
+    )
+    LAUT_HFD_QH = Sammlung(
+        trace="Hfd Qh",
+        groups="Lautschrift|Hfd Qh",
+        kreis="Hfd",
+        ort="Qh",
+    )
+    LAUT_HFD_RH = Sammlung(
+        trace="Hfd Rh",
+        groups="Lautschrift|Hfd Rh",
+        kreis="Hfd",
+        ort="Rh",
+    )
+    LAUT_HFD_RL = Sammlung(
+        trace="Hfd Rl",
+        groups="Lautschrift|Hfd Rl",
+        kreis="Hfd",
+        ort="Rl",
+    )
+    LAUT_HFD_SB = Sammlung(
+        trace="Hfd Sb",
+        groups="Lautschrift|Hfd Sb",
+        kreis="Hfd",
+        ort="Sb",
+    )
+    LAUT_HFD_SC = Sammlung(
+        trace="Hfd Sc",
+        groups="Lautschrift|Hfd Sc",
+        kreis="Hfd",
+        ort="Sc",
+    )
+    LAUT_HFD_SD = Sammlung(
+        trace="Hfd Sd",
+        groups="Lautschrift|Hfd Sd",
+        kreis="Hfd",
+        ort="Sd",
+    )
+    LAUT_HFD_SG = Sammlung(
+        trace="Hfd Sg",
+        groups="Lautschrift|Hfd Sg",
+        kreis="Hfd",
+        ort="Sg",
+    )
+    LAUT_HFD_SI = Sammlung(
+        trace="Hfd Si",
+        groups="Lautschrift|Hfd Si",
+        kreis="Hfd",
+        ort="Si",
+    )
+    LAUT_HFD_SL = Sammlung(
+        trace="Hfd Sl",
+        groups="Lautschrift|Hfd Sl",
+        kreis="Hfd",
+        ort="Sl",
+    )
+    LAUT_HFD_SP = Sammlung(
+        trace="Hfd Sp",
+        groups="Lautschrift|Hfd Sp",
+        kreis="Hfd",
+        ort="Sp",
+    )
+    LAUT_HFD_ST = Sammlung(
+        trace="Hfd St",
+        groups="Lautschrift|Hfd St",
+        kreis="Hfd",
+        ort="St",
+    )
+    LAUT_HFD_SU = Sammlung(
+        trace="Hfd Su",
+        groups="Lautschrift|Hfd Su",
+        kreis="Hfd",
+        ort="Su",
+    )
+    LAUT_HFD_SW = Sammlung(
+        trace="Hfd Sw",
+        groups="Lautschrift|Hfd Sw",
+        kreis="Hfd",
+        ort="Sw",
+    )
+    LAUT_HFD_VD = Sammlung(
+        trace="Hfd Vd",
+        groups="Lautschrift|Hfd Vd",
+        kreis="Hfd",
+        ort="Vd",
+    )
+    LAUT_HFD_VL = Sammlung(
+        trace="Hfd Vl",
+        groups="Lautschrift|Hfd Vl",
+        kreis="Hfd",
+        ort="Vl",
+    )
+    LAUT_HFD_WA = Sammlung(
+        trace="Hfd Wa",
+        groups="Lautschrift|Hfd Wa",
+        kreis="Hfd",
+        ort="Wa",
+    )
+    LAUT_HFD_WD = Sammlung(
+        trace="Hfd Wd",
+        groups="Lautschrift|Hfd Wd",
+        kreis="Hfd",
+        ort="Wd",
+    )
+    LAUT_HFD_WE = Sammlung(
+        trace="Hfd We",
+        groups="Lautschrift|Hfd We",
+        kreis="Hfd",
+        ort="We",
+    )
+    LAUT_HFD_WF = Sammlung(
+        trace="Hfd Wf",
+        groups="Lautschrift|Hfd Wf",
+        kreis="Hfd",
+        ort="Wf",
+    )
+    LAUT_HFD_WK = Sammlung(
+        trace="Hfd Wk",
+        groups="Lautschrift|Hfd Wk",
+        kreis="Hfd",
+        ort="Wk",
+    )
+    LAUT_HÖX_AB = Sammlung(
+        trace="Höx Ab",
+        groups="Lautschrift|Höx Ab",
+        kreis="Höx",
+        ort="Ab",
+    )
+    LAUT_HÖX_AH = Sammlung(
+        trace="Höx Ah",
+        groups="Lautschrift|Höx Ah",
+        kreis="Höx",
+        ort="Ah",
+    )
+    LAUT_HÖX_AL = Sammlung(
+        trace="Höx Al",
+        groups="Lautschrift|Höx Al",
+        kreis="Höx",
+        ort="Al",
+    )
+    LAUT_HÖX_AM = Sammlung(
+        trace="Höx Am",
+        groups="Lautschrift|Höx Am",
+        kreis="Höx",
+        ort="Am",
+    )
+    LAUT_HÖX_BB = Sammlung(
+        trace="Höx Bb",
+        groups="Lautschrift|Höx Bb",
+        kreis="Höx",
+        ort="Bb",
+    )
+    LAUT_HÖX_BE = Sammlung(
+        trace="Höx Be",
+        groups="Lautschrift|Höx Be",
+        kreis="Höx",
+        ort="Be",
+    )
+    LAUT_HÖX_BG = Sammlung(
+        trace="Höx Bg",
+        groups="Lautschrift|Höx Bg",
+        kreis="Höx",
+        ort="Bg",
+    )
+    LAUT_HÖX_BH = Sammlung(
+        trace="Höx Bh",
+        groups="Lautschrift|Höx Bh",
+        kreis="Höx",
+        ort="Bh",
+    )
+    LAUT_HÖX_BL = Sammlung(
+        trace="Höx Bl",
+        groups="Lautschrift|Höx Bl",
+        kreis="Höx",
+        ort="Bl",
+    )
+    LAUT_HÖX_BO = Sammlung(
+        trace="Höx Bo",
+        groups="Lautschrift|Höx Bo",
+        kreis="Höx",
+        ort="Bo",
+    )
+    LAUT_HÖX_BÖ = Sammlung(
+        trace="Höx Bö",
+        groups="Lautschrift|Höx Bö",
+        kreis="Höx",
+        ort="Bö",
+    )
+    LAUT_HÖX_BR = Sammlung(
+        trace="Höx Br",
+        groups="Lautschrift|Höx Br",
+        kreis="Höx",
+        ort="Br",
+    )
+    LAUT_HÖX_BS = Sammlung(
+        trace="Höx Bs",
+        groups="Lautschrift|Höx Bs",
+        kreis="Höx",
+        ort="Bs",
+    )
+    LAUT_HÖX_BV = Sammlung(
+        trace="Höx Bv",
+        groups="Lautschrift|Höx Bv",
+        kreis="Höx",
+        ort="Bv",
+    )
+    LAUT_HÖX_BX = Sammlung(
+        trace="Höx Bx",
+        groups="Lautschrift|Höx Bx",
+        kreis="Höx",
+        ort="Bx",
+    )
+    LAUT_HÖX_DB = Sammlung(
+        trace="Höx Db",
+        groups="Lautschrift|Höx Db",
+        kreis="Höx",
+        ort="Db",
+    )
+    LAUT_HÖX_DH = Sammlung(
+        trace="Höx Dh",
+        groups="Lautschrift|Höx Dh",
+        kreis="Höx",
+        ort="Dh",
+    )
+    LAUT_HÖX_DR = Sammlung(
+        trace="Höx Dr",
+        groups="Lautschrift|Höx Dr",
+        kreis="Höx",
+        ort="Dr",
+    )
+    LAUT_HÖX_EN = Sammlung(
+        trace="Höx En",
+        groups="Lautschrift|Höx En",
+        kreis="Höx",
+        ort="En",
+    )
+    LAUT_HÖX_ER = Sammlung(
+        trace="Höx Er",
+        groups="Lautschrift|Höx Er",
+        kreis="Höx",
+        ort="Er",
+    )
+    LAUT_HÖX_FR = Sammlung(
+        trace="Höx Fr",
+        groups="Lautschrift|Höx Fr",
+        kreis="Höx",
+        ort="Fr",
+    )
+    LAUT_HÖX_FÜ = Sammlung(
+        trace="Höx Fü",
+        groups="Lautschrift|Höx Fü",
+        kreis="Höx",
+        ort="Fü",
+    )
+    LAUT_HÖX_GH = Sammlung(
+        trace="Höx Gh",
+        groups="Lautschrift|Höx Gh",
+        kreis="Höx",
+        ort="Gh",
+    )
+    LAUT_HÖX_HA = Sammlung(
+        trace="Höx Ha",
+        groups="Lautschrift|Höx Ha",
+        kreis="Höx",
+        ort="Ha",
+    )
+    LAUT_HÖX_HB = Sammlung(
+        trace="Höx Hb",
+        groups="Lautschrift|Höx Hb",
+        kreis="Höx",
+        ort="Hb",
+    )
+    LAUT_HÖX_HD = Sammlung(
+        trace="Höx Hd",
+        groups="Lautschrift|Höx Hd",
+        kreis="Höx",
+        ort="Hd",
+    )
+    LAUT_HÖX_HE = Sammlung(
+        trace="Höx He",
+        groups="Lautschrift|Höx He",
+        kreis="Höx",
+        ort="He",
+    )
+    LAUT_HÖX_HH = Sammlung(
+        trace="Höx Hh",
+        groups="Lautschrift|Höx Hh",
+        kreis="Höx",
+        ort="Hh",
+    )
+    LAUT_HÖX_HI = Sammlung(
+        trace="Höx Hi",
+        groups="Lautschrift|Höx Hi",
+        kreis="Höx",
+        ort="Hi",
+    )
+    LAUT_HÖX_HM = Sammlung(
+        trace="Höx Hm",
+        groups="Lautschrift|Höx Hm",
+        kreis="Höx",
+        ort="Hm",
+    )
+    LAUT_HÖX_HO = Sammlung(
+        trace="Höx Ho",
+        groups="Lautschrift|Höx Ho",
+        kreis="Höx",
+        ort="Ho",
+    )
+    LAUT_HÖX_HR = Sammlung(
+        trace="Höx Hr",
+        groups="Lautschrift|Höx Hr",
+        kreis="Höx",
+        ort="Hr",
+    )
+    LAUT_HÖX_HS = Sammlung(
+        trace="Höx Hs",
+        groups="Lautschrift|Höx Hs",
+        kreis="Höx",
+        ort="Hs",
+    )
+    LAUT_HÖX_HX = Sammlung(
+        trace="Höx Hx",
+        groups="Lautschrift|Höx Hx",
+        kreis="Höx",
+        ort="Hx",
+    )
+    LAUT_HÖX_IS = Sammlung(
+        trace="Höx Is",
+        groups="Lautschrift|Höx Is",
+        kreis="Höx",
+        ort="Is",
+    )
+    LAUT_HÖX_KB = Sammlung(
+        trace="Höx Kb",
+        groups="Lautschrift|Höx Kb",
+        kreis="Höx",
+        ort="Kb",
+    )
+    LAUT_HÖX_KO = Sammlung(
+        trace="Höx Ko",
+        groups="Lautschrift|Höx Ko",
+        kreis="Höx",
+        ort="Ko",
+    )
+    LAUT_HÖX_LD = Sammlung(
+        trace="Höx Ld",
+        groups="Lautschrift|Höx Ld",
+        kreis="Höx",
+        ort="Ld",
+    )
+    LAUT_HÖX_LM = Sammlung(
+        trace="Höx Lm",
+        groups="Lautschrift|Höx Lm",
+        kreis="Höx",
+        ort="Lm",
+    )
+    LAUT_HÖX_LÖ = Sammlung(
+        trace="Höx Lö",
+        groups="Lautschrift|Höx Lö",
+        kreis="Höx",
+        ort="Lö",
+    )
+    LAUT_HÖX_LÜ = Sammlung(
+        trace="Höx Lü",
+        groups="Lautschrift|Höx Lü",
+        kreis="Höx",
+        ort="Lü",
+    )
+    LAUT_HÖX_MB = Sammlung(
+        trace="Höx Mb",
+        groups="Lautschrift|Höx Mb",
+        kreis="Höx",
+        ort="Mb",
+    )
+    LAUT_HÖX_MH = Sammlung(
+        trace="Höx Mh",
+        groups="Lautschrift|Höx Mh",
+        kreis="Höx",
+        ort="Mh",
+    )
+    LAUT_HÖX_OB = Sammlung(
+        trace="Höx Ob",
+        groups="Lautschrift|Höx Ob",
+        kreis="Höx",
+        ort="Ob",
+    )
+    LAUT_HÖX_OE = Sammlung(
+        trace="Höx Oe",
+        groups="Lautschrift|Höx Oe",
+        kreis="Höx",
+        ort="Oe",
+    )
+    LAUT_HÖX_OH = Sammlung(
+        trace="Höx Oh",
+        groups="Lautschrift|Höx Oh",
+        kreis="Höx",
+        ort="Oh",
+    )
+    LAUT_HÖX_OT = Sammlung(
+        trace="Höx Ot",
+        groups="Lautschrift|Höx Ot",
+        kreis="Höx",
+        ort="Ot",
+    )
+    LAUT_HÖX_PÖ = Sammlung(
+        trace="Höx Pö",
+        groups="Lautschrift|Höx Pö",
+        kreis="Höx",
+        ort="Pö",
+    )
+    LAUT_HÖX_RE = Sammlung(
+        trace="Höx Re",
+        groups="Lautschrift|Höx Re",
+        kreis="Höx",
+        ort="Re",
+    )
+    LAUT_HÖX_RH = Sammlung(
+        trace="Höx Rh",
+        groups="Lautschrift|Höx Rh",
+        kreis="Höx",
+        ort="Rh",
+    )
+    LAUT_HÖX_RI = Sammlung(
+        trace="Höx Ri",
+        groups="Lautschrift|Höx Ri",
+        kreis="Höx",
+        ort="Ri",
+    )
+    LAUT_HÖX_RO = Sammlung(
+        trace="Höx Ro",
+        groups="Lautschrift|Höx Ro",
+        kreis="Höx",
+        ort="Ro",
+    )
+    LAUT_HÖX_SB = Sammlung(
+        trace="Höx Sb",
+        groups="Lautschrift|Höx Sb",
+        kreis="Höx",
+        ort="Sb",
+    )
+    LAUT_HÖX_SH = Sammlung(
+        trace="Höx Sh",
+        groups="Lautschrift|Höx Sh",
+        kreis="Höx",
+        ort="Sh",
+    )
+    LAUT_HÖX_SM = Sammlung(
+        trace="Höx Sm",
+        groups="Lautschrift|Höx Sm",
+        kreis="Höx",
+        ort="Sm",
+    )
+    LAUT_HÖX_SS = Sammlung(
+        trace="Höx Ss",
+        groups="Lautschrift|Höx Ss",
+        kreis="Höx",
+        ort="Ss",
+    )
+    LAUT_HÖX_TI = Sammlung(
+        trace="Höx Ti",
+        groups="Lautschrift|Höx Ti",
+        kreis="Höx",
+        ort="Ti",
+    )
+    LAUT_HÖX_VB = Sammlung(
+        trace="Höx Vb",
+        groups="Lautschrift|Höx Vb",
+        kreis="Höx",
+        ort="Vb",
+    )
+    LAUT_HÖX_VÖ = Sammlung(
+        trace="Höx Vö",
+        groups="Lautschrift|Höx Vö",
+        kreis="Höx",
+        ort="Vö",
+    )
+    LAUT_HÖX_WE = Sammlung(
+        trace="Höx We",
+        groups="Lautschrift|Höx We",
+        kreis="Höx",
+        ort="We",
+    )
+    LAUT_HÖX_WÜ = Sammlung(
+        trace="Höx Wü",
+        groups="Lautschrift|Höx Wü",
+        kreis="Höx",
+        ort="Wü",
+    )
+    LAUT_ISL_AP = Sammlung(
+        trace="Isl Ap",
+        groups="Lautschrift|Isl Ap",
+        kreis="Isl",
+        ort="Ap",
+    )
+    LAUT_ISL_BB = Sammlung(
+        trace="Isl Bb",
+        groups="Lautschrift|Isl Bb",
+        kreis="Isl",
+        ort="Bb",
+    )
+    LAUT_ISL_BC = Sammlung(
+        trace="Isl Bc",
+        groups="Lautschrift|Isl Bc",
+        kreis="Isl",
+        ort="Bc",
+    )
+    LAUT_ISL_BD = Sammlung(
+        trace="Isl Bd",
+        groups="Lautschrift|Isl Bd",
+        kreis="Isl",
+        ort="Bd",
+    )
+    LAUT_ISL_BE = Sammlung(
+        trace="Isl Be",
+        groups="Lautschrift|Isl Be",
+        kreis="Isl",
+        ort="Be",
+    )
+    LAUT_ISL_BG = Sammlung(
+        trace="Isl Bg",
+        groups="Lautschrift|Isl Bg",
+        kreis="Isl",
+        ort="Bg",
+    )
+    LAUT_ISL_BH = Sammlung(
+        trace="Isl Bh",
+        groups="Lautschrift|Isl Bh",
+        kreis="Isl",
+        ort="Bh",
+    )
+    LAUT_ISL_BK = Sammlung(
+        trace="Isl Bk",
+        groups="Lautschrift|Isl Bk",
+        kreis="Isl",
+        ort="Bk",
+    )
+    LAUT_ISL_BÖ = Sammlung(
+        trace="Isl Bö",
+        groups="Lautschrift|Isl Bö",
+        kreis="Isl",
+        ort="Bö",
+    )
+    LAUT_ISL_BP = Sammlung(
+        trace="Isl Bp",
+        groups="Lautschrift|Isl Bp",
+        kreis="Isl",
+        ort="Bp",
+    )
+    LAUT_ISL_BR = Sammlung(
+        trace="Isl Br",
+        groups="Lautschrift|Isl Br",
+        kreis="Isl",
+        ort="Br",
+    )
+    LAUT_ISL_BÜ = Sammlung(
+        trace="Isl Bü",
+        groups="Lautschrift|Isl Bü",
+        kreis="Isl",
+        ort="Bü",
+    )
+    LAUT_ISL_BX = Sammlung(
+        trace="Isl Bx",
+        groups="Lautschrift|Isl Bx",
+        kreis="Isl",
+        ort="Bx",
+    )
+    LAUT_ISL_DA = Sammlung(
+        trace="Isl Da",
+        groups="Lautschrift|Isl Da",
+        kreis="Isl",
+        ort="Da",
+    )
+    LAUT_ISL_DG = Sammlung(
+        trace="Isl Dg",
+        groups="Lautschrift|Isl Dg",
+        kreis="Isl",
+        ort="Dg",
+    )
+    LAUT_ISL_DH = Sammlung(
+        trace="Isl Dh",
+        groups="Lautschrift|Isl Dh",
+        kreis="Isl",
+        ort="Dh",
+    )
+    LAUT_ISL_DÖ = Sammlung(
+        trace="Isl Dö",
+        groups="Lautschrift|Isl Dö",
+        kreis="Isl",
+        ort="Dö",
+    )
+    LAUT_ISL_DP = Sammlung(
+        trace="Isl Dp",
+        groups="Lautschrift|Isl Dp",
+        kreis="Isl",
+        ort="Dp",
+    )
+    LAUT_ISL_DS = Sammlung(
+        trace="Isl Ds",
+        groups="Lautschrift|Isl Ds",
+        kreis="Isl",
+        ort="Ds",
+    )
+    LAUT_ISL_DÜ = Sammlung(
+        trace="Isl Dü",
+        groups="Lautschrift|Isl Dü",
+        kreis="Isl",
+        ort="Dü",
+    )
+    LAUT_ISL_EF = Sammlung(
+        trace="Isl Ef",
+        groups="Lautschrift|Isl Ef",
+        kreis="Isl",
+        ort="Ef",
+    )
+    LAUT_ISL_EL = Sammlung(
+        trace="Isl El",
+        groups="Lautschrift|Isl El",
+        kreis="Isl",
+        ort="El",
+    )
+    LAUT_ISL_ER = Sammlung(
+        trace="Isl Er",
+        groups="Lautschrift|Isl Er",
+        kreis="Isl",
+        ort="Er",
+    )
+    LAUT_ISL_EV = Sammlung(
+        trace="Isl Ev",
+        groups="Lautschrift|Isl Ev",
+        kreis="Isl",
+        ort="Ev",
+    )
+    LAUT_ISL_FB = Sammlung(
+        trace="Isl Fb",
+        groups="Lautschrift|Isl Fb",
+        kreis="Isl",
+        ort="Fb",
+    )
+    LAUT_ISL_GB = Sammlung(
+        trace="Isl Gb",
+        groups="Lautschrift|Isl Gb",
+        kreis="Isl",
+        ort="Gb",
+    )
+    LAUT_ISL_GE = Sammlung(
+        trace="Isl Ge",
+        groups="Lautschrift|Isl Ge",
+        kreis="Isl",
+        ort="Ge",
+    )
+    LAUT_ISL_GF = Sammlung(
+        trace="Isl Gf",
+        groups="Lautschrift|Isl Gf",
+        kreis="Isl",
+        ort="Gf",
+    )
+    LAUT_ISL_GH = Sammlung(
+        trace="Isl Gh",
+        groups="Lautschrift|Isl Gh",
+        kreis="Isl",
+        ort="Gh",
+    )
+    LAUT_ISL_GL = Sammlung(
+        trace="Isl Gl",
+        groups="Lautschrift|Isl Gl",
+        kreis="Isl",
+        ort="Gl",
+    )
+    LAUT_ISL_GM = Sammlung(
+        trace="Isl Gm",
+        groups="Lautschrift|Isl Gm",
+        kreis="Isl",
+        ort="Gm",
+    )
+    LAUT_ISL_GR = Sammlung(
+        trace="Isl Gr",
+        groups="Lautschrift|Isl Gr",
+        kreis="Isl",
+        ort="Gr",
+    )
+    LAUT_ISL_GS = Sammlung(
+        trace="Isl Gs",
+        groups="Lautschrift|Isl Gs",
+        kreis="Isl",
+        ort="Gs",
+    )
+    LAUT_ISL_GX = Sammlung(
+        trace="Isl Gx",
+        groups="Lautschrift|Isl Gx",
+        kreis="Isl",
+        ort="Gx",
+    )
+    LAUT_ISL_HA = Sammlung(
+        trace="Isl Ha",
+        groups="Lautschrift|Isl Ha",
+        kreis="Isl",
+        ort="Ha",
+    )
+    LAUT_ISL_HD = Sammlung(
+        trace="Isl Hd",
+        groups="Lautschrift|Isl Hd",
+        kreis="Isl",
+        ort="Hd",
+    )
+    LAUT_ISL_HE = Sammlung(
+        trace="Isl He",
+        groups="Lautschrift|Isl He",
+        kreis="Isl",
+        ort="He",
+    )
+    LAUT_ISL_HG = Sammlung(
+        trace="Isl Hg",
+        groups="Lautschrift|Isl Hg",
+        kreis="Isl",
+        ort="Hg",
+    )
+    LAUT_ISL_HN = Sammlung(
+        trace="Isl Hn",
+        groups="Lautschrift|Isl Hn",
+        kreis="Isl",
+        ort="Hn",
+    )
+    LAUT_ISL_HO = Sammlung(
+        trace="Isl Ho",
+        groups="Lautschrift|Isl Ho",
+        kreis="Isl",
+        ort="Ho",
+    )
+    LAUT_ISL_HP = Sammlung(
+        trace="Isl Hp",
+        groups="Lautschrift|Isl Hp",
+        kreis="Isl",
+        ort="Hp",
+    )
+    LAUT_ISL_HÜ = Sammlung(
+        trace="Isl Hü",
+        groups="Lautschrift|Isl Hü",
+        kreis="Isl",
+        ort="Hü",
+    )
+    LAUT_ISL_HV = Sammlung(
+        trace="Isl Hv",
+        groups="Lautschrift|Isl Hv",
+        kreis="Isl",
+        ort="Hv",
+    )
+    LAUT_ISL_IM = Sammlung(
+        trace="Isl Im",
+        groups="Lautschrift|Isl Im",
+        kreis="Isl",
+        ort="Im",
+    )
+    LAUT_ISL_IS = Sammlung(
+        trace="Isl Is",
+        groups="Lautschrift|Isl Is",
+        kreis="Isl",
+        ort="Is",
+    )
+    LAUT_ISL_KA = Sammlung(
+        trace="Isl Ka",
+        groups="Lautschrift|Isl Ka",
+        kreis="Isl",
+        ort="Ka",
+    )
+    LAUT_ISL_KB = Sammlung(
+        trace="Isl Kb",
+        groups="Lautschrift|Isl Kb",
+        kreis="Isl",
+        ort="Kb",
+    )
+    LAUT_ISL_KG = Sammlung(
+        trace="Isl Kg",
+        groups="Lautschrift|Isl Kg",
+        kreis="Isl",
+        ort="Kg",
+    )
+    LAUT_ISL_KH = Sammlung(
+        trace="Isl Kh",
+        groups="Lautschrift|Isl Kh",
+        kreis="Isl",
+        ort="Kh",
+    )
+    LAUT_ISL_KO = Sammlung(
+        trace="Isl Ko",
+        groups="Lautschrift|Isl Ko",
+        kreis="Isl",
+        ort="Ko",
+    )
+    LAUT_ISL_KR = Sammlung(
+        trace="Isl Kr",
+        groups="Lautschrift|Isl Kr",
+        kreis="Isl",
+        ort="Kr",
+    )
+    LAUT_ISL_LÄ = Sammlung(
+        trace="Isl Lä",
+        groups="Lautschrift|Isl Lä",
+        kreis="Isl",
+        ort="Lä",
+    )
+    LAUT_ISL_LB = Sammlung(
+        trace="Isl Lb",
+        groups="Lautschrift|Isl Lb",
+        kreis="Isl",
+        ort="Lb",
+    )
+    LAUT_ISL_LD = Sammlung(
+        trace="Isl Ld",
+        groups="Lautschrift|Isl Ld",
+        kreis="Isl",
+        ort="Ld",
+    )
+    LAUT_ISL_LE = Sammlung(
+        trace="Isl Le",
+        groups="Lautschrift|Isl Le",
+        kreis="Isl",
+        ort="Le",
+    )
+    LAUT_ISL_LH = Sammlung(
+        trace="Isl Lh",
+        groups="Lautschrift|Isl Lh",
+        kreis="Isl",
+        ort="Lh",
+    )
+    LAUT_ISL_LK = Sammlung(
+        trace="Isl Lk",
+        groups="Lautschrift|Isl Lk",
+        kreis="Isl",
+        ort="Lk",
+    )
+    LAUT_ISL_LÖ = Sammlung(
+        trace="Isl Lö",
+        groups="Lautschrift|Isl Lö",
+        kreis="Isl",
+        ort="Lö",
+    )
+    LAUT_ISL_LU = Sammlung(
+        trace="Isl Lu",
+        groups="Lautschrift|Isl Lu",
+        kreis="Isl",
+        ort="Lu",
+    )
+    LAUT_ISL_LÜ = Sammlung(
+        trace="Isl Lü",
+        groups="Lautschrift|Isl Lü",
+        kreis="Isl",
+        ort="Lü",
+    )
+    LAUT_ISL_ME = Sammlung(
+        trace="Isl Me",
+        groups="Lautschrift|Isl Me",
+        kreis="Isl",
+        ort="Me",
+    )
+    LAUT_ISL_NI = Sammlung(
+        trace="Isl Ni",
+        groups="Lautschrift|Isl Ni",
+        kreis="Isl",
+        ort="Ni",
+    )
+    LAUT_ISL_OG = Sammlung(
+        trace="Isl Og",
+        groups="Lautschrift|Isl Og",
+        kreis="Isl",
+        ort="Og",
+    )
+    LAUT_ISL_OÖ = Sammlung(
+        trace="Isl Oö",
+        groups="Lautschrift|Isl Oö",
+        kreis="Isl",
+        ort="Oö",
+    )
+    LAUT_ISL_ÖS = Sammlung(
+        trace="Isl Ös",
+        groups="Lautschrift|Isl Ös",
+        kreis="Isl",
+        ort="Ös",
+    )
+    LAUT_ISL_ÖZ = Sammlung(
+        trace="Isl Öz",
+        groups="Lautschrift|Isl Öz",
+        kreis="Isl",
+        ort="Öz",
+    )
+    LAUT_ISL_PI = Sammlung(
+        trace="Isl Pi",
+        groups="Lautschrift|Isl Pi",
+        kreis="Isl",
+        ort="Pi",
+    )
+    LAUT_ISL_RE = Sammlung(
+        trace="Isl Re",
+        groups="Lautschrift|Isl Re",
+        kreis="Isl",
+        ort="Re",
+    )
+    LAUT_ISL_RG = Sammlung(
+        trace="Isl Rg",
+        groups="Lautschrift|Isl Rg",
+        kreis="Isl",
+        ort="Rg",
+    )
+    LAUT_ISL_RH = Sammlung(
+        trace="Isl Rh",
+        groups="Lautschrift|Isl Rh",
+        kreis="Isl",
+        ort="Rh",
+    )
+    LAUT_ISL_RO = Sammlung(
+        trace="Isl Ro",
+        groups="Lautschrift|Isl Ro",
+        kreis="Isl",
+        ort="Ro",
+    )
+    LAUT_ISL_RS = Sammlung(
+        trace="Isl Rs",
+        groups="Lautschrift|Isl Rs",
+        kreis="Isl",
+        ort="Rs",
+    )
+    LAUT_ISL_RÜ = Sammlung(
+        trace="Isl Rü",
+        groups="Lautschrift|Isl Rü",
+        kreis="Isl",
+        ort="Rü",
+    )
+    LAUT_ISL_SA = Sammlung(
+        trace="Isl Sa",
+        groups="Lautschrift|Isl Sa",
+        kreis="Isl",
+        ort="Sa",
+    )
+    LAUT_ISL_SB = Sammlung(
+        trace="Isl Sb",
+        groups="Lautschrift|Isl Sb",
+        kreis="Isl",
+        ort="Sb",
+    )
+    LAUT_ISL_SC = Sammlung(
+        trace="Isl Sc",
+        groups="Lautschrift|Isl Sc",
+        kreis="Isl",
+        ort="Sc",
+    )
+    LAUT_ISL_SI = Sammlung(
+        trace="Isl Si",
+        groups="Lautschrift|Isl Si",
+        kreis="Isl",
+        ort="Si",
+    )
+    LAUT_ISL_SK = Sammlung(
+        trace="Isl Sk",
+        groups="Lautschrift|Isl Sk",
+        kreis="Isl",
+        ort="Sk",
+    )
+    LAUT_ISL_SU = Sammlung(
+        trace="Isl Su",
+        groups="Lautschrift|Isl Su",
+        kreis="Isl",
+        ort="Su",
+    )
+    LAUT_ISL_SÜ = Sammlung(
+        trace="Isl Sü",
+        groups="Lautschrift|Isl Sü",
+        kreis="Isl",
+        ort="Sü",
+    )
+    LAUT_ISL_SW = Sammlung(
+        trace="Isl Sw",
+        groups="Lautschrift|Isl Sw",
+        kreis="Isl",
+        ort="Sw",
+    )
+    LAUT_ISL_UG = Sammlung(
+        trace="Isl Ug",
+        groups="Lautschrift|Isl Ug",
+        kreis="Isl",
+        ort="Ug",
+    )
+    LAUT_ISL_VH = Sammlung(
+        trace="Isl Vh",
+        groups="Lautschrift|Isl Vh",
+        kreis="Isl",
+        ort="Vh",
+    )
+    LAUT_ISL_VI = Sammlung(
+        trace="Isl Vi",
+        groups="Lautschrift|Isl Vi",
+        kreis="Isl",
+        ort="Vi",
+    )
+    LAUT_ISL_WD = Sammlung(
+        trace="Isl Wd",
+        groups="Lautschrift|Isl Wd",
+        kreis="Isl",
+        ort="Wd",
+    )
+    LAUT_ISL_WE = Sammlung(
+        trace="Isl We",
+        groups="Lautschrift|Isl We",
+        kreis="Isl",
+        ort="We",
+    )
+    LAUT_ISL_WH = Sammlung(
+        trace="Isl Wh",
+        groups="Lautschrift|Isl Wh",
+        kreis="Isl",
+        ort="Wh",
+    )
+    LAUT_ISL_WI = Sammlung(
+        trace="Isl Wi",
+        groups="Lautschrift|Isl Wi",
+        kreis="Isl",
+        ort="Wi",
+    )
+    LAUT_ISL_WR = Sammlung(
+        trace="Isl Wr",
+        groups="Lautschrift|Isl Wr",
+        kreis="Isl",
+        ort="Wr",
+    )
+    LAUT_ISL_WU = Sammlung(
+        trace="Isl Wu",
+        groups="Lautschrift|Isl Wu",
+        kreis="Isl",
+        ort="Wu",
+    )
+    LAUT_ISL_WX = Sammlung(
+        trace="Isl Wx",
+        groups="Lautschrift|Isl Wx",
+        kreis="Isl",
+        ort="Wx",
+    )
+    LAUT_KLO_AB = Sammlung(
+        trace="Klo Ab",
+        groups="Lautschrift|Klo Ab",
+        kreis="Klo",
+        ort="Ab",
+    )
+    LAUT_KLO_AD = Sammlung(
+        trace="Klo Ad",
+        groups="Lautschrift|Klo Ad",
+        kreis="Klo",
+        ort="Ad",
+    )
+    LAUT_KLO_AG = Sammlung(
+        trace="Klo Ag",
+        groups="Lautschrift|Klo Ag",
+        kreis="Klo",
+        ort="Ag",
+    )
+    LAUT_KLO_AL = Sammlung(
+        trace="Klo Al",
+        groups="Lautschrift|Klo Al",
+        kreis="Klo",
+        ort="Al",
+    )
+    LAUT_KLO_AM = Sammlung(
+        trace="Klo Am",
+        groups="Lautschrift|Klo Am",
+        kreis="Klo",
+        ort="Am",
+    )
+    LAUT_KLO_AP = Sammlung(
+        trace="Klo Ap",
+        groups="Lautschrift|Klo Ap",
+        kreis="Klo",
+        ort="Ap",
+    )
+    LAUT_KLO_AU = Sammlung(
+        trace="Klo Au",
+        groups="Lautschrift|Klo Au",
+        kreis="Klo",
+        ort="Au",
+    )
+    LAUT_KLO_BB = Sammlung(
+        trace="Klo Bb",
+        groups="Lautschrift|Klo Bb",
+        kreis="Klo",
+        ort="Bb",
+    )
+    LAUT_KLO_BE = Sammlung(
+        trace="Klo Be",
+        groups="Lautschrift|Klo Be",
+        kreis="Klo",
+        ort="Be",
+    )
+    LAUT_KLO_BH = Sammlung(
+        trace="Klo Bh",
+        groups="Lautschrift|Klo Bh",
+        kreis="Klo",
+        ort="Bh",
+    )
+    LAUT_KLO_BL = Sammlung(
+        trace="Klo Bl",
+        groups="Lautschrift|Klo Bl",
+        kreis="Klo",
+        ort="Bl",
+    )
+    LAUT_KLO_BO = Sammlung(
+        trace="Klo Bo",
+        groups="Lautschrift|Klo Bo",
+        kreis="Klo",
+        ort="Bo",
+    )
+    LAUT_KLO_BS = Sammlung(
+        trace="Klo Bs",
+        groups="Lautschrift|Klo Bs",
+        kreis="Klo",
+        ort="Bs",
+    )
+    LAUT_KLO_BU = Sammlung(
+        trace="Klo Bu",
+        groups="Lautschrift|Klo Bu",
+        kreis="Klo",
+        ort="Bu",
+    )
+    LAUT_KLO_BÜ = Sammlung(
+        trace="Klo Bü",
+        groups="Lautschrift|Klo Bü",
+        kreis="Klo",
+        ort="Bü",
+    )
+    LAUT_KLO_BV = Sammlung(
+        trace="Klo Bv",
+        groups="Lautschrift|Klo Bv",
+        kreis="Klo",
+        ort="Bv",
+    )
+    LAUT_KLO_DW = Sammlung(
+        trace="Klo Dw",
+        groups="Lautschrift|Klo Dw",
+        kreis="Klo",
+        ort="Dw",
+    )
+    LAUT_KLO_EB = Sammlung(
+        trace="Klo Eb",
+        groups="Lautschrift|Klo Eb",
+        kreis="Klo",
+        ort="Eb",
+    )
+    LAUT_KLO_EF = Sammlung(
+        trace="Klo Ef",
+        groups="Lautschrift|Klo Ef",
+        kreis="Klo",
+        ort="Ef",
+    )
+    LAUT_KLO_EH = Sammlung(
+        trace="Klo Eh",
+        groups="Lautschrift|Klo Eh",
+        kreis="Klo",
+        ort="Eh",
+    )
+    LAUT_KLO_EL = Sammlung(
+        trace="Klo El",
+        groups="Lautschrift|Klo El",
+        kreis="Klo",
+        ort="El",
+    )
+    LAUT_KLO_EM = Sammlung(
+        trace="Klo Em",
+        groups="Lautschrift|Klo Em",
+        kreis="Klo",
+        ort="Em",
+    )
+    LAUT_KLO_ER = Sammlung(
+        trace="Klo Er",
+        groups="Lautschrift|Klo Er",
+        kreis="Klo",
+        ort="Er",
+    )
+    LAUT_KLO_ES = Sammlung(
+        trace="Klo Es",
+        groups="Lautschrift|Klo Es",
+        kreis="Klo",
+        ort="Es",
+    )
+    LAUT_KLO_EV = Sammlung(
+        trace="Klo Ev",
+        groups="Lautschrift|Klo Ev",
+        kreis="Klo",
+        ort="Ev",
+    )
+    LAUT_KLO_FB = Sammlung(
+        trace="Klo Fb",
+        groups="Lautschrift|Klo Fb",
+        kreis="Klo",
+        ort="Fb",
+    )
+    LAUT_KLO_FR = Sammlung(
+        trace="Klo Fr",
+        groups="Lautschrift|Klo Fr",
+        kreis="Klo",
+        ort="Fr",
+    )
+    LAUT_KLO_GA = Sammlung(
+        trace="Klo Ga",
+        groups="Lautschrift|Klo Ga",
+        kreis="Klo",
+        ort="Ga",
+    )
+    LAUT_KLO_GG = Sammlung(
+        trace="Klo Gg",
+        groups="Lautschrift|Klo Gg",
+        kreis="Klo",
+        ort="Gg",
+    )
+    LAUT_KLO_GL = Sammlung(
+        trace="Klo Gl",
+        groups="Lautschrift|Klo Gl",
+        kreis="Klo",
+        ort="Gl",
+    )
+    LAUT_KLO_GT = Sammlung(
+        trace="Klo Gt",
+        groups="Lautschrift|Klo Gt",
+        kreis="Klo",
+        ort="Gt",
+    )
+    LAUT_KLO_HA = Sammlung(
+        trace="Klo Ha",
+        groups="Lautschrift|Klo Ha",
+        kreis="Klo",
+        ort="Ha",
+    )
+    LAUT_KLO_HB = Sammlung(
+        trace="Klo Hb",
+        groups="Lautschrift|Klo Hb",
+        kreis="Klo",
+        ort="Hb",
+    )
+    LAUT_KLO_HE = Sammlung(
+        trace="Klo He",
+        groups="Lautschrift|Klo He",
+        kreis="Klo",
+        ort="He",
+    )
+    LAUT_KLO_HG = Sammlung(
+        trace="Klo Hg",
+        groups="Lautschrift|Klo Hg",
+        kreis="Klo",
+        ort="Hg",
+    )
+    LAUT_KLO_HH = Sammlung(
+        trace="Klo Hh",
+        groups="Lautschrift|Klo Hh",
+        kreis="Klo",
+        ort="Hh",
+    )
+    LAUT_KLO_HL = Sammlung(
+        trace="Klo Hl",
+        groups="Lautschrift|Klo Hl",
+        kreis="Klo",
+        ort="Hl",
+    )
+    LAUT_KLO_HM = Sammlung(
+        trace="Klo Hm",
+        groups="Lautschrift|Klo Hm",
+        kreis="Klo",
+        ort="Hm",
+    )
+    LAUT_KLO_HO = Sammlung(
+        trace="Klo Ho",
+        groups="Lautschrift|Klo Ho",
+        kreis="Klo",
+        ort="Ho",
+    )
+    LAUT_KLO_HR = Sammlung(
+        trace="Klo Hr",
+        groups="Lautschrift|Klo Hr",
+        kreis="Klo",
+        ort="Hr",
+    )
+    LAUT_KLO_KA = Sammlung(
+        trace="Klo Ka",
+        groups="Lautschrift|Klo Ka",
+        kreis="Klo",
+        ort="Ka",
+    )
+    LAUT_KLO_KF = Sammlung(
+        trace="Klo Kf",
+        groups="Lautschrift|Klo Kf",
+        kreis="Klo",
+        ort="Kf",
+    )
+    LAUT_KLO_KH = Sammlung(
+        trace="Klo Kh",
+        groups="Lautschrift|Klo Kh",
+        kreis="Klo",
+        ort="Kh",
+    )
+    LAUT_KLO_KL = Sammlung(
+        trace="Klo Kl",
+        groups="Lautschrift|Klo Kl",
+        kreis="Klo",
+        ort="Kl",
+    )
+    LAUT_KLO_LA = Sammlung(
+        trace="Klo La",
+        groups="Lautschrift|Klo La",
+        kreis="Klo",
+        ort="La",
+    )
+    LAUT_KLO_LI = Sammlung(
+        trace="Klo Li",
+        groups="Lautschrift|Klo Li",
+        kreis="Klo",
+        ort="Li",
+    )
+    LAUT_KLO_LO = Sammlung(
+        trace="Klo Lo",
+        groups="Lautschrift|Klo Lo",
+        kreis="Klo",
+        ort="Lo",
+    )
+    LAUT_KLO_LÖ = Sammlung(
+        trace="Klo Lö",
+        groups="Lautschrift|Klo Lö",
+        kreis="Klo",
+        ort="Lö",
+    )
+    LAUT_KLO_MA = Sammlung(
+        trace="Klo Ma",
+        groups="Lautschrift|Klo Ma",
+        kreis="Klo",
+        ort="Ma",
+    )
+    LAUT_KLO_MO = Sammlung(
+        trace="Klo Mo",
+        groups="Lautschrift|Klo Mo",
+        kreis="Klo",
+        ort="Mo",
+    )
+    LAUT_KLO_ND = Sammlung(
+        trace="Klo Nd",
+        groups="Lautschrift|Klo Nd",
+        kreis="Klo",
+        ort="Nd",
+    )
+    LAUT_KLO_NM = Sammlung(
+        trace="Klo Nm",
+        groups="Lautschrift|Klo Nm",
+        kreis="Klo",
+        ort="Nm",
+    )
+    LAUT_KLO_NT = Sammlung(
+        trace="Klo Nt",
+        groups="Lautschrift|Klo Nt",
+        kreis="Klo",
+        ort="Nt",
+    )
+    LAUT_KLO_NU = Sammlung(
+        trace="Klo Nu",
+        groups="Lautschrift|Klo Nu",
+        kreis="Klo",
+        ort="Nu",
+    )
+    LAUT_KLO_PD = Sammlung(
+        trace="Klo Pd",
+        groups="Lautschrift|Klo Pd",
+        kreis="Klo",
+        ort="Pd",
+    )
+    LAUT_KLO_PH = Sammlung(
+        trace="Klo Ph",
+        groups="Lautschrift|Klo Ph",
+        kreis="Klo",
+        ort="Ph",
+    )
+    LAUT_KLO_RH = Sammlung(
+        trace="Klo Rh",
+        groups="Lautschrift|Klo Rh",
+        kreis="Klo",
+        ort="Rh",
+    )
+    LAUT_KLO_SE = Sammlung(
+        trace="Klo Se",
+        groups="Lautschrift|Klo Se",
+        kreis="Klo",
+        ort="Se",
+    )
+    LAUT_KLO_SH = Sammlung(
+        trace="Klo Sh",
+        groups="Lautschrift|Klo Sh",
+        kreis="Klo",
+        ort="Sh",
+    )
+    LAUT_KLO_ST = Sammlung(
+        trace="Klo St",
+        groups="Lautschrift|Klo St",
+        kreis="Klo",
+        ort="St",
+    )
+    LAUT_KLO_SW = Sammlung(
+        trace="Klo Sw",
+        groups="Lautschrift|Klo Sw",
+        kreis="Klo",
+        ort="Sw",
+    )
+    LAUT_KLO_TE = Sammlung(
+        trace="Klo Te",
+        groups="Lautschrift|Klo Te",
+        kreis="Klo",
+        ort="Te",
+    )
+    LAUT_KLO_TÜ = Sammlung(
+        trace="Klo Tü",
+        groups="Lautschrift|Klo Tü",
+        kreis="Klo",
+        ort="Tü",
+    )
+    LAUT_KLO_TW = Sammlung(
+        trace="Klo Tw",
+        groups="Lautschrift|Klo Tw",
+        kreis="Klo",
+        ort="Tw",
+    )
+    LAUT_KLO_VA = Sammlung(
+        trace="Klo Va",
+        groups="Lautschrift|Klo Va",
+        kreis="Klo",
+        ort="Va",
+    )
+    LAUT_KLO_VB = Sammlung(
+        trace="Klo Vb",
+        groups="Lautschrift|Klo Vb",
+        kreis="Klo",
+        ort="Vb",
+    )
+    LAUT_KLO_VT = Sammlung(
+        trace="Klo Vt",
+        groups="Lautschrift|Klo Vt",
+        kreis="Klo",
+        ort="Vt",
+    )
+    LAUT_KLO_WI = Sammlung(
+        trace="Klo Wi",
+        groups="Lautschrift|Klo Wi",
+        kreis="Klo",
+        ort="Wi",
+    )
+    LAUT_KLO_WS = Sammlung(
+        trace="Klo Ws",
+        groups="Lautschrift|Klo Ws",
+        kreis="Klo",
+        ort="Ws",
+    )
+    LAUT_KOS_AU = Sammlung(
+        trace="Kos Au",
+        groups="Lautschrift|Kos Au",
+        kreis="Kos",
+        ort="Au",
+    )
+    LAUT_KOS_BA = Sammlung(
+        trace="Kos Ba",
+        groups="Lautschrift|Kos Ba",
+        kreis="Kos",
+        ort="Ba",
+    )
+    LAUT_KOS_BB = Sammlung(
+        trace="Kos Bb",
+        groups="Lautschrift|Kos Bb",
+        kreis="Kos",
+        ort="Bb",
+    )
+    LAUT_KOS_BE = Sammlung(
+        trace="Kos Be",
+        groups="Lautschrift|Kos Be",
+        kreis="Kos",
+        ort="Be",
+    )
+    LAUT_KOS_BÖ = Sammlung(
+        trace="Kos Bö",
+        groups="Lautschrift|Kos Bö",
+        kreis="Kos",
+        ort="Bö",
+    )
+    LAUT_KOS_BU = Sammlung(
+        trace="Kos Bu",
+        groups="Lautschrift|Kos Bu",
+        kreis="Kos",
+        ort="Bu",
+    )
+    LAUT_KOS_BÜ = Sammlung(
+        trace="Kos Bü",
+        groups="Lautschrift|Kos Bü",
+        kreis="Kos",
+        ort="Bü",
+    )
+    LAUT_KOS_DA = Sammlung(
+        trace="Kos Da",
+        groups="Lautschrift|Kos Da",
+        kreis="Kos",
+        ort="Da",
+    )
+    LAUT_KOS_DD = Sammlung(
+        trace="Kos Dd",
+        groups="Lautschrift|Kos Dd",
+        kreis="Kos",
+        ort="Dd",
+    )
+    LAUT_KOS_DF = Sammlung(
+        trace="Kos Df",
+        groups="Lautschrift|Kos Df",
+        kreis="Kos",
+        ort="Df",
+    )
+    LAUT_KOS_DK = Sammlung(
+        trace="Kos Dk",
+        groups="Lautschrift|Kos Dk",
+        kreis="Kos",
+        ort="Dk",
+    )
+    LAUT_KOS_DÜ = Sammlung(
+        trace="Kos Dü",
+        groups="Lautschrift|Kos Dü",
+        kreis="Kos",
+        ort="Dü",
+    )
+    LAUT_KOS_ES = Sammlung(
+        trace="Kos Es",
+        groups="Lautschrift|Kos Es",
+        kreis="Kos",
+        ort="Es",
+    )
+    LAUT_KOS_FL = Sammlung(
+        trace="Kos Fl",
+        groups="Lautschrift|Kos Fl",
+        kreis="Kos",
+        ort="Fl",
+    )
+    LAUT_KOS_GA = Sammlung(
+        trace="Kos Ga",
+        groups="Lautschrift|Kos Ga",
+        kreis="Kos",
+        ort="Ga",
+    )
+    LAUT_KOS_GB = Sammlung(
+        trace="Kos Gb",
+        groups="Lautschrift|Kos Gb",
+        kreis="Kos",
+        ort="Gb",
+    )
+    LAUT_KOS_GE = Sammlung(
+        trace="Kos Ge",
+        groups="Lautschrift|Kos Ge",
+        kreis="Kos",
+        ort="Ge",
+    )
+    LAUT_KOS_GO = Sammlung(
+        trace="Kos Go",
+        groups="Lautschrift|Kos Go",
+        kreis="Kos",
+        ort="Go",
+    )
+    LAUT_KOS_GP = Sammlung(
+        trace="Kos Gp",
+        groups="Lautschrift|Kos Gp",
+        kreis="Kos",
+        ort="Gp",
+    )
+    LAUT_KOS_HA = Sammlung(
+        trace="Kos Ha",
+        groups="Lautschrift|Kos Ha",
+        kreis="Kos",
+        ort="Ha",
+    )
+    LAUT_KOS_HD = Sammlung(
+        trace="Kos Hd",
+        groups="Lautschrift|Kos Hd",
+        kreis="Kos",
+        ort="Hd",
+    )
+    LAUT_KOS_HE = Sammlung(
+        trace="Kos He",
+        groups="Lautschrift|Kos He",
+        kreis="Kos",
+        ort="He",
+    )
+    LAUT_KOS_HI = Sammlung(
+        trace="Kos Hi",
+        groups="Lautschrift|Kos Hi",
+        kreis="Kos",
+        ort="Hi",
+    )
+    LAUT_KOS_HO = Sammlung(
+        trace="Kos Ho",
+        groups="Lautschrift|Kos Ho",
+        kreis="Kos",
+        ort="Ho",
+    )
+    LAUT_KOS_HÖ = Sammlung(
+        trace="Kos Hö",
+        groups="Lautschrift|Kos Hö",
+        kreis="Kos",
+        ort="Hö",
+    )
+    LAUT_KOS_HW = Sammlung(
+        trace="Kos Hw",
+        groups="Lautschrift|Kos Hw",
+        kreis="Kos",
+        ort="Hw",
+    )
+    LAUT_KOS_KA = Sammlung(
+        trace="Kos Ka",
+        groups="Lautschrift|Kos Ka",
+        kreis="Kos",
+        ort="Ka",
+    )
+    LAUT_KOS_KF = Sammlung(
+        trace="Kos Kf",
+        groups="Lautschrift|Kos Kf",
+        kreis="Kos",
+        ort="Kf",
+    )
+    LAUT_KOS_KH = Sammlung(
+        trace="Kos Kh",
+        groups="Lautschrift|Kos Kh",
+        kreis="Kos",
+        ort="Kh",
+    )
+    LAUT_KOS_KL = Sammlung(
+        trace="Kos Kl",
+        groups="Lautschrift|Kos Kl",
+        kreis="Kos",
+        ort="Kl",
+    )
+    LAUT_KOS_LE = Sammlung(
+        trace="Kos Le",
+        groups="Lautschrift|Kos Le",
+        kreis="Kos",
+        ort="Le",
+    )
+    LAUT_KOS_LS = Sammlung(
+        trace="Kos Ls",
+        groups="Lautschrift|Kos Ls",
+        kreis="Kos",
+        ort="Ls",
+    )
+    LAUT_KOS_MF = Sammlung(
+        trace="Kos Mf",
+        groups="Lautschrift|Kos Mf",
+        kreis="Kos",
+        ort="Mf",
+    )
+    LAUT_KOS_MW = Sammlung(
+        trace="Kos Mw",
+        groups="Lautschrift|Kos Mw",
+        kreis="Kos",
+        ort="Mw",
+    )
+    LAUT_KOS_OH = Sammlung(
+        trace="Kos Oh",
+        groups="Lautschrift|Kos Oh",
+        kreis="Kos",
+        ort="Oh",
+    )
+    LAUT_KOS_OW = Sammlung(
+        trace="Kos Ow",
+        groups="Lautschrift|Kos Ow",
+        kreis="Kos",
+        ort="Ow",
+    )
+    LAUT_KOS_RR = Sammlung(
+        trace="Kos Rr",
+        groups="Lautschrift|Kos Rr",
+        kreis="Kos",
+        ort="Rr",
+    )
+    LAUT_KOS_SF = Sammlung(
+        trace="Kos Sf",
+        groups="Lautschrift|Kos Sf",
+        kreis="Kos",
+        ort="Sf",
+    )
+    LAUT_KOS_SK = Sammlung(
+        trace="Kos Sk",
+        groups="Lautschrift|Kos Sk",
+        kreis="Kos",
+        ort="Sk",
+    )
+    LAUT_KOS_ST = Sammlung(
+        trace="Kos St",
+        groups="Lautschrift|Kos St",
+        kreis="Kos",
+        ort="St",
+    )
+    LAUT_KOS_TU = Sammlung(
+        trace="Kos Tu",
+        groups="Lautschrift|Kos Tu",
+        kreis="Kos",
+        ort="Tu",
+    )
+    LAUT_KOS_VI = Sammlung(
+        trace="Kos Vi",
+        groups="Lautschrift|Kos Vi",
+        kreis="Kos",
+        ort="Vi",
+    )
+    LAUT_KOS_WE = Sammlung(
+        trace="Kos We",
+        groups="Lautschrift|Kos We",
+        kreis="Kos",
+        ort="We",
+    )
+    LAUT_LEM_AD = Sammlung(
+        trace="Lem Ad",
+        groups="Lautschrift|Lem Ad",
+        kreis="Lem",
+        ort="Ad",
+    )
+    LAUT_LEM_AL = Sammlung(
+        trace="Lem Al",
+        groups="Lautschrift|Lem Al",
+        kreis="Lem",
+        ort="Al",
+    )
+    LAUT_LEM_AM = Sammlung(
+        trace="Lem Am",
+        groups="Lautschrift|Lem Am",
+        kreis="Lem",
+        ort="Am",
+    )
+    LAUT_LEM_AS = Sammlung(
+        trace="Lem As",
+        groups="Lautschrift|Lem As",
+        kreis="Lem",
+        ort="As",
+    )
+    LAUT_LEM_BA = Sammlung(
+        trace="Lem Ba",
+        groups="Lautschrift|Lem Ba",
+        kreis="Lem",
+        ort="Ba",
+    )
+    LAUT_LEM_BE = Sammlung(
+        trace="Lem Be",
+        groups="Lautschrift|Lem Be",
+        kreis="Lem",
+        ort="Be",
+    )
+    LAUT_LEM_BF = Sammlung(
+        trace="Lem Bf",
+        groups="Lautschrift|Lem Bf",
+        kreis="Lem",
+        ort="Bf",
+    )
+    LAUT_LEM_BG = Sammlung(
+        trace="Lem Bg",
+        groups="Lautschrift|Lem Bg",
+        kreis="Lem",
+        ort="Bg",
+    )
+    LAUT_LEM_BK = Sammlung(
+        trace="Lem Bk",
+        groups="Lautschrift|Lem Bk",
+        kreis="Lem",
+        ort="Bk",
+    )
+    LAUT_LEM_BP = Sammlung(
+        trace="Lem Bp",
+        groups="Lautschrift|Lem Bp",
+        kreis="Lem",
+        ort="Bp",
+    )
+    LAUT_LEM_BR = Sammlung(
+        trace="Lem Br",
+        groups="Lautschrift|Lem Br",
+        kreis="Lem",
+        ort="Br",
+    )
+    LAUT_LEM_BT = Sammlung(
+        trace="Lem Bt",
+        groups="Lautschrift|Lem Bt",
+        kreis="Lem",
+        ort="Bt",
+    )
+    LAUT_LEM_BX = Sammlung(
+        trace="Lem Bx",
+        groups="Lautschrift|Lem Bx",
+        kreis="Lem",
+        ort="Bx",
+    )
+    LAUT_LEM_DÖ = Sammlung(
+        trace="Lem Dö",
+        groups="Lautschrift|Lem Dö",
+        kreis="Lem",
+        ort="Dö",
+    )
+    LAUT_LEM_ER = Sammlung(
+        trace="Lem Er",
+        groups="Lautschrift|Lem Er",
+        kreis="Lem",
+        ort="Er",
+    )
+    LAUT_LEM_GÖ = Sammlung(
+        trace="Lem Gö",
+        groups="Lautschrift|Lem Gö",
+        kreis="Lem",
+        ort="Gö",
+    )
+    LAUT_LEM_GR = Sammlung(
+        trace="Lem Gr",
+        groups="Lautschrift|Lem Gr",
+        kreis="Lem",
+        ort="Gr",
+    )
+    LAUT_LEM_HB = Sammlung(
+        trace="Lem Hb",
+        groups="Lautschrift|Lem Hb",
+        kreis="Lem",
+        ort="Hb",
+    )
+    LAUT_LEM_HD = Sammlung(
+        trace="Lem Hd",
+        groups="Lautschrift|Lem Hd",
+        kreis="Lem",
+        ort="Hd",
+    )
+    LAUT_LEM_HE = Sammlung(
+        trace="Lem He",
+        groups="Lautschrift|Lem He",
+        kreis="Lem",
+        ort="He",
+    )
+    LAUT_LEM_HF = Sammlung(
+        trace="Lem Hf",
+        groups="Lautschrift|Lem Hf",
+        kreis="Lem",
+        ort="Hf",
+    )
+    LAUT_LEM_HG = Sammlung(
+        trace="Lem Hg",
+        groups="Lautschrift|Lem Hg",
+        kreis="Lem",
+        ort="Hg",
+    )
+    LAUT_LEM_HH = Sammlung(
+        trace="Lem Hh",
+        groups="Lautschrift|Lem Hh",
+        kreis="Lem",
+        ort="Hh",
+    )
+    LAUT_LEM_HO = Sammlung(
+        trace="Lem Ho",
+        groups="Lautschrift|Lem Ho",
+        kreis="Lem",
+        ort="Ho",
+    )
+    LAUT_LEM_HÖ = Sammlung(
+        trace="Lem Hö",
+        groups="Lautschrift|Lem Hö",
+        kreis="Lem",
+        ort="Hö",
+    )
+    LAUT_LEM_HT = Sammlung(
+        trace="Lem Ht",
+        groups="Lautschrift|Lem Ht",
+        kreis="Lem",
+        ort="Ht",
+    )
+    LAUT_LEM_KA = Sammlung(
+        trace="Lem Ka",
+        groups="Lautschrift|Lem Ka",
+        kreis="Lem",
+        ort="Ka",
+    )
+    LAUT_LEM_KI = Sammlung(
+        trace="Lem Ki",
+        groups="Lautschrift|Lem Ki",
+        kreis="Lem",
+        ort="Ki",
+    )
+    LAUT_LEM_KN = Sammlung(
+        trace="Lem Kn",
+        groups="Lautschrift|Lem Kn",
+        kreis="Lem",
+        ort="Kn",
+    )
+    LAUT_LEM_LA = Sammlung(
+        trace="Lem La",
+        groups="Lautschrift|Lem La",
+        kreis="Lem",
+        ort="La",
+    )
+    LAUT_LEM_LB = Sammlung(
+        trace="Lem Lb",
+        groups="Lautschrift|Lem Lb",
+        kreis="Lem",
+        ort="Lb",
+    )
+    LAUT_LEM_LC = Sammlung(
+        trace="Lem Lc",
+        groups="Lautschrift|Lem Lc",
+        kreis="Lem",
+        ort="Lc",
+    )
+    LAUT_LEM_LD = Sammlung(
+        trace="Lem Ld",
+        groups="Lautschrift|Lem Ld",
+        kreis="Lem",
+        ort="Ld",
+    )
+    LAUT_LEM_LE = Sammlung(
+        trace="Lem Le",
+        groups="Lautschrift|Lem Le",
+        kreis="Lem",
+        ort="Le",
+    )
+    LAUT_LEM_LF = Sammlung(
+        trace="Lem Lf",
+        groups="Lautschrift|Lem Lf",
+        kreis="Lem",
+        ort="Lf",
+    )
+    LAUT_LEM_LG = Sammlung(
+        trace="Lem Lg",
+        groups="Lautschrift|Lem Lg",
+        kreis="Lem",
+        ort="Lg",
+    )
+    LAUT_LEM_LH = Sammlung(
+        trace="Lem Lh",
+        groups="Lautschrift|Lem Lh",
+        kreis="Lem",
+        ort="Lh",
+    )
+    LAUT_LEM_LI = Sammlung(
+        trace="Lem Li",
+        groups="Lautschrift|Lem Li",
+        kreis="Lem",
+        ort="Li",
+    )
+    LAUT_LEM_LO = Sammlung(
+        trace="Lem Lo",
+        groups="Lautschrift|Lem Lo",
+        kreis="Lem",
+        ort="Lo",
+    )
+    LAUT_LEM_LP = Sammlung(
+        trace="Lem Lp",
+        groups="Lautschrift|Lem Lp",
+        kreis="Lem",
+        ort="Lp",
+    )
+    LAUT_LEM_LR = Sammlung(
+        trace="Lem Lr",
+        groups="Lautschrift|Lem Lr",
+        kreis="Lem",
+        ort="Lr",
+    )
+    LAUT_LEM_LÜ = Sammlung(
+        trace="Lem Lü",
+        groups="Lautschrift|Lem Lü",
+        kreis="Lem",
+        ort="Lü",
+    )
+    LAUT_LEM_MA = Sammlung(
+        trace="Lem Ma",
+        groups="Lautschrift|Lem Ma",
+        kreis="Lem",
+        ort="Ma",
+    )
+    LAUT_LEM_MB = Sammlung(
+        trace="Lem Mb",
+        groups="Lautschrift|Lem Mb",
+        kreis="Lem",
+        ort="Mb",
+    )
+    LAUT_LEM_MT = Sammlung(
+        trace="Lem Mt",
+        groups="Lautschrift|Lem Mt",
+        kreis="Lem",
+        ort="Mt",
+    )
+    LAUT_LEM_ÖR = Sammlung(
+        trace="Lem Ör",
+        groups="Lautschrift|Lem Ör",
+        kreis="Lem",
+        ort="Ör",
+    )
+    LAUT_LEM_RE = Sammlung(
+        trace="Lem Re",
+        groups="Lautschrift|Lem Re",
+        kreis="Lem",
+        ort="Re",
+    )
+    LAUT_LEM_SB = Sammlung(
+        trace="Lem Sb",
+        groups="Lautschrift|Lem Sb",
+        kreis="Lem",
+        ort="Sb",
+    )
+    LAUT_LEM_SC = Sammlung(
+        trace="Lem Sc",
+        groups="Lautschrift|Lem Sc",
+        kreis="Lem",
+        ort="Sc",
+    )
+    LAUT_LEM_SE = Sammlung(
+        trace="Lem Se",
+        groups="Lautschrift|Lem Se",
+        kreis="Lem",
+        ort="Se",
+    )
+    LAUT_LEM_SH = Sammlung(
+        trace="Lem Sh",
+        groups="Lautschrift|Lem Sh",
+        kreis="Lem",
+        ort="Sh",
+    )
+    LAUT_LEM_SI = Sammlung(
+        trace="Lem Si",
+        groups="Lautschrift|Lem Si",
+        kreis="Lem",
+        ort="Si",
+    )
+    LAUT_LEM_SM = Sammlung(
+        trace="Lem Sm",
+        groups="Lautschrift|Lem Sm",
+        kreis="Lem",
+        ort="Sm",
+    )
+    LAUT_LEM_ST = Sammlung(
+        trace="Lem St",
+        groups="Lautschrift|Lem St",
+        kreis="Lem",
+        ort="St",
+    )
+    LAUT_LEM_SU = Sammlung(
+        trace="Lem Su",
+        groups="Lautschrift|Lem Su",
+        kreis="Lem",
+        ort="Su",
+    )
+    LAUT_LEM_SW = Sammlung(
+        trace="Lem Sw",
+        groups="Lautschrift|Lem Sw",
+        kreis="Lem",
+        ort="Sw",
+    )
+    LAUT_LEM_SX = Sammlung(
+        trace="Lem Sx",
+        groups="Lautschrift|Lem Sx",
+        kreis="Lem",
+        ort="Sx",
+    )
+    LAUT_LEM_TA = Sammlung(
+        trace="Lem Ta",
+        groups="Lautschrift|Lem Ta",
+        kreis="Lem",
+        ort="Ta",
+    )
+    LAUT_LEM_VA = Sammlung(
+        trace="Lem Va",
+        groups="Lautschrift|Lem Va",
+        kreis="Lem",
+        ort="Va",
+    )
+    LAUT_LEM_VH = Sammlung(
+        trace="Lem Vh",
+        groups="Lautschrift|Lem Vh",
+        kreis="Lem",
+        ort="Vh",
+    )
+    LAUT_LEM_VO = Sammlung(
+        trace="Lem Vo",
+        groups="Lautschrift|Lem Vo",
+        kreis="Lem",
+        ort="Vo",
+    )
+    LAUT_LEM_WA = Sammlung(
+        trace="Lem Wa",
+        groups="Lautschrift|Lem Wa",
+        kreis="Lem",
+        ort="Wa",
+    )
+    LAUT_LEM_WB = Sammlung(
+        trace="Lem Wb",
+        groups="Lautschrift|Lem Wb",
+        kreis="Lem",
+        ort="Wb",
+    )
+    LAUT_LEM_WD = Sammlung(
+        trace="Lem Wd",
+        groups="Lautschrift|Lem Wd",
+        kreis="Lem",
+        ort="Wd",
+    )
+    LAUT_LEM_WH = Sammlung(
+        trace="Lem Wh",
+        groups="Lautschrift|Lem Wh",
+        kreis="Lem",
+        ort="Wh",
+    )
+    LAUT_LEM_WR = Sammlung(
+        trace="Lem Wr",
+        groups="Lautschrift|Lem Wr",
+        kreis="Lem",
+        ort="Wr",
+    )
+    LAUT_LEM_WÜ = Sammlung(
+        trace="Lem Wü",
+        groups="Lautschrift|Lem Wü",
+        kreis="Lem",
+        ort="Wü",
+    )
+    LAUT_LHS_AB = Sammlung(
+        trace="Lhs Ab",
+        groups="Lautschrift|Lhs Ab",
+        kreis="Lhs",
+        ort="Ab",
+    )
+    LAUT_LHS_AH = Sammlung(
+        trace="Lhs Ah",
+        groups="Lautschrift|Lhs Ah",
+        kreis="Lhs",
+        ort="Ah",
+    )
+    LAUT_LHS_AL = Sammlung(
+        trace="Lhs Al",
+        groups="Lautschrift|Lhs Al",
+        kreis="Lhs",
+        ort="Al",
+    )
+    LAUT_LHS_BB = Sammlung(
+        trace="Lhs Bb",
+        groups="Lautschrift|Lhs Bb",
+        kreis="Lhs",
+        ort="Bb",
+    )
+    LAUT_LHS_BH = Sammlung(
+        trace="Lhs Bh",
+        groups="Lautschrift|Lhs Bh",
+        kreis="Lhs",
+        ort="Bh",
+    )
+    LAUT_LHS_BK = Sammlung(
+        trace="Lhs Bk",
+        groups="Lautschrift|Lhs Bk",
+        kreis="Lhs",
+        ort="Bk",
+    )
+    LAUT_LHS_BO = Sammlung(
+        trace="Lhs Bo",
+        groups="Lautschrift|Lhs Bo",
+        kreis="Lhs",
+        ort="Bo",
+    )
+    LAUT_LHS_DB = Sammlung(
+        trace="Lhs Db",
+        groups="Lautschrift|Lhs Db",
+        kreis="Lhs",
+        ort="Db",
+    )
+    LAUT_LHS_DR = Sammlung(
+        trace="Lhs Dr",
+        groups="Lautschrift|Lhs Dr",
+        kreis="Lhs",
+        ort="Dr",
+    )
+    LAUT_LHS_EI = Sammlung(
+        trace="Lhs Ei",
+        groups="Lautschrift|Lhs Ei",
+        kreis="Lhs",
+        ort="Ei",
+    )
+    LAUT_LHS_EL = Sammlung(
+        trace="Lhs El",
+        groups="Lautschrift|Lhs El",
+        kreis="Lhs",
+        ort="El",
+    )
+    LAUT_LHS_EM = Sammlung(
+        trace="Lhs Em",
+        groups="Lautschrift|Lhs Em",
+        kreis="Lhs",
+        ort="Em",
+    )
+    LAUT_LHS_ER = Sammlung(
+        trace="Lhs Er",
+        groups="Lautschrift|Lhs Er",
+        kreis="Lhs",
+        ort="Er",
+    )
+    LAUT_LHS_FH = Sammlung(
+        trace="Lhs Fh",
+        groups="Lautschrift|Lhs Fh",
+        kreis="Lhs",
+        ort="Fh",
+    )
+    LAUT_LHS_HE = Sammlung(
+        trace="Lhs He",
+        groups="Lautschrift|Lhs He",
+        kreis="Lhs",
+        ort="He",
+    )
+    LAUT_LHS_HO = Sammlung(
+        trace="Lhs Ho",
+        groups="Lautschrift|Lhs Ho",
+        kreis="Lhs",
+        ort="Ho",
+    )
+    LAUT_LHS_HÖ = Sammlung(
+        trace="Lhs Hö",
+        groups="Lautschrift|Lhs Hö",
+        kreis="Lhs",
+        ort="Hö",
+    )
+    LAUT_LHS_HS = Sammlung(
+        trace="Lhs Hs",
+        groups="Lautschrift|Lhs Hs",
+        kreis="Lhs",
+        ort="Hs",
+    )
+    LAUT_LHS_KA = Sammlung(
+        trace="Lhs Ka",
+        groups="Lautschrift|Lhs Ka",
+        kreis="Lhs",
+        ort="Ka",
+    )
+    LAUT_LHS_LA = Sammlung(
+        trace="Lhs La",
+        groups="Lautschrift|Lhs La",
+        kreis="Lhs",
+        ort="La",
+    )
+    LAUT_LHS_LH = Sammlung(
+        trace="Lhs Lh",
+        groups="Lautschrift|Lhs Lh",
+        kreis="Lhs",
+        ort="Lh",
+    )
+    LAUT_LHS_ME = Sammlung(
+        trace="Lhs Me",
+        groups="Lautschrift|Lhs Me",
+        kreis="Lhs",
+        ort="Me",
+    )
+    LAUT_LHS_NB = Sammlung(
+        trace="Lhs Nb",
+        groups="Lautschrift|Lhs Nb",
+        kreis="Lhs",
+        ort="Nb",
+    )
+    LAUT_LHS_NK = Sammlung(
+        trace="Lhs Nk",
+        groups="Lautschrift|Lhs Nk",
+        kreis="Lhs",
+        ort="Nk",
+    )
+    LAUT_LHS_OB = Sammlung(
+        trace="Lhs Ob",
+        groups="Lautschrift|Lhs Ob",
+        kreis="Lhs",
+        ort="Ob",
+    )
+    LAUT_LHS_OL = Sammlung(
+        trace="Lhs Ol",
+        groups="Lautschrift|Lhs Ol",
+        kreis="Lhs",
+        ort="Ol",
+    )
+    LAUT_LHS_ON = Sammlung(
+        trace="Lhs On",
+        groups="Lautschrift|Lhs On",
+        kreis="Lhs",
+        ort="On",
+    )
+    LAUT_LHS_SE = Sammlung(
+        trace="Lhs Se",
+        groups="Lautschrift|Lhs Se",
+        kreis="Lhs",
+        ort="Se",
+    )
+    LAUT_LHS_SK = Sammlung(
+        trace="Lhs Sk",
+        groups="Lautschrift|Lhs Sk",
+        kreis="Lhs",
+        ort="Sk",
+    )
+    LAUT_LHS_SM = Sammlung(
+        trace="Lhs Sm",
+        groups="Lautschrift|Lhs Sm",
+        kreis="Lhs",
+        ort="Sm",
+    )
+    LAUT_LHS_SR = Sammlung(
+        trace="Lhs Sr",
+        groups="Lautschrift|Lhs Sr",
+        kreis="Lhs",
+        ort="Sr",
+    )
+    LAUT_LHS_ST = Sammlung(
+        trace="Lhs St",
+        groups="Lautschrift|Lhs St",
+        kreis="Lhs",
+        ort="St",
+    )
+    LAUT_LHS_TE = Sammlung(
+        trace="Lhs Te",
+        groups="Lautschrift|Lhs Te",
+        kreis="Lhs",
+        ort="Te",
+    )
+    LAUT_LHS_TH = Sammlung(
+        trace="Lhs Th",
+        groups="Lautschrift|Lhs Th",
+        kreis="Lhs",
+        ort="Th",
+    )
+    LAUT_LHS_VE = Sammlung(
+        trace="Lhs Ve",
+        groups="Lautschrift|Lhs Ve",
+        kreis="Lhs",
+        ort="Ve",
+    )
+    LAUT_LHS_VI = Sammlung(
+        trace="Lhs Vi",
+        groups="Lautschrift|Lhs Vi",
+        kreis="Lhs",
+        ort="Vi",
+    )
+    LAUT_LHS_WE = Sammlung(
+        trace="Lhs We",
+        groups="Lautschrift|Lhs We",
+        kreis="Lhs",
+        ort="We",
+    )
+    LAUT_LHS_WI = Sammlung(
+        trace="Lhs Wi",
+        groups="Lautschrift|Lhs Wi",
+        kreis="Lhs",
+        ort="Wi",
+    )
+    LAUT_LHS_WL = Sammlung(
+        trace="Lhs Wl",
+        groups="Lautschrift|Lhs Wl",
+        kreis="Lhs",
+        ort="Wl",
+    )
+    LAUT_LHS_WN = Sammlung(
+        trace="Lhs Wn",
+        groups="Lautschrift|Lhs Wn",
+        kreis="Lhs",
+        ort="Wn",
+    )
+    LAUT_LHS_WP = Sammlung(
+        trace="Lhs Wp",
+        groups="Lautschrift|Lhs Wp",
+        kreis="Lhs",
+        ort="Wp",
+    )
+    LAUT_LHS_WS = Sammlung(
+        trace="Lhs Ws",
+        groups="Lautschrift|Lhs Ws",
+        kreis="Lhs",
+        ort="Ws",
+    )
+    LAUT_LIN_AL = Sammlung(
+        trace="Lin Al",
+        groups="Lautschrift|Lin Al",
+        kreis="Lin",
+        ort="Al",
+    )
+    LAUT_LIN_AV = Sammlung(
+        trace="Lin Av",
+        groups="Lautschrift|Lin Av",
+        kreis="Lin",
+        ort="Av",
+    )
+    LAUT_LIN_AX = Sammlung(
+        trace="Lin Ax",
+        groups="Lautschrift|Lin Ax",
+        kreis="Lin",
+        ort="Ax",
+    )
+    LAUT_LIN_AY = Sammlung(
+        trace="Lin Ay",
+        groups="Lautschrift|Lin Ay",
+        kreis="Lin",
+        ort="Ay",
+    )
+    LAUT_LIN_BA = Sammlung(
+        trace="Lin Ba",
+        groups="Lautschrift|Lin Ba",
+        kreis="Lin",
+        ort="Ba",
+    )
+    LAUT_LIN_BE = Sammlung(
+        trace="Lin Be",
+        groups="Lautschrift|Lin Be",
+        kreis="Lin",
+        ort="Be",
+    )
+    LAUT_LIN_BH = Sammlung(
+        trace="Lin Bh",
+        groups="Lautschrift|Lin Bh",
+        kreis="Lin",
+        ort="Bh",
+    )
+    LAUT_LIN_BI = Sammlung(
+        trace="Lin Bi",
+        groups="Lautschrift|Lin Bi",
+        kreis="Lin",
+        ort="Bi",
+    )
+    LAUT_LIN_BK = Sammlung(
+        trace="Lin Bk",
+        groups="Lautschrift|Lin Bk",
+        kreis="Lin",
+        ort="Bk",
+    )
+    LAUT_LIN_BL = Sammlung(
+        trace="Lin Bl",
+        groups="Lautschrift|Lin Bl",
+        kreis="Lin",
+        ort="Bl",
+    )
+    LAUT_LIN_BR = Sammlung(
+        trace="Lin Br",
+        groups="Lautschrift|Lin Br",
+        kreis="Lin",
+        ort="Br",
+    )
+    LAUT_LIN_BS = Sammlung(
+        trace="Lin Bs",
+        groups="Lautschrift|Lin Bs",
+        kreis="Lin",
+        ort="Bs",
+    )
+    LAUT_LIN_BT = Sammlung(
+        trace="Lin Bt",
+        groups="Lautschrift|Lin Bt",
+        kreis="Lin",
+        ort="Bt",
+    )
+    LAUT_LIN_BW = Sammlung(
+        trace="Lin Bw",
+        groups="Lautschrift|Lin Bw",
+        kreis="Lin",
+        ort="Bw",
+    )
+    LAUT_LIN_BX = Sammlung(
+        trace="Lin Bx",
+        groups="Lautschrift|Lin Bx",
+        kreis="Lin",
+        ort="Bx",
+    )
+    LAUT_LIN_DA = Sammlung(
+        trace="Lin Da",
+        groups="Lautschrift|Lin Da",
+        kreis="Lin",
+        ort="Da",
+    )
+    LAUT_LIN_DP = Sammlung(
+        trace="Lin Dp",
+        groups="Lautschrift|Lin Dp",
+        kreis="Lin",
+        ort="Dp",
+    )
+    LAUT_LIN_EB = Sammlung(
+        trace="Lin Eb",
+        groups="Lautschrift|Lin Eb",
+        kreis="Lin",
+        ort="Eb",
+    )
+    LAUT_LIN_EM = Sammlung(
+        trace="Lin Em",
+        groups="Lautschrift|Lin Em",
+        kreis="Lin",
+        ort="Em",
+    )
+    LAUT_LIN_ES = Sammlung(
+        trace="Lin Es",
+        groups="Lautschrift|Lin Es",
+        kreis="Lin",
+        ort="Es",
+    )
+    LAUT_LIN_FR = Sammlung(
+        trace="Lin Fr",
+        groups="Lautschrift|Lin Fr",
+        kreis="Lin",
+        ort="Fr",
+    )
+    LAUT_LIN_GE = Sammlung(
+        trace="Lin Ge",
+        groups="Lautschrift|Lin Ge",
+        kreis="Lin",
+        ort="Ge",
+    )
+    LAUT_LIN_GL = Sammlung(
+        trace="Lin Gl",
+        groups="Lautschrift|Lin Gl",
+        kreis="Lin",
+        ort="Gl",
+    )
+    LAUT_LIN_HA = Sammlung(
+        trace="Lin Ha",
+        groups="Lautschrift|Lin Ha",
+        kreis="Lin",
+        ort="Ha",
+    )
+    LAUT_LIN_HD = Sammlung(
+        trace="Lin Hd",
+        groups="Lautschrift|Lin Hd",
+        kreis="Lin",
+        ort="Hd",
+    )
+    LAUT_LIN_HH = Sammlung(
+        trace="Lin Hh",
+        groups="Lautschrift|Lin Hh",
+        kreis="Lin",
+        ort="Hh",
+    )
+    LAUT_LIN_HO = Sammlung(
+        trace="Lin Ho",
+        groups="Lautschrift|Lin Ho",
+        kreis="Lin",
+        ort="Ho",
+    )
+    LAUT_LIN_LA = Sammlung(
+        trace="Lin La",
+        groups="Lautschrift|Lin La",
+        kreis="Lin",
+        ort="La",
+    )
+    LAUT_LIN_LE = Sammlung(
+        trace="Lin Le",
+        groups="Lautschrift|Lin Le",
+        kreis="Lin",
+        ort="Le",
+    )
+    LAUT_LIN_LI = Sammlung(
+        trace="Lin Li",
+        groups="Lautschrift|Lin Li",
+        kreis="Lin",
+        ort="Li",
+    )
+    LAUT_LIN_LO = Sammlung(
+        trace="Lin Lo",
+        groups="Lautschrift|Lin Lo",
+        kreis="Lin",
+        ort="Lo",
+    )
+    LAUT_LIN_LS = Sammlung(
+        trace="Lin Ls",
+        groups="Lautschrift|Lin Ls",
+        kreis="Lin",
+        ort="Ls",
+    )
+    LAUT_LIN_LT = Sammlung(
+        trace="Lin Lt",
+        groups="Lautschrift|Lin Lt",
+        kreis="Lin",
+        ort="Lt",
+    )
+    LAUT_LIN_LX = Sammlung(
+        trace="Lin Lx",
+        groups="Lautschrift|Lin Lx",
+        kreis="Lin",
+        ort="Lx",
+    )
+    LAUT_LIN_ME = Sammlung(
+        trace="Lin Me",
+        groups="Lautschrift|Lin Me",
+        kreis="Lin",
+        ort="Me",
+    )
+    LAUT_LIN_MR = Sammlung(
+        trace="Lin Mr",
+        groups="Lautschrift|Lin Mr",
+        kreis="Lin",
+        ort="Mr",
+    )
+    LAUT_LIN_MU = Sammlung(
+        trace="Lin Mu",
+        groups="Lautschrift|Lin Mu",
+        kreis="Lin",
+        ort="Mu",
+    )
+    LAUT_LIN_NL = Sammlung(
+        trace="Lin Nl",
+        groups="Lautschrift|Lin Nl",
+        kreis="Lin",
+        ort="Nl",
+    )
+    LAUT_LIN_PL = Sammlung(
+        trace="Lin Pl",
+        groups="Lautschrift|Lin Pl",
+        kreis="Lin",
+        ort="Pl",
+    )
+    LAUT_LIN_PO = Sammlung(
+        trace="Lin Po",
+        groups="Lautschrift|Lin Po",
+        kreis="Lin",
+        ort="Po",
+    )
+    LAUT_LIN_SB = Sammlung(
+        trace="Lin Sb",
+        groups="Lautschrift|Lin Sb",
+        kreis="Lin",
+        ort="Sb",
+    )
+    LAUT_LIN_SC = Sammlung(
+        trace="Lin Sc",
+        groups="Lautschrift|Lin Sc",
+        kreis="Lin",
+        ort="Sc",
+    )
+    LAUT_LIN_SD = Sammlung(
+        trace="Lin Sd",
+        groups="Lautschrift|Lin Sd",
+        kreis="Lin",
+        ort="Sd",
+    )
+    LAUT_LIN_SL = Sammlung(
+        trace="Lin Sl",
+        groups="Lautschrift|Lin Sl",
+        kreis="Lin",
+        ort="Sl",
+    )
+    LAUT_LIN_SN = Sammlung(
+        trace="Lin Sn",
+        groups="Lautschrift|Lin Sn",
+        kreis="Lin",
+        ort="Sn",
+    )
+    LAUT_LIN_SP = Sammlung(
+        trace="Lin Sp",
+        groups="Lautschrift|Lin Sp",
+        kreis="Lin",
+        ort="Sp",
+    )
+    LAUT_LIN_ST = Sammlung(
+        trace="Lin St",
+        groups="Lautschrift|Lin St",
+        kreis="Lin",
+        ort="St",
+    )
+    LAUT_LIN_SU = Sammlung(
+        trace="Lin Su",
+        groups="Lautschrift|Lin Su",
+        kreis="Lin",
+        ort="Su",
+    )
+    LAUT_LIN_TH = Sammlung(
+        trace="Lin Th",
+        groups="Lautschrift|Lin Th",
+        kreis="Lin",
+        ort="Th",
+    )
+    LAUT_LIN_VA = Sammlung(
+        trace="Lin Va",
+        groups="Lautschrift|Lin Va",
+        kreis="Lin",
+        ort="Va",
+    )
+    LAUT_LIN_VH = Sammlung(
+        trace="Lin Vh",
+        groups="Lautschrift|Lin Vh",
+        kreis="Lin",
+        ort="Vh",
+    )
+    LAUT_LIN_WD = Sammlung(
+        trace="Lin Wd",
+        groups="Lautschrift|Lin Wd",
+        kreis="Lin",
+        ort="Wd",
+    )
+    LAUT_LIN_WE = Sammlung(
+        trace="Lin We",
+        groups="Lautschrift|Lin We",
+        kreis="Lin",
+        ort="We",
+    )
+    LAUT_LST_AG = Sammlung(
+        trace="Lst Ag",
+        groups="Lautschrift|Lst Ag",
+        kreis="Lst",
+        ort="Ag",
+    )
+    LAUT_LST_AN = Sammlung(
+        trace="Lst An",
+        groups="Lautschrift|Lst An",
+        kreis="Lst",
+        ort="An",
+    )
+    LAUT_LST_AR = Sammlung(
+        trace="Lst Ar",
+        groups="Lautschrift|Lst Ar",
+        kreis="Lst",
+        ort="Ar",
+    )
+    LAUT_LST_BB = Sammlung(
+        trace="Lst Bb",
+        groups="Lautschrift|Lst Bb",
+        kreis="Lst",
+        ort="Bb",
+    )
+    LAUT_LST_BF = Sammlung(
+        trace="Lst Bf",
+        groups="Lautschrift|Lst Bf",
+        kreis="Lst",
+        ort="Bf",
+    )
+    LAUT_LST_BG = Sammlung(
+        trace="Lst Bg",
+        groups="Lautschrift|Lst Bg",
+        kreis="Lst",
+        ort="Bg",
+    )
+    LAUT_LST_BH = Sammlung(
+        trace="Lst Bh",
+        groups="Lautschrift|Lst Bh",
+        kreis="Lst",
+        ort="Bh",
+    )
+    LAUT_LST_BÖ = Sammlung(
+        trace="Lst Bö",
+        groups="Lautschrift|Lst Bö",
+        kreis="Lst",
+        ort="Bö",
+    )
+    LAUT_LST_DH = Sammlung(
+        trace="Lst Dh",
+        groups="Lautschrift|Lst Dh",
+        kreis="Lst",
+        ort="Dh",
+    )
+    LAUT_LST_DR = Sammlung(
+        trace="Lst Dr",
+        groups="Lautschrift|Lst Dr",
+        kreis="Lst",
+        ort="Dr",
+    )
+    LAUT_LST_EB = Sammlung(
+        trace="Lst Eb",
+        groups="Lautschrift|Lst Eb",
+        kreis="Lst",
+        ort="Eb",
+    )
+    LAUT_LST_EF = Sammlung(
+        trace="Lst Ef",
+        groups="Lautschrift|Lst Ef",
+        kreis="Lst",
+        ort="Ef",
+    )
+    LAUT_LST_EH = Sammlung(
+        trace="Lst Eh",
+        groups="Lautschrift|Lst Eh",
+        kreis="Lst",
+        ort="Eh",
+    )
+    LAUT_LST_EI = Sammlung(
+        trace="Lst Ei",
+        groups="Lautschrift|Lst Ei",
+        kreis="Lst",
+        ort="Ei",
+    )
+    LAUT_LST_ER = Sammlung(
+        trace="Lst Er",
+        groups="Lautschrift|Lst Er",
+        kreis="Lst",
+        ort="Er",
+    )
+    LAUT_LST_ES = Sammlung(
+        trace="Lst Es",
+        groups="Lautschrift|Lst Es",
+        kreis="Lst",
+        ort="Es",
+    )
+    LAUT_LST_GE = Sammlung(
+        trace="Lst Ge",
+        groups="Lautschrift|Lst Ge",
+        kreis="Lst",
+        ort="Ge",
+    )
+    LAUT_LST_HE = Sammlung(
+        trace="Lst He",
+        groups="Lautschrift|Lst He",
+        kreis="Lst",
+        ort="He",
+    )
+    LAUT_LST_HH = Sammlung(
+        trace="Lst Hh",
+        groups="Lautschrift|Lst Hh",
+        kreis="Lst",
+        ort="Hh",
+    )
+    LAUT_LST_HO = Sammlung(
+        trace="Lst Ho",
+        groups="Lautschrift|Lst Ho",
+        kreis="Lst",
+        ort="Ho",
+    )
+    LAUT_LST_HS = Sammlung(
+        trace="Lst Hs",
+        groups="Lautschrift|Lst Hs",
+        kreis="Lst",
+        ort="Hs",
+    )
+    LAUT_LST_KA = Sammlung(
+        trace="Lst Ka",
+        groups="Lautschrift|Lst Ka",
+        kreis="Lst",
+        ort="Ka",
+    )
+    LAUT_LST_KH = Sammlung(
+        trace="Lst Kh",
+        groups="Lautschrift|Lst Kh",
+        kreis="Lst",
+        ort="Kh",
+    )
+    LAUT_LST_KL = Sammlung(
+        trace="Lst Kl",
+        groups="Lautschrift|Lst Kl",
+        kreis="Lst",
+        ort="Kl",
+    )
+    LAUT_LST_KN = Sammlung(
+        trace="Lst Kn",
+        groups="Lautschrift|Lst Kn",
+        kreis="Lst",
+        ort="Kn",
+    )
+    LAUT_LST_KP = Sammlung(
+        trace="Lst Kp",
+        groups="Lautschrift|Lst Kp",
+        kreis="Lst",
+        ort="Kp",
+    )
+    LAUT_LST_LA = Sammlung(
+        trace="Lst La",
+        groups="Lautschrift|Lst La",
+        kreis="Lst",
+        ort="La",
+    )
+    LAUT_LST_LI = Sammlung(
+        trace="Lst Li",
+        groups="Lautschrift|Lst Li",
+        kreis="Lst",
+        ort="Li",
+    )
+    LAUT_LST_LR = Sammlung(
+        trace="Lst Lr",
+        groups="Lautschrift|Lst Lr",
+        kreis="Lst",
+        ort="Lr",
+    )
+    LAUT_LST_LS = Sammlung(
+        trace="Lst Ls",
+        groups="Lautschrift|Lst Ls",
+        kreis="Lst",
+        ort="Ls",
+    )
+    LAUT_LST_ME = Sammlung(
+        trace="Lst Me",
+        groups="Lautschrift|Lst Me",
+        kreis="Lst",
+        ort="Me",
+    )
+    LAUT_LST_MH = Sammlung(
+        trace="Lst Mh",
+        groups="Lautschrift|Lst Mh",
+        kreis="Lst",
+        ort="Mh",
+    )
+    LAUT_LST_MÖ = Sammlung(
+        trace="Lst Mö",
+        groups="Lautschrift|Lst Mö",
+        kreis="Lst",
+        ort="Mö",
+    )
+    LAUT_LST_MS = Sammlung(
+        trace="Lst Ms",
+        groups="Lautschrift|Lst Ms",
+        kreis="Lst",
+        ort="Ms",
+    )
+    LAUT_LST_MZ = Sammlung(
+        trace="Lst Mz",
+        groups="Lautschrift|Lst Mz",
+        kreis="Lst",
+        ort="Mz",
+    )
+    LAUT_LST_OH = Sammlung(
+        trace="Lst Oh",
+        groups="Lautschrift|Lst Oh",
+        kreis="Lst",
+        ort="Oh",
+    )
+    LAUT_LST_ÖS = Sammlung(
+        trace="Lst Ös",
+        groups="Lautschrift|Lst Ös",
+        kreis="Lst",
+        ort="Ös",
+    )
+    LAUT_LST_RI = Sammlung(
+        trace="Lst Ri",
+        groups="Lautschrift|Lst Ri",
+        kreis="Lst",
+        ort="Ri",
+    )
+    LAUT_LST_RO = Sammlung(
+        trace="Lst Ro",
+        groups="Lautschrift|Lst Ro",
+        kreis="Lst",
+        ort="Ro",
+    )
+    LAUT_LST_RÜ = Sammlung(
+        trace="Lst Rü",
+        groups="Lautschrift|Lst Rü",
+        kreis="Lst",
+        ort="Rü",
+    )
+    LAUT_LST_SC = Sammlung(
+        trace="Lst Sc",
+        groups="Lautschrift|Lst Sc",
+        kreis="Lst",
+        ort="Sc",
+    )
+    LAUT_LST_SL = Sammlung(
+        trace="Lst Sl",
+        groups="Lautschrift|Lst Sl",
+        kreis="Lst",
+        ort="Sl",
+    )
+    LAUT_LST_SM = Sammlung(
+        trace="Lst Sm",
+        groups="Lautschrift|Lst Sm",
+        kreis="Lst",
+        ort="Sm",
+    )
+    LAUT_LST_ST = Sammlung(
+        trace="Lst St",
+        groups="Lautschrift|Lst St",
+        kreis="Lst",
+        ort="St",
+    )
+    LAUT_LST_SU = Sammlung(
+        trace="Lst Su",
+        groups="Lautschrift|Lst Su",
+        kreis="Lst",
+        ort="Su",
+    )
+    LAUT_LST_VÖ = Sammlung(
+        trace="Lst Vö",
+        groups="Lautschrift|Lst Vö",
+        kreis="Lst",
+        ort="Vö",
+    )
+    LAUT_LST_WK = Sammlung(
+        trace="Lst Wk",
+        groups="Lautschrift|Lst Wk",
+        kreis="Lst",
+        ort="Wk",
+    )
+    LAUT_LÜB_AL = Sammlung(
+        trace="Lüb Al",
+        groups="Lautschrift|Lüb Al",
+        kreis="Lüb",
+        ort="Al",
+    )
+    LAUT_LÜB_AR = Sammlung(
+        trace="Lüb Ar",
+        groups="Lautschrift|Lüb Ar",
+        kreis="Lüb",
+        ort="Ar",
+    )
+    LAUT_LÜB_AS = Sammlung(
+        trace="Lüb As",
+        groups="Lautschrift|Lüb As",
+        kreis="Lüb",
+        ort="As",
+    )
+    LAUT_LÜB_BA = Sammlung(
+        trace="Lüb Ba",
+        groups="Lautschrift|Lüb Ba",
+        kreis="Lüb",
+        ort="Ba",
+    )
+    LAUT_LÜB_BH = Sammlung(
+        trace="Lüb Bh",
+        groups="Lautschrift|Lüb Bh",
+        kreis="Lüb",
+        ort="Bh",
+    )
+    LAUT_LÜB_BL = Sammlung(
+        trace="Lüb Bl",
+        groups="Lautschrift|Lüb Bl",
+        kreis="Lüb",
+        ort="Bl",
+    )
+    LAUT_LÜB_BR = Sammlung(
+        trace="Lüb Br",
+        groups="Lautschrift|Lüb Br",
+        kreis="Lüb",
+        ort="Br",
+    )
+    LAUT_LÜB_BÜ = Sammlung(
+        trace="Lüb Bü",
+        groups="Lautschrift|Lüb Bü",
+        kreis="Lüb",
+        ort="Bü",
+    )
+    LAUT_LÜB_DE = Sammlung(
+        trace="Lüb De",
+        groups="Lautschrift|Lüb De",
+        kreis="Lüb",
+        ort="De",
+    )
+    LAUT_LÜB_DI = Sammlung(
+        trace="Lüb Di",
+        groups="Lautschrift|Lüb Di",
+        kreis="Lüb",
+        ort="Di",
+    )
+    LAUT_LÜB_DR = Sammlung(
+        trace="Lüb Dr",
+        groups="Lautschrift|Lüb Dr",
+        kreis="Lüb",
+        ort="Dr",
+    )
+    LAUT_LÜB_EN = Sammlung(
+        trace="Lüb En",
+        groups="Lautschrift|Lüb En",
+        kreis="Lüb",
+        ort="En",
+    )
+    LAUT_LÜB_FA = Sammlung(
+        trace="Lüb Fa",
+        groups="Lautschrift|Lüb Fa",
+        kreis="Lüb",
+        ort="Fa",
+    )
+    LAUT_LÜB_FI = Sammlung(
+        trace="Lüb Fi",
+        groups="Lautschrift|Lüb Fi",
+        kreis="Lüb",
+        ort="Fi",
+    )
+    LAUT_LÜB_FR = Sammlung(
+        trace="Lüb Fr",
+        groups="Lautschrift|Lüb Fr",
+        kreis="Lüb",
+        ort="Fr",
+    )
+    LAUT_LÜB_FS = Sammlung(
+        trace="Lüb Fs",
+        groups="Lautschrift|Lüb Fs",
+        kreis="Lüb",
+        ort="Fs",
+    )
+    LAUT_LÜB_GB = Sammlung(
+        trace="Lüb Gb",
+        groups="Lautschrift|Lüb Gb",
+        kreis="Lüb",
+        ort="Gb",
+    )
+    LAUT_LÜB_GE = Sammlung(
+        trace="Lüb Ge",
+        groups="Lautschrift|Lüb Ge",
+        kreis="Lüb",
+        ort="Ge",
+    )
+    LAUT_LÜB_HA = Sammlung(
+        trace="Lüb Ha",
+        groups="Lautschrift|Lüb Ha",
+        kreis="Lüb",
+        ort="Ha",
+    )
+    LAUT_LÜB_HE = Sammlung(
+        trace="Lüb He",
+        groups="Lautschrift|Lüb He",
+        kreis="Lüb",
+        ort="He",
+    )
+    LAUT_LÜB_HH = Sammlung(
+        trace="Lüb Hh",
+        groups="Lautschrift|Lüb Hh",
+        kreis="Lüb",
+        ort="Hh",
+    )
+    LAUT_LÜB_HL = Sammlung(
+        trace="Lüb Hl",
+        groups="Lautschrift|Lüb Hl",
+        kreis="Lüb",
+        ort="Hl",
+    )
+    LAUT_LÜB_HO = Sammlung(
+        trace="Lüb Ho",
+        groups="Lautschrift|Lüb Ho",
+        kreis="Lüb",
+        ort="Ho",
+    )
+    LAUT_LÜB_HT = Sammlung(
+        trace="Lüb Ht",
+        groups="Lautschrift|Lüb Ht",
+        kreis="Lüb",
+        ort="Ht",
+    )
+    LAUT_LÜB_HÜ = Sammlung(
+        trace="Lüb Hü",
+        groups="Lautschrift|Lüb Hü",
+        kreis="Lüb",
+        ort="Hü",
+    )
+    LAUT_LÜB_IS = Sammlung(
+        trace="Lüb Is",
+        groups="Lautschrift|Lüb Is",
+        kreis="Lüb",
+        ort="Is",
+    )
+    LAUT_LÜB_KL = Sammlung(
+        trace="Lüb Kl",
+        groups="Lautschrift|Lüb Kl",
+        kreis="Lüb",
+        ort="Kl",
+    )
+    LAUT_LÜB_LB = Sammlung(
+        trace="Lüb Lb",
+        groups="Lautschrift|Lüb Lb",
+        kreis="Lüb",
+        ort="Lb",
+    )
+    LAUT_LÜB_LE = Sammlung(
+        trace="Lüb Le",
+        groups="Lautschrift|Lüb Le",
+        kreis="Lüb",
+        ort="Le",
+    )
+    LAUT_LÜB_MO = Sammlung(
+        trace="Lüb Mo",
+        groups="Lautschrift|Lüb Mo",
+        kreis="Lüb",
+        ort="Mo",
+    )
+    LAUT_LÜB_NE = Sammlung(
+        trace="Lüb Ne",
+        groups="Lautschrift|Lüb Ne",
+        kreis="Lüb",
+        ort="Ne",
+    )
+    LAUT_LÜB_NM = Sammlung(
+        trace="Lüb Nm",
+        groups="Lautschrift|Lüb Nm",
+        kreis="Lüb",
+        ort="Nm",
+    )
+    LAUT_LÜB_OB = Sammlung(
+        trace="Lüb Ob",
+        groups="Lautschrift|Lüb Ob",
+        kreis="Lüb",
+        ort="Ob",
+    )
+    LAUT_LÜB_OD = Sammlung(
+        trace="Lüb Od",
+        groups="Lautschrift|Lüb Od",
+        kreis="Lüb",
+        ort="Od",
+    )
+    LAUT_LÜB_OF = Sammlung(
+        trace="Lüb Of",
+        groups="Lautschrift|Lüb Of",
+        kreis="Lüb",
+        ort="Of",
+    )
+    LAUT_LÜB_OM = Sammlung(
+        trace="Lüb Om",
+        groups="Lautschrift|Lüb Om",
+        kreis="Lüb",
+        ort="Om",
+    )
+    LAUT_LÜB_OW = Sammlung(
+        trace="Lüb Ow",
+        groups="Lautschrift|Lüb Ow",
+        kreis="Lüb",
+        ort="Ow",
+    )
+    LAUT_LÜB_PO = Sammlung(
+        trace="Lüb Po",
+        groups="Lautschrift|Lüb Po",
+        kreis="Lüb",
+        ort="Po",
+    )
+    LAUT_LÜB_PS = Sammlung(
+        trace="Lüb Ps",
+        groups="Lautschrift|Lüb Ps",
+        kreis="Lüb",
+        ort="Ps",
+    )
+    LAUT_LÜB_RA = Sammlung(
+        trace="Lüb Ra",
+        groups="Lautschrift|Lüb Ra",
+        kreis="Lüb",
+        ort="Ra",
+    )
+    LAUT_LÜB_SH = Sammlung(
+        trace="Lüb Sh",
+        groups="Lautschrift|Lüb Sh",
+        kreis="Lüb",
+        ort="Sh",
+    )
+    LAUT_LÜB_SI = Sammlung(
+        trace="Lüb Si",
+        groups="Lautschrift|Lüb Si",
+        kreis="Lüb",
+        ort="Si",
+    )
+    LAUT_LÜB_SN = Sammlung(
+        trace="Lüb Sn",
+        groups="Lautschrift|Lüb Sn",
+        kreis="Lüb",
+        ort="Sn",
+    )
+    LAUT_LÜB_ST = Sammlung(
+        trace="Lüb St",
+        groups="Lautschrift|Lüb St",
+        kreis="Lüb",
+        ort="St",
+    )
+    LAUT_LÜB_SU = Sammlung(
+        trace="Lüb Su",
+        groups="Lautschrift|Lüb Su",
+        kreis="Lüb",
+        ort="Su",
+    )
+    LAUT_LÜB_TE = Sammlung(
+        trace="Lüb Te",
+        groups="Lautschrift|Lüb Te",
+        kreis="Lüb",
+        ort="Te",
+    )
+    LAUT_LÜB_TI = Sammlung(
+        trace="Lüb Ti",
+        groups="Lautschrift|Lüb Ti",
+        kreis="Lüb",
+        ort="Ti",
+    )
+    LAUT_LÜB_TO = Sammlung(
+        trace="Lüb To",
+        groups="Lautschrift|Lüb To",
+        kreis="Lüb",
+        ort="To",
+    )
+    LAUT_LÜB_TW = Sammlung(
+        trace="Lüb Tw",
+        groups="Lautschrift|Lüb Tw",
+        kreis="Lüb",
+        ort="Tw",
+    )
+    LAUT_LÜB_VA = Sammlung(
+        trace="Lüb Va",
+        groups="Lautschrift|Lüb Va",
+        kreis="Lüb",
+        ort="Va",
+    )
+    LAUT_LÜB_VE = Sammlung(
+        trace="Lüb Ve",
+        groups="Lautschrift|Lüb Ve",
+        kreis="Lüb",
+        ort="Ve",
+    )
+    LAUT_LÜB_VH = Sammlung(
+        trace="Lüb Vh",
+        groups="Lautschrift|Lüb Vh",
+        kreis="Lüb",
+        ort="Vh",
+    )
+    LAUT_LÜB_WE = Sammlung(
+        trace="Lüb We",
+        groups="Lautschrift|Lüb We",
+        kreis="Lüb",
+        ort="We",
+    )
+    LAUT_LÜB_WH = Sammlung(
+        trace="Lüb Wh",
+        groups="Lautschrift|Lüb Wh",
+        kreis="Lüb",
+        ort="Wh",
+    )
+    LAUT_LÜB_WP = Sammlung(
+        trace="Lüb Wp",
+        groups="Lautschrift|Lüb Wp",
+        kreis="Lüb",
+        ort="Wp",
+    )
+    LAUT_MEL_AM = Sammlung(
+        trace="Mel Am",
+        groups="Lautschrift|Mel Am",
+        kreis="Mel",
+        ort="Am",
+    )
+    LAUT_MEL_BM = Sammlung(
+        trace="Mel Bm",
+        groups="Lautschrift|Mel Bm",
+        kreis="Mel",
+        ort="Bm",
+    )
+    LAUT_MEL_BU = Sammlung(
+        trace="Mel Bu",
+        groups="Lautschrift|Mel Bu",
+        kreis="Mel",
+        ort="Bu",
+    )
+    LAUT_MEL_DD = Sammlung(
+        trace="Mel Dd",
+        groups="Lautschrift|Mel Dd",
+        kreis="Mel",
+        ort="Dd",
+    )
+    LAUT_MEL_DÖ = Sammlung(
+        trace="Mel Dö",
+        groups="Lautschrift|Mel Dö",
+        kreis="Mel",
+        ort="Dö",
+    )
+    LAUT_MEL_DR = Sammlung(
+        trace="Mel Dr",
+        groups="Lautschrift|Mel Dr",
+        kreis="Mel",
+        ort="Dr",
+    )
+    LAUT_MEL_DT = Sammlung(
+        trace="Mel Dt",
+        groups="Lautschrift|Mel Dt",
+        kreis="Mel",
+        ort="Dt",
+    )
+    LAUT_MEL_DÜ = Sammlung(
+        trace="Mel Dü",
+        groups="Lautschrift|Mel Dü",
+        kreis="Mel",
+        ort="Dü",
+    )
+    LAUT_MEL_EB = Sammlung(
+        trace="Mel Eb",
+        groups="Lautschrift|Mel Eb",
+        kreis="Mel",
+        ort="Eb",
+    )
+    LAUT_MEL_FÖ = Sammlung(
+        trace="Mel Fö",
+        groups="Lautschrift|Mel Fö",
+        kreis="Mel",
+        ort="Fö",
+    )
+    LAUT_MEL_GA = Sammlung(
+        trace="Mel Ga",
+        groups="Lautschrift|Mel Ga",
+        kreis="Mel",
+        ort="Ga",
+    )
+    LAUT_MEL_GD = Sammlung(
+        trace="Mel Gd",
+        groups="Lautschrift|Mel Gd",
+        kreis="Mel",
+        ort="Gd",
+    )
+    LAUT_MEL_GE = Sammlung(
+        trace="Mel Ge",
+        groups="Lautschrift|Mel Ge",
+        kreis="Mel",
+        ort="Ge",
+    )
+    LAUT_MEL_HD = Sammlung(
+        trace="Mel Hd",
+        groups="Lautschrift|Mel Hd",
+        kreis="Mel",
+        ort="Hd",
+    )
+    LAUT_MEL_HO = Sammlung(
+        trace="Mel Ho",
+        groups="Lautschrift|Mel Ho",
+        kreis="Mel",
+        ort="Ho",
+    )
+    LAUT_MEL_HU = Sammlung(
+        trace="Mel Hu",
+        groups="Lautschrift|Mel Hu",
+        kreis="Mel",
+        ort="Hu",
+    )
+    LAUT_MEL_KR = Sammlung(
+        trace="Mel Kr",
+        groups="Lautschrift|Mel Kr",
+        kreis="Mel",
+        ort="Kr",
+    )
+    LAUT_MEL_KÜ = Sammlung(
+        trace="Mel Kü",
+        groups="Lautschrift|Mel Kü",
+        kreis="Mel",
+        ort="Kü",
+    )
+    LAUT_MEL_MD = Sammlung(
+        trace="Mel Md",
+        groups="Lautschrift|Mel Md",
+        kreis="Mel",
+        ort="Md",
+    )
+    LAUT_MEL_ME = Sammlung(
+        trace="Mel Me",
+        groups="Lautschrift|Mel Me",
+        kreis="Mel",
+        ort="Me",
+    )
+    LAUT_MEL_NF = Sammlung(
+        trace="Mel Nf",
+        groups="Lautschrift|Mel Nf",
+        kreis="Mel",
+        ort="Nf",
+    )
+    LAUT_MEL_NK = Sammlung(
+        trace="Mel Nk",
+        groups="Lautschrift|Mel Nk",
+        kreis="Mel",
+        ort="Nk",
+    )
+    LAUT_MEL_NS = Sammlung(
+        trace="Mel Ns",
+        groups="Lautschrift|Mel Ns",
+        kreis="Mel",
+        ort="Ns",
+    )
+    LAUT_MEL_OD = Sammlung(
+        trace="Mel Od",
+        groups="Lautschrift|Mel Od",
+        kreis="Mel",
+        ort="Od",
+    )
+    LAUT_MEL_RI = Sammlung(
+        trace="Mel Ri",
+        groups="Lautschrift|Mel Ri",
+        kreis="Mel",
+        ort="Ri",
+    )
+    LAUT_MEL_SA = Sammlung(
+        trace="Mel Sa",
+        groups="Lautschrift|Mel Sa",
+        kreis="Mel",
+        ort="Sa",
+    )
+    LAUT_MEL_SU = Sammlung(
+        trace="Mel Su",
+        groups="Lautschrift|Mel Su",
+        kreis="Mel",
+        ort="Su",
+    )
+    LAUT_MEL_UB = Sammlung(
+        trace="Mel Ub",
+        groups="Lautschrift|Mel Ub",
+        kreis="Mel",
+        ort="Ub",
+    )
+    LAUT_MEL_ÜH = Sammlung(
+        trace="Mel Üh",
+        groups="Lautschrift|Mel Üh",
+        kreis="Mel",
+        ort="Üh",
+    )
+    LAUT_MEL_WD = Sammlung(
+        trace="Mel Wd",
+        groups="Lautschrift|Mel Wd",
+        kreis="Mel",
+        ort="Wd",
+    )
+    LAUT_MEL_WE = Sammlung(
+        trace="Mel We",
+        groups="Lautschrift|Mel We",
+        kreis="Mel",
+        ort="We",
+    )
+    LAUT_MEL_WH = Sammlung(
+        trace="Mel Wh",
+        groups="Lautschrift|Mel Wh",
+        kreis="Mel",
+        ort="Wh",
+    )
+    LAUT_MEL_WT = Sammlung(
+        trace="Mel Wt",
+        groups="Lautschrift|Mel Wt",
+        kreis="Mel",
+        ort="Wt",
+    )
+    LAUT_MEL_WY = Sammlung(
+        trace="Mel Wy",
+        groups="Lautschrift|Mel Wy",
+        kreis="Mel",
+        ort="Wy",
+    )
+    LAUT_MEP_AB = Sammlung(
+        trace="Mep Ab",
+        groups="Lautschrift|Mep Ab",
+        kreis="Mep",
+        ort="Ab",
+    )
+    LAUT_MEP_AD = Sammlung(
+        trace="Mep Ad",
+        groups="Lautschrift|Mep Ad",
+        kreis="Mep",
+        ort="Ad",
+    )
+    LAUT_MEP_AH = Sammlung(
+        trace="Mep Ah",
+        groups="Lautschrift|Mep Ah",
+        kreis="Mep",
+        ort="Ah",
+    )
+    LAUT_MEP_AM = Sammlung(
+        trace="Mep Am",
+        groups="Lautschrift|Mep Am",
+        kreis="Mep",
+        ort="Am",
+    )
+    LAUT_MEP_BH = Sammlung(
+        trace="Mep Bh",
+        groups="Lautschrift|Mep Bh",
+        kreis="Mep",
+        ort="Bh",
+    )
+    LAUT_MEP_BO = Sammlung(
+        trace="Mep Bo",
+        groups="Lautschrift|Mep Bo",
+        kreis="Mep",
+        ort="Bo",
+    )
+    LAUT_MEP_BÜ = Sammlung(
+        trace="Mep Bü",
+        groups="Lautschrift|Mep Bü",
+        kreis="Mep",
+        ort="Bü",
+    )
+    LAUT_MEP_DA = Sammlung(
+        trace="Mep Da",
+        groups="Lautschrift|Mep Da",
+        kreis="Mep",
+        ort="Da",
+    )
+    LAUT_MEP_DK = Sammlung(
+        trace="Mep Dk",
+        groups="Lautschrift|Mep Dk",
+        kreis="Mep",
+        ort="Dk",
+    )
+    LAUT_MEP_DO = Sammlung(
+        trace="Mep Do",
+        groups="Lautschrift|Mep Do",
+        kreis="Mep",
+        ort="Do",
+    )
+    LAUT_MEP_DÖ = Sammlung(
+        trace="Mep Dö",
+        groups="Lautschrift|Mep Dö",
+        kreis="Mep",
+        ort="Dö",
+    )
+    LAUT_MEP_EM = Sammlung(
+        trace="Mep Em",
+        groups="Lautschrift|Mep Em",
+        kreis="Mep",
+        ort="Em",
+    )
+    LAUT_MEP_FU = Sammlung(
+        trace="Mep Fu",
+        groups="Lautschrift|Mep Fu",
+        kreis="Mep",
+        ort="Fu",
+    )
+    LAUT_MEP_GB = Sammlung(
+        trace="Mep Gb",
+        groups="Lautschrift|Mep Gb",
+        kreis="Mep",
+        ort="Gb",
+    )
+    LAUT_MEP_GE = Sammlung(
+        trace="Mep Ge",
+        groups="Lautschrift|Mep Ge",
+        kreis="Mep",
+        ort="Ge",
+    )
+    LAUT_MEP_GF = Sammlung(
+        trace="Mep Gf",
+        groups="Lautschrift|Mep Gf",
+        kreis="Mep",
+        ort="Gf",
+    )
+    LAUT_MEP_GH = Sammlung(
+        trace="Mep Gh",
+        groups="Lautschrift|Mep Gh",
+        kreis="Mep",
+        ort="Gh",
+    )
+    LAUT_MEP_GS = Sammlung(
+        trace="Mep Gs",
+        groups="Lautschrift|Mep Gs",
+        kreis="Mep",
+        ort="Gs",
+    )
+    LAUT_MEP_HA = Sammlung(
+        trace="Mep Ha",
+        groups="Lautschrift|Mep Ha",
+        kreis="Mep",
+        ort="Ha",
+    )
+    LAUT_MEP_HE = Sammlung(
+        trace="Mep He",
+        groups="Lautschrift|Mep He",
+        kreis="Mep",
+        ort="He",
+    )
+    LAUT_MEP_HL = Sammlung(
+        trace="Mep Hl",
+        groups="Lautschrift|Mep Hl",
+        kreis="Mep",
+        ort="Hl",
+    )
+    LAUT_MEP_HM = Sammlung(
+        trace="Mep Hm",
+        groups="Lautschrift|Mep Hm",
+        kreis="Mep",
+        ort="Hm",
+    )
+    LAUT_MEP_HN = Sammlung(
+        trace="Mep Hn",
+        groups="Lautschrift|Mep Hn",
+        kreis="Mep",
+        ort="Hn",
+    )
+    LAUT_MEP_HO = Sammlung(
+        trace="Mep Ho",
+        groups="Lautschrift|Mep Ho",
+        kreis="Mep",
+        ort="Ho",
+    )
+    LAUT_MEP_HS = Sammlung(
+        trace="Mep Hs",
+        groups="Lautschrift|Mep Hs",
+        kreis="Mep",
+        ort="Hs",
+    )
+    LAUT_MEP_HT = Sammlung(
+        trace="Mep Ht",
+        groups="Lautschrift|Mep Ht",
+        kreis="Mep",
+        ort="Ht",
+    )
+    LAUT_MEP_HÜ = Sammlung(
+        trace="Mep Hü",
+        groups="Lautschrift|Mep Hü",
+        kreis="Mep",
+        ort="Hü",
+    )
+    LAUT_MEP_KH = Sammlung(
+        trace="Mep Kh",
+        groups="Lautschrift|Mep Kh",
+        kreis="Mep",
+        ort="Kh",
+    )
+    LAUT_MEP_KS = Sammlung(
+        trace="Mep Ks",
+        groups="Lautschrift|Mep Ks",
+        kreis="Mep",
+        ort="Ks",
+    )
+    LAUT_MEP_LA = Sammlung(
+        trace="Mep La",
+        groups="Lautschrift|Mep La",
+        kreis="Mep",
+        ort="La",
+    )
+    LAUT_MEP_LÄ = Sammlung(
+        trace="Mep Lä",
+        groups="Lautschrift|Mep Lä",
+        kreis="Mep",
+        ort="Lä",
+    )
+    LAUT_MEP_LE = Sammlung(
+        trace="Mep Le",
+        groups="Lautschrift|Mep Le",
+        kreis="Mep",
+        ort="Le",
+    )
+    LAUT_MEP_LG = Sammlung(
+        trace="Mep Lg",
+        groups="Lautschrift|Mep Lg",
+        kreis="Mep",
+        ort="Lg",
+    )
+    LAUT_MEP_LL = Sammlung(
+        trace="Mep Ll",
+        groups="Lautschrift|Mep Ll",
+        kreis="Mep",
+        ort="Ll",
+    )
+    LAUT_MEP_LO = Sammlung(
+        trace="Mep Lo",
+        groups="Lautschrift|Mep Lo",
+        kreis="Mep",
+        ort="Lo",
+    )
+    LAUT_MEP_LT = Sammlung(
+        trace="Mep Lt",
+        groups="Lautschrift|Mep Lt",
+        kreis="Mep",
+        ort="Lt",
+    )
+    LAUT_MEP_MP = Sammlung(
+        trace="Mep Mp",
+        groups="Lautschrift|Mep Mp",
+        kreis="Mep",
+        ort="Mp",
+    )
+    LAUT_MEP_RB = Sammlung(
+        trace="Mep Rb",
+        groups="Lautschrift|Mep Rb",
+        kreis="Mep",
+        ort="Rb",
+    )
+    LAUT_MEP_RM = Sammlung(
+        trace="Mep Rm",
+        groups="Lautschrift|Mep Rm",
+        kreis="Mep",
+        ort="Rm",
+    )
+    LAUT_MEP_RT = Sammlung(
+        trace="Mep Rt",
+        groups="Lautschrift|Mep Rt",
+        kreis="Mep",
+        ort="Rt",
+    )
+    LAUT_MEP_RÜ = Sammlung(
+        trace="Mep Rü",
+        groups="Lautschrift|Mep Rü",
+        kreis="Mep",
+        ort="Rü",
+    )
+    LAUT_MEP_SD = Sammlung(
+        trace="Mep Sd",
+        groups="Lautschrift|Mep Sd",
+        kreis="Mep",
+        ort="Sd",
+    )
+    LAUT_MEP_SF = Sammlung(
+        trace="Mep Sf",
+        groups="Lautschrift|Mep Sf",
+        kreis="Mep",
+        ort="Sf",
+    )
+    LAUT_MEP_SP = Sammlung(
+        trace="Mep Sp",
+        groups="Lautschrift|Mep Sp",
+        kreis="Mep",
+        ort="Sp",
+    )
+    LAUT_MEP_SW = Sammlung(
+        trace="Mep Sw",
+        groups="Lautschrift|Mep Sw",
+        kreis="Mep",
+        ort="Sw",
+    )
+    LAUT_MEP_TE = Sammlung(
+        trace="Mep Te",
+        groups="Lautschrift|Mep Te",
+        kreis="Mep",
+        ort="Te",
+    )
+    LAUT_MEP_TW = Sammlung(
+        trace="Mep Tw",
+        groups="Lautschrift|Mep Tw",
+        kreis="Mep",
+        ort="Tw",
+    )
+    LAUT_MEP_VA = Sammlung(
+        trace="Mep Va",
+        groups="Lautschrift|Mep Va",
+        kreis="Mep",
+        ort="Va",
+    )
+    LAUT_MEP_VE = Sammlung(
+        trace="Mep Ve",
+        groups="Lautschrift|Mep Ve",
+        kreis="Mep",
+        ort="Ve",
+    )
+    LAUT_MEP_VI = Sammlung(
+        trace="Mep Vi",
+        groups="Lautschrift|Mep Vi",
+        kreis="Mep",
+        ort="Vi",
+    )
+    LAUT_MEP_WA = Sammlung(
+        trace="Mep Wa",
+        groups="Lautschrift|Mep Wa",
+        kreis="Mep",
+        ort="Wa",
+    )
+    LAUT_MEP_WE = Sammlung(
+        trace="Mep We",
+        groups="Lautschrift|Mep We",
+        kreis="Mep",
+        ort="We",
+    )
+    LAUT_MEP_WL = Sammlung(
+        trace="Mep Wl",
+        groups="Lautschrift|Mep Wl",
+        kreis="Mep",
+        ort="Wl",
+    )
+    LAUT_MES_AF = Sammlung(
+        trace="Mes Af",
+        groups="Lautschrift|Mes Af",
+        kreis="Mes",
+        ort="Af",
+    )
+    LAUT_MES_AI = Sammlung(
+        trace="Mes Ai",
+        groups="Lautschrift|Mes Ai",
+        kreis="Mes",
+        ort="Ai",
+    )
+    LAUT_MES_BA = Sammlung(
+        trace="Mes Ba",
+        groups="Lautschrift|Mes Ba",
+        kreis="Mes",
+        ort="Ba",
+    )
+    LAUT_MES_BB = Sammlung(
+        trace="Mes Bb",
+        groups="Lautschrift|Mes Bb",
+        kreis="Mes",
+        ort="Bb",
+    )
+    LAUT_MES_BD = Sammlung(
+        trace="Mes Bd",
+        groups="Lautschrift|Mes Bd",
+        kreis="Mes",
+        ort="Bd",
+    )
+    LAUT_MES_BE = Sammlung(
+        trace="Mes Be",
+        groups="Lautschrift|Mes Be",
+        kreis="Mes",
+        ort="Be",
+    )
+    LAUT_MES_BF = Sammlung(
+        trace="Mes Bf",
+        groups="Lautschrift|Mes Bf",
+        kreis="Mes",
+        ort="Bf",
+    )
+    LAUT_MES_BH = Sammlung(
+        trace="Mes Bh",
+        groups="Lautschrift|Mes Bh",
+        kreis="Mes",
+        ort="Bh",
+    )
+    LAUT_MES_BK = Sammlung(
+        trace="Mes Bk",
+        groups="Lautschrift|Mes Bk",
+        kreis="Mes",
+        ort="Bk",
+    )
+    LAUT_MES_BL = Sammlung(
+        trace="Mes Bl",
+        groups="Lautschrift|Mes Bl",
+        kreis="Mes",
+        ort="Bl",
+    )
+    LAUT_MES_BÖ = Sammlung(
+        trace="Mes Bö",
+        groups="Lautschrift|Mes Bö",
+        kreis="Mes",
+        ort="Bö",
+    )
+    LAUT_MES_BR = Sammlung(
+        trace="Mes Br",
+        groups="Lautschrift|Mes Br",
+        kreis="Mes",
+        ort="Br",
+    )
+    LAUT_MES_BS = Sammlung(
+        trace="Mes Bs",
+        groups="Lautschrift|Mes Bs",
+        kreis="Mes",
+        ort="Bs",
+    )
+    LAUT_MES_BÜ = Sammlung(
+        trace="Mes Bü",
+        groups="Lautschrift|Mes Bü",
+        kreis="Mes",
+        ort="Bü",
+    )
+    LAUT_MES_BW = Sammlung(
+        trace="Mes Bw",
+        groups="Lautschrift|Mes Bw",
+        kreis="Mes",
+        ort="Bw",
+    )
+    LAUT_MES_DO = Sammlung(
+        trace="Mes Do",
+        groups="Lautschrift|Mes Do",
+        kreis="Mes",
+        ort="Do",
+    )
+    LAUT_MES_DT = Sammlung(
+        trace="Mes Dt",
+        groups="Lautschrift|Mes Dt",
+        kreis="Mes",
+        ort="Dt",
+    )
+    LAUT_MES_EH = Sammlung(
+        trace="Mes Eh",
+        groups="Lautschrift|Mes Eh",
+        kreis="Mes",
+        ort="Eh",
+    )
+    LAUT_MES_ES = Sammlung(
+        trace="Mes Es",
+        groups="Lautschrift|Mes Es",
+        kreis="Mes",
+        ort="Es",
+    )
+    LAUT_MES_EV = Sammlung(
+        trace="Mes Ev",
+        groups="Lautschrift|Mes Ev",
+        kreis="Mes",
+        ort="Ev",
+    )
+    LAUT_MES_FB = Sammlung(
+        trace="Mes Fb",
+        groups="Lautschrift|Mes Fb",
+        kreis="Mes",
+        ort="Fb",
+    )
+    LAUT_MES_FH = Sammlung(
+        trace="Mes Fh",
+        groups="Lautschrift|Mes Fh",
+        kreis="Mes",
+        ort="Fh",
+    )
+    LAUT_MES_FI = Sammlung(
+        trace="Mes Fi",
+        groups="Lautschrift|Mes Fi",
+        kreis="Mes",
+        ort="Fi",
+    )
+    LAUT_MES_FR = Sammlung(
+        trace="Mes Fr",
+        groups="Lautschrift|Mes Fr",
+        kreis="Mes",
+        ort="Fr",
+    )
+    LAUT_MES_FT = Sammlung(
+        trace="Mes Ft",
+        groups="Lautschrift|Mes Ft",
+        kreis="Mes",
+        ort="Ft",
+    )
+    LAUT_MES_GE = Sammlung(
+        trace="Mes Ge",
+        groups="Lautschrift|Mes Ge",
+        kreis="Mes",
+        ort="Ge",
+    )
+    LAUT_MES_GH = Sammlung(
+        trace="Mes Gh",
+        groups="Lautschrift|Mes Gh",
+        kreis="Mes",
+        ort="Gh",
+    )
+    LAUT_MES_GL = Sammlung(
+        trace="Mes Gl",
+        groups="Lautschrift|Mes Gl",
+        kreis="Mes",
+        ort="Gl",
+    )
+    LAUT_MES_GR = Sammlung(
+        trace="Mes Gr",
+        groups="Lautschrift|Mes Gr",
+        kreis="Mes",
+        ort="Gr",
+    )
+    LAUT_MES_HB = Sammlung(
+        trace="Mes Hb",
+        groups="Lautschrift|Mes Hb",
+        kreis="Mes",
+        ort="Hb",
+    )
+    LAUT_MES_HE = Sammlung(
+        trace="Mes He",
+        groups="Lautschrift|Mes He",
+        kreis="Mes",
+        ort="He",
+    )
+    LAUT_MES_HH = Sammlung(
+        trace="Mes Hh",
+        groups="Lautschrift|Mes Hh",
+        kreis="Mes",
+        ort="Hh",
+    )
+    LAUT_MES_HO = Sammlung(
+        trace="Mes Ho",
+        groups="Lautschrift|Mes Ho",
+        kreis="Mes",
+        ort="Ho",
+    )
+    LAUT_MES_KA = Sammlung(
+        trace="Mes Ka",
+        groups="Lautschrift|Mes Ka",
+        kreis="Mes",
+        ort="Ka",
+    )
+    LAUT_MES_KL = Sammlung(
+        trace="Mes Kl",
+        groups="Lautschrift|Mes Kl",
+        kreis="Mes",
+        ort="Kl",
+    )
+    LAUT_MES_KO = Sammlung(
+        trace="Mes Ko",
+        groups="Lautschrift|Mes Ko",
+        kreis="Mes",
+        ort="Ko",
+    )
+    LAUT_MES_KR = Sammlung(
+        trace="Mes Kr",
+        groups="Lautschrift|Mes Kr",
+        kreis="Mes",
+        ort="Kr",
+    )
+    LAUT_MES_KÜ = Sammlung(
+        trace="Mes Kü",
+        groups="Lautschrift|Mes Kü",
+        kreis="Mes",
+        ort="Kü",
+    )
+    LAUT_MES_LA = Sammlung(
+        trace="Mes La",
+        groups="Lautschrift|Mes La",
+        kreis="Mes",
+        ort="La",
+    )
+    LAUT_MES_LH = Sammlung(
+        trace="Mes Lh",
+        groups="Lautschrift|Mes Lh",
+        kreis="Mes",
+        ort="Lh",
+    )
+    LAUT_MES_ME = Sammlung(
+        trace="Mes Me",
+        groups="Lautschrift|Mes Me",
+        kreis="Mes",
+        ort="Me",
+    )
+    LAUT_MES_MS = Sammlung(
+        trace="Mes Ms",
+        groups="Lautschrift|Mes Ms",
+        kreis="Mes",
+        ort="Ms",
+    )
+    LAUT_MES_NA = Sammlung(
+        trace="Mes Na",
+        groups="Lautschrift|Mes Na",
+        kreis="Mes",
+        ort="Na",
+    )
+    LAUT_MES_NF = Sammlung(
+        trace="Mes Nf",
+        groups="Lautschrift|Mes Nf",
+        kreis="Mes",
+        ort="Nf",
+    )
+    LAUT_MES_NH = Sammlung(
+        trace="Mes Nh",
+        groups="Lautschrift|Mes Nh",
+        kreis="Mes",
+        ort="Nh",
+    )
+    LAUT_MES_NI = Sammlung(
+        trace="Mes Ni",
+        groups="Lautschrift|Mes Ni",
+        kreis="Mes",
+        ort="Ni",
+    )
+    LAUT_MES_NL = Sammlung(
+        trace="Mes Nl",
+        groups="Lautschrift|Mes Nl",
+        kreis="Mes",
+        ort="Nl",
+    )
+    LAUT_MES_NO = Sammlung(
+        trace="Mes No",
+        groups="Lautschrift|Mes No",
+        kreis="Mes",
+        ort="No",
+    )
+    LAUT_MES_NS = Sammlung(
+        trace="Mes Ns",
+        groups="Lautschrift|Mes Ns",
+        kreis="Mes",
+        ort="Ns",
+    )
+    LAUT_MES_NU = Sammlung(
+        trace="Mes Nu",
+        groups="Lautschrift|Mes Nu",
+        kreis="Mes",
+        ort="Nu",
+    )
+    LAUT_MES_ÖD = Sammlung(
+        trace="Mes Öd",
+        groups="Lautschrift|Mes Öd",
+        kreis="Mes",
+        ort="Öd",
+    )
+    LAUT_MES_OH = Sammlung(
+        trace="Mes Oh",
+        groups="Lautschrift|Mes Oh",
+        kreis="Mes",
+        ort="Oh",
+    )
+    LAUT_MES_OK = Sammlung(
+        trace="Mes Ok",
+        groups="Lautschrift|Mes Ok",
+        kreis="Mes",
+        ort="Ok",
+    )
+    LAUT_MES_OS = Sammlung(
+        trace="Mes Os",
+        groups="Lautschrift|Mes Os",
+        kreis="Mes",
+        ort="Os",
+    )
+    LAUT_MES_OT = Sammlung(
+        trace="Mes Ot",
+        groups="Lautschrift|Mes Ot",
+        kreis="Mes",
+        ort="Ot",
+    )
+    LAUT_MES_OW = Sammlung(
+        trace="Mes Ow",
+        groups="Lautschrift|Mes Ow",
+        kreis="Mes",
+        ort="Ow",
+    )
+    LAUT_MES_RA = Sammlung(
+        trace="Mes Ra",
+        groups="Lautschrift|Mes Ra",
+        kreis="Mes",
+        ort="Ra",
+    )
+    LAUT_MES_RB = Sammlung(
+        trace="Mes Rb",
+        groups="Lautschrift|Mes Rb",
+        kreis="Mes",
+        ort="Rb",
+    )
+    LAUT_MES_RE = Sammlung(
+        trace="Mes Re",
+        groups="Lautschrift|Mes Re",
+        kreis="Mes",
+        ort="Re",
+    )
+    LAUT_MES_RH = Sammlung(
+        trace="Mes Rh",
+        groups="Lautschrift|Mes Rh",
+        kreis="Mes",
+        ort="Rh",
+    )
+    LAUT_MES_SC = Sammlung(
+        trace="Mes Sc",
+        groups="Lautschrift|Mes Sc",
+        kreis="Mes",
+        ort="Sc",
+    )
+    LAUT_MES_SD = Sammlung(
+        trace="Mes Sd",
+        groups="Lautschrift|Mes Sd",
+        kreis="Mes",
+        ort="Sd",
+    )
+    LAUT_MES_SH = Sammlung(
+        trace="Mes Sh",
+        groups="Lautschrift|Mes Sh",
+        kreis="Mes",
+        ort="Sh",
+    )
+    LAUT_MES_SM = Sammlung(
+        trace="Mes Sm",
+        groups="Lautschrift|Mes Sm",
+        kreis="Mes",
+        ort="Sm",
+    )
+    LAUT_MES_SR = Sammlung(
+        trace="Mes Sr",
+        groups="Lautschrift|Mes Sr",
+        kreis="Mes",
+        ort="Sr",
+    )
+    LAUT_MES_ST = Sammlung(
+        trace="Mes St",
+        groups="Lautschrift|Mes St",
+        kreis="Mes",
+        ort="St",
+    )
+    LAUT_MES_VE = Sammlung(
+        trace="Mes Ve",
+        groups="Lautschrift|Mes Ve",
+        kreis="Mes",
+        ort="Ve",
+    )
+    LAUT_MES_WA = Sammlung(
+        trace="Mes Wa",
+        groups="Lautschrift|Mes Wa",
+        kreis="Mes",
+        ort="Wa",
+    )
+    LAUT_MES_WB = Sammlung(
+        trace="Mes Wb",
+        groups="Lautschrift|Mes Wb",
+        kreis="Mes",
+        ort="Wb",
+    )
+    LAUT_MES_WE = Sammlung(
+        trace="Mes We",
+        groups="Lautschrift|Mes We",
+        kreis="Mes",
+        ort="We",
+    )
+    LAUT_MES_WF = Sammlung(
+        trace="Mes Wf",
+        groups="Lautschrift|Mes Wf",
+        kreis="Mes",
+        ort="Wf",
+    )
+    LAUT_MES_WH = Sammlung(
+        trace="Mes Wh",
+        groups="Lautschrift|Mes Wh",
+        kreis="Mes",
+        ort="Wh",
+    )
+    LAUT_MES_WO = Sammlung(
+        trace="Mes Wo",
+        groups="Lautschrift|Mes Wo",
+        kreis="Mes",
+        ort="Wo",
+    )
+    LAUT_MES_WP = Sammlung(
+        trace="Mes Wp",
+        groups="Lautschrift|Mes Wp",
+        kreis="Mes",
+        ort="Wp",
+    )
+    LAUT_MES_WS = Sammlung(
+        trace="Mes Ws",
+        groups="Lautschrift|Mes Ws",
+        kreis="Mes",
+        ort="Ws",
+    )
+    LAUT_MIN_BA = Sammlung(
+        trace="Min Ba",
+        groups="Lautschrift|Min Ba",
+        kreis="Min",
+        ort="Ba",
+    )
+    LAUT_MIN_BH = Sammlung(
+        trace="Min Bh",
+        groups="Lautschrift|Min Bh",
+        kreis="Min",
+        ort="Bh",
+    )
+    LAUT_MIN_BI = Sammlung(
+        trace="Min Bi",
+        groups="Lautschrift|Min Bi",
+        kreis="Min",
+        ort="Bi",
+    )
+    LAUT_MIN_BK = Sammlung(
+        trace="Min Bk",
+        groups="Lautschrift|Min Bk",
+        kreis="Min",
+        ort="Bk",
+    )
+    LAUT_MIN_BN = Sammlung(
+        trace="Min Bn",
+        groups="Lautschrift|Min Bn",
+        kreis="Min",
+        ort="Bn",
+    )
+    LAUT_MIN_BÖ = Sammlung(
+        trace="Min Bö",
+        groups="Lautschrift|Min Bö",
+        kreis="Min",
+        ort="Bö",
+    )
+    LAUT_MIN_DA = Sammlung(
+        trace="Min Da",
+        groups="Lautschrift|Min Da",
+        kreis="Min",
+        ort="Da",
+    )
+    LAUT_MIN_DE = Sammlung(
+        trace="Min De",
+        groups="Lautschrift|Min De",
+        kreis="Min",
+        ort="De",
+    )
+    LAUT_MIN_DÖ = Sammlung(
+        trace="Min Dö",
+        groups="Lautschrift|Min Dö",
+        kreis="Min",
+        ort="Dö",
+    )
+    LAUT_MIN_DÜ = Sammlung(
+        trace="Min Dü",
+        groups="Lautschrift|Min Dü",
+        kreis="Min",
+        ort="Dü",
+    )
+    LAUT_MIN_EH = Sammlung(
+        trace="Min Eh",
+        groups="Lautschrift|Min Eh",
+        kreis="Min",
+        ort="Eh",
+    )
+    LAUT_MIN_EI = Sammlung(
+        trace="Min Ei",
+        groups="Lautschrift|Min Ei",
+        kreis="Min",
+        ort="Ei",
+    )
+    LAUT_MIN_EL = Sammlung(
+        trace="Min El",
+        groups="Lautschrift|Min El",
+        kreis="Min",
+        ort="El",
+    )
+    LAUT_MIN_EN = Sammlung(
+        trace="Min En",
+        groups="Lautschrift|Min En",
+        kreis="Min",
+        ort="En",
+    )
+    LAUT_MIN_FR = Sammlung(
+        trace="Min Fr",
+        groups="Lautschrift|Min Fr",
+        kreis="Min",
+        ort="Fr",
+    )
+    LAUT_MIN_FW = Sammlung(
+        trace="Min Fw",
+        groups="Lautschrift|Min Fw",
+        kreis="Min",
+        ort="Fw",
+    )
+    LAUT_MIN_GO = Sammlung(
+        trace="Min Go",
+        groups="Lautschrift|Min Go",
+        kreis="Min",
+        ort="Go",
+    )
+    LAUT_MIN_GR = Sammlung(
+        trace="Min Gr",
+        groups="Lautschrift|Min Gr",
+        kreis="Min",
+        ort="Gr",
+    )
+    LAUT_MIN_HA = Sammlung(
+        trace="Min Ha",
+        groups="Lautschrift|Min Ha",
+        kreis="Min",
+        ort="Ha",
+    )
+    LAUT_MIN_HÄ = Sammlung(
+        trace="Min Hä",
+        groups="Lautschrift|Min Hä",
+        kreis="Min",
+        ort="Hä",
+    )
+    LAUT_MIN_HB = Sammlung(
+        trace="Min Hb",
+        groups="Lautschrift|Min Hb",
+        kreis="Min",
+        ort="Hb",
+    )
+    LAUT_MIN_HD = Sammlung(
+        trace="Min Hd",
+        groups="Lautschrift|Min Hd",
+        kreis="Min",
+        ort="Hd",
+    )
+    LAUT_MIN_HE = Sammlung(
+        trace="Min He",
+        groups="Lautschrift|Min He",
+        kreis="Min",
+        ort="He",
+    )
+    LAUT_MIN_HH = Sammlung(
+        trace="Min Hh",
+        groups="Lautschrift|Min Hh",
+        kreis="Min",
+        ort="Hh",
+    )
+    LAUT_MIN_HI = Sammlung(
+        trace="Min Hi",
+        groups="Lautschrift|Min Hi",
+        kreis="Min",
+        ort="Hi",
+    )
+    LAUT_MIN_HM = Sammlung(
+        trace="Min Hm",
+        groups="Lautschrift|Min Hm",
+        kreis="Min",
+        ort="Hm",
+    )
+    LAUT_MIN_HO = Sammlung(
+        trace="Min Ho",
+        groups="Lautschrift|Min Ho",
+        kreis="Min",
+        ort="Ho",
+    )
+    LAUT_MIN_HS = Sammlung(
+        trace="Min Hs",
+        groups="Lautschrift|Min Hs",
+        kreis="Min",
+        ort="Hs",
+    )
+    LAUT_MIN_HZ = Sammlung(
+        trace="Min Hz",
+        groups="Lautschrift|Min Hz",
+        kreis="Min",
+        ort="Hz",
+    )
+    LAUT_MIN_IH = Sammlung(
+        trace="Min Ih",
+        groups="Lautschrift|Min Ih",
+        kreis="Min",
+        ort="Ih",
+    )
+    LAUT_MIN_IL = Sammlung(
+        trace="Min Il",
+        groups="Lautschrift|Min Il",
+        kreis="Min",
+        ort="Il",
+    )
+    LAUT_MIN_IS = Sammlung(
+        trace="Min Is",
+        groups="Lautschrift|Min Is",
+        kreis="Min",
+        ort="Is",
+    )
+    LAUT_MIN_JÖ = Sammlung(
+        trace="Min Jö",
+        groups="Lautschrift|Min Jö",
+        kreis="Min",
+        ort="Jö",
+    )
+    LAUT_MIN_KB = Sammlung(
+        trace="Min Kb",
+        groups="Lautschrift|Min Kb",
+        kreis="Min",
+        ort="Kb",
+    )
+    LAUT_MIN_KH = Sammlung(
+        trace="Min Kh",
+        groups="Lautschrift|Min Kh",
+        kreis="Min",
+        ort="Kh",
+    )
+    LAUT_MIN_KO = Sammlung(
+        trace="Min Ko",
+        groups="Lautschrift|Min Ko",
+        kreis="Min",
+        ort="Ko",
+    )
+    LAUT_MIN_LA = Sammlung(
+        trace="Min La",
+        groups="Lautschrift|Min La",
+        kreis="Min",
+        ort="La",
+    )
+    LAUT_MIN_LB = Sammlung(
+        trace="Min Lb",
+        groups="Lautschrift|Min Lb",
+        kreis="Min",
+        ort="Lb",
+    )
+    LAUT_MIN_LF = Sammlung(
+        trace="Min Lf",
+        groups="Lautschrift|Min Lf",
+        kreis="Min",
+        ort="Lf",
+    )
+    LAUT_MIN_LO = Sammlung(
+        trace="Min Lo",
+        groups="Lautschrift|Min Lo",
+        kreis="Min",
+        ort="Lo",
+    )
+    LAUT_MIN_MA = Sammlung(
+        trace="Min Ma",
+        groups="Lautschrift|Min Ma",
+        kreis="Min",
+        ort="Ma",
+    )
+    LAUT_MIN_MB = Sammlung(
+        trace="Min Mb",
+        groups="Lautschrift|Min Mb",
+        kreis="Min",
+        ort="Mb",
+    )
+    LAUT_MIN_ME = Sammlung(
+        trace="Min Me",
+        groups="Lautschrift|Min Me",
+        kreis="Min",
+        ort="Me",
+    )
+    LAUT_MIN_MI = Sammlung(
+        trace="Min Mi",
+        groups="Lautschrift|Min Mi",
+        kreis="Min",
+        ort="Mi",
+    )
+    LAUT_MIN_ML = Sammlung(
+        trace="Min Ml",
+        groups="Lautschrift|Min Ml",
+        kreis="Min",
+        ort="Ml",
+    )
+    LAUT_MIN_MO = Sammlung(
+        trace="Min Mo",
+        groups="Lautschrift|Min Mo",
+        kreis="Min",
+        ort="Mo",
+    )
+    LAUT_MIN_MW = Sammlung(
+        trace="Min Mw",
+        groups="Lautschrift|Min Mw",
+        kreis="Min",
+        ort="Mw",
+    )
+    LAUT_MIN_NA = Sammlung(
+        trace="Min Na",
+        groups="Lautschrift|Min Na",
+        kreis="Min",
+        ort="Na",
+    )
+    LAUT_MIN_NB = Sammlung(
+        trace="Min Nb",
+        groups="Lautschrift|Min Nb",
+        kreis="Min",
+        ort="Nb",
+    )
+    LAUT_MIN_NE = Sammlung(
+        trace="Min Ne",
+        groups="Lautschrift|Min Ne",
+        kreis="Min",
+        ort="Ne",
+    )
+    LAUT_MIN_NH = Sammlung(
+        trace="Min Nh",
+        groups="Lautschrift|Min Nh",
+        kreis="Min",
+        ort="Nh",
+    )
+    LAUT_MIN_NK = Sammlung(
+        trace="Min Nk",
+        groups="Lautschrift|Min Nk",
+        kreis="Min",
+        ort="Nk",
+    )
+    LAUT_MIN_NS = Sammlung(
+        trace="Min Ns",
+        groups="Lautschrift|Min Ns",
+        kreis="Min",
+        ort="Ns",
+    )
+    LAUT_MIN_OB = Sammlung(
+        trace="Min Ob",
+        groups="Lautschrift|Min Ob",
+        kreis="Min",
+        ort="Ob",
+    )
+    LAUT_MIN_ÖH = Sammlung(
+        trace="Min Öh",
+        groups="Lautschrift|Min Öh",
+        kreis="Min",
+        ort="Öh",
+    )
+    LAUT_MIN_OL = Sammlung(
+        trace="Min Ol",
+        groups="Lautschrift|Min Ol",
+        kreis="Min",
+        ort="Ol",
+    )
+    LAUT_MIN_OS = Sammlung(
+        trace="Min Os",
+        groups="Lautschrift|Min Os",
+        kreis="Min",
+        ort="Os",
+    )
+    LAUT_MIN_PÄ = Sammlung(
+        trace="Min Pä",
+        groups="Lautschrift|Min Pä",
+        kreis="Min",
+        ort="Pä",
+    )
+    LAUT_MIN_PH = Sammlung(
+        trace="Min Ph",
+        groups="Lautschrift|Min Ph",
+        kreis="Min",
+        ort="Ph",
+    )
+    LAUT_MIN_QU = Sammlung(
+        trace="Min Qu",
+        groups="Lautschrift|Min Qu",
+        kreis="Min",
+        ort="Qu",
+    )
+    LAUT_MIN_RD = Sammlung(
+        trace="Min Rd",
+        groups="Lautschrift|Min Rd",
+        kreis="Min",
+        ort="Rd",
+    )
+    LAUT_MIN_RE = Sammlung(
+        trace="Min Re",
+        groups="Lautschrift|Min Re",
+        kreis="Min",
+        ort="Re",
+    )
+    LAUT_MIN_RH = Sammlung(
+        trace="Min Rh",
+        groups="Lautschrift|Min Rh",
+        kreis="Min",
+        ort="Rh",
+    )
+    LAUT_MIN_RO = Sammlung(
+        trace="Min Ro",
+        groups="Lautschrift|Min Ro",
+        kreis="Min",
+        ort="Ro",
+    )
+    LAUT_MIN_SB = Sammlung(
+        trace="Min Sb",
+        groups="Lautschrift|Min Sb",
+        kreis="Min",
+        ort="Sb",
+    )
+    LAUT_MIN_SF = Sammlung(
+        trace="Min Sf",
+        groups="Lautschrift|Min Sf",
+        kreis="Min",
+        ort="Sf",
+    )
+    LAUT_MIN_SH = Sammlung(
+        trace="Min Sh",
+        groups="Lautschrift|Min Sh",
+        kreis="Min",
+        ort="Sh",
+    )
+    LAUT_MIN_ST = Sammlung(
+        trace="Min St",
+        groups="Lautschrift|Min St",
+        kreis="Min",
+        ort="St",
+    )
+    LAUT_MIN_TO = Sammlung(
+        trace="Min To",
+        groups="Lautschrift|Min To",
+        kreis="Min",
+        ort="To",
+    )
+    LAUT_MIN_UF = Sammlung(
+        trace="Min Uf",
+        groups="Lautschrift|Min Uf",
+        kreis="Min",
+        ort="Uf",
+    )
+    LAUT_MIN_UL = Sammlung(
+        trace="Min Ul",
+        groups="Lautschrift|Min Ul",
+        kreis="Min",
+        ort="Ul",
+    )
+    LAUT_MIN_VE = Sammlung(
+        trace="Min Ve",
+        groups="Lautschrift|Min Ve",
+        kreis="Min",
+        ort="Ve",
+    )
+    LAUT_MIN_VH = Sammlung(
+        trace="Min Vh",
+        groups="Lautschrift|Min Vh",
+        kreis="Min",
+        ort="Vh",
+    )
+    LAUT_MIN_VO = Sammlung(
+        trace="Min Vo",
+        groups="Lautschrift|Min Vo",
+        kreis="Min",
+        ort="Vo",
+    )
+    LAUT_MIN_WE = Sammlung(
+        trace="Min We",
+        groups="Lautschrift|Min We",
+        kreis="Min",
+        ort="We",
+    )
+    LAUT_MIN_WG = Sammlung(
+        trace="Min Wg",
+        groups="Lautschrift|Min Wg",
+        kreis="Min",
+        ort="Wg",
+    )
+    LAUT_MIN_WH = Sammlung(
+        trace="Min Wh",
+        groups="Lautschrift|Min Wh",
+        kreis="Min",
+        ort="Wh",
+    )
+    LAUT_MIN_WK = Sammlung(
+        trace="Min Wk",
+        groups="Lautschrift|Min Wk",
+        kreis="Min",
+        ort="Wk",
+    )
+    LAUT_MIN_WL = Sammlung(
+        trace="Min Wl",
+        groups="Lautschrift|Min Wl",
+        kreis="Min",
+        ort="Wl",
+    )
+    LAUT_MIN_WÖ = Sammlung(
+        trace="Min Wö",
+        groups="Lautschrift|Min Wö",
+        kreis="Min",
+        ort="Wö",
+    )
+    LAUT_MIN_WT = Sammlung(
+        trace="Min Wt",
+        groups="Lautschrift|Min Wt",
+        kreis="Min",
+        ort="Wt",
+    )
+    LAUT_MIN_WU = Sammlung(
+        trace="Min Wu",
+        groups="Lautschrift|Min Wu",
+        kreis="Min",
+        ort="Wu",
+    )
+    LAUT_MÜN_AB = Sammlung(
+        trace="Mün Ab",
+        groups="Lautschrift|Mün Ab",
+        kreis="Mün",
+        ort="Ab",
+    )
+    LAUT_MÜN_AD = Sammlung(
+        trace="Mün Ad",
+        groups="Lautschrift|Mün Ad",
+        kreis="Mün",
+        ort="Ad",
+    )
+    LAUT_MÜN_AK = Sammlung(
+        trace="Mün Ak",
+        groups="Lautschrift|Mün Ak",
+        kreis="Mün",
+        ort="Ak",
+    )
+    LAUT_MÜN_AL = Sammlung(
+        trace="Mün Al",
+        groups="Lautschrift|Mün Al",
+        kreis="Mün",
+        ort="Al",
+    )
+    LAUT_MÜN_AM = Sammlung(
+        trace="Mün Am",
+        groups="Lautschrift|Mün Am",
+        kreis="Mün",
+        ort="Am",
+    )
+    LAUT_MÜN_AN = Sammlung(
+        trace="Mün An",
+        groups="Lautschrift|Mün An",
+        kreis="Mün",
+        ort="An",
+    )
+    LAUT_MÜN_AP = Sammlung(
+        trace="Mün Ap",
+        groups="Lautschrift|Mün Ap",
+        kreis="Mün",
+        ort="Ap",
+    )
+    LAUT_MÜN_BB = Sammlung(
+        trace="Mün Bb",
+        groups="Lautschrift|Mün Bb",
+        kreis="Mün",
+        ort="Bb",
+    )
+    LAUT_MÜN_BO = Sammlung(
+        trace="Mün Bo",
+        groups="Lautschrift|Mün Bo",
+        kreis="Mün",
+        ort="Bo",
+    )
+    LAUT_MÜN_BR = Sammlung(
+        trace="Mün Br",
+        groups="Lautschrift|Mün Br",
+        kreis="Mün",
+        ort="Br",
+    )
+    LAUT_MÜN_BS = Sammlung(
+        trace="Mün Bs",
+        groups="Lautschrift|Mün Bs",
+        kreis="Mün",
+        ort="Bs",
+    )
+    LAUT_MÜN_DB = Sammlung(
+        trace="Mün Db",
+        groups="Lautschrift|Mün Db",
+        kreis="Mün",
+        ort="Db",
+    )
+    LAUT_MÜN_GB = Sammlung(
+        trace="Mün Gb",
+        groups="Lautschrift|Mün Gb",
+        kreis="Mün",
+        ort="Gb",
+    )
+    LAUT_MÜN_GE = Sammlung(
+        trace="Mün Ge",
+        groups="Lautschrift|Mün Ge",
+        kreis="Mün",
+        ort="Ge",
+    )
+    LAUT_MÜN_GI = Sammlung(
+        trace="Mün Gi",
+        groups="Lautschrift|Mün Gi",
+        kreis="Mün",
+        ort="Gi",
+    )
+    LAUT_MÜN_GR = Sammlung(
+        trace="Mün Gr",
+        groups="Lautschrift|Mün Gr",
+        kreis="Mün",
+        ort="Gr",
+    )
+    LAUT_MÜN_GS = Sammlung(
+        trace="Mün Gs",
+        groups="Lautschrift|Mün Gs",
+        kreis="Mün",
+        ort="Gs",
+    )
+    LAUT_MÜN_GU = Sammlung(
+        trace="Mün Gu",
+        groups="Lautschrift|Mün Gu",
+        kreis="Mün",
+        ort="Gu",
+    )
+    LAUT_MÜN_HA = Sammlung(
+        trace="Mün Ha",
+        groups="Lautschrift|Mün Ha",
+        kreis="Mün",
+        ort="Ha",
+    )
+    LAUT_MÜN_HB = Sammlung(
+        trace="Mün Hb",
+        groups="Lautschrift|Mün Hb",
+        kreis="Mün",
+        ort="Hb",
+    )
+    LAUT_MÜN_HD = Sammlung(
+        trace="Mün Hd",
+        groups="Lautschrift|Mün Hd",
+        kreis="Mün",
+        ort="Hd",
+    )
+    LAUT_MÜN_HI = Sammlung(
+        trace="Mün Hi",
+        groups="Lautschrift|Mün Hi",
+        kreis="Mün",
+        ort="Hi",
+    )
+    LAUT_MÜN_HO = Sammlung(
+        trace="Mün Ho",
+        groups="Lautschrift|Mün Ho",
+        kreis="Mün",
+        ort="Ho",
+    )
+    LAUT_MÜN_HP = Sammlung(
+        trace="Mün Hp",
+        groups="Lautschrift|Mün Hp",
+        kreis="Mün",
+        ort="Hp",
+    )
+    LAUT_MÜN_KH = Sammlung(
+        trace="Mün Kh",
+        groups="Lautschrift|Mün Kh",
+        kreis="Mün",
+        ort="Kh",
+    )
+    LAUT_MÜN_KÖ = Sammlung(
+        trace="Mün Kö",
+        groups="Lautschrift|Mün Kö",
+        kreis="Mün",
+        ort="Kö",
+    )
+    LAUT_MÜN_KW = Sammlung(
+        trace="Mün Kw",
+        groups="Lautschrift|Mün Kw",
+        kreis="Mün",
+        ort="Kw",
+    )
+    LAUT_MÜN_MB = Sammlung(
+        trace="Mün Mb",
+        groups="Lautschrift|Mün Mb",
+        kreis="Mün",
+        ort="Mb",
+    )
+    LAUT_MÜN_MS = Sammlung(
+        trace="Mün Ms",
+        groups="Lautschrift|Mün Ms",
+        kreis="Mün",
+        ort="Ms",
+    )
+    LAUT_MÜN_MÜ = Sammlung(
+        trace="Mün Mü",
+        groups="Lautschrift|Mün Mü",
+        kreis="Mün",
+        ort="Mü",
+    )
+    LAUT_MÜN_MZ = Sammlung(
+        trace="Mün Mz",
+        groups="Lautschrift|Mün Mz",
+        kreis="Mün",
+        ort="Mz",
+    )
+    LAUT_MÜN_NB = Sammlung(
+        trace="Mün Nb",
+        groups="Lautschrift|Mün Nb",
+        kreis="Mün",
+        ort="Nb",
+    )
+    LAUT_MÜN_NO = Sammlung(
+        trace="Mün No",
+        groups="Lautschrift|Mün No",
+        kreis="Mün",
+        ort="No",
+    )
+    LAUT_MÜN_RO = Sammlung(
+        trace="Mün Ro",
+        groups="Lautschrift|Mün Ro",
+        kreis="Mün",
+        ort="Ro",
+    )
+    LAUT_MÜN_RR = Sammlung(
+        trace="Mün Rr",
+        groups="Lautschrift|Mün Rr",
+        kreis="Mün",
+        ort="Rr",
+    )
+    LAUT_MÜN_SB = Sammlung(
+        trace="Mün Sb",
+        groups="Lautschrift|Mün Sb",
+        kreis="Mün",
+        ort="Sb",
+    )
+    LAUT_MÜN_SD = Sammlung(
+        trace="Mün Sd",
+        groups="Lautschrift|Mün Sd",
+        kreis="Mün",
+        ort="Sd",
+    )
+    LAUT_MÜN_SH = Sammlung(
+        trace="Mün Sh",
+        groups="Lautschrift|Mün Sh",
+        kreis="Mün",
+        ort="Sh",
+    )
+    LAUT_MÜN_SP = Sammlung(
+        trace="Mün Sp",
+        groups="Lautschrift|Mün Sp",
+        kreis="Mün",
+        ort="Sp",
+    )
+    LAUT_MÜN_TE = Sammlung(
+        trace="Mün Te",
+        groups="Lautschrift|Mün Te",
+        kreis="Mün",
+        ort="Te",
+    )
+    LAUT_MÜN_WB = Sammlung(
+        trace="Mün Wb",
+        groups="Lautschrift|Mün Wb",
+        kreis="Mün",
+        ort="Wb",
+    )
+    LAUT_MÜN_WL = Sammlung(
+        trace="Mün Wl",
+        groups="Lautschrift|Mün Wl",
+        kreis="Mün",
+        ort="Wl",
+    )
+    LAUT_MÜN_WO = Sammlung(
+        trace="Mün Wo",
+        groups="Lautschrift|Mün Wo",
+        kreis="Mün",
+        ort="Wo",
+    )
+    LAUT_NIE_AM = Sammlung(
+        trace="Nie Am",
+        groups="Lautschrift|Nie Am",
+        kreis="Nie",
+        ort="Am",
+    )
+    LAUT_NIE_BH = Sammlung(
+        trace="Nie Bh",
+        groups="Lautschrift|Nie Bh",
+        kreis="Nie",
+        ort="Bh",
+    )
+    LAUT_NIE_BO = Sammlung(
+        trace="Nie Bo",
+        groups="Lautschrift|Nie Bo",
+        kreis="Nie",
+        ort="Bo",
+    )
+    LAUT_NIE_BR = Sammlung(
+        trace="Nie Br",
+        groups="Lautschrift|Nie Br",
+        kreis="Nie",
+        ort="Br",
+    )
+    LAUT_NIE_DH = Sammlung(
+        trace="Nie Dh",
+        groups="Lautschrift|Nie Dh",
+        kreis="Nie",
+        ort="Dh",
+    )
+    LAUT_NIE_DI = Sammlung(
+        trace="Nie Di",
+        groups="Lautschrift|Nie Di",
+        kreis="Nie",
+        ort="Di",
+    )
+    LAUT_NIE_DL = Sammlung(
+        trace="Nie Dl",
+        groups="Lautschrift|Nie Dl",
+        kreis="Nie",
+        ort="Dl",
+    )
+    LAUT_NIE_DT = Sammlung(
+        trace="Nie Dt",
+        groups="Lautschrift|Nie Dt",
+        kreis="Nie",
+        ort="Dt",
+    )
+    LAUT_NIE_ES = Sammlung(
+        trace="Nie Es",
+        groups="Lautschrift|Nie Es",
+        kreis="Nie",
+        ort="Es",
+    )
+    LAUT_NIE_GV = Sammlung(
+        trace="Nie Gv",
+        groups="Lautschrift|Nie Gv",
+        kreis="Nie",
+        ort="Gv",
+    )
+    LAUT_NIE_HH = Sammlung(
+        trace="Nie Hh",
+        groups="Lautschrift|Nie Hh",
+        kreis="Nie",
+        ort="Hh",
+    )
+    LAUT_NIE_HI = Sammlung(
+        trace="Nie Hi",
+        groups="Lautschrift|Nie Hi",
+        kreis="Nie",
+        ort="Hi",
+    )
+    LAUT_NIE_HO = Sammlung(
+        trace="Nie Ho",
+        groups="Lautschrift|Nie Ho",
+        kreis="Nie",
+        ort="Ho",
+    )
+    LAUT_NIE_HÖ = Sammlung(
+        trace="Nie Hö",
+        groups="Lautschrift|Nie Hö",
+        kreis="Nie",
+        ort="Hö",
+    )
+    LAUT_NIE_HS = Sammlung(
+        trace="Nie Hs",
+        groups="Lautschrift|Nie Hs",
+        kreis="Nie",
+        ort="Hs",
+    )
+    LAUT_NIE_HT = Sammlung(
+        trace="Nie Ht",
+        groups="Lautschrift|Nie Ht",
+        kreis="Nie",
+        ort="Ht",
+    )
+    LAUT_NIE_HU = Sammlung(
+        trace="Nie Hu",
+        groups="Lautschrift|Nie Hu",
+        kreis="Nie",
+        ort="Hu",
+    )
+    LAUT_NIE_JH = Sammlung(
+        trace="Nie Jh",
+        groups="Lautschrift|Nie Jh",
+        kreis="Nie",
+        ort="Jh",
+    )
+    LAUT_NIE_LA = Sammlung(
+        trace="Nie La",
+        groups="Lautschrift|Nie La",
+        kreis="Nie",
+        ort="La",
+    )
+    LAUT_NIE_LH = Sammlung(
+        trace="Nie Lh",
+        groups="Lautschrift|Nie Lh",
+        kreis="Nie",
+        ort="Lh",
+    )
+    LAUT_NIE_LO = Sammlung(
+        trace="Nie Lo",
+        groups="Lautschrift|Nie Lo",
+        kreis="Nie",
+        ort="Lo",
+    )
+    LAUT_NIE_MH = Sammlung(
+        trace="Nie Mh",
+        groups="Lautschrift|Nie Mh",
+        kreis="Nie",
+        ort="Mh",
+    )
+    LAUT_NIE_MÜ = Sammlung(
+        trace="Nie Mü",
+        groups="Lautschrift|Nie Mü",
+        kreis="Nie",
+        ort="Mü",
+    )
+    LAUT_NIE_ND = Sammlung(
+        trace="Nie Nd",
+        groups="Lautschrift|Nie Nd",
+        kreis="Nie",
+        ort="Nd",
+    )
+    LAUT_NIE_NO = Sammlung(
+        trace="Nie No",
+        groups="Lautschrift|Nie No",
+        kreis="Nie",
+        ort="No",
+    )
+    LAUT_NIE_SA = Sammlung(
+        trace="Nie Sa",
+        groups="Lautschrift|Nie Sa",
+        kreis="Nie",
+        ort="Sa",
+    )
+    LAUT_NIE_SH = Sammlung(
+        trace="Nie Sh",
+        groups="Lautschrift|Nie Sh",
+        kreis="Nie",
+        ort="Sh",
+    )
+    LAUT_NIE_ST = Sammlung(
+        trace="Nie St",
+        groups="Lautschrift|Nie St",
+        kreis="Nie",
+        ort="St",
+    )
+    LAUT_NIE_UC = Sammlung(
+        trace="Nie Uc",
+        groups="Lautschrift|Nie Uc",
+        kreis="Nie",
+        ort="Uc",
+    )
+    LAUT_NIE_WA = Sammlung(
+        trace="Nie Wa",
+        groups="Lautschrift|Nie Wa",
+        kreis="Nie",
+        ort="Wa",
+    )
+    LAUT_NIE_WF = Sammlung(
+        trace="Nie Wf",
+        groups="Lautschrift|Nie Wf",
+        kreis="Nie",
+        ort="Wf",
+    )
+    LAUT_NIE_WH = Sammlung(
+        trace="Nie Wh",
+        groups="Lautschrift|Nie Wh",
+        kreis="Nie",
+        ort="Wh",
+    )
+    LAUT_NIE_WI = Sammlung(
+        trace="Nie Wi",
+        groups="Lautschrift|Nie Wi",
+        kreis="Nie",
+        ort="Wi",
+    )
+    LAUT_OLP_AB = Sammlung(
+        trace="Olp Ab",
+        groups="Lautschrift|Olp Ab",
+        kreis="Olp",
+        ort="Ab",
+    )
+    LAUT_OLP_AH = Sammlung(
+        trace="Olp Ah",
+        groups="Lautschrift|Olp Ah",
+        kreis="Olp",
+        ort="Ah",
+    )
+    LAUT_OLP_AK = Sammlung(
+        trace="Olp Ak",
+        groups="Lautschrift|Olp Ak",
+        kreis="Olp",
+        ort="Ak",
+    )
+    LAUT_OLP_AT = Sammlung(
+        trace="Olp At",
+        groups="Lautschrift|Olp At",
+        kreis="Olp",
+        ort="At",
+    )
+    LAUT_OLP_BB = Sammlung(
+        trace="Olp Bb",
+        groups="Lautschrift|Olp Bb",
+        kreis="Olp",
+        ort="Bb",
+    )
+    LAUT_OLP_BE = Sammlung(
+        trace="Olp Be",
+        groups="Lautschrift|Olp Be",
+        kreis="Olp",
+        ort="Be",
+    )
+    LAUT_OLP_BH = Sammlung(
+        trace="Olp Bh",
+        groups="Lautschrift|Olp Bh",
+        kreis="Olp",
+        ort="Bh",
+    )
+    LAUT_OLP_BL = Sammlung(
+        trace="Olp Bl",
+        groups="Lautschrift|Olp Bl",
+        kreis="Olp",
+        ort="Bl",
+    )
+    LAUT_OLP_BS = Sammlung(
+        trace="Olp Bs",
+        groups="Lautschrift|Olp Bs",
+        kreis="Olp",
+        ort="Bs",
+    )
+    LAUT_OLP_BÜ = Sammlung(
+        trace="Olp Bü",
+        groups="Lautschrift|Olp Bü",
+        kreis="Olp",
+        ort="Bü",
+    )
+    LAUT_OLP_DA = Sammlung(
+        trace="Olp Da",
+        groups="Lautschrift|Olp Da",
+        kreis="Olp",
+        ort="Da",
+    )
+    LAUT_OLP_DH = Sammlung(
+        trace="Olp Dh",
+        groups="Lautschrift|Olp Dh",
+        kreis="Olp",
+        ort="Dh",
+    )
+    LAUT_OLP_DÜ = Sammlung(
+        trace="Olp Dü",
+        groups="Lautschrift|Olp Dü",
+        kreis="Olp",
+        ort="Dü",
+    )
+    LAUT_OLP_EB = Sammlung(
+        trace="Olp Eb",
+        groups="Lautschrift|Olp Eb",
+        kreis="Olp",
+        ort="Eb",
+    )
+    LAUT_OLP_EH = Sammlung(
+        trace="Olp Eh",
+        groups="Lautschrift|Olp Eh",
+        kreis="Olp",
+        ort="Eh",
+    )
+    LAUT_OLP_EL = Sammlung(
+        trace="Olp El",
+        groups="Lautschrift|Olp El",
+        kreis="Olp",
+        ort="El",
+    )
+    LAUT_OLP_EN = Sammlung(
+        trace="Olp En",
+        groups="Lautschrift|Olp En",
+        kreis="Olp",
+        ort="En",
+    )
+    LAUT_OLP_FÖ = Sammlung(
+        trace="Olp Fö",
+        groups="Lautschrift|Olp Fö",
+        kreis="Olp",
+        ort="Fö",
+    )
+    LAUT_OLP_GB = Sammlung(
+        trace="Olp Gb",
+        groups="Lautschrift|Olp Gb",
+        kreis="Olp",
+        ort="Gb",
+    )
+    LAUT_OLP_GE = Sammlung(
+        trace="Olp Ge",
+        groups="Lautschrift|Olp Ge",
+        kreis="Olp",
+        ort="Ge",
+    )
+    LAUT_OLP_GI = Sammlung(
+        trace="Olp Gi",
+        groups="Lautschrift|Olp Gi",
+        kreis="Olp",
+        ort="Gi",
+    )
+    LAUT_OLP_HA = Sammlung(
+        trace="Olp Ha",
+        groups="Lautschrift|Olp Ha",
+        kreis="Olp",
+        ort="Ha",
+    )
+    LAUT_OLP_HB = Sammlung(
+        trace="Olp Hb",
+        groups="Lautschrift|Olp Hb",
+        kreis="Olp",
+        ort="Hb",
+    )
+    LAUT_OLP_HE = Sammlung(
+        trace="Olp He",
+        groups="Lautschrift|Olp He",
+        kreis="Olp",
+        ort="He",
+    )
+    LAUT_OLP_HG = Sammlung(
+        trace="Olp Hg",
+        groups="Lautschrift|Olp Hg",
+        kreis="Olp",
+        ort="Hg",
+    )
+    LAUT_OLP_HI = Sammlung(
+        trace="Olp Hi",
+        groups="Lautschrift|Olp Hi",
+        kreis="Olp",
+        ort="Hi",
+    )
+    LAUT_OLP_HO = Sammlung(
+        trace="Olp Ho",
+        groups="Lautschrift|Olp Ho",
+        kreis="Olp",
+        ort="Ho",
+    )
+    LAUT_OLP_HP = Sammlung(
+        trace="Olp Hp",
+        groups="Lautschrift|Olp Hp",
+        kreis="Olp",
+        ort="Hp",
+    )
+    LAUT_OLP_HS = Sammlung(
+        trace="Olp Hs",
+        groups="Lautschrift|Olp Hs",
+        kreis="Olp",
+        ort="Hs",
+    )
+    LAUT_OLP_HÜ = Sammlung(
+        trace="Olp Hü",
+        groups="Lautschrift|Olp Hü",
+        kreis="Olp",
+        ort="Hü",
+    )
+    LAUT_OLP_KH = Sammlung(
+        trace="Olp Kh",
+        groups="Lautschrift|Olp Kh",
+        kreis="Olp",
+        ort="Kh",
+    )
+    LAUT_OLP_KV = Sammlung(
+        trace="Olp Kv",
+        groups="Lautschrift|Olp Kv",
+        kreis="Olp",
+        ort="Kv",
+    )
+    LAUT_OLP_LA = Sammlung(
+        trace="Olp La",
+        groups="Lautschrift|Olp La",
+        kreis="Olp",
+        ort="La",
+    )
+    LAUT_OLP_LE = Sammlung(
+        trace="Olp Le",
+        groups="Lautschrift|Olp Le",
+        kreis="Olp",
+        ort="Le",
+    )
+    LAUT_OLP_LI = Sammlung(
+        trace="Olp Li",
+        groups="Lautschrift|Olp Li",
+        kreis="Olp",
+        ort="Li",
+    )
+    LAUT_OLP_LS = Sammlung(
+        trace="Olp Ls",
+        groups="Lautschrift|Olp Ls",
+        kreis="Olp",
+        ort="Ls",
+    )
+    LAUT_OLP_LÜ = Sammlung(
+        trace="Olp Lü",
+        groups="Lautschrift|Olp Lü",
+        kreis="Olp",
+        ort="Lü",
+    )
+    LAUT_OLP_MA = Sammlung(
+        trace="Olp Ma",
+        groups="Lautschrift|Olp Ma",
+        kreis="Olp",
+        ort="Ma",
+    )
+    LAUT_OLP_MB = Sammlung(
+        trace="Olp Mb",
+        groups="Lautschrift|Olp Mb",
+        kreis="Olp",
+        ort="Mb",
+    )
+    LAUT_OLP_ME = Sammlung(
+        trace="Olp Me",
+        groups="Lautschrift|Olp Me",
+        kreis="Olp",
+        ort="Me",
+    )
+    LAUT_OLP_MH = Sammlung(
+        trace="Olp Mh",
+        groups="Lautschrift|Olp Mh",
+        kreis="Olp",
+        ort="Mh",
+    )
+    LAUT_OLP_MK = Sammlung(
+        trace="Olp Mk",
+        groups="Lautschrift|Olp Mk",
+        kreis="Olp",
+        ort="Mk",
+    )
+    LAUT_OLP_NE = Sammlung(
+        trace="Olp Ne",
+        groups="Lautschrift|Olp Ne",
+        kreis="Olp",
+        ort="Ne",
+    )
+    LAUT_OLP_NH = Sammlung(
+        trace="Olp Nh",
+        groups="Lautschrift|Olp Nh",
+        kreis="Olp",
+        ort="Nh",
+    )
+    LAUT_OLP_NK = Sammlung(
+        trace="Olp Nk",
+        groups="Lautschrift|Olp Nk",
+        kreis="Olp",
+        ort="Nk",
+    )
+    LAUT_OLP_OE = Sammlung(
+        trace="Olp Oe",
+        groups="Lautschrift|Olp Oe",
+        kreis="Olp",
+        ort="Oe",
+    )
+    LAUT_OLP_OF = Sammlung(
+        trace="Olp Of",
+        groups="Lautschrift|Olp Of",
+        kreis="Olp",
+        ort="Of",
+    )
+    LAUT_OLP_OH = Sammlung(
+        trace="Olp Oh",
+        groups="Lautschrift|Olp Oh",
+        kreis="Olp",
+        ort="Oh",
+    )
+    LAUT_OLP_OL = Sammlung(
+        trace="Olp Ol",
+        groups="Lautschrift|Olp Ol",
+        kreis="Olp",
+        ort="Ol",
+    )
+    LAUT_OLP_OM = Sammlung(
+        trace="Olp Om",
+        groups="Lautschrift|Olp Om",
+        kreis="Olp",
+        ort="Om",
+    )
+    LAUT_OLP_OV = Sammlung(
+        trace="Olp Ov",
+        groups="Lautschrift|Olp Ov",
+        kreis="Olp",
+        ort="Ov",
+    )
+    LAUT_OLP_RB = Sammlung(
+        trace="Olp Rb",
+        groups="Lautschrift|Olp Rb",
+        kreis="Olp",
+        ort="Rb",
+    )
+    LAUT_OLP_RE = Sammlung(
+        trace="Olp Re",
+        groups="Lautschrift|Olp Re",
+        kreis="Olp",
+        ort="Re",
+    )
+    LAUT_OLP_RH = Sammlung(
+        trace="Olp Rh",
+        groups="Lautschrift|Olp Rh",
+        kreis="Olp",
+        ort="Rh",
+    )
+    LAUT_OLP_RI = Sammlung(
+        trace="Olp Ri",
+        groups="Lautschrift|Olp Ri",
+        kreis="Olp",
+        ort="Ri",
+    )
+    LAUT_OLP_RL = Sammlung(
+        trace="Olp Rl",
+        groups="Lautschrift|Olp Rl",
+        kreis="Olp",
+        ort="Rl",
+    )
+    LAUT_OLP_RO = Sammlung(
+        trace="Olp Ro",
+        groups="Lautschrift|Olp Ro",
+        kreis="Olp",
+        ort="Ro",
+    )
+    LAUT_OLP_RÖ = Sammlung(
+        trace="Olp Rö",
+        groups="Lautschrift|Olp Rö",
+        kreis="Olp",
+        ort="Rö",
+    )
+    LAUT_OLP_RP = Sammlung(
+        trace="Olp Rp",
+        groups="Lautschrift|Olp Rp",
+        kreis="Olp",
+        ort="Rp",
+    )
+    LAUT_OLP_RÜ = Sammlung(
+        trace="Olp Rü",
+        groups="Lautschrift|Olp Rü",
+        kreis="Olp",
+        ort="Rü",
+    )
+    LAUT_OLP_SB = Sammlung(
+        trace="Olp Sb",
+        groups="Lautschrift|Olp Sb",
+        kreis="Olp",
+        ort="Sb",
+    )
+    LAUT_OLP_SC = Sammlung(
+        trace="Olp Sc",
+        groups="Lautschrift|Olp Sc",
+        kreis="Olp",
+        ort="Sc",
+    )
+    LAUT_OLP_SH = Sammlung(
+        trace="Olp Sh",
+        groups="Lautschrift|Olp Sh",
+        kreis="Olp",
+        ort="Sh",
+    )
+    LAUT_OLP_SM = Sammlung(
+        trace="Olp Sm",
+        groups="Lautschrift|Olp Sm",
+        kreis="Olp",
+        ort="Sm",
+    )
+    LAUT_OLP_SP = Sammlung(
+        trace="Olp Sp",
+        groups="Lautschrift|Olp Sp",
+        kreis="Olp",
+        ort="Sp",
+    )
+    LAUT_OLP_SR = Sammlung(
+        trace="Olp Sr",
+        groups="Lautschrift|Olp Sr",
+        kreis="Olp",
+        ort="Sr",
+    )
+    LAUT_OLP_TE = Sammlung(
+        trace="Olp Te",
+        groups="Lautschrift|Olp Te",
+        kreis="Olp",
+        ort="Te",
+    )
+    LAUT_OLP_TH = Sammlung(
+        trace="Olp Th",
+        groups="Lautschrift|Olp Th",
+        kreis="Olp",
+        ort="Th",
+    )
+    LAUT_OLP_TI = Sammlung(
+        trace="Olp Ti",
+        groups="Lautschrift|Olp Ti",
+        kreis="Olp",
+        ort="Ti",
+    )
+    LAUT_OLP_VA = Sammlung(
+        trace="Olp Va",
+        groups="Lautschrift|Olp Va",
+        kreis="Olp",
+        ort="Va",
+    )
+    LAUT_OLP_WE = Sammlung(
+        trace="Olp We",
+        groups="Lautschrift|Olp We",
+        kreis="Olp",
+        ort="We",
+    )
+    LAUT_OLP_WI = Sammlung(
+        trace="Olp Wi",
+        groups="Lautschrift|Olp Wi",
+        kreis="Olp",
+        ort="Wi",
+    )
+    LAUT_OLP_WN = Sammlung(
+        trace="Olp Wn",
+        groups="Lautschrift|Olp Wn",
+        kreis="Olp",
+        ort="Wn",
+    )
+    LAUT_OSN_AD = Sammlung(
+        trace="Osn Ad",
+        groups="Lautschrift|Osn Ad",
+        kreis="Osn",
+        ort="Ad",
+    )
+    LAUT_OSN_AF = Sammlung(
+        trace="Osn Af",
+        groups="Lautschrift|Osn Af",
+        kreis="Osn",
+        ort="Af",
+    )
+    LAUT_OSN_AL = Sammlung(
+        trace="Osn Al",
+        groups="Lautschrift|Osn Al",
+        kreis="Osn",
+        ort="Al",
+    )
+    LAUT_OSN_AS = Sammlung(
+        trace="Osn As",
+        groups="Lautschrift|Osn As",
+        kreis="Osn",
+        ort="As",
+    )
+    LAUT_OSN_AT = Sammlung(
+        trace="Osn At",
+        groups="Lautschrift|Osn At",
+        kreis="Osn",
+        ort="At",
+    )
+    LAUT_OSN_BD = Sammlung(
+        trace="Osn Bd",
+        groups="Lautschrift|Osn Bd",
+        kreis="Osn",
+        ort="Bd",
+    )
+    LAUT_OSN_BE = Sammlung(
+        trace="Osn Be",
+        groups="Lautschrift|Osn Be",
+        kreis="Osn",
+        ort="Be",
+    )
+    LAUT_OSN_BO = Sammlung(
+        trace="Osn Bo",
+        groups="Lautschrift|Osn Bo",
+        kreis="Osn",
+        ort="Bo",
+    )
+    LAUT_OSN_ED = Sammlung(
+        trace="Osn Ed",
+        groups="Lautschrift|Osn Ed",
+        kreis="Osn",
+        ort="Ed",
+    )
+    LAUT_OSN_ER = Sammlung(
+        trace="Osn Er",
+        groups="Lautschrift|Osn Er",
+        kreis="Osn",
+        ort="Er",
+    )
+    LAUT_OSN_GA = Sammlung(
+        trace="Osn Ga",
+        groups="Lautschrift|Osn Ga",
+        kreis="Osn",
+        ort="Ga",
+    )
+    LAUT_OSN_GB = Sammlung(
+        trace="Osn Gb",
+        groups="Lautschrift|Osn Gb",
+        kreis="Osn",
+        ort="Gb",
+    )
+    LAUT_OSN_GH = Sammlung(
+        trace="Osn Gh",
+        groups="Lautschrift|Osn Gh",
+        kreis="Osn",
+        ort="Gh",
+    )
+    LAUT_OSN_GL = Sammlung(
+        trace="Osn Gl",
+        groups="Lautschrift|Osn Gl",
+        kreis="Osn",
+        ort="Gl",
+    )
+    LAUT_OSN_GN = Sammlung(
+        trace="Osn Gn",
+        groups="Lautschrift|Osn Gn",
+        kreis="Osn",
+        ort="Gn",
+    )
+    LAUT_OSN_GR = Sammlung(
+        trace="Osn Gr",
+        groups="Lautschrift|Osn Gr",
+        kreis="Osn",
+        ort="Gr",
+    )
+    LAUT_OSN_HA = Sammlung(
+        trace="Osn Ha",
+        groups="Lautschrift|Osn Ha",
+        kreis="Osn",
+        ort="Ha",
+    )
+    LAUT_OSN_HB = Sammlung(
+        trace="Osn Hb",
+        groups="Lautschrift|Osn Hb",
+        kreis="Osn",
+        ort="Hb",
+    )
+    LAUT_OSN_HD = Sammlung(
+        trace="Osn Hd",
+        groups="Lautschrift|Osn Hd",
+        kreis="Osn",
+        ort="Hd",
+    )
+    LAUT_OSN_HE = Sammlung(
+        trace="Osn He",
+        groups="Lautschrift|Osn He",
+        kreis="Osn",
+        ort="He",
+    )
+    LAUT_OSN_HG = Sammlung(
+        trace="Osn Hg",
+        groups="Lautschrift|Osn Hg",
+        kreis="Osn",
+        ort="Hg",
+    )
+    LAUT_OSN_HI = Sammlung(
+        trace="Osn Hi",
+        groups="Lautschrift|Osn Hi",
+        kreis="Osn",
+        ort="Hi",
+    )
+    LAUT_OSN_HL = Sammlung(
+        trace="Osn Hl",
+        groups="Lautschrift|Osn Hl",
+        kreis="Osn",
+        ort="Hl",
+    )
+    LAUT_OSN_HR = Sammlung(
+        trace="Osn Hr",
+        groups="Lautschrift|Osn Hr",
+        kreis="Osn",
+        ort="Hr",
+    )
+    LAUT_OSN_HS = Sammlung(
+        trace="Osn Hs",
+        groups="Lautschrift|Osn Hs",
+        kreis="Osn",
+        ort="Hs",
+    )
+    LAUT_OSN_HT = Sammlung(
+        trace="Osn Ht",
+        groups="Lautschrift|Osn Ht",
+        kreis="Osn",
+        ort="Ht",
+    )
+    LAUT_OSN_IB = Sammlung(
+        trace="Osn Ib",
+        groups="Lautschrift|Osn Ib",
+        kreis="Osn",
+        ort="Ib",
+    )
+    LAUT_OSN_IK = Sammlung(
+        trace="Osn Ik",
+        groups="Lautschrift|Osn Ik",
+        kreis="Osn",
+        ort="Ik",
+    )
+    LAUT_OSN_JE = Sammlung(
+        trace="Osn Je",
+        groups="Lautschrift|Osn Je",
+        kreis="Osn",
+        ort="Je",
+    )
+    LAUT_OSN_KK = Sammlung(
+        trace="Osn Kk",
+        groups="Lautschrift|Osn Kk",
+        kreis="Osn",
+        ort="Kk",
+    )
+    LAUT_OSN_KL = Sammlung(
+        trace="Osn Kl",
+        groups="Lautschrift|Osn Kl",
+        kreis="Osn",
+        ort="Kl",
+    )
+    LAUT_OSN_LA = Sammlung(
+        trace="Osn La",
+        groups="Lautschrift|Osn La",
+        kreis="Osn",
+        ort="La",
+    )
+    LAUT_OSN_LE = Sammlung(
+        trace="Osn Le",
+        groups="Lautschrift|Osn Le",
+        kreis="Osn",
+        ort="Le",
+    )
+    LAUT_OSN_LÜ = Sammlung(
+        trace="Osn Lü",
+        groups="Lautschrift|Osn Lü",
+        kreis="Osn",
+        ort="Lü",
+    )
+    LAUT_OSN_MB = Sammlung(
+        trace="Osn Mb",
+        groups="Lautschrift|Osn Mb",
+        kreis="Osn",
+        ort="Mb",
+    )
+    LAUT_OSN_ME = Sammlung(
+        trace="Osn Me",
+        groups="Lautschrift|Osn Me",
+        kreis="Osn",
+        ort="Me",
+    )
+    LAUT_OSN_MY = Sammlung(
+        trace="Osn My",
+        groups="Lautschrift|Osn My",
+        kreis="Osn",
+        ort="My",
+    )
+    LAUT_OSN_NA = Sammlung(
+        trace="Osn Na",
+        groups="Lautschrift|Osn Na",
+        kreis="Osn",
+        ort="Na",
+    )
+    LAUT_OSN_NE = Sammlung(
+        trace="Osn Ne",
+        groups="Lautschrift|Osn Ne",
+        kreis="Osn",
+        ort="Ne",
+    )
+    LAUT_OSN_NH = Sammlung(
+        trace="Osn Nh",
+        groups="Lautschrift|Osn Nh",
+        kreis="Osn",
+        ort="Nh",
+    )
+    LAUT_OSN_NT = Sammlung(
+        trace="Osn Nt",
+        groups="Lautschrift|Osn Nt",
+        kreis="Osn",
+        ort="Nt",
+    )
+    LAUT_OSN_OB = Sammlung(
+        trace="Osn Ob",
+        groups="Lautschrift|Osn Ob",
+        kreis="Osn",
+        ort="Ob",
+    )
+    LAUT_OSN_OF = Sammlung(
+        trace="Osn Of",
+        groups="Lautschrift|Osn Of",
+        kreis="Osn",
+        ort="Of",
+    )
+    LAUT_OSN_OK = Sammlung(
+        trace="Osn Ok",
+        groups="Lautschrift|Osn Ok",
+        kreis="Osn",
+        ort="Ok",
+    )
+    LAUT_OSN_OR = Sammlung(
+        trace="Osn Or",
+        groups="Lautschrift|Osn Or",
+        kreis="Osn",
+        ort="Or",
+    )
+    LAUT_OSN_ÖS = Sammlung(
+        trace="Osn Ös",
+        groups="Lautschrift|Osn Ös",
+        kreis="Osn",
+        ort="Ös",
+    )
+    LAUT_OSN_PI = Sammlung(
+        trace="Osn Pi",
+        groups="Lautschrift|Osn Pi",
+        kreis="Osn",
+        ort="Pi",
+    )
+    LAUT_OSN_RE = Sammlung(
+        trace="Osn Re",
+        groups="Lautschrift|Osn Re",
+        kreis="Osn",
+        ort="Re",
+    )
+    LAUT_OSN_RF = Sammlung(
+        trace="Osn Rf",
+        groups="Lautschrift|Osn Rf",
+        kreis="Osn",
+        ort="Rf",
+    )
+    LAUT_OSN_RU = Sammlung(
+        trace="Osn Ru",
+        groups="Lautschrift|Osn Ru",
+        kreis="Osn",
+        ort="Ru",
+    )
+    LAUT_OSN_SC = Sammlung(
+        trace="Osn Sc",
+        groups="Lautschrift|Osn Sc",
+        kreis="Osn",
+        ort="Sc",
+    )
+    LAUT_OSN_SD = Sammlung(
+        trace="Osn Sd",
+        groups="Lautschrift|Osn Sd",
+        kreis="Osn",
+        ort="Sd",
+    )
+    LAUT_OSN_SE = Sammlung(
+        trace="Osn Se",
+        groups="Lautschrift|Osn Se",
+        kreis="Osn",
+        ort="Se",
+    )
+    LAUT_OSN_SF = Sammlung(
+        trace="Osn Sf",
+        groups="Lautschrift|Osn Sf",
+        kreis="Osn",
+        ort="Sf",
+    )
+    LAUT_OSN_SH = Sammlung(
+        trace="Osn Sh",
+        groups="Lautschrift|Osn Sh",
+        kreis="Osn",
+        ort="Sh",
+    )
+    LAUT_OSN_SL = Sammlung(
+        trace="Osn Sl",
+        groups="Lautschrift|Osn Sl",
+        kreis="Osn",
+        ort="Sl",
+    )
+    LAUT_OSN_SP = Sammlung(
+        trace="Osn Sp",
+        groups="Lautschrift|Osn Sp",
+        kreis="Osn",
+        ort="Sp",
+    )
+    LAUT_OSN_SU = Sammlung(
+        trace="Osn Su",
+        groups="Lautschrift|Osn Su",
+        kreis="Osn",
+        ort="Su",
+    )
+    LAUT_OSN_SW = Sammlung(
+        trace="Osn Sw",
+        groups="Lautschrift|Osn Sw",
+        kreis="Osn",
+        ort="Sw",
+    )
+    LAUT_OSN_UH = Sammlung(
+        trace="Osn Uh",
+        groups="Lautschrift|Osn Uh",
+        kreis="Osn",
+        ort="Uh",
+    )
+    LAUT_OSN_VE = Sammlung(
+        trace="Osn Ve",
+        groups="Lautschrift|Osn Ve",
+        kreis="Osn",
+        ort="Ve",
+    )
+    LAUT_OSN_VO = Sammlung(
+        trace="Osn Vo",
+        groups="Lautschrift|Osn Vo",
+        kreis="Osn",
+        ort="Vo",
+    )
+    LAUT_OSN_WD = Sammlung(
+        trace="Osn Wd",
+        groups="Lautschrift|Osn Wd",
+        kreis="Osn",
+        ort="Wd",
+    )
+    LAUT_OSN_WE = Sammlung(
+        trace="Osn We",
+        groups="Lautschrift|Osn We",
+        kreis="Osn",
+        ort="We",
+    )
+    LAUT_OSN_WF = Sammlung(
+        trace="Osn Wf",
+        groups="Lautschrift|Osn Wf",
+        kreis="Osn",
+        ort="Wf",
+    )
+    LAUT_OSN_WH = Sammlung(
+        trace="Osn Wh",
+        groups="Lautschrift|Osn Wh",
+        kreis="Osn",
+        ort="Wh",
+    )
+    LAUT_OSN_WS = Sammlung(
+        trace="Osn Ws",
+        groups="Lautschrift|Osn Ws",
+        kreis="Osn",
+        ort="Ws",
+    )
+    LAUT_PAD_AB = Sammlung(
+        trace="Pad Ab",
+        groups="Lautschrift|Pad Ab",
+        kreis="Pad",
+        ort="Ab",
+    )
+    LAUT_PAD_AL = Sammlung(
+        trace="Pad Al",
+        groups="Lautschrift|Pad Al",
+        kreis="Pad",
+        ort="Al",
+    )
+    LAUT_PAD_BH = Sammlung(
+        trace="Pad Bh",
+        groups="Lautschrift|Pad Bh",
+        kreis="Pad",
+        ort="Bh",
+    )
+    LAUT_PAD_BO = Sammlung(
+        trace="Pad Bo",
+        groups="Lautschrift|Pad Bo",
+        kreis="Pad",
+        ort="Bo",
+    )
+    LAUT_PAD_BU = Sammlung(
+        trace="Pad Bu",
+        groups="Lautschrift|Pad Bu",
+        kreis="Pad",
+        ort="Bu",
+    )
+    LAUT_PAD_DA = Sammlung(
+        trace="Pad Da",
+        groups="Lautschrift|Pad Da",
+        kreis="Pad",
+        ort="Da",
+    )
+    LAUT_PAD_DB = Sammlung(
+        trace="Pad Db",
+        groups="Lautschrift|Pad Db",
+        kreis="Pad",
+        ort="Db",
+    )
+    LAUT_PAD_DH = Sammlung(
+        trace="Pad Dh",
+        groups="Lautschrift|Pad Dh",
+        kreis="Pad",
+        ort="Dh",
+    )
+    LAUT_PAD_EL = Sammlung(
+        trace="Pad El",
+        groups="Lautschrift|Pad El",
+        kreis="Pad",
+        ort="El",
+    )
+    LAUT_PAD_ES = Sammlung(
+        trace="Pad Es",
+        groups="Lautschrift|Pad Es",
+        kreis="Pad",
+        ort="Es",
+    )
+    LAUT_PAD_HH = Sammlung(
+        trace="Pad Hh",
+        groups="Lautschrift|Pad Hh",
+        kreis="Pad",
+        ort="Hh",
+    )
+    LAUT_PAD_HÖ = Sammlung(
+        trace="Pad Hö",
+        groups="Lautschrift|Pad Hö",
+        kreis="Pad",
+        ort="Hö",
+    )
+    LAUT_PAD_KB = Sammlung(
+        trace="Pad Kb",
+        groups="Lautschrift|Pad Kb",
+        kreis="Pad",
+        ort="Kb",
+    )
+    LAUT_PAD_KL = Sammlung(
+        trace="Pad Kl",
+        groups="Lautschrift|Pad Kl",
+        kreis="Pad",
+        ort="Kl",
+    )
+    LAUT_PAD_LI = Sammlung(
+        trace="Pad Li",
+        groups="Lautschrift|Pad Li",
+        kreis="Pad",
+        ort="Li",
+    )
+    LAUT_PAD_LP = Sammlung(
+        trace="Pad Lp",
+        groups="Lautschrift|Pad Lp",
+        kreis="Pad",
+        ort="Lp",
+    )
+    LAUT_PAD_ML = Sammlung(
+        trace="Pad Ml",
+        groups="Lautschrift|Pad Ml",
+        kreis="Pad",
+        ort="Ml",
+    )
+    LAUT_PAD_NB = Sammlung(
+        trace="Pad Nb",
+        groups="Lautschrift|Pad Nb",
+        kreis="Pad",
+        ort="Nb",
+    )
+    LAUT_PAD_NE = Sammlung(
+        trace="Pad Ne",
+        groups="Lautschrift|Pad Ne",
+        kreis="Pad",
+        ort="Ne",
+    )
+    LAUT_PAD_NH = Sammlung(
+        trace="Pad Nh",
+        groups="Lautschrift|Pad Nh",
+        kreis="Pad",
+        ort="Nh",
+    )
+    LAUT_PAD_NS = Sammlung(
+        trace="Pad Ns",
+        groups="Lautschrift|Pad Ns",
+        kreis="Pad",
+        ort="Ns",
+    )
+    LAUT_PAD_NT = Sammlung(
+        trace="Pad Nt",
+        groups="Lautschrift|Pad Nt",
+        kreis="Pad",
+        ort="Nt",
+    )
+    LAUT_PAD_OL = Sammlung(
+        trace="Pad Ol",
+        groups="Lautschrift|Pad Ol",
+        kreis="Pad",
+        ort="Ol",
+    )
+    LAUT_PAD_OM = Sammlung(
+        trace="Pad Om",
+        groups="Lautschrift|Pad Om",
+        kreis="Pad",
+        ort="Om",
+    )
+    LAUT_PAD_PB = Sammlung(
+        trace="Pad Pb",
+        groups="Lautschrift|Pad Pb",
+        kreis="Pad",
+        ort="Pb",
+    )
+    LAUT_PAD_RI = Sammlung(
+        trace="Pad Ri",
+        groups="Lautschrift|Pad Ri",
+        kreis="Pad",
+        ort="Ri",
+    )
+    LAUT_PAD_SA = Sammlung(
+        trace="Pad Sa",
+        groups="Lautschrift|Pad Sa",
+        kreis="Pad",
+        ort="Sa",
+    )
+    LAUT_PAD_SC = Sammlung(
+        trace="Pad Sc",
+        groups="Lautschrift|Pad Sc",
+        kreis="Pad",
+        ort="Sc",
+    )
+    LAUT_PAD_SH = Sammlung(
+        trace="Pad Sh",
+        groups="Lautschrift|Pad Sh",
+        kreis="Pad",
+        ort="Sh",
+    )
+    LAUT_PAD_SL = Sammlung(
+        trace="Pad Sl",
+        groups="Lautschrift|Pad Sl",
+        kreis="Pad",
+        ort="Sl",
+    )
+    LAUT_PAD_ST = Sammlung(
+        trace="Pad St",
+        groups="Lautschrift|Pad St",
+        kreis="Pad",
+        ort="St",
+    )
+    LAUT_PAD_SU = Sammlung(
+        trace="Pad Su",
+        groups="Lautschrift|Pad Su",
+        kreis="Pad",
+        ort="Su",
+    )
+    LAUT_PAD_SW = Sammlung(
+        trace="Pad Sw",
+        groups="Lautschrift|Pad Sw",
+        kreis="Pad",
+        ort="Sw",
+    )
+    LAUT_PAD_WH = Sammlung(
+        trace="Pad Wh",
+        groups="Lautschrift|Pad Wh",
+        kreis="Pad",
+        ort="Wh",
+    )
+    LAUT_PAD_WL = Sammlung(
+        trace="Pad Wl",
+        groups="Lautschrift|Pad Wl",
+        kreis="Pad",
+        ort="Wl",
+    )
+    LAUT_PAD_WW = Sammlung(
+        trace="Pad Ww",
+        groups="Lautschrift|Pad Ww",
+        kreis="Pad",
+        ort="Ww",
+    )
+    LAUT_REK_AD = Sammlung(
+        trace="Rek Ad",
+        groups="Lautschrift|Rek Ad",
+        kreis="Rek",
+        ort="Ad",
+    )
+    LAUT_REK_AL = Sammlung(
+        trace="Rek Al",
+        groups="Lautschrift|Rek Al",
+        kreis="Rek",
+        ort="Al",
+    )
+    LAUT_REK_AS = Sammlung(
+        trace="Rek As",
+        groups="Lautschrift|Rek As",
+        kreis="Rek",
+        ort="As",
+    )
+    LAUT_REK_BA = Sammlung(
+        trace="Rek Ba",
+        groups="Lautschrift|Rek Ba",
+        kreis="Rek",
+        ort="Ba",
+    )
+    LAUT_REK_BD = Sammlung(
+        trace="Rek Bd",
+        groups="Lautschrift|Rek Bd",
+        kreis="Rek",
+        ort="Bd",
+    )
+    LAUT_REK_BM = Sammlung(
+        trace="Rek Bm",
+        groups="Lautschrift|Rek Bm",
+        kreis="Rek",
+        ort="Bm",
+    )
+    LAUT_REK_BO = Sammlung(
+        trace="Rek Bo",
+        groups="Lautschrift|Rek Bo",
+        kreis="Rek",
+        ort="Bo",
+    )
+    LAUT_REK_BP = Sammlung(
+        trace="Rek Bp",
+        groups="Lautschrift|Rek Bp",
+        kreis="Rek",
+        ort="Bp",
+    )
+    LAUT_REK_BS = Sammlung(
+        trace="Rek Bs",
+        groups="Lautschrift|Rek Bs",
+        kreis="Rek",
+        ort="Bs",
+    )
+    LAUT_REK_BU = Sammlung(
+        trace="Rek Bu",
+        groups="Lautschrift|Rek Bu",
+        kreis="Rek",
+        ort="Bu",
+    )
+    LAUT_REK_BX = Sammlung(
+        trace="Rek Bx",
+        groups="Lautschrift|Rek Bx",
+        kreis="Rek",
+        ort="Bx",
+    )
+    LAUT_REK_DA = Sammlung(
+        trace="Rek Da",
+        groups="Lautschrift|Rek Da",
+        kreis="Rek",
+        ort="Da",
+    )
+    LAUT_REK_DE = Sammlung(
+        trace="Rek De",
+        groups="Lautschrift|Rek De",
+        kreis="Rek",
+        ort="De",
+    )
+    LAUT_REK_DI = Sammlung(
+        trace="Rek Di",
+        groups="Lautschrift|Rek Di",
+        kreis="Rek",
+        ort="Di",
+    )
+    LAUT_REK_DO = Sammlung(
+        trace="Rek Do",
+        groups="Lautschrift|Rek Do",
+        kreis="Rek",
+        ort="Do",
+    )
+    LAUT_REK_ER = Sammlung(
+        trace="Rek Er",
+        groups="Lautschrift|Rek Er",
+        kreis="Rek",
+        ort="Er",
+    )
+    LAUT_REK_ES = Sammlung(
+        trace="Rek Es",
+        groups="Lautschrift|Rek Es",
+        kreis="Rek",
+        ort="Es",
+    )
+    LAUT_REK_FH = Sammlung(
+        trace="Rek Fh",
+        groups="Lautschrift|Rek Fh",
+        kreis="Rek",
+        ort="Fh",
+    )
+    LAUT_REK_GB = Sammlung(
+        trace="Rek Gb",
+        groups="Lautschrift|Rek Gb",
+        kreis="Rek",
+        ort="Gb",
+    )
+    LAUT_REK_GL = Sammlung(
+        trace="Rek Gl",
+        groups="Lautschrift|Rek Gl",
+        kreis="Rek",
+        ort="Gl",
+    )
+    LAUT_REK_HA = Sammlung(
+        trace="Rek Ha",
+        groups="Lautschrift|Rek Ha",
+        kreis="Rek",
+        ort="Ha",
+    )
+    LAUT_REK_HB = Sammlung(
+        trace="Rek Hb",
+        groups="Lautschrift|Rek Hb",
+        kreis="Rek",
+        ort="Hb",
+    )
+    LAUT_REK_HE = Sammlung(
+        trace="Rek He",
+        groups="Lautschrift|Rek He",
+        kreis="Rek",
+        ort="He",
+    )
+    LAUT_REK_HH = Sammlung(
+        trace="Rek Hh",
+        groups="Lautschrift|Rek Hh",
+        kreis="Rek",
+        ort="Hh",
+    )
+    LAUT_REK_HL = Sammlung(
+        trace="Rek Hl",
+        groups="Lautschrift|Rek Hl",
+        kreis="Rek",
+        ort="Hl",
+    )
+    LAUT_REK_HM = Sammlung(
+        trace="Rek Hm",
+        groups="Lautschrift|Rek Hm",
+        kreis="Rek",
+        ort="Hm",
+    )
+    LAUT_REK_HO = Sammlung(
+        trace="Rek Ho",
+        groups="Lautschrift|Rek Ho",
+        kreis="Rek",
+        ort="Ho",
+    )
+    LAUT_REK_HR = Sammlung(
+        trace="Rek Hr",
+        groups="Lautschrift|Rek Hr",
+        kreis="Rek",
+        ort="Hr",
+    )
+    LAUT_REK_HU = Sammlung(
+        trace="Rek Hu",
+        groups="Lautschrift|Rek Hu",
+        kreis="Rek",
+        ort="Hu",
+    )
+    LAUT_REK_HÜ = Sammlung(
+        trace="Rek Hü",
+        groups="Lautschrift|Rek Hü",
+        kreis="Rek",
+        ort="Hü",
+    )
+    LAUT_REK_HV = Sammlung(
+        trace="Rek Hv",
+        groups="Lautschrift|Rek Hv",
+        kreis="Rek",
+        ort="Hv",
+    )
+    LAUT_REK_HX = Sammlung(
+        trace="Rek Hx",
+        groups="Lautschrift|Rek Hx",
+        kreis="Rek",
+        ort="Hx",
+    )
+    LAUT_REK_KH = Sammlung(
+        trace="Rek Kh",
+        groups="Lautschrift|Rek Kh",
+        kreis="Rek",
+        ort="Kh",
+    )
+    LAUT_REK_LA = Sammlung(
+        trace="Rek La",
+        groups="Lautschrift|Rek La",
+        kreis="Rek",
+        ort="La",
+    )
+    LAUT_REK_LB = Sammlung(
+        trace="Rek Lb",
+        groups="Lautschrift|Rek Lb",
+        kreis="Rek",
+        ort="Lb",
+    )
+    LAUT_REK_LD = Sammlung(
+        trace="Rek Ld",
+        groups="Lautschrift|Rek Ld",
+        kreis="Rek",
+        ort="Ld",
+    )
+    LAUT_REK_LH = Sammlung(
+        trace="Rek Lh",
+        groups="Lautschrift|Rek Lh",
+        kreis="Rek",
+        ort="Lh",
+    )
+    LAUT_REK_MA = Sammlung(
+        trace="Rek Ma",
+        groups="Lautschrift|Rek Ma",
+        kreis="Rek",
+        ort="Ma",
+    )
+    LAUT_REK_MH = Sammlung(
+        trace="Rek Mh",
+        groups="Lautschrift|Rek Mh",
+        kreis="Rek",
+        ort="Mh",
+    )
+    LAUT_REK_OF = Sammlung(
+        trace="Rek Of",
+        groups="Lautschrift|Rek Of",
+        kreis="Rek",
+        ort="Of",
+    )
+    LAUT_REK_PE = Sammlung(
+        trace="Rek Pe",
+        groups="Lautschrift|Rek Pe",
+        kreis="Rek",
+        ort="Pe",
+    )
+    LAUT_REK_PO = Sammlung(
+        trace="Rek Po",
+        groups="Lautschrift|Rek Po",
+        kreis="Rek",
+        ort="Po",
+    )
+    LAUT_REK_RA = Sammlung(
+        trace="Rek Ra",
+        groups="Lautschrift|Rek Ra",
+        kreis="Rek",
+        ort="Ra",
+    )
+    LAUT_REK_RH = Sammlung(
+        trace="Rek Rh",
+        groups="Lautschrift|Rek Rh",
+        kreis="Rek",
+        ort="Rh",
+    )
+    LAUT_REK_RS = Sammlung(
+        trace="Rek Rs",
+        groups="Lautschrift|Rek Rs",
+        kreis="Rek",
+        ort="Rs",
+    )
+    LAUT_REK_SI = Sammlung(
+        trace="Rek Si",
+        groups="Lautschrift|Rek Si",
+        kreis="Rek",
+        ort="Si",
+    )
+    LAUT_REK_SM = Sammlung(
+        trace="Rek Sm",
+        groups="Lautschrift|Rek Sm",
+        kreis="Rek",
+        ort="Sm",
+    )
+    LAUT_REK_ST = Sammlung(
+        trace="Rek St",
+        groups="Lautschrift|Rek St",
+        kreis="Rek",
+        ort="St",
+    )
+    LAUT_REK_SY = Sammlung(
+        trace="Rek Sy",
+        groups="Lautschrift|Rek Sy",
+        kreis="Rek",
+        ort="Sy",
+    )
+    LAUT_REK_WD = Sammlung(
+        trace="Rek Wd",
+        groups="Lautschrift|Rek Wd",
+        kreis="Rek",
+        ort="Wd",
+    )
+    LAUT_REK_WH = Sammlung(
+        trace="Rek Wh",
+        groups="Lautschrift|Rek Wh",
+        kreis="Rek",
+        ort="Wh",
+    )
+    LAUT_REK_WP = Sammlung(
+        trace="Rek Wp",
+        groups="Lautschrift|Rek Wp",
+        kreis="Rek",
+        ort="Wp",
+    )
+    LAUT_REK_WU = Sammlung(
+        trace="Rek Wu",
+        groups="Lautschrift|Rek Wu",
+        kreis="Rek",
+        ort="Wu",
+    )
+    LAUT_SCH_AL = Sammlung(
+        trace="Sch Al",
+        groups="Lautschrift|Sch Al",
+        kreis="Sch",
+        ort="Al",
+    )
+    LAUT_SCH_AN = Sammlung(
+        trace="Sch An",
+        groups="Lautschrift|Sch An",
+        kreis="Sch",
+        ort="An",
+    )
+    LAUT_SCH_AP = Sammlung(
+        trace="Sch Ap",
+        groups="Lautschrift|Sch Ap",
+        kreis="Sch",
+        ort="Ap",
+    )
+    LAUT_SCH_AU = Sammlung(
+        trace="Sch Au",
+        groups="Lautschrift|Sch Au",
+        kreis="Sch",
+        ort="Au",
+    )
+    LAUT_SCH_BA = Sammlung(
+        trace="Sch Ba",
+        groups="Lautschrift|Sch Ba",
+        kreis="Sch",
+        ort="Ba",
+    )
+    LAUT_SCH_BD = Sammlung(
+        trace="Sch Bd",
+        groups="Lautschrift|Sch Bd",
+        kreis="Sch",
+        ort="Bd",
+    )
+    LAUT_SCH_BO = Sammlung(
+        trace="Sch Bo",
+        groups="Lautschrift|Sch Bo",
+        kreis="Sch",
+        ort="Bo",
+    )
+    LAUT_SCH_DB = Sammlung(
+        trace="Sch Db",
+        groups="Lautschrift|Sch Db",
+        kreis="Sch",
+        ort="Db",
+    )
+    LAUT_SCH_EN = Sammlung(
+        trace="Sch En",
+        groups="Lautschrift|Sch En",
+        kreis="Sch",
+        ort="En",
+    )
+    LAUT_SCH_ES = Sammlung(
+        trace="Sch Es",
+        groups="Lautschrift|Sch Es",
+        kreis="Sch",
+        ort="Es",
+    )
+    LAUT_SCH_EX = Sammlung(
+        trace="Sch Ex",
+        groups="Lautschrift|Sch Ex",
+        kreis="Sch",
+        ort="Ex",
+    )
+    LAUT_SCH_FI = Sammlung(
+        trace="Sch Fi",
+        groups="Lautschrift|Sch Fi",
+        kreis="Sch",
+        ort="Fi",
+    )
+    LAUT_SCH_FU = Sammlung(
+        trace="Sch Fu",
+        groups="Lautschrift|Sch Fu",
+        kreis="Sch",
+        ort="Fu",
+    )
+    LAUT_SCH_GB = Sammlung(
+        trace="Sch Gb",
+        groups="Lautschrift|Sch Gb",
+        kreis="Sch",
+        ort="Gb",
+    )
+    LAUT_SCH_GH = Sammlung(
+        trace="Sch Gh",
+        groups="Lautschrift|Sch Gh",
+        kreis="Sch",
+        ort="Gh",
+    )
+    LAUT_SCH_GN = Sammlung(
+        trace="Sch Gn",
+        groups="Lautschrift|Sch Gn",
+        kreis="Sch",
+        ort="Gn",
+    )
+    LAUT_SCH_GW = Sammlung(
+        trace="Sch Gw",
+        groups="Lautschrift|Sch Gw",
+        kreis="Sch",
+        ort="Gw",
+    )
+    LAUT_SCH_HA = Sammlung(
+        trace="Sch Ha",
+        groups="Lautschrift|Sch Ha",
+        kreis="Sch",
+        ort="Ha",
+    )
+    LAUT_SCH_HD = Sammlung(
+        trace="Sch Hd",
+        groups="Lautschrift|Sch Hd",
+        kreis="Sch",
+        ort="Hd",
+    )
+    LAUT_SCH_HE = Sammlung(
+        trace="Sch He",
+        groups="Lautschrift|Sch He",
+        kreis="Sch",
+        ort="He",
+    )
+    LAUT_SCH_HH = Sammlung(
+        trace="Sch Hh",
+        groups="Lautschrift|Sch Hh",
+        kreis="Sch",
+        ort="Hh",
+    )
+    LAUT_SCH_HO = Sammlung(
+        trace="Sch Ho",
+        groups="Lautschrift|Sch Ho",
+        kreis="Sch",
+        ort="Ho",
+    )
+    LAUT_SCH_HÖ = Sammlung(
+        trace="Sch Hö",
+        groups="Lautschrift|Sch Hö",
+        kreis="Sch",
+        ort="Hö",
+    )
+    LAUT_SCH_HR = Sammlung(
+        trace="Sch Hr",
+        groups="Lautschrift|Sch Hr",
+        kreis="Sch",
+        ort="Hr",
+    )
+    LAUT_SCH_HT = Sammlung(
+        trace="Sch Ht",
+        groups="Lautschrift|Sch Ht",
+        kreis="Sch",
+        ort="Ht",
+    )
+    LAUT_SCH_KA = Sammlung(
+        trace="Sch Ka",
+        groups="Lautschrift|Sch Ka",
+        kreis="Sch",
+        ort="Ka",
+    )
+    LAUT_SCH_KH = Sammlung(
+        trace="Sch Kh",
+        groups="Lautschrift|Sch Kh",
+        kreis="Sch",
+        ort="Kh",
+    )
+    LAUT_SCH_KR = Sammlung(
+        trace="Sch Kr",
+        groups="Lautschrift|Sch Kr",
+        kreis="Sch",
+        ort="Kr",
+    )
+    LAUT_SCH_LF = Sammlung(
+        trace="Sch Lf",
+        groups="Lautschrift|Sch Lf",
+        kreis="Sch",
+        ort="Lf",
+    )
+    LAUT_SCH_LI = Sammlung(
+        trace="Sch Li",
+        groups="Lautschrift|Sch Li",
+        kreis="Sch",
+        ort="Li",
+    )
+    LAUT_SCH_LY = Sammlung(
+        trace="Sch Ly",
+        groups="Lautschrift|Sch Ly",
+        kreis="Sch",
+        ort="Ly",
+    )
+    LAUT_SCH_MB = Sammlung(
+        trace="Sch Mb",
+        groups="Lautschrift|Sch Mb",
+        kreis="Sch",
+        ort="Mb",
+    )
+    LAUT_SCH_ND = Sammlung(
+        trace="Sch Nd",
+        groups="Lautschrift|Sch Nd",
+        kreis="Sch",
+        ort="Nd",
+    )
+    LAUT_SCH_OB = Sammlung(
+        trace="Sch Ob",
+        groups="Lautschrift|Sch Ob",
+        kreis="Sch",
+        ort="Ob",
+    )
+    LAUT_SCH_OT = Sammlung(
+        trace="Sch Ot",
+        groups="Lautschrift|Sch Ot",
+        kreis="Sch",
+        ort="Ot",
+    )
+    LAUT_SCH_PÖ = Sammlung(
+        trace="Sch Pö",
+        groups="Lautschrift|Sch Pö",
+        kreis="Sch",
+        ort="Pö",
+    )
+    LAUT_SCH_RA = Sammlung(
+        trace="Sch Ra",
+        groups="Lautschrift|Sch Ra",
+        kreis="Sch",
+        ort="Ra",
+    )
+    LAUT_SCH_RD = Sammlung(
+        trace="Sch Rd",
+        groups="Lautschrift|Sch Rd",
+        kreis="Sch",
+        ort="Rd",
+    )
+    LAUT_SCH_RE = Sammlung(
+        trace="Sch Re",
+        groups="Lautschrift|Sch Re",
+        kreis="Sch",
+        ort="Re",
+    )
+    LAUT_SCH_RH = Sammlung(
+        trace="Sch Rh",
+        groups="Lautschrift|Sch Rh",
+        kreis="Sch",
+        ort="Rh",
+    )
+    LAUT_SCH_RI = Sammlung(
+        trace="Sch Ri",
+        groups="Lautschrift|Sch Ri",
+        kreis="Sch",
+        ort="Ri",
+    )
+    LAUT_SCH_RN = Sammlung(
+        trace="Sch Rn",
+        groups="Lautschrift|Sch Rn",
+        kreis="Sch",
+        ort="Rn",
+    )
+    LAUT_SCH_RO = Sammlung(
+        trace="Sch Ro",
+        groups="Lautschrift|Sch Ro",
+        kreis="Sch",
+        ort="Ro",
+    )
+    LAUT_SCH_RS = Sammlung(
+        trace="Sch Rs",
+        groups="Lautschrift|Sch Rs",
+        kreis="Sch",
+        ort="Rs",
+    )
+    LAUT_SCH_RU = Sammlung(
+        trace="Sch Ru",
+        groups="Lautschrift|Sch Ru",
+        kreis="Sch",
+        ort="Ru",
+    )
+    LAUT_SCH_SD = Sammlung(
+        trace="Sch Sd",
+        groups="Lautschrift|Sch Sd",
+        kreis="Sch",
+        ort="Sd",
+    )
+    LAUT_SCH_SH = Sammlung(
+        trace="Sch Sh",
+        groups="Lautschrift|Sch Sh",
+        kreis="Sch",
+        ort="Sh",
+    )
+    LAUT_SCH_WA = Sammlung(
+        trace="Sch Wa",
+        groups="Lautschrift|Sch Wa",
+        kreis="Sch",
+        ort="Wa",
+    )
+    LAUT_SCH_WB = Sammlung(
+        trace="Sch Wb",
+        groups="Lautschrift|Sch Wb",
+        kreis="Sch",
+        ort="Wb",
+    )
+    LAUT_SCH_WD = Sammlung(
+        trace="Sch Wd",
+        groups="Lautschrift|Sch Wd",
+        kreis="Sch",
+        ort="Wd",
+    )
+    LAUT_SCH_WE = Sammlung(
+        trace="Sch We",
+        groups="Lautschrift|Sch We",
+        kreis="Sch",
+        ort="We",
+    )
+    LAUT_SCH_WK = Sammlung(
+        trace="Sch Wk",
+        groups="Lautschrift|Sch Wk",
+        kreis="Sch",
+        ort="Wk",
+    )
+    LAUT_SOS_AL = Sammlung(
+        trace="Sos Al",
+        groups="Lautschrift|Sos Al",
+        kreis="Sos",
+        ort="Al",
+    )
+    LAUT_SOS_AM = Sammlung(
+        trace="Sos Am",
+        groups="Lautschrift|Sos Am",
+        kreis="Sos",
+        ort="Am",
+    )
+    LAUT_SOS_BA = Sammlung(
+        trace="Sos Ba",
+        groups="Lautschrift|Sos Ba",
+        kreis="Sos",
+        ort="Ba",
+    )
+    LAUT_SOS_BE = Sammlung(
+        trace="Sos Be",
+        groups="Lautschrift|Sos Be",
+        kreis="Sos",
+        ort="Be",
+    )
+    LAUT_SOS_BG = Sammlung(
+        trace="Sos Bg",
+        groups="Lautschrift|Sos Bg",
+        kreis="Sos",
+        ort="Bg",
+    )
+    LAUT_SOS_BH = Sammlung(
+        trace="Sos Bh",
+        groups="Lautschrift|Sos Bh",
+        kreis="Sos",
+        ort="Bh",
+    )
+    LAUT_SOS_BK = Sammlung(
+        trace="Sos Bk",
+        groups="Lautschrift|Sos Bk",
+        kreis="Sos",
+        ort="Bk",
+    )
+    LAUT_SOS_BL = Sammlung(
+        trace="Sos Bl",
+        groups="Lautschrift|Sos Bl",
+        kreis="Sos",
+        ort="Bl",
+    )
+    LAUT_SOS_BM = Sammlung(
+        trace="Sos Bm",
+        groups="Lautschrift|Sos Bm",
+        kreis="Sos",
+        ort="Bm",
+    )
+    LAUT_SOS_BN = Sammlung(
+        trace="Sos Bn",
+        groups="Lautschrift|Sos Bn",
+        kreis="Sos",
+        ort="Bn",
+    )
+    LAUT_SOS_BO = Sammlung(
+        trace="Sos Bo",
+        groups="Lautschrift|Sos Bo",
+        kreis="Sos",
+        ort="Bo",
+    )
+    LAUT_SOS_BR = Sammlung(
+        trace="Sos Br",
+        groups="Lautschrift|Sos Br",
+        kreis="Sos",
+        ort="Br",
+    )
+    LAUT_SOS_BS = Sammlung(
+        trace="Sos Bs",
+        groups="Lautschrift|Sos Bs",
+        kreis="Sos",
+        ort="Bs",
+    )
+    LAUT_SOS_BT = Sammlung(
+        trace="Sos Bt",
+        groups="Lautschrift|Sos Bt",
+        kreis="Sos",
+        ort="Bt",
+    )
+    LAUT_SOS_BÜ = Sammlung(
+        trace="Sos Bü",
+        groups="Lautschrift|Sos Bü",
+        kreis="Sos",
+        ort="Bü",
+    )
+    LAUT_SOS_BW = Sammlung(
+        trace="Sos Bw",
+        groups="Lautschrift|Sos Bw",
+        kreis="Sos",
+        ort="Bw",
+    )
+    LAUT_SOS_DE = Sammlung(
+        trace="Sos De",
+        groups="Lautschrift|Sos De",
+        kreis="Sos",
+        ort="De",
+    )
+    LAUT_SOS_DI = Sammlung(
+        trace="Sos Di",
+        groups="Lautschrift|Sos Di",
+        kreis="Sos",
+        ort="Di",
+    )
+    LAUT_SOS_DL = Sammlung(
+        trace="Sos Dl",
+        groups="Lautschrift|Sos Dl",
+        kreis="Sos",
+        ort="Dl",
+    )
+    LAUT_SOS_DW = Sammlung(
+        trace="Sos Dw",
+        groups="Lautschrift|Sos Dw",
+        kreis="Sos",
+        ort="Dw",
+    )
+    LAUT_SOS_EB = Sammlung(
+        trace="Sos Eb",
+        groups="Lautschrift|Sos Eb",
+        kreis="Sos",
+        ort="Eb",
+    )
+    LAUT_SOS_EH = Sammlung(
+        trace="Sos Eh",
+        groups="Lautschrift|Sos Eh",
+        kreis="Sos",
+        ort="Eh",
+    )
+    LAUT_SOS_EI = Sammlung(
+        trace="Sos Ei",
+        groups="Lautschrift|Sos Ei",
+        kreis="Sos",
+        ort="Ei",
+    )
+    LAUT_SOS_EK = Sammlung(
+        trace="Sos Ek",
+        groups="Lautschrift|Sos Ek",
+        kreis="Sos",
+        ort="Ek",
+    )
+    LAUT_SOS_EL = Sammlung(
+        trace="Sos El",
+        groups="Lautschrift|Sos El",
+        kreis="Sos",
+        ort="El",
+    )
+    LAUT_SOS_EM = Sammlung(
+        trace="Sos Em",
+        groups="Lautschrift|Sos Em",
+        kreis="Sos",
+        ort="Em",
+    )
+    LAUT_SOS_EN = Sammlung(
+        trace="Sos En",
+        groups="Lautschrift|Sos En",
+        kreis="Sos",
+        ort="En",
+    )
+    LAUT_SOS_EO = Sammlung(
+        trace="Sos Eo",
+        groups="Lautschrift|Sos Eo",
+        kreis="Sos",
+        ort="Eo",
+    )
+    LAUT_SOS_EP = Sammlung(
+        trace="Sos Ep",
+        groups="Lautschrift|Sos Ep",
+        kreis="Sos",
+        ort="Ep",
+    )
+    LAUT_SOS_FL = Sammlung(
+        trace="Sos Fl",
+        groups="Lautschrift|Sos Fl",
+        kreis="Sos",
+        ort="Fl",
+    )
+    LAUT_SOS_GA = Sammlung(
+        trace="Sos Ga",
+        groups="Lautschrift|Sos Ga",
+        kreis="Sos",
+        ort="Ga",
+    )
+    LAUT_SOS_GÜ = Sammlung(
+        trace="Sos Gü",
+        groups="Lautschrift|Sos Gü",
+        kreis="Sos",
+        ort="Gü",
+    )
+    LAUT_SOS_HA = Sammlung(
+        trace="Sos Ha",
+        groups="Lautschrift|Sos Ha",
+        kreis="Sos",
+        ort="Ha",
+    )
+    LAUT_SOS_HE = Sammlung(
+        trace="Sos He",
+        groups="Lautschrift|Sos He",
+        kreis="Sos",
+        ort="He",
+    )
+    LAUT_SOS_HH = Sammlung(
+        trace="Sos Hh",
+        groups="Lautschrift|Sos Hh",
+        kreis="Sos",
+        ort="Hh",
+    )
+    LAUT_SOS_HI = Sammlung(
+        trace="Sos Hi",
+        groups="Lautschrift|Sos Hi",
+        kreis="Sos",
+        ort="Hi",
+    )
+    LAUT_SOS_HN = Sammlung(
+        trace="Sos Hn",
+        groups="Lautschrift|Sos Hn",
+        kreis="Sos",
+        ort="Hn",
+    )
+    LAUT_SOS_HO = Sammlung(
+        trace="Sos Ho",
+        groups="Lautschrift|Sos Ho",
+        kreis="Sos",
+        ort="Ho",
+    )
+    LAUT_SOS_HÖ = Sammlung(
+        trace="Sos Hö",
+        groups="Lautschrift|Sos Hö",
+        kreis="Sos",
+        ort="Hö",
+    )
+    LAUT_SOS_HP = Sammlung(
+        trace="Sos Hp",
+        groups="Lautschrift|Sos Hp",
+        kreis="Sos",
+        ort="Hp",
+    )
+    LAUT_SOS_HT = Sammlung(
+        trace="Sos Ht",
+        groups="Lautschrift|Sos Ht",
+        kreis="Sos",
+        ort="Ht",
+    )
+    LAUT_SOS_HU = Sammlung(
+        trace="Sos Hu",
+        groups="Lautschrift|Sos Hu",
+        kreis="Sos",
+        ort="Hu",
+    )
+    LAUT_SOS_IL = Sammlung(
+        trace="Sos Il",
+        groups="Lautschrift|Sos Il",
+        kreis="Sos",
+        ort="Il",
+    )
+    LAUT_SOS_KA = Sammlung(
+        trace="Sos Ka",
+        groups="Lautschrift|Sos Ka",
+        kreis="Sos",
+        ort="Ka",
+    )
+    LAUT_SOS_KL = Sammlung(
+        trace="Sos Kl",
+        groups="Lautschrift|Sos Kl",
+        kreis="Sos",
+        ort="Kl",
+    )
+    LAUT_SOS_KÖ = Sammlung(
+        trace="Sos Kö",
+        groups="Lautschrift|Sos Kö",
+        kreis="Sos",
+        ort="Kö",
+    )
+    LAUT_SOS_KU = Sammlung(
+        trace="Sos Ku",
+        groups="Lautschrift|Sos Ku",
+        kreis="Sos",
+        ort="Ku",
+    )
+    LAUT_SOS_KW = Sammlung(
+        trace="Sos Kw",
+        groups="Lautschrift|Sos Kw",
+        kreis="Sos",
+        ort="Kw",
+    )
+    LAUT_SOS_LE = Sammlung(
+        trace="Sos Le",
+        groups="Lautschrift|Sos Le",
+        kreis="Sos",
+        ort="Le",
+    )
+    LAUT_SOS_LH = Sammlung(
+        trace="Sos Lh",
+        groups="Lautschrift|Sos Lh",
+        kreis="Sos",
+        ort="Lh",
+    )
+    LAUT_SOS_LO = Sammlung(
+        trace="Sos Lo",
+        groups="Lautschrift|Sos Lo",
+        kreis="Sos",
+        ort="Lo",
+    )
+    LAUT_SOS_LT = Sammlung(
+        trace="Sos Lt",
+        groups="Lautschrift|Sos Lt",
+        kreis="Sos",
+        ort="Lt",
+    )
+    LAUT_SOS_LÜ = Sammlung(
+        trace="Sos Lü",
+        groups="Lautschrift|Sos Lü",
+        kreis="Sos",
+        ort="Lü",
+    )
+    LAUT_SOS_MC = Sammlung(
+        trace="Sos Mc",
+        groups="Lautschrift|Sos Mc",
+        kreis="Sos",
+        ort="Mc",
+    )
+    LAUT_SOS_ME = Sammlung(
+        trace="Sos Me",
+        groups="Lautschrift|Sos Me",
+        kreis="Sos",
+        ort="Me",
+    )
+    LAUT_SOS_ML = Sammlung(
+        trace="Sos Ml",
+        groups="Lautschrift|Sos Ml",
+        kreis="Sos",
+        ort="Ml",
+    )
+    LAUT_SOS_MÜ = Sammlung(
+        trace="Sos Mü",
+        groups="Lautschrift|Sos Mü",
+        kreis="Sos",
+        ort="Mü",
+    )
+    LAUT_SOS_MY = Sammlung(
+        trace="Sos My",
+        groups="Lautschrift|Sos My",
+        kreis="Sos",
+        ort="My",
+    )
+    LAUT_SOS_NA = Sammlung(
+        trace="Sos Na",
+        groups="Lautschrift|Sos Na",
+        kreis="Sos",
+        ort="Na",
+    )
+    LAUT_SOS_NB = Sammlung(
+        trace="Sos Nb",
+        groups="Lautschrift|Sos Nb",
+        kreis="Sos",
+        ort="Nb",
+    )
+    LAUT_SOS_ND = Sammlung(
+        trace="Sos Nd",
+        groups="Lautschrift|Sos Nd",
+        kreis="Sos",
+        ort="Nd",
+    )
+    LAUT_SOS_NE = Sammlung(
+        trace="Sos Ne",
+        groups="Lautschrift|Sos Ne",
+        kreis="Sos",
+        ort="Ne",
+    )
+    LAUT_SOS_NG = Sammlung(
+        trace="Sos Ng",
+        groups="Lautschrift|Sos Ng",
+        kreis="Sos",
+        ort="Ng",
+    )
+    LAUT_SOS_NW = Sammlung(
+        trace="Sos Nw",
+        groups="Lautschrift|Sos Nw",
+        kreis="Sos",
+        ort="Nw",
+    )
+    LAUT_SOS_OB = Sammlung(
+        trace="Sos Ob",
+        groups="Lautschrift|Sos Ob",
+        kreis="Sos",
+        ort="Ob",
+    )
+    LAUT_SOS_OH = Sammlung(
+        trace="Sos Oh",
+        groups="Lautschrift|Sos Oh",
+        kreis="Sos",
+        ort="Oh",
+    )
+    LAUT_SOS_ÖH = Sammlung(
+        trace="Sos Öh",
+        groups="Lautschrift|Sos Öh",
+        kreis="Sos",
+        ort="Öh",
+    )
+    LAUT_SOS_OÖ = Sammlung(
+        trace="Sos Oö",
+        groups="Lautschrift|Sos Oö",
+        kreis="Sos",
+        ort="Oö",
+    )
+    LAUT_SOS_OP = Sammlung(
+        trace="Sos Op",
+        groups="Lautschrift|Sos Op",
+        kreis="Sos",
+        ort="Op",
+    )
+    LAUT_SOS_PA = Sammlung(
+        trace="Sos Pa",
+        groups="Lautschrift|Sos Pa",
+        kreis="Sos",
+        ort="Pa",
+    )
+    LAUT_SOS_RE = Sammlung(
+        trace="Sos Re",
+        groups="Lautschrift|Sos Re",
+        kreis="Sos",
+        ort="Re",
+    )
+    LAUT_SOS_RL = Sammlung(
+        trace="Sos Rl",
+        groups="Lautschrift|Sos Rl",
+        kreis="Sos",
+        ort="Rl",
+    )
+    LAUT_SOS_RÖ = Sammlung(
+        trace="Sos Rö",
+        groups="Lautschrift|Sos Rö",
+        kreis="Sos",
+        ort="Rö",
+    )
+    LAUT_SOS_RU = Sammlung(
+        trace="Sos Ru",
+        groups="Lautschrift|Sos Ru",
+        kreis="Sos",
+        ort="Ru",
+    )
+    LAUT_SOS_SB = Sammlung(
+        trace="Sos Sb",
+        groups="Lautschrift|Sos Sb",
+        kreis="Sos",
+        ort="Sb",
+    )
+    LAUT_SOS_SC = Sammlung(
+        trace="Sos Sc",
+        groups="Lautschrift|Sos Sc",
+        kreis="Sos",
+        ort="Sc",
+    )
+    LAUT_SOS_SD = Sammlung(
+        trace="Sos Sd",
+        groups="Lautschrift|Sos Sd",
+        kreis="Sos",
+        ort="Sd",
+    )
+    LAUT_SOS_SI = Sammlung(
+        trace="Sos Si",
+        groups="Lautschrift|Sos Si",
+        kreis="Sos",
+        ort="Si",
+    )
+    LAUT_SOS_SK = Sammlung(
+        trace="Sos Sk",
+        groups="Lautschrift|Sos Sk",
+        kreis="Sos",
+        ort="Sk",
+    )
+    LAUT_SOS_SL = Sammlung(
+        trace="Sos Sl",
+        groups="Lautschrift|Sos Sl",
+        kreis="Sos",
+        ort="Sl",
+    )
+    LAUT_SOS_SO = Sammlung(
+        trace="Sos So",
+        groups="Lautschrift|Sos So",
+        kreis="Sos",
+        ort="So",
+    )
+    LAUT_SOS_ST = Sammlung(
+        trace="Sos St",
+        groups="Lautschrift|Sos St",
+        kreis="Sos",
+        ort="St",
+    )
+    LAUT_SOS_SW = Sammlung(
+        trace="Sos Sw",
+        groups="Lautschrift|Sos Sw",
+        kreis="Sos",
+        ort="Sw",
+    )
+    LAUT_SOS_TH = Sammlung(
+        trace="Sos Th",
+        groups="Lautschrift|Sos Th",
+        kreis="Sos",
+        ort="Th",
+    )
+    LAUT_SOS_TÖ = Sammlung(
+        trace="Sos Tö",
+        groups="Lautschrift|Sos Tö",
+        kreis="Sos",
+        ort="Tö",
+    )
+    LAUT_SOS_VE = Sammlung(
+        trace="Sos Ve",
+        groups="Lautschrift|Sos Ve",
+        kreis="Sos",
+        ort="Ve",
+    )
+    LAUT_SOS_VÖ = Sammlung(
+        trace="Sos Vö",
+        groups="Lautschrift|Sos Vö",
+        kreis="Sos",
+        ort="Vö",
+    )
+    LAUT_SOS_WA = Sammlung(
+        trace="Sos Wa",
+        groups="Lautschrift|Sos Wa",
+        kreis="Sos",
+        ort="Wa",
+    )
+    LAUT_SOS_WB = Sammlung(
+        trace="Sos Wb",
+        groups="Lautschrift|Sos Wb",
+        kreis="Sos",
+        ort="Wb",
+    )
+    LAUT_SOS_WD = Sammlung(
+        trace="Sos Wd",
+        groups="Lautschrift|Sos Wd",
+        kreis="Sos",
+        ort="Wd",
+    )
+    LAUT_SOS_WE = Sammlung(
+        trace="Sos We",
+        groups="Lautschrift|Sos We",
+        kreis="Sos",
+        ort="We",
+    )
+    LAUT_SOS_WH = Sammlung(
+        trace="Sos Wh",
+        groups="Lautschrift|Sos Wh",
+        kreis="Sos",
+        ort="Wh",
+    )
+    LAUT_SOS_WI = Sammlung(
+        trace="Sos Wi",
+        groups="Lautschrift|Sos Wi",
+        kreis="Sos",
+        ort="Wi",
+    )
+    LAUT_SOS_WL = Sammlung(
+        trace="Sos Wl",
+        groups="Lautschrift|Sos Wl",
+        kreis="Sos",
+        ort="Wl",
+    )
+    LAUT_SOS_WÖ = Sammlung(
+        trace="Sos Wö",
+        groups="Lautschrift|Sos Wö",
+        kreis="Sos",
+        ort="Wö",
+    )
+    LAUT_SOS_WP = Sammlung(
+        trace="Sos Wp",
+        groups="Lautschrift|Sos Wp",
+        kreis="Sos",
+        ort="Wp",
+    )
+    LAUT_SOS_WV = Sammlung(
+        trace="Sos Wv",
+        groups="Lautschrift|Sos Wv",
+        kreis="Sos",
+        ort="Wv",
+    )
+    LAUT_STF_AB = Sammlung(
+        trace="Stf Ab",
+        groups="Lautschrift|Stf Ab",
+        kreis="Stf",
+        ort="Ab",
+    )
+    LAUT_STF_AR = Sammlung(
+        trace="Stf Ar",
+        groups="Lautschrift|Stf Ar",
+        kreis="Stf",
+        ort="Ar",
+    )
+    LAUT_STF_BO = Sammlung(
+        trace="Stf Bo",
+        groups="Lautschrift|Stf Bo",
+        kreis="Stf",
+        ort="Bo",
+    )
+    LAUT_STF_BU = Sammlung(
+        trace="Stf Bu",
+        groups="Lautschrift|Stf Bu",
+        kreis="Stf",
+        ort="Bu",
+    )
+    LAUT_STF_DU = Sammlung(
+        trace="Stf Du",
+        groups="Lautschrift|Stf Du",
+        kreis="Stf",
+        ort="Du",
+    )
+    LAUT_STF_EL = Sammlung(
+        trace="Stf El",
+        groups="Lautschrift|Stf El",
+        kreis="Stf",
+        ort="El",
+    )
+    LAUT_STF_EM = Sammlung(
+        trace="Stf Em",
+        groups="Lautschrift|Stf Em",
+        kreis="Stf",
+        ort="Em",
+    )
+    LAUT_STF_HA = Sammlung(
+        trace="Stf Ha",
+        groups="Lautschrift|Stf Ha",
+        kreis="Stf",
+        ort="Ha",
+    )
+    LAUT_STF_HB = Sammlung(
+        trace="Stf Hb",
+        groups="Lautschrift|Stf Hb",
+        kreis="Stf",
+        ort="Hb",
+    )
+    LAUT_STF_HH = Sammlung(
+        trace="Stf Hh",
+        groups="Lautschrift|Stf Hh",
+        kreis="Stf",
+        ort="Hh",
+    )
+    LAUT_STF_HL = Sammlung(
+        trace="Stf Hl",
+        groups="Lautschrift|Stf Hl",
+        kreis="Stf",
+        ort="Hl",
+    )
+    LAUT_STF_HO = Sammlung(
+        trace="Stf Ho",
+        groups="Lautschrift|Stf Ho",
+        kreis="Stf",
+        ort="Ho",
+    )
+    LAUT_STF_KA = Sammlung(
+        trace="Stf Ka",
+        groups="Lautschrift|Stf Ka",
+        kreis="Stf",
+        ort="Ka",
+    )
+    LAUT_STF_LA = Sammlung(
+        trace="Stf La",
+        groups="Lautschrift|Stf La",
+        kreis="Stf",
+        ort="La",
+    )
+    LAUT_STF_LE = Sammlung(
+        trace="Stf Le",
+        groups="Lautschrift|Stf Le",
+        kreis="Stf",
+        ort="Le",
+    )
+    LAUT_STF_LH = Sammlung(
+        trace="Stf Lh",
+        groups="Lautschrift|Stf Lh",
+        kreis="Stf",
+        ort="Lh",
+    )
+    LAUT_STF_LS = Sammlung(
+        trace="Stf Ls",
+        groups="Lautschrift|Stf Ls",
+        kreis="Stf",
+        ort="Ls",
+    )
+    LAUT_STF_ME = Sammlung(
+        trace="Stf Me",
+        groups="Lautschrift|Stf Me",
+        kreis="Stf",
+        ort="Me",
+    )
+    LAUT_STF_MS = Sammlung(
+        trace="Stf Ms",
+        groups="Lautschrift|Stf Ms",
+        kreis="Stf",
+        ort="Ms",
+    )
+    LAUT_STF_NK = Sammlung(
+        trace="Stf Nk",
+        groups="Lautschrift|Stf Nk",
+        kreis="Stf",
+        ort="Nk",
+    )
+    LAUT_STF_NW = Sammlung(
+        trace="Stf Nw",
+        groups="Lautschrift|Stf Nw",
+        kreis="Stf",
+        ort="Nw",
+    )
+    LAUT_STF_OC = Sammlung(
+        trace="Stf Oc",
+        groups="Lautschrift|Stf Oc",
+        kreis="Stf",
+        ort="Oc",
+    )
+    LAUT_STF_RH = Sammlung(
+        trace="Stf Rh",
+        groups="Lautschrift|Stf Rh",
+        kreis="Stf",
+        ort="Rh",
+    )
+    LAUT_STF_RO = Sammlung(
+        trace="Stf Ro",
+        groups="Lautschrift|Stf Ro",
+        kreis="Stf",
+        ort="Ro",
+    )
+    LAUT_STF_SE = Sammlung(
+        trace="Stf Se",
+        groups="Lautschrift|Stf Se",
+        kreis="Stf",
+        ort="Se",
+    )
+    LAUT_STF_VE = Sammlung(
+        trace="Stf Ve",
+        groups="Lautschrift|Stf Ve",
+        kreis="Stf",
+        ort="Ve",
+    )
+    LAUT_STF_WB = Sammlung(
+        trace="Stf Wb",
+        groups="Lautschrift|Stf Wb",
+        kreis="Stf",
+        ort="Wb",
+    )
+    LAUT_STF_WH = Sammlung(
+        trace="Stf Wh",
+        groups="Lautschrift|Stf Wh",
+        kreis="Stf",
+        ort="Wh",
+    )
+    LAUT_STF_WT = Sammlung(
+        trace="Stf Wt",
+        groups="Lautschrift|Stf Wt",
+        kreis="Stf",
+        ort="Wt",
+    )
+    LAUT_STH_EN = Sammlung(
+        trace="Sth En",
+        groups="Lautschrift|Sth En",
+        kreis="Sth",
+        ort="En",
+    )
+    LAUT_STH_GH = Sammlung(
+        trace="Sth Gh",
+        groups="Lautschrift|Sth Gh",
+        kreis="Sth",
+        ort="Gh",
+    )
+    LAUT_STH_HB = Sammlung(
+        trace="Sth Hb",
+        groups="Lautschrift|Sth Hb",
+        kreis="Sth",
+        ort="Hb",
+    )
+    LAUT_STH_HH = Sammlung(
+        trace="Sth Hh",
+        groups="Lautschrift|Sth Hh",
+        kreis="Sth",
+        ort="Hh",
+    )
+    LAUT_STH_HS = Sammlung(
+        trace="Sth Hs",
+        groups="Lautschrift|Sth Hs",
+        kreis="Sth",
+        ort="Hs",
+    )
+    LAUT_STH_LA = Sammlung(
+        trace="Sth La",
+        groups="Lautschrift|Sth La",
+        kreis="Sth",
+        ort="La",
+    )
+    LAUT_STH_LF = Sammlung(
+        trace="Sth Lf",
+        groups="Lautschrift|Sth Lf",
+        kreis="Sth",
+        ort="Lf",
+    )
+    LAUT_STH_LH = Sammlung(
+        trace="Sth Lh",
+        groups="Lautschrift|Sth Lh",
+        kreis="Sth",
+        ort="Lh",
+    )
+    LAUT_STH_MB = Sammlung(
+        trace="Sth Mb",
+        groups="Lautschrift|Sth Mb",
+        kreis="Sth",
+        ort="Mb",
+    )
+    LAUT_STH_NB = Sammlung(
+        trace="Sth Nb",
+        groups="Lautschrift|Sth Nb",
+        kreis="Sth",
+        ort="Nb",
+    )
+    LAUT_STH_NH = Sammlung(
+        trace="Sth Nh",
+        groups="Lautschrift|Sth Nh",
+        kreis="Sth",
+        ort="Nh",
+    )
+    LAUT_STH_NI = Sammlung(
+        trace="Sth Ni",
+        groups="Lautschrift|Sth Ni",
+        kreis="Sth",
+        ort="Ni",
+    )
+    LAUT_STH_NO = Sammlung(
+        trace="Sth No",
+        groups="Lautschrift|Sth No",
+        kreis="Sth",
+        ort="No",
+    )
+    LAUT_STH_NW = Sammlung(
+        trace="Sth Nw",
+        groups="Lautschrift|Sth Nw",
+        kreis="Sth",
+        ort="Nw",
+    )
+    LAUT_STH_OB = Sammlung(
+        trace="Sth Ob",
+        groups="Lautschrift|Sth Ob",
+        kreis="Sth",
+        ort="Ob",
+    )
+    LAUT_STH_PH = Sammlung(
+        trace="Sth Ph",
+        groups="Lautschrift|Sth Ph",
+        kreis="Sth",
+        ort="Ph",
+    )
+    LAUT_STH_PO = Sammlung(
+        trace="Sth Po",
+        groups="Lautschrift|Sth Po",
+        kreis="Sth",
+        ort="Po",
+    )
+    LAUT_STH_SH = Sammlung(
+        trace="Sth Sh",
+        groups="Lautschrift|Sth Sh",
+        kreis="Sth",
+        ort="Sh",
+    )
+    LAUT_STH_ST = Sammlung(
+        trace="Sth St",
+        groups="Lautschrift|Sth St",
+        kreis="Sth",
+        ort="St",
+    )
+    LAUT_STH_SÜ = Sammlung(
+        trace="Sth Sü",
+        groups="Lautschrift|Sth Sü",
+        kreis="Sth",
+        ort="Sü",
+    )
+    LAUT_STH_VO = Sammlung(
+        trace="Sth Vo",
+        groups="Lautschrift|Sth Vo",
+        kreis="Sth",
+        ort="Vo",
+    )
+    LAUT_STH_WH = Sammlung(
+        trace="Sth Wh",
+        groups="Lautschrift|Sth Wh",
+        kreis="Sth",
+        ort="Wh",
+    )
+    LAUT_STH_WI = Sammlung(
+        trace="Sth Wi",
+        groups="Lautschrift|Sth Wi",
+        kreis="Sth",
+        ort="Wi",
+    )
+    LAUT_STH_WÖ = Sammlung(
+        trace="Sth Wö",
+        groups="Lautschrift|Sth Wö",
+        kreis="Sth",
+        ort="Wö",
+    )
+    LAUT_TEK_AD = Sammlung(
+        trace="Tek Ad",
+        groups="Lautschrift|Tek Ad",
+        kreis="Tek",
+        ort="Ad",
+    )
+    LAUT_TEK_AL = Sammlung(
+        trace="Tek Al",
+        groups="Lautschrift|Tek Al",
+        kreis="Tek",
+        ort="Al",
+    )
+    LAUT_TEK_BB = Sammlung(
+        trace="Tek Bb",
+        groups="Lautschrift|Tek Bb",
+        kreis="Tek",
+        ort="Bb",
+    )
+    LAUT_TEK_BC = Sammlung(
+        trace="Tek Bc",
+        groups="Lautschrift|Tek Bc",
+        kreis="Tek",
+        ort="Bc",
+    )
+    LAUT_TEK_BE = Sammlung(
+        trace="Tek Be",
+        groups="Lautschrift|Tek Be",
+        kreis="Tek",
+        ort="Be",
+    )
+    LAUT_TEK_BI = Sammlung(
+        trace="Tek Bi",
+        groups="Lautschrift|Tek Bi",
+        kreis="Tek",
+        ort="Bi",
+    )
+    LAUT_TEK_BO = Sammlung(
+        trace="Tek Bo",
+        groups="Lautschrift|Tek Bo",
+        kreis="Tek",
+        ort="Bo",
+    )
+    LAUT_TEK_BR = Sammlung(
+        trace="Tek Br",
+        groups="Lautschrift|Tek Br",
+        kreis="Tek",
+        ort="Br",
+    )
+    LAUT_TEK_BÜ = Sammlung(
+        trace="Tek Bü",
+        groups="Lautschrift|Tek Bü",
+        kreis="Tek",
+        ort="Bü",
+    )
+    LAUT_TEK_DL = Sammlung(
+        trace="Tek Dl",
+        groups="Lautschrift|Tek Dl",
+        kreis="Tek",
+        ort="Dl",
+    )
+    LAUT_TEK_DÖ = Sammlung(
+        trace="Tek Dö",
+        groups="Lautschrift|Tek Dö",
+        kreis="Tek",
+        ort="Dö",
+    )
+    LAUT_TEK_DR = Sammlung(
+        trace="Tek Dr",
+        groups="Lautschrift|Tek Dr",
+        kreis="Tek",
+        ort="Dr",
+    )
+    LAUT_TEK_GH = Sammlung(
+        trace="Tek Gh",
+        groups="Lautschrift|Tek Gh",
+        kreis="Tek",
+        ort="Gh",
+    )
+    LAUT_TEK_HA = Sammlung(
+        trace="Tek Ha",
+        groups="Lautschrift|Tek Ha",
+        kreis="Tek",
+        ort="Ha",
+    )
+    LAUT_TEK_HB = Sammlung(
+        trace="Tek Hb",
+        groups="Lautschrift|Tek Hb",
+        kreis="Tek",
+        ort="Hb",
+    )
+    LAUT_TEK_HD = Sammlung(
+        trace="Tek Hd",
+        groups="Lautschrift|Tek Hd",
+        kreis="Tek",
+        ort="Hd",
+    )
+    LAUT_TEK_HF = Sammlung(
+        trace="Tek Hf",
+        groups="Lautschrift|Tek Hf",
+        kreis="Tek",
+        ort="Hf",
+    )
+    LAUT_TEK_HH = Sammlung(
+        trace="Tek Hh",
+        groups="Lautschrift|Tek Hh",
+        kreis="Tek",
+        ort="Hh",
+    )
+    LAUT_TEK_HO = Sammlung(
+        trace="Tek Ho",
+        groups="Lautschrift|Tek Ho",
+        kreis="Tek",
+        ort="Ho",
+    )
+    LAUT_TEK_HÖ = Sammlung(
+        trace="Tek Hö",
+        groups="Lautschrift|Tek Hö",
+        kreis="Tek",
+        ort="Hö",
+    )
+    LAUT_TEK_HP = Sammlung(
+        trace="Tek Hp",
+        groups="Lautschrift|Tek Hp",
+        kreis="Tek",
+        ort="Hp",
+    )
+    LAUT_TEK_HT = Sammlung(
+        trace="Tek Ht",
+        groups="Lautschrift|Tek Ht",
+        kreis="Tek",
+        ort="Ht",
+    )
+    LAUT_TEK_HV = Sammlung(
+        trace="Tek Hv",
+        groups="Lautschrift|Tek Hv",
+        kreis="Tek",
+        ort="Hv",
+    )
+    LAUT_TEK_IB = Sammlung(
+        trace="Tek Ib",
+        groups="Lautschrift|Tek Ib",
+        kreis="Tek",
+        ort="Ib",
+    )
+    LAUT_TEK_KV = Sammlung(
+        trace="Tek Kv",
+        groups="Lautschrift|Tek Kv",
+        kreis="Tek",
+        ort="Kv",
+    )
+    LAUT_TEK_LA = Sammlung(
+        trace="Tek La",
+        groups="Lautschrift|Tek La",
+        kreis="Tek",
+        ort="La",
+    )
+    LAUT_TEK_LB = Sammlung(
+        trace="Tek Lb",
+        groups="Lautschrift|Tek Lb",
+        kreis="Tek",
+        ort="Lb",
+    )
+    LAUT_TEK_LD = Sammlung(
+        trace="Tek Ld",
+        groups="Lautschrift|Tek Ld",
+        kreis="Tek",
+        ort="Ld",
+    )
+    LAUT_TEK_LE = Sammlung(
+        trace="Tek Le",
+        groups="Lautschrift|Tek Le",
+        kreis="Tek",
+        ort="Le",
+    )
+    LAUT_TEK_LH = Sammlung(
+        trace="Tek Lh",
+        groups="Lautschrift|Tek Lh",
+        kreis="Tek",
+        ort="Lh",
+    )
+    LAUT_TEK_LI = Sammlung(
+        trace="Tek Li",
+        groups="Lautschrift|Tek Li",
+        kreis="Tek",
+        ort="Li",
+    )
+    LAUT_TEK_LO = Sammlung(
+        trace="Tek Lo",
+        groups="Lautschrift|Tek Lo",
+        kreis="Tek",
+        ort="Lo",
+    )
+    LAUT_TEK_LT = Sammlung(
+        trace="Tek Lt",
+        groups="Lautschrift|Tek Lt",
+        kreis="Tek",
+        ort="Lt",
+    )
+    LAUT_TEK_LX = Sammlung(
+        trace="Tek Lx",
+        groups="Lautschrift|Tek Lx",
+        kreis="Tek",
+        ort="Lx",
+    )
+    LAUT_TEK_ME = Sammlung(
+        trace="Tek Me",
+        groups="Lautschrift|Tek Me",
+        kreis="Tek",
+        ort="Me",
+    )
+    LAUT_TEK_MT = Sammlung(
+        trace="Tek Mt",
+        groups="Lautschrift|Tek Mt",
+        kreis="Tek",
+        ort="Mt",
+    )
+    LAUT_TEK_MW = Sammlung(
+        trace="Tek Mw",
+        groups="Lautschrift|Tek Mw",
+        kreis="Tek",
+        ort="Mw",
+    )
+    LAUT_TEK_NB = Sammlung(
+        trace="Tek Nb",
+        groups="Lautschrift|Tek Nb",
+        kreis="Tek",
+        ort="Nb",
+    )
+    LAUT_TEK_OB = Sammlung(
+        trace="Tek Ob",
+        groups="Lautschrift|Tek Ob",
+        kreis="Tek",
+        ort="Ob",
+    )
+    LAUT_TEK_OL = Sammlung(
+        trace="Tek Ol",
+        groups="Lautschrift|Tek Ol",
+        kreis="Tek",
+        ort="Ol",
+    )
+    LAUT_TEK_OR = Sammlung(
+        trace="Tek Or",
+        groups="Lautschrift|Tek Or",
+        kreis="Tek",
+        ort="Or",
+    )
+    LAUT_TEK_OS = Sammlung(
+        trace="Tek Os",
+        groups="Lautschrift|Tek Os",
+        kreis="Tek",
+        ort="Os",
+    )
+    LAUT_TEK_OW = Sammlung(
+        trace="Tek Ow",
+        groups="Lautschrift|Tek Ow",
+        kreis="Tek",
+        ort="Ow",
+    )
+    LAUT_TEK_PÜ = Sammlung(
+        trace="Tek Pü",
+        groups="Lautschrift|Tek Pü",
+        kreis="Tek",
+        ort="Pü",
+    )
+    LAUT_TEK_RB = Sammlung(
+        trace="Tek Rb",
+        groups="Lautschrift|Tek Rb",
+        kreis="Tek",
+        ort="Rb",
+    )
+    LAUT_TEK_RE = Sammlung(
+        trace="Tek Re",
+        groups="Lautschrift|Tek Re",
+        kreis="Tek",
+        ort="Re",
+    )
+    LAUT_TEK_SB = Sammlung(
+        trace="Tek Sb",
+        groups="Lautschrift|Tek Sb",
+        kreis="Tek",
+        ort="Sb",
+    )
+    LAUT_TEK_SC = Sammlung(
+        trace="Tek Sc",
+        groups="Lautschrift|Tek Sc",
+        kreis="Tek",
+        ort="Sc",
+    )
+    LAUT_TEK_SE = Sammlung(
+        trace="Tek Se",
+        groups="Lautschrift|Tek Se",
+        kreis="Tek",
+        ort="Se",
+    )
+    LAUT_TEK_SL = Sammlung(
+        trace="Tek Sl",
+        groups="Lautschrift|Tek Sl",
+        kreis="Tek",
+        ort="Sl",
+    )
+    LAUT_TEK_ST = Sammlung(
+        trace="Tek St",
+        groups="Lautschrift|Tek St",
+        kreis="Tek",
+        ort="St",
+    )
+    LAUT_TEK_TB = Sammlung(
+        trace="Tek Tb",
+        groups="Lautschrift|Tek Tb",
+        kreis="Tek",
+        ort="Tb",
+    )
+    LAUT_TEK_UF = Sammlung(
+        trace="Tek Uf",
+        groups="Lautschrift|Tek Uf",
+        kreis="Tek",
+        ort="Uf",
+    )
+    LAUT_TEK_WE = Sammlung(
+        trace="Tek We",
+        groups="Lautschrift|Tek We",
+        kreis="Tek",
+        ort="We",
+    )
+    LAUT_TEK_WK = Sammlung(
+        trace="Tek Wk",
+        groups="Lautschrift|Tek Wk",
+        kreis="Tek",
+        ort="Wk",
+    )
+    LAUT_TEK_WT = Sammlung(
+        trace="Tek Wt",
+        groups="Lautschrift|Tek Wt",
+        kreis="Tek",
+        ort="Wt",
+    )
+    LAUT_UNN_AB = Sammlung(
+        trace="Unn Ab",
+        groups="Lautschrift|Unn Ab",
+        kreis="Unn",
+        ort="Ab",
+    )
+    LAUT_UNN_AD = Sammlung(
+        trace="Unn Ad",
+        groups="Lautschrift|Unn Ad",
+        kreis="Unn",
+        ort="Ad",
+    )
+    LAUT_UNN_AF = Sammlung(
+        trace="Unn Af",
+        groups="Lautschrift|Unn Af",
+        kreis="Unn",
+        ort="Af",
+    )
+    LAUT_UNN_AH = Sammlung(
+        trace="Unn Ah",
+        groups="Lautschrift|Unn Ah",
+        kreis="Unn",
+        ort="Ah",
+    )
+    LAUT_UNN_AR = Sammlung(
+        trace="Unn Ar",
+        groups="Lautschrift|Unn Ar",
+        kreis="Unn",
+        ort="Ar",
+    )
+    LAUT_UNN_BE = Sammlung(
+        trace="Unn Be",
+        groups="Lautschrift|Unn Be",
+        kreis="Unn",
+        ort="Be",
+    )
+    LAUT_UNN_BI = Sammlung(
+        trace="Unn Bi",
+        groups="Lautschrift|Unn Bi",
+        kreis="Unn",
+        ort="Bi",
+    )
+    LAUT_UNN_BK = Sammlung(
+        trace="Unn Bk",
+        groups="Lautschrift|Unn Bk",
+        kreis="Unn",
+        ort="Bk",
+    )
+    LAUT_UNN_BR = Sammlung(
+        trace="Unn Br",
+        groups="Lautschrift|Unn Br",
+        kreis="Unn",
+        ort="Br",
+    )
+    LAUT_UNN_BT = Sammlung(
+        trace="Unn Bt",
+        groups="Lautschrift|Unn Bt",
+        kreis="Unn",
+        ort="Bt",
+    )
+    LAUT_UNN_DH = Sammlung(
+        trace="Unn Dh",
+        groups="Lautschrift|Unn Dh",
+        kreis="Unn",
+        ort="Dh",
+    )
+    LAUT_UNN_DL = Sammlung(
+        trace="Unn Dl",
+        groups="Lautschrift|Unn Dl",
+        kreis="Unn",
+        ort="Dl",
+    )
+    LAUT_UNN_DW = Sammlung(
+        trace="Unn Dw",
+        groups="Lautschrift|Unn Dw",
+        kreis="Unn",
+        ort="Dw",
+    )
+    LAUT_UNN_FB = Sammlung(
+        trace="Unn Fb",
+        groups="Lautschrift|Unn Fb",
+        kreis="Unn",
+        ort="Fb",
+    )
+    LAUT_UNN_FH = Sammlung(
+        trace="Unn Fh",
+        groups="Lautschrift|Unn Fh",
+        kreis="Unn",
+        ort="Fh",
+    )
+    LAUT_UNN_FL = Sammlung(
+        trace="Unn Fl",
+        groups="Lautschrift|Unn Fl",
+        kreis="Unn",
+        ort="Fl",
+    )
+    LAUT_UNN_FR = Sammlung(
+        trace="Unn Fr",
+        groups="Lautschrift|Unn Fr",
+        kreis="Unn",
+        ort="Fr",
+    )
+    LAUT_UNN_HA = Sammlung(
+        trace="Unn Ha",
+        groups="Lautschrift|Unn Ha",
+        kreis="Unn",
+        ort="Ha",
+    )
+    LAUT_UNN_HD = Sammlung(
+        trace="Unn Hd",
+        groups="Lautschrift|Unn Hd",
+        kreis="Unn",
+        ort="Hd",
+    )
+    LAUT_UNN_HE = Sammlung(
+        trace="Unn He",
+        groups="Lautschrift|Unn He",
+        kreis="Unn",
+        ort="He",
+    )
+    LAUT_UNN_HH = Sammlung(
+        trace="Unn Hh",
+        groups="Lautschrift|Unn Hh",
+        kreis="Unn",
+        ort="Hh",
+    )
+    LAUT_UNN_HI = Sammlung(
+        trace="Unn Hi",
+        groups="Lautschrift|Unn Hi",
+        kreis="Unn",
+        ort="Hi",
+    )
+    LAUT_UNN_HM = Sammlung(
+        trace="Unn Hm",
+        groups="Lautschrift|Unn Hm",
+        kreis="Unn",
+        ort="Hm",
+    )
+    LAUT_UNN_HN = Sammlung(
+        trace="Unn Hn",
+        groups="Lautschrift|Unn Hn",
+        kreis="Unn",
+        ort="Hn",
+    )
+    LAUT_UNN_HO = Sammlung(
+        trace="Unn Ho",
+        groups="Lautschrift|Unn Ho",
+        kreis="Unn",
+        ort="Ho",
+    )
+    LAUT_UNN_HR = Sammlung(
+        trace="Unn Hr",
+        groups="Lautschrift|Unn Hr",
+        kreis="Unn",
+        ort="Hr",
+    )
+    LAUT_UNN_HW = Sammlung(
+        trace="Unn Hw",
+        groups="Lautschrift|Unn Hw",
+        kreis="Unn",
+        ort="Hw",
+    )
+    LAUT_UNN_HX = Sammlung(
+        trace="Unn Hx",
+        groups="Lautschrift|Unn Hx",
+        kreis="Unn",
+        ort="Hx",
+    )
+    LAUT_UNN_KA = Sammlung(
+        trace="Unn Ka",
+        groups="Lautschrift|Unn Ka",
+        kreis="Unn",
+        ort="Ka",
+    )
+    LAUT_UNN_KB = Sammlung(
+        trace="Unn Kb",
+        groups="Lautschrift|Unn Kb",
+        kreis="Unn",
+        ort="Kb",
+    )
+    LAUT_UNN_LA = Sammlung(
+        trace="Unn La",
+        groups="Lautschrift|Unn La",
+        kreis="Unn",
+        ort="La",
+    )
+    LAUT_UNN_LE = Sammlung(
+        trace="Unn Le",
+        groups="Lautschrift|Unn Le",
+        kreis="Unn",
+        ort="Le",
+    )
+    LAUT_UNN_LN = Sammlung(
+        trace="Unn Ln",
+        groups="Lautschrift|Unn Ln",
+        kreis="Unn",
+        ort="Ln",
+    )
+    LAUT_UNN_LÜ = Sammlung(
+        trace="Unn Lü",
+        groups="Lautschrift|Unn Lü",
+        kreis="Unn",
+        ort="Lü",
+    )
+    LAUT_UNN_MA = Sammlung(
+        trace="Unn Ma",
+        groups="Lautschrift|Unn Ma",
+        kreis="Unn",
+        ort="Ma",
+    )
+    LAUT_UNN_ME = Sammlung(
+        trace="Unn Me",
+        groups="Lautschrift|Unn Me",
+        kreis="Unn",
+        ort="Me",
+    )
+    LAUT_UNN_MH = Sammlung(
+        trace="Unn Mh",
+        groups="Lautschrift|Unn Mh",
+        kreis="Unn",
+        ort="Mh",
+    )
+    LAUT_UNN_MS = Sammlung(
+        trace="Unn Ms",
+        groups="Lautschrift|Unn Ms",
+        kreis="Unn",
+        ort="Ms",
+    )
+    LAUT_UNN_NB = Sammlung(
+        trace="Unn Nb",
+        groups="Lautschrift|Unn Nb",
+        kreis="Unn",
+        ort="Nb",
+    )
+    LAUT_UNN_ND = Sammlung(
+        trace="Unn Nd",
+        groups="Lautschrift|Unn Nd",
+        kreis="Unn",
+        ort="Nd",
+    )
+    LAUT_UNN_NI = Sammlung(
+        trace="Unn Ni",
+        groups="Lautschrift|Unn Ni",
+        kreis="Unn",
+        ort="Ni",
+    )
+    LAUT_UNN_NM = Sammlung(
+        trace="Unn Nm",
+        groups="Lautschrift|Unn Nm",
+        kreis="Unn",
+        ort="Nm",
+    )
+    LAUT_UNN_OA = Sammlung(
+        trace="Unn Oa",
+        groups="Lautschrift|Unn Oa",
+        kreis="Unn",
+        ort="Oa",
+    )
+    LAUT_UNN_OB = Sammlung(
+        trace="Unn Ob",
+        groups="Lautschrift|Unn Ob",
+        kreis="Unn",
+        ort="Ob",
+    )
+    LAUT_UNN_OF = Sammlung(
+        trace="Unn Of",
+        groups="Lautschrift|Unn Of",
+        kreis="Unn",
+        ort="Of",
+    )
+    LAUT_UNN_OH = Sammlung(
+        trace="Unn Oh",
+        groups="Lautschrift|Unn Oh",
+        kreis="Unn",
+        ort="Oh",
+    )
+    LAUT_UNN_OÖ = Sammlung(
+        trace="Unn Oö",
+        groups="Lautschrift|Unn Oö",
+        kreis="Unn",
+        ort="Oö",
+    )
+    LAUT_UNN_OT = Sammlung(
+        trace="Unn Ot",
+        groups="Lautschrift|Unn Ot",
+        kreis="Unn",
+        ort="Ot",
+    )
+    LAUT_UNN_OV = Sammlung(
+        trace="Unn Ov",
+        groups="Lautschrift|Unn Ov",
+        kreis="Unn",
+        ort="Ov",
+    )
+    LAUT_UNN_OW = Sammlung(
+        trace="Unn Ow",
+        groups="Lautschrift|Unn Ow",
+        kreis="Unn",
+        ort="Ow",
+    )
+    LAUT_UNN_PE = Sammlung(
+        trace="Unn Pe",
+        groups="Lautschrift|Unn Pe",
+        kreis="Unn",
+        ort="Pe",
+    )
+    LAUT_UNN_RO = Sammlung(
+        trace="Unn Ro",
+        groups="Lautschrift|Unn Ro",
+        kreis="Unn",
+        ort="Ro",
+    )
+    LAUT_UNN_RÜ = Sammlung(
+        trace="Unn Rü",
+        groups="Lautschrift|Unn Rü",
+        kreis="Unn",
+        ort="Rü",
+    )
+    LAUT_UNN_RY = Sammlung(
+        trace="Unn Ry",
+        groups="Lautschrift|Unn Ry",
+        kreis="Unn",
+        ort="Ry",
+    )
+    LAUT_UNN_SB = Sammlung(
+        trace="Unn Sb",
+        groups="Lautschrift|Unn Sb",
+        kreis="Unn",
+        ort="Sb",
+    )
+    LAUT_UNN_SC = Sammlung(
+        trace="Unn Sc",
+        groups="Lautschrift|Unn Sc",
+        kreis="Unn",
+        ort="Sc",
+    )
+    LAUT_UNN_SD = Sammlung(
+        trace="Unn Sd",
+        groups="Lautschrift|Unn Sd",
+        kreis="Unn",
+        ort="Sd",
+    )
+    LAUT_UNN_SI = Sammlung(
+        trace="Unn Si",
+        groups="Lautschrift|Unn Si",
+        kreis="Unn",
+        ort="Si",
+    )
+    LAUT_UNN_SK = Sammlung(
+        trace="Unn Sk",
+        groups="Lautschrift|Unn Sk",
+        kreis="Unn",
+        ort="Sk",
+    )
+    LAUT_UNN_SÖ = Sammlung(
+        trace="Unn Sö",
+        groups="Lautschrift|Unn Sö",
+        kreis="Unn",
+        ort="Sö",
+    )
+    LAUT_UNN_ST = Sammlung(
+        trace="Unn St",
+        groups="Lautschrift|Unn St",
+        kreis="Unn",
+        ort="St",
+    )
+    LAUT_UNN_SÜ = Sammlung(
+        trace="Unn Sü",
+        groups="Lautschrift|Unn Sü",
+        kreis="Unn",
+        ort="Sü",
+    )
+    LAUT_UNN_ÜL = Sammlung(
+        trace="Unn Ül",
+        groups="Lautschrift|Unn Ül",
+        kreis="Unn",
+        ort="Ül",
+    )
+    LAUT_UNN_UN = Sammlung(
+        trace="Unn Un",
+        groups="Lautschrift|Unn Un",
+        kreis="Unn",
+        ort="Un",
+    )
+    LAUT_UNN_ÜN = Sammlung(
+        trace="Unn Ün",
+        groups="Lautschrift|Unn Ün",
+        kreis="Unn",
+        ort="Ün",
+    )
+    LAUT_UNN_VÖ = Sammlung(
+        trace="Unn Vö",
+        groups="Lautschrift|Unn Vö",
+        kreis="Unn",
+        ort="Vö",
+    )
+    LAUT_UNN_WB = Sammlung(
+        trace="Unn Wb",
+        groups="Lautschrift|Unn Wb",
+        kreis="Unn",
+        ort="Wb",
+    )
+    LAUT_UNN_WD = Sammlung(
+        trace="Unn Wd",
+        groups="Lautschrift|Unn Wd",
+        kreis="Unn",
+        ort="Wd",
+    )
+    LAUT_UNN_WE = Sammlung(
+        trace="Unn We",
+        groups="Lautschrift|Unn We",
+        kreis="Unn",
+        ort="We",
+    )
+    LAUT_UNN_WH = Sammlung(
+        trace="Unn Wh",
+        groups="Lautschrift|Unn Wh",
+        kreis="Unn",
+        ort="Wh",
+    )
+    LAUT_UNN_WK = Sammlung(
+        trace="Unn Wk",
+        groups="Lautschrift|Unn Wk",
+        kreis="Unn",
+        ort="Wk",
+    )
+    LAUT_UNN_WR = Sammlung(
+        trace="Unn Wr",
+        groups="Lautschrift|Unn Wr",
+        kreis="Unn",
+        ort="Wr",
+    )
+    LAUT_UNN_WS = Sammlung(
+        trace="Unn Ws",
+        groups="Lautschrift|Unn Ws",
+        kreis="Unn",
+        ort="Ws",
+    )
+    LAUT_VCH_AB = Sammlung(
+        trace="Vch Ab",
+        groups="Lautschrift|Vch Ab",
+        kreis="Vch",
+        ort="Ab",
+    )
+    LAUT_VCH_AS = Sammlung(
+        trace="Vch As",
+        groups="Lautschrift|Vch As",
+        kreis="Vch",
+        ort="As",
+    )
+    LAUT_VCH_BA = Sammlung(
+        trace="Vch Ba",
+        groups="Lautschrift|Vch Ba",
+        kreis="Vch",
+        ort="Ba",
+    )
+    LAUT_VCH_BF = Sammlung(
+        trace="Vch Bf",
+        groups="Lautschrift|Vch Bf",
+        kreis="Vch",
+        ort="Bf",
+    )
+    LAUT_VCH_BH = Sammlung(
+        trace="Vch Bh",
+        groups="Lautschrift|Vch Bh",
+        kreis="Vch",
+        ort="Bh",
+    )
+    LAUT_VCH_BI = Sammlung(
+        trace="Vch Bi",
+        groups="Lautschrift|Vch Bi",
+        kreis="Vch",
+        ort="Bi",
+    )
+    LAUT_VCH_BK = Sammlung(
+        trace="Vch Bk",
+        groups="Lautschrift|Vch Bk",
+        kreis="Vch",
+        ort="Bk",
+    )
+    LAUT_VCH_BL = Sammlung(
+        trace="Vch Bl",
+        groups="Lautschrift|Vch Bl",
+        kreis="Vch",
+        ort="Bl",
+    )
+    LAUT_VCH_BO = Sammlung(
+        trace="Vch Bo",
+        groups="Lautschrift|Vch Bo",
+        kreis="Vch",
+        ort="Bo",
+    )
+    LAUT_VCH_BR = Sammlung(
+        trace="Vch Br",
+        groups="Lautschrift|Vch Br",
+        kreis="Vch",
+        ort="Br",
+    )
+    LAUT_VCH_DA = Sammlung(
+        trace="Vch Da",
+        groups="Lautschrift|Vch Da",
+        kreis="Vch",
+        ort="Da",
+    )
+    LAUT_VCH_DD = Sammlung(
+        trace="Vch Dd",
+        groups="Lautschrift|Vch Dd",
+        kreis="Vch",
+        ort="Dd",
+    )
+    LAUT_VCH_DL = Sammlung(
+        trace="Vch Dl",
+        groups="Lautschrift|Vch Dl",
+        kreis="Vch",
+        ort="Dl",
+    )
+    LAUT_VCH_DÜ = Sammlung(
+        trace="Vch Dü",
+        groups="Lautschrift|Vch Dü",
+        kreis="Vch",
+        ort="Dü",
+    )
+    LAUT_VCH_EI = Sammlung(
+        trace="Vch Ei",
+        groups="Lautschrift|Vch Ei",
+        kreis="Vch",
+        ort="Ei",
+    )
+    LAUT_VCH_EL = Sammlung(
+        trace="Vch El",
+        groups="Lautschrift|Vch El",
+        kreis="Vch",
+        ort="El",
+    )
+    LAUT_VCH_EN = Sammlung(
+        trace="Vch En",
+        groups="Lautschrift|Vch En",
+        kreis="Vch",
+        ort="En",
+    )
+    LAUT_VCH_FL = Sammlung(
+        trace="Vch Fl",
+        groups="Lautschrift|Vch Fl",
+        kreis="Vch",
+        ort="Fl",
+    )
+    LAUT_VCH_GH = Sammlung(
+        trace="Vch Gh",
+        groups="Lautschrift|Vch Gh",
+        kreis="Vch",
+        ort="Gh",
+    )
+    LAUT_VCH_GO = Sammlung(
+        trace="Vch Go",
+        groups="Lautschrift|Vch Go",
+        kreis="Vch",
+        ort="Go",
+    )
+    LAUT_VCH_HA = Sammlung(
+        trace="Vch Ha",
+        groups="Lautschrift|Vch Ha",
+        kreis="Vch",
+        ort="Ha",
+    )
+    LAUT_VCH_HB = Sammlung(
+        trace="Vch Hb",
+        groups="Lautschrift|Vch Hb",
+        kreis="Vch",
+        ort="Hb",
+    )
+    LAUT_VCH_HD = Sammlung(
+        trace="Vch Hd",
+        groups="Lautschrift|Vch Hd",
+        kreis="Vch",
+        ort="Hd",
+    )
+    LAUT_VCH_HG = Sammlung(
+        trace="Vch Hg",
+        groups="Lautschrift|Vch Hg",
+        kreis="Vch",
+        ort="Hg",
+    )
+    LAUT_VCH_HH = Sammlung(
+        trace="Vch Hh",
+        groups="Lautschrift|Vch Hh",
+        kreis="Vch",
+        ort="Hh",
+    )
+    LAUT_VCH_HI = Sammlung(
+        trace="Vch Hi",
+        groups="Lautschrift|Vch Hi",
+        kreis="Vch",
+        ort="Hi",
+    )
+    LAUT_VCH_HN = Sammlung(
+        trace="Vch Hn",
+        groups="Lautschrift|Vch Hn",
+        kreis="Vch",
+        ort="Hn",
+    )
+    LAUT_VCH_HO = Sammlung(
+        trace="Vch Ho",
+        groups="Lautschrift|Vch Ho",
+        kreis="Vch",
+        ort="Ho",
+    )
+    LAUT_VCH_HS = Sammlung(
+        trace="Vch Hs",
+        groups="Lautschrift|Vch Hs",
+        kreis="Vch",
+        ort="Hs",
+    )
+    LAUT_VCH_HT = Sammlung(
+        trace="Vch Ht",
+        groups="Lautschrift|Vch Ht",
+        kreis="Vch",
+        ort="Ht",
+    )
+    LAUT_VCH_HX = Sammlung(
+        trace="Vch Hx",
+        groups="Lautschrift|Vch Hx",
+        kreis="Vch",
+        ort="Hx",
+    )
+    LAUT_VCH_IH = Sammlung(
+        trace="Vch Ih",
+        groups="Lautschrift|Vch Ih",
+        kreis="Vch",
+        ort="Ih",
+    )
+    LAUT_VCH_KA = Sammlung(
+        trace="Vch Ka",
+        groups="Lautschrift|Vch Ka",
+        kreis="Vch",
+        ort="Ka",
+    )
+    LAUT_VCH_KF = Sammlung(
+        trace="Vch Kf",
+        groups="Lautschrift|Vch Kf",
+        kreis="Vch",
+        ort="Kf",
+    )
+    LAUT_VCH_KL = Sammlung(
+        trace="Vch Kl",
+        groups="Lautschrift|Vch Kl",
+        kreis="Vch",
+        ort="Kl",
+    )
+    LAUT_VCH_KR = Sammlung(
+        trace="Vch Kr",
+        groups="Lautschrift|Vch Kr",
+        kreis="Vch",
+        ort="Kr",
+    )
+    LAUT_VCH_LD = Sammlung(
+        trace="Vch Ld",
+        groups="Lautschrift|Vch Ld",
+        kreis="Vch",
+        ort="Ld",
+    )
+    LAUT_VCH_LF = Sammlung(
+        trace="Vch Lf",
+        groups="Lautschrift|Vch Lf",
+        kreis="Vch",
+        ort="Lf",
+    )
+    LAUT_VCH_LM = Sammlung(
+        trace="Vch Lm",
+        groups="Lautschrift|Vch Lm",
+        kreis="Vch",
+        ort="Lm",
+    )
+    LAUT_VCH_LO = Sammlung(
+        trace="Vch Lo",
+        groups="Lautschrift|Vch Lo",
+        kreis="Vch",
+        ort="Lo",
+    )
+    LAUT_VCH_LU = Sammlung(
+        trace="Vch Lu",
+        groups="Lautschrift|Vch Lu",
+        kreis="Vch",
+        ort="Lu",
+    )
+    LAUT_VCH_LW = Sammlung(
+        trace="Vch Lw",
+        groups="Lautschrift|Vch Lw",
+        kreis="Vch",
+        ort="Lw",
+    )
+    LAUT_VCH_MD = Sammlung(
+        trace="Vch Md",
+        groups="Lautschrift|Vch Md",
+        kreis="Vch",
+        ort="Md",
+    )
+    LAUT_VCH_MÜ = Sammlung(
+        trace="Vch Mü",
+        groups="Lautschrift|Vch Mü",
+        kreis="Vch",
+        ort="Mü",
+    )
+    LAUT_VCH_ND = Sammlung(
+        trace="Vch Nd",
+        groups="Lautschrift|Vch Nd",
+        kreis="Vch",
+        ort="Nd",
+    )
+    LAUT_VCH_NH = Sammlung(
+        trace="Vch Nh",
+        groups="Lautschrift|Vch Nh",
+        kreis="Vch",
+        ort="Nh",
+    )
+    LAUT_VCH_NK = Sammlung(
+        trace="Vch Nk",
+        groups="Lautschrift|Vch Nk",
+        kreis="Vch",
+        ort="Nk",
+    )
+    LAUT_VCH_NL = Sammlung(
+        trace="Vch Nl",
+        groups="Lautschrift|Vch Nl",
+        kreis="Vch",
+        ort="Nl",
+    )
+    LAUT_VCH_OE = Sammlung(
+        trace="Vch Oe",
+        groups="Lautschrift|Vch Oe",
+        kreis="Vch",
+        ort="Oe",
+    )
+    LAUT_VCH_OF = Sammlung(
+        trace="Vch Of",
+        groups="Lautschrift|Vch Of",
+        kreis="Vch",
+        ort="Of",
+    )
+    LAUT_VCH_OY = Sammlung(
+        trace="Vch Oy",
+        groups="Lautschrift|Vch Oy",
+        kreis="Vch",
+        ort="Oy",
+    )
+    LAUT_VCH_RD = Sammlung(
+        trace="Vch Rd",
+        groups="Lautschrift|Vch Rd",
+        kreis="Vch",
+        ort="Rd",
+    )
+    LAUT_VCH_RF = Sammlung(
+        trace="Vch Rf",
+        groups="Lautschrift|Vch Rf",
+        kreis="Vch",
+        ort="Rf",
+    )
+    LAUT_VCH_SC = Sammlung(
+        trace="Vch Sc",
+        groups="Lautschrift|Vch Sc",
+        kreis="Vch",
+        ort="Sc",
+    )
+    LAUT_VCH_SH = Sammlung(
+        trace="Vch Sh",
+        groups="Lautschrift|Vch Sh",
+        kreis="Vch",
+        ort="Sh",
+    )
+    LAUT_VCH_SL = Sammlung(
+        trace="Vch Sl",
+        groups="Lautschrift|Vch Sl",
+        kreis="Vch",
+        ort="Sl",
+    )
+    LAUT_VCH_ST = Sammlung(
+        trace="Vch St",
+        groups="Lautschrift|Vch St",
+        kreis="Vch",
+        ort="St",
+    )
+    LAUT_VCH_SW = Sammlung(
+        trace="Vch Sw",
+        groups="Lautschrift|Vch Sw",
+        kreis="Vch",
+        ort="Sw",
+    )
+    LAUT_VCH_VA = Sammlung(
+        trace="Vch Va",
+        groups="Lautschrift|Vch Va",
+        kreis="Vch",
+        ort="Va",
+    )
+    LAUT_VCH_VB = Sammlung(
+        trace="Vch Vb",
+        groups="Lautschrift|Vch Vb",
+        kreis="Vch",
+        ort="Vb",
+    )
+    LAUT_VCH_VE = Sammlung(
+        trace="Vch Ve",
+        groups="Lautschrift|Vch Ve",
+        kreis="Vch",
+        ort="Ve",
+    )
+    LAUT_VCH_VH = Sammlung(
+        trace="Vch Vh",
+        groups="Lautschrift|Vch Vh",
+        kreis="Vch",
+        ort="Vh",
+    )
+    LAUT_VCH_VP = Sammlung(
+        trace="Vch Vp",
+        groups="Lautschrift|Vch Vp",
+        kreis="Vch",
+        ort="Vp",
+    )
+    LAUT_VCH_WE = Sammlung(
+        trace="Vch We",
+        groups="Lautschrift|Vch We",
+        kreis="Vch",
+        ort="We",
+    )
+    LAUT_VCH_WÖ = Sammlung(
+        trace="Vch Wö",
+        groups="Lautschrift|Vch Wö",
+        kreis="Vch",
+        ort="Wö",
+    )
+    LAUT_VCH_WU = Sammlung(
+        trace="Vch Wu",
+        groups="Lautschrift|Vch Wu",
+        kreis="Vch",
+        ort="Wu",
+    )
+    LAUT_WAL_AD = Sammlung(
+        trace="Wal Ad",
+        groups="Lautschrift|Wal Ad",
+        kreis="Wal",
+        ort="Ad",
+    )
+    LAUT_WAL_AF = Sammlung(
+        trace="Wal Af",
+        groups="Lautschrift|Wal Af",
+        kreis="Wal",
+        ort="Af",
+    )
+    LAUT_WAL_AL = Sammlung(
+        trace="Wal Al",
+        groups="Lautschrift|Wal Al",
+        kreis="Wal",
+        ort="Al",
+    )
+    LAUT_WAL_AM = Sammlung(
+        trace="Wal Am",
+        groups="Lautschrift|Wal Am",
+        kreis="Wal",
+        ort="Am",
+    )
+    LAUT_WAL_AR = Sammlung(
+        trace="Wal Ar",
+        groups="Lautschrift|Wal Ar",
+        kreis="Wal",
+        ort="Ar",
+    )
+    LAUT_WAL_AS = Sammlung(
+        trace="Wal As",
+        groups="Lautschrift|Wal As",
+        kreis="Wal",
+        ort="As",
+    )
+    LAUT_WAL_BA = Sammlung(
+        trace="Wal Ba",
+        groups="Lautschrift|Wal Ba",
+        kreis="Wal",
+        ort="Ba",
+    )
+    LAUT_WAL_BB = Sammlung(
+        trace="Wal Bb",
+        groups="Lautschrift|Wal Bb",
+        kreis="Wal",
+        ort="Bb",
+    )
+    LAUT_WAL_BD = Sammlung(
+        trace="Wal Bd",
+        groups="Lautschrift|Wal Bd",
+        kreis="Wal",
+        ort="Bd",
+    )
+    LAUT_WAL_BH = Sammlung(
+        trace="Wal Bh",
+        groups="Lautschrift|Wal Bh",
+        kreis="Wal",
+        ort="Bh",
+    )
+    LAUT_WAL_BÖ = Sammlung(
+        trace="Wal Bö",
+        groups="Lautschrift|Wal Bö",
+        kreis="Wal",
+        ort="Bö",
+    )
+    LAUT_WAL_BR = Sammlung(
+        trace="Wal Br",
+        groups="Lautschrift|Wal Br",
+        kreis="Wal",
+        ort="Br",
+    )
+    LAUT_WAL_BÜ = Sammlung(
+        trace="Wal Bü",
+        groups="Lautschrift|Wal Bü",
+        kreis="Wal",
+        ort="Bü",
+    )
+    LAUT_WAL_DE = Sammlung(
+        trace="Wal De",
+        groups="Lautschrift|Wal De",
+        kreis="Wal",
+        ort="De",
+    )
+    LAUT_WAL_DF = Sammlung(
+        trace="Wal Df",
+        groups="Lautschrift|Wal Df",
+        kreis="Wal",
+        ort="Df",
+    )
+    LAUT_WAL_DH = Sammlung(
+        trace="Wal Dh",
+        groups="Lautschrift|Wal Dh",
+        kreis="Wal",
+        ort="Dh",
+    )
+    LAUT_WAL_DI = Sammlung(
+        trace="Wal Di",
+        groups="Lautschrift|Wal Di",
+        kreis="Wal",
+        ort="Di",
+    )
+    LAUT_WAL_DT = Sammlung(
+        trace="Wal Dt",
+        groups="Lautschrift|Wal Dt",
+        kreis="Wal",
+        ort="Dt",
+    )
+    LAUT_WAL_EI = Sammlung(
+        trace="Wal Ei",
+        groups="Lautschrift|Wal Ei",
+        kreis="Wal",
+        ort="Ei",
+    )
+    LAUT_WAL_EL = Sammlung(
+        trace="Wal El",
+        groups="Lautschrift|Wal El",
+        kreis="Wal",
+        ort="El",
+    )
+    LAUT_WAL_EN = Sammlung(
+        trace="Wal En",
+        groups="Lautschrift|Wal En",
+        kreis="Wal",
+        ort="En",
+    )
+    LAUT_WAL_EP = Sammlung(
+        trace="Wal Ep",
+        groups="Lautschrift|Wal Ep",
+        kreis="Wal",
+        ort="Ep",
+    )
+    LAUT_WAL_FB = Sammlung(
+        trace="Wal Fb",
+        groups="Lautschrift|Wal Fb",
+        kreis="Wal",
+        ort="Fb",
+    )
+    LAUT_WAL_FL = Sammlung(
+        trace="Wal Fl",
+        groups="Lautschrift|Wal Fl",
+        kreis="Wal",
+        ort="Fl",
+    )
+    LAUT_WAL_FR = Sammlung(
+        trace="Wal Fr",
+        groups="Lautschrift|Wal Fr",
+        kreis="Wal",
+        ort="Fr",
+    )
+    LAUT_WAL_GB = Sammlung(
+        trace="Wal Gb",
+        groups="Lautschrift|Wal Gb",
+        kreis="Wal",
+        ort="Gb",
+    )
+    LAUT_WAL_GD = Sammlung(
+        trace="Wal Gd",
+        groups="Lautschrift|Wal Gd",
+        kreis="Wal",
+        ort="Gd",
+    )
+    LAUT_WAL_GH = Sammlung(
+        trace="Wal Gh",
+        groups="Lautschrift|Wal Gh",
+        kreis="Wal",
+        ort="Gh",
+    )
+    LAUT_WAL_GI = Sammlung(
+        trace="Wal Gi",
+        groups="Lautschrift|Wal Gi",
+        kreis="Wal",
+        ort="Gi",
+    )
+    LAUT_WAL_HA = Sammlung(
+        trace="Wal Ha",
+        groups="Lautschrift|Wal Ha",
+        kreis="Wal",
+        ort="Ha",
+    )
+    LAUT_WAL_HB = Sammlung(
+        trace="Wal Hb",
+        groups="Lautschrift|Wal Hb",
+        kreis="Wal",
+        ort="Hb",
+    )
+    LAUT_WAL_HE = Sammlung(
+        trace="Wal He",
+        groups="Lautschrift|Wal He",
+        kreis="Wal",
+        ort="He",
+    )
+    LAUT_WAL_HH = Sammlung(
+        trace="Wal Hh",
+        groups="Lautschrift|Wal Hh",
+        kreis="Wal",
+        ort="Hh",
+    )
+    LAUT_WAL_HI = Sammlung(
+        trace="Wal Hi",
+        groups="Lautschrift|Wal Hi",
+        kreis="Wal",
+        ort="Hi",
+    )
+    LAUT_WAL_HM = Sammlung(
+        trace="Wal Hm",
+        groups="Lautschrift|Wal Hm",
+        kreis="Wal",
+        ort="Hm",
+    )
+    LAUT_WAL_HÖ = Sammlung(
+        trace="Wal Hö",
+        groups="Lautschrift|Wal Hö",
+        kreis="Wal",
+        ort="Hö",
+    )
+    LAUT_WAL_HP = Sammlung(
+        trace="Wal Hp",
+        groups="Lautschrift|Wal Hp",
+        kreis="Wal",
+        ort="Hp",
+    )
+    LAUT_WAL_HR = Sammlung(
+        trace="Wal Hr",
+        groups="Lautschrift|Wal Hr",
+        kreis="Wal",
+        ort="Hr",
+    )
+    LAUT_WAL_HS = Sammlung(
+        trace="Wal Hs",
+        groups="Lautschrift|Wal Hs",
+        kreis="Wal",
+        ort="Hs",
+    )
+    LAUT_WAL_HZ = Sammlung(
+        trace="Wal Hz",
+        groups="Lautschrift|Wal Hz",
+        kreis="Wal",
+        ort="Hz",
+    )
+    LAUT_WAL_IM = Sammlung(
+        trace="Wal Im",
+        groups="Lautschrift|Wal Im",
+        kreis="Wal",
+        ort="Im",
+    )
+    LAUT_WAL_IT = Sammlung(
+        trace="Wal It",
+        groups="Lautschrift|Wal It",
+        kreis="Wal",
+        ort="It",
+    )
+    LAUT_WAL_KB = Sammlung(
+        trace="Wal Kb",
+        groups="Lautschrift|Wal Kb",
+        kreis="Wal",
+        ort="Kb",
+    )
+    LAUT_WAL_KG = Sammlung(
+        trace="Wal Kg",
+        groups="Lautschrift|Wal Kg",
+        kreis="Wal",
+        ort="Kg",
+    )
+    LAUT_WAL_KI = Sammlung(
+        trace="Wal Ki",
+        groups="Lautschrift|Wal Ki",
+        kreis="Wal",
+        ort="Ki",
+    )
+    LAUT_WAL_KÜ = Sammlung(
+        trace="Wal Kü",
+        groups="Lautschrift|Wal Kü",
+        kreis="Wal",
+        ort="Kü",
+    )
+    LAUT_WAL_LA = Sammlung(
+        trace="Wal La",
+        groups="Lautschrift|Wal La",
+        kreis="Wal",
+        ort="La",
+    )
+    LAUT_WAL_LB = Sammlung(
+        trace="Wal Lb",
+        groups="Lautschrift|Wal Lb",
+        kreis="Wal",
+        ort="Lb",
+    )
+    LAUT_WAL_LF = Sammlung(
+        trace="Wal Lf",
+        groups="Lautschrift|Wal Lf",
+        kreis="Wal",
+        ort="Lf",
+    )
+    LAUT_WAL_LH = Sammlung(
+        trace="Wal Lh",
+        groups="Lautschrift|Wal Lh",
+        kreis="Wal",
+        ort="Lh",
+    )
+    LAUT_WAL_ME = Sammlung(
+        trace="Wal Me",
+        groups="Lautschrift|Wal Me",
+        kreis="Wal",
+        ort="Me",
+    )
+    LAUT_WAL_MH = Sammlung(
+        trace="Wal Mh",
+        groups="Lautschrift|Wal Mh",
+        kreis="Wal",
+        ort="Mh",
+    )
+    LAUT_WAL_ML = Sammlung(
+        trace="Wal Ml",
+        groups="Lautschrift|Wal Ml",
+        kreis="Wal",
+        ort="Ml",
+    )
+    LAUT_WAL_MN = Sammlung(
+        trace="Wal Mn",
+        groups="Lautschrift|Wal Mn",
+        kreis="Wal",
+        ort="Mn",
+    )
+    LAUT_WAL_MS = Sammlung(
+        trace="Wal Ms",
+        groups="Lautschrift|Wal Ms",
+        kreis="Wal",
+        ort="Ms",
+    )
+    LAUT_WAL_MÜ = Sammlung(
+        trace="Wal Mü",
+        groups="Lautschrift|Wal Mü",
+        kreis="Wal",
+        ort="Mü",
+    )
+    LAUT_WAL_NB = Sammlung(
+        trace="Wal Nb",
+        groups="Lautschrift|Wal Nb",
+        kreis="Wal",
+        ort="Nb",
+    )
+    LAUT_WAL_NE = Sammlung(
+        trace="Wal Ne",
+        groups="Lautschrift|Wal Ne",
+        kreis="Wal",
+        ort="Ne",
+    )
+    LAUT_WAL_NF = Sammlung(
+        trace="Wal Nf",
+        groups="Lautschrift|Wal Nf",
+        kreis="Wal",
+        ort="Nf",
+    )
+    LAUT_WAL_NR = Sammlung(
+        trace="Wal Nr",
+        groups="Lautschrift|Wal Nr",
+        kreis="Wal",
+        ort="Nr",
+    )
+    LAUT_WAL_NS = Sammlung(
+        trace="Wal Ns",
+        groups="Lautschrift|Wal Ns",
+        kreis="Wal",
+        ort="Ns",
+    )
+    LAUT_WAL_NW = Sammlung(
+        trace="Wal Nw",
+        groups="Lautschrift|Wal Nw",
+        kreis="Wal",
+        ort="Nw",
+    )
+    LAUT_WAL_OB = Sammlung(
+        trace="Wal Ob",
+        groups="Lautschrift|Wal Ob",
+        kreis="Wal",
+        ort="Ob",
+    )
+    LAUT_WAL_OE = Sammlung(
+        trace="Wal Oe",
+        groups="Lautschrift|Wal Oe",
+        kreis="Wal",
+        ort="Oe",
+    )
+    LAUT_WAL_OT = Sammlung(
+        trace="Wal Ot",
+        groups="Lautschrift|Wal Ot",
+        kreis="Wal",
+        ort="Ot",
+    )
+    LAUT_WAL_OW = Sammlung(
+        trace="Wal Ow",
+        groups="Lautschrift|Wal Ow",
+        kreis="Wal",
+        ort="Ow",
+    )
+    LAUT_WAL_RA = Sammlung(
+        trace="Wal Ra",
+        groups="Lautschrift|Wal Ra",
+        kreis="Wal",
+        ort="Ra",
+    )
+    LAUT_WAL_RE = Sammlung(
+        trace="Wal Re",
+        groups="Lautschrift|Wal Re",
+        kreis="Wal",
+        ort="Re",
+    )
+    LAUT_WAL_RG = Sammlung(
+        trace="Wal Rg",
+        groups="Lautschrift|Wal Rg",
+        kreis="Wal",
+        ort="Rg",
+    )
+    LAUT_WAL_RO = Sammlung(
+        trace="Wal Ro",
+        groups="Lautschrift|Wal Ro",
+        kreis="Wal",
+        ort="Ro",
+    )
+    LAUT_WAL_RT = Sammlung(
+        trace="Wal Rt",
+        groups="Lautschrift|Wal Rt",
+        kreis="Wal",
+        ort="Rt",
+    )
+    LAUT_WAL_SA = Sammlung(
+        trace="Wal Sa",
+        groups="Lautschrift|Wal Sa",
+        kreis="Wal",
+        ort="Sa",
+    )
+    LAUT_WAL_SB = Sammlung(
+        trace="Wal Sb",
+        groups="Lautschrift|Wal Sb",
+        kreis="Wal",
+        ort="Sb",
+    )
+    LAUT_WAL_SC = Sammlung(
+        trace="Wal Sc",
+        groups="Lautschrift|Wal Sc",
+        kreis="Wal",
+        ort="Sc",
+    )
+    LAUT_WAL_SE = Sammlung(
+        trace="Wal Se",
+        groups="Lautschrift|Wal Se",
+        kreis="Wal",
+        ort="Se",
+    )
+    LAUT_WAL_SF = Sammlung(
+        trace="Wal Sf",
+        groups="Lautschrift|Wal Sf",
+        kreis="Wal",
+        ort="Sf",
+    )
+    LAUT_WAL_SM = Sammlung(
+        trace="Wal Sm",
+        groups="Lautschrift|Wal Sm",
+        kreis="Wal",
+        ort="Sm",
+    )
+    LAUT_WAL_ST = Sammlung(
+        trace="Wal St",
+        groups="Lautschrift|Wal St",
+        kreis="Wal",
+        ort="St",
+    )
+    LAUT_WAL_SU = Sammlung(
+        trace="Wal Su",
+        groups="Lautschrift|Wal Su",
+        kreis="Wal",
+        ort="Su",
+    )
+    LAUT_WAL_TI = Sammlung(
+        trace="Wal Ti",
+        groups="Lautschrift|Wal Ti",
+        kreis="Wal",
+        ort="Ti",
+    )
+    LAUT_WAL_TW = Sammlung(
+        trace="Wal Tw",
+        groups="Lautschrift|Wal Tw",
+        kreis="Wal",
+        ort="Tw",
+    )
+    LAUT_WAL_US = Sammlung(
+        trace="Wal Us",
+        groups="Lautschrift|Wal Us",
+        kreis="Wal",
+        ort="Us",
+    )
+    LAUT_WAL_VA = Sammlung(
+        trace="Wal Va",
+        groups="Lautschrift|Wal Va",
+        kreis="Wal",
+        ort="Va",
+    )
+    LAUT_WAL_VH = Sammlung(
+        trace="Wal Vh",
+        groups="Lautschrift|Wal Vh",
+        kreis="Wal",
+        ort="Vh",
+    )
+    LAUT_WAL_VÖ = Sammlung(
+        trace="Wal Vö",
+        groups="Lautschrift|Wal Vö",
+        kreis="Wal",
+        ort="Vö",
+    )
+    LAUT_WAL_WB = Sammlung(
+        trace="Wal Wb",
+        groups="Lautschrift|Wal Wb",
+        kreis="Wal",
+        ort="Wb",
+    )
+    LAUT_WAL_WD = Sammlung(
+        trace="Wal Wd",
+        groups="Lautschrift|Wal Wd",
+        kreis="Wal",
+        ort="Wd",
+    )
+    LAUT_WAL_WE = Sammlung(
+        trace="Wal We",
+        groups="Lautschrift|Wal We",
+        kreis="Wal",
+        ort="We",
+    )
+    LAUT_WAL_WH = Sammlung(
+        trace="Wal Wh",
+        groups="Lautschrift|Wal Wh",
+        kreis="Wal",
+        ort="Wh",
+    )
+    LAUT_WAL_WI = Sammlung(
+        trace="Wal Wi",
+        groups="Lautschrift|Wal Wi",
+        kreis="Wal",
+        ort="Wi",
+    )
+    LAUT_WAL_WL = Sammlung(
+        trace="Wal Wl",
+        groups="Lautschrift|Wal Wl",
+        kreis="Wal",
+        ort="Wl",
+    )
+    LAUT_WAL_WR = Sammlung(
+        trace="Wal Wr",
+        groups="Lautschrift|Wal Wr",
+        kreis="Wal",
+        ort="Wr",
+    )
+    LAUT_WAL_WT = Sammlung(
+        trace="Wal Wt",
+        groups="Lautschrift|Wal Wt",
+        kreis="Wal",
+        ort="Wt",
+    )
+    LAUT_WBG_AH = Sammlung(
+        trace="Wbg Ah",
+        groups="Lautschrift|Wbg Ah",
+        kreis="Wbg",
+        ort="Ah",
+    )
+    LAUT_WBG_BB = Sammlung(
+        trace="Wbg Bb",
+        groups="Lautschrift|Wbg Bb",
+        kreis="Wbg",
+        ort="Bb",
+    )
+    LAUT_WBG_BG = Sammlung(
+        trace="Wbg Bg",
+        groups="Lautschrift|Wbg Bg",
+        kreis="Wbg",
+        ort="Bg",
+    )
+    LAUT_WBG_BH = Sammlung(
+        trace="Wbg Bh",
+        groups="Lautschrift|Wbg Bh",
+        kreis="Wbg",
+        ort="Bh",
+    )
+    LAUT_WBG_BO = Sammlung(
+        trace="Wbg Bo",
+        groups="Lautschrift|Wbg Bo",
+        kreis="Wbg",
+        ort="Bo",
+    )
+    LAUT_WBG_BÜ = Sammlung(
+        trace="Wbg Bü",
+        groups="Lautschrift|Wbg Bü",
+        kreis="Wbg",
+        ort="Bü",
+    )
+    LAUT_WBG_DA = Sammlung(
+        trace="Wbg Da",
+        groups="Lautschrift|Wbg Da",
+        kreis="Wbg",
+        ort="Da",
+    )
+    LAUT_WBG_DB = Sammlung(
+        trace="Wbg Db",
+        groups="Lautschrift|Wbg Db",
+        kreis="Wbg",
+        ort="Db",
+    )
+    LAUT_WBG_DÖ = Sammlung(
+        trace="Wbg Dö",
+        groups="Lautschrift|Wbg Dö",
+        kreis="Wbg",
+        ort="Dö",
+    )
+    LAUT_WBG_DS = Sammlung(
+        trace="Wbg Ds",
+        groups="Lautschrift|Wbg Ds",
+        kreis="Wbg",
+        ort="Ds",
+    )
+    LAUT_WBG_EI = Sammlung(
+        trace="Wbg Ei",
+        groups="Lautschrift|Wbg Ei",
+        kreis="Wbg",
+        ort="Ei",
+    )
+    LAUT_WBG_EN = Sammlung(
+        trace="Wbg En",
+        groups="Lautschrift|Wbg En",
+        kreis="Wbg",
+        ort="En",
+    )
+    LAUT_WBG_FÖ = Sammlung(
+        trace="Wbg Fö",
+        groups="Lautschrift|Wbg Fö",
+        kreis="Wbg",
+        ort="Fö",
+    )
+    LAUT_WBG_FR = Sammlung(
+        trace="Wbg Fr",
+        groups="Lautschrift|Wbg Fr",
+        kreis="Wbg",
+        ort="Fr",
+    )
+    LAUT_WBG_GE = Sammlung(
+        trace="Wbg Ge",
+        groups="Lautschrift|Wbg Ge",
+        kreis="Wbg",
+        ort="Ge",
+    )
+    LAUT_WBG_GM = Sammlung(
+        trace="Wbg Gm",
+        groups="Lautschrift|Wbg Gm",
+        kreis="Wbg",
+        ort="Gm",
+    )
+    LAUT_WBG_GR = Sammlung(
+        trace="Wbg Gr",
+        groups="Lautschrift|Wbg Gr",
+        kreis="Wbg",
+        ort="Gr",
+    )
+    LAUT_WBG_HA = Sammlung(
+        trace="Wbg Ha",
+        groups="Lautschrift|Wbg Ha",
+        kreis="Wbg",
+        ort="Ha",
+    )
+    LAUT_WBG_HE = Sammlung(
+        trace="Wbg He",
+        groups="Lautschrift|Wbg He",
+        kreis="Wbg",
+        ort="He",
+    )
+    LAUT_WBG_HH = Sammlung(
+        trace="Wbg Hh",
+        groups="Lautschrift|Wbg Hh",
+        kreis="Wbg",
+        ort="Hh",
+    )
+    LAUT_WBG_HO = Sammlung(
+        trace="Wbg Ho",
+        groups="Lautschrift|Wbg Ho",
+        kreis="Wbg",
+        ort="Ho",
+    )
+    LAUT_WBG_IK = Sammlung(
+        trace="Wbg Ik",
+        groups="Lautschrift|Wbg Ik",
+        kreis="Wbg",
+        ort="Ik",
+    )
+    LAUT_WBG_KA = Sammlung(
+        trace="Wbg Ka",
+        groups="Lautschrift|Wbg Ka",
+        kreis="Wbg",
+        ort="Ka",
+    )
+    LAUT_WBG_KÖ = Sammlung(
+        trace="Wbg Kö",
+        groups="Lautschrift|Wbg Kö",
+        kreis="Wbg",
+        ort="Kö",
+    )
+    LAUT_WBG_KÜ = Sammlung(
+        trace="Wbg Kü",
+        groups="Lautschrift|Wbg Kü",
+        kreis="Wbg",
+        ort="Kü",
+    )
+    LAUT_WBG_LÖ = Sammlung(
+        trace="Wbg Lö",
+        groups="Lautschrift|Wbg Lö",
+        kreis="Wbg",
+        ort="Lö",
+    )
+    LAUT_WBG_LÜ = Sammlung(
+        trace="Wbg Lü",
+        groups="Lautschrift|Wbg Lü",
+        kreis="Wbg",
+        ort="Lü",
+    )
+    LAUT_WBG_ME = Sammlung(
+        trace="Wbg Me",
+        groups="Lautschrift|Wbg Me",
+        kreis="Wbg",
+        ort="Me",
+    )
+    LAUT_WBG_MU = Sammlung(
+        trace="Wbg Mu",
+        groups="Lautschrift|Wbg Mu",
+        kreis="Wbg",
+        ort="Mu",
+    )
+    LAUT_WBG_NA = Sammlung(
+        trace="Wbg Na",
+        groups="Lautschrift|Wbg Na",
+        kreis="Wbg",
+        ort="Na",
+    )
+    LAUT_WBG_NH = Sammlung(
+        trace="Wbg Nh",
+        groups="Lautschrift|Wbg Nh",
+        kreis="Wbg",
+        ort="Nh",
+    )
+    LAUT_WBG_NI = Sammlung(
+        trace="Wbg Ni",
+        groups="Lautschrift|Wbg Ni",
+        kreis="Wbg",
+        ort="Ni",
+    )
+    LAUT_WBG_NÖ = Sammlung(
+        trace="Wbg Nö",
+        groups="Lautschrift|Wbg Nö",
+        kreis="Wbg",
+        ort="Nö",
+    )
+    LAUT_WBG_NZ = Sammlung(
+        trace="Wbg Nz",
+        groups="Lautschrift|Wbg Nz",
+        kreis="Wbg",
+        ort="Nz",
+    )
+    LAUT_WBG_OS = Sammlung(
+        trace="Wbg Os",
+        groups="Lautschrift|Wbg Os",
+        kreis="Wbg",
+        ort="Os",
+    )
+    LAUT_WBG_PE = Sammlung(
+        trace="Wbg Pe",
+        groups="Lautschrift|Wbg Pe",
+        kreis="Wbg",
+        ort="Pe",
+    )
+    LAUT_WBG_RI = Sammlung(
+        trace="Wbg Ri",
+        groups="Lautschrift|Wbg Ri",
+        kreis="Wbg",
+        ort="Ri",
+    )
+    LAUT_WBG_RÖ = Sammlung(
+        trace="Wbg Rö",
+        groups="Lautschrift|Wbg Rö",
+        kreis="Wbg",
+        ort="Rö",
+    )
+    LAUT_WBG_SF = Sammlung(
+        trace="Wbg Sf",
+        groups="Lautschrift|Wbg Sf",
+        kreis="Wbg",
+        ort="Sf",
+    )
+    LAUT_WBG_SH = Sammlung(
+        trace="Wbg Sh",
+        groups="Lautschrift|Wbg Sh",
+        kreis="Wbg",
+        ort="Sh",
+    )
+    LAUT_WBG_SI = Sammlung(
+        trace="Wbg Si",
+        groups="Lautschrift|Wbg Si",
+        kreis="Wbg",
+        ort="Si",
+    )
+    LAUT_WBG_SS = Sammlung(
+        trace="Wbg Ss",
+        groups="Lautschrift|Wbg Ss",
+        kreis="Wbg",
+        ort="Ss",
+    )
+    LAUT_WBG_WB = Sammlung(
+        trace="Wbg Wb",
+        groups="Lautschrift|Wbg Wb",
+        kreis="Wbg",
+        ort="Wb",
+    )
+    LAUT_WBG_WE = Sammlung(
+        trace="Wbg We",
+        groups="Lautschrift|Wbg We",
+        kreis="Wbg",
+        ort="We",
+    )
+    LAUT_WBG_WG = Sammlung(
+        trace="Wbg Wg",
+        groups="Lautschrift|Wbg Wg",
+        kreis="Wbg",
+        ort="Wg",
+    )
+    LAUT_WBG_WI = Sammlung(
+        trace="Wbg Wi",
+        groups="Lautschrift|Wbg Wi",
+        kreis="Wbg",
+        ort="Wi",
+    )
+    LAUT_WBG_WO = Sammlung(
+        trace="Wbg Wo",
+        groups="Lautschrift|Wbg Wo",
+        kreis="Wbg",
+        ort="Wo",
+    )
+    LAUT_WDF_BE = Sammlung(
+        trace="Wdf Be",
+        groups="Lautschrift|Wdf Be",
+        kreis="Wdf",
+        ort="Be",
+    )
+    LAUT_WDF_BL = Sammlung(
+        trace="Wdf Bl",
+        groups="Lautschrift|Wdf Bl",
+        kreis="Wdf",
+        ort="Bl",
+    )
+    LAUT_WDF_BR = Sammlung(
+        trace="Wdf Br",
+        groups="Lautschrift|Wdf Br",
+        kreis="Wdf",
+        ort="Br",
+    )
+    LAUT_WDF_BS = Sammlung(
+        trace="Wdf Bs",
+        groups="Lautschrift|Wdf Bs",
+        kreis="Wdf",
+        ort="Bs",
+    )
+    LAUT_WDF_DM = Sammlung(
+        trace="Wdf Dm",
+        groups="Lautschrift|Wdf Dm",
+        kreis="Wdf",
+        ort="Dm",
+    )
+    LAUT_WDF_EI = Sammlung(
+        trace="Wdf Ei",
+        groups="Lautschrift|Wdf Ei",
+        kreis="Wdf",
+        ort="Ei",
+    )
+    LAUT_WDF_EV = Sammlung(
+        trace="Wdf Ev",
+        groups="Lautschrift|Wdf Ev",
+        kreis="Wdf",
+        ort="Ev",
+    )
+    LAUT_WDF_FR = Sammlung(
+        trace="Wdf Fr",
+        groups="Lautschrift|Wdf Fr",
+        kreis="Wdf",
+        ort="Fr",
+    )
+    LAUT_WDF_FÜ = Sammlung(
+        trace="Wdf Fü",
+        groups="Lautschrift|Wdf Fü",
+        kreis="Wdf",
+        ort="Fü",
+    )
+    LAUT_WDF_GF = Sammlung(
+        trace="Wdf Gf",
+        groups="Lautschrift|Wdf Gf",
+        kreis="Wdf",
+        ort="Gf",
+    )
+    LAUT_WDF_GR = Sammlung(
+        trace="Wdf Gr",
+        groups="Lautschrift|Wdf Gr",
+        kreis="Wdf",
+        ort="Gr",
+    )
+    LAUT_WDF_HO = Sammlung(
+        trace="Wdf Ho",
+        groups="Lautschrift|Wdf Ho",
+        kreis="Wdf",
+        ort="Ho",
+    )
+    LAUT_WDF_HW = Sammlung(
+        trace="Wdf Hw",
+        groups="Lautschrift|Wdf Hw",
+        kreis="Wdf",
+        ort="Hw",
+    )
+    LAUT_WDF_MF = Sammlung(
+        trace="Wdf Mf",
+        groups="Lautschrift|Wdf Mf",
+        kreis="Wdf",
+        ort="Mf",
+    )
+    LAUT_WDF_MI = Sammlung(
+        trace="Wdf Mi",
+        groups="Lautschrift|Wdf Mi",
+        kreis="Wdf",
+        ort="Mi",
+    )
+    LAUT_WDF_MÜ = Sammlung(
+        trace="Wdf Mü",
+        groups="Lautschrift|Wdf Mü",
+        kreis="Wdf",
+        ort="Mü",
+    )
+    LAUT_WDF_OB = Sammlung(
+        trace="Wdf Ob",
+        groups="Lautschrift|Wdf Ob",
+        kreis="Wdf",
+        ort="Ob",
+    )
+    LAUT_WDF_OF = Sammlung(
+        trace="Wdf Of",
+        groups="Lautschrift|Wdf Of",
+        kreis="Wdf",
+        ort="Of",
+    )
+    LAUT_WDF_RH = Sammlung(
+        trace="Wdf Rh",
+        groups="Lautschrift|Wdf Rh",
+        kreis="Wdf",
+        ort="Rh",
+    )
+    LAUT_WDF_SB = Sammlung(
+        trace="Wdf Sb",
+        groups="Lautschrift|Wdf Sb",
+        kreis="Wdf",
+        ort="Sb",
+    )
+    LAUT_WDF_SC = Sammlung(
+        trace="Wdf Sc",
+        groups="Lautschrift|Wdf Sc",
+        kreis="Wdf",
+        ort="Sc",
+    )
+    LAUT_WDF_VE = Sammlung(
+        trace="Wdf Ve",
+        groups="Lautschrift|Wdf Ve",
+        kreis="Wdf",
+        ort="Ve",
+    )
+    LAUT_WDF_VO = Sammlung(
+        trace="Wdf Vo",
+        groups="Lautschrift|Wdf Vo",
+        kreis="Wdf",
+        ort="Vo",
+    )
+    LAUT_WDF_WD = Sammlung(
+        trace="Wdf Wd",
+        groups="Lautschrift|Wdf Wd",
+        kreis="Wdf",
+        ort="Wd",
+    )
+    LAUT_WDF_WK = Sammlung(
+        trace="Wdf Wk",
+        groups="Lautschrift|Wdf Wk",
+        kreis="Wdf",
+        ort="Wk",
+    )
+    LAUT_WIE_AL = Sammlung(
+        trace="Wie Al",
+        groups="Lautschrift|Wie Al",
+        kreis="Wie",
+        ort="Al",
+    )
+    LAUT_WIE_AV = Sammlung(
+        trace="Wie Av",
+        groups="Lautschrift|Wie Av",
+        kreis="Wie",
+        ort="Av",
+    )
+    LAUT_WIE_BA = Sammlung(
+        trace="Wie Ba",
+        groups="Lautschrift|Wie Ba",
+        kreis="Wie",
+        ort="Ba",
+    )
+    LAUT_WIE_BH = Sammlung(
+        trace="Wie Bh",
+        groups="Lautschrift|Wie Bh",
+        kreis="Wie",
+        ort="Bh",
+    )
+    LAUT_WIE_BL = Sammlung(
+        trace="Wie Bl",
+        groups="Lautschrift|Wie Bl",
+        kreis="Wie",
+        ort="Bl",
+    )
+    LAUT_WIE_BO = Sammlung(
+        trace="Wie Bo",
+        groups="Lautschrift|Wie Bo",
+        kreis="Wie",
+        ort="Bo",
+    )
+    LAUT_WIE_BR = Sammlung(
+        trace="Wie Br",
+        groups="Lautschrift|Wie Br",
+        kreis="Wie",
+        ort="Br",
+    )
+    LAUT_WIE_DR = Sammlung(
+        trace="Wie Dr",
+        groups="Lautschrift|Wie Dr",
+        kreis="Wie",
+        ort="Dr",
+    )
+    LAUT_WIE_EH = Sammlung(
+        trace="Wie Eh",
+        groups="Lautschrift|Wie Eh",
+        kreis="Wie",
+        ort="Eh",
+    )
+    LAUT_WIE_EM = Sammlung(
+        trace="Wie Em",
+        groups="Lautschrift|Wie Em",
+        kreis="Wie",
+        ort="Em",
+    )
+    LAUT_WIE_FR = Sammlung(
+        trace="Wie Fr",
+        groups="Lautschrift|Wie Fr",
+        kreis="Wie",
+        ort="Fr",
+    )
+    LAUT_WIE_GR = Sammlung(
+        trace="Wie Gr",
+        groups="Lautschrift|Wie Gr",
+        kreis="Wie",
+        ort="Gr",
+    )
+    LAUT_WIE_GÜ = Sammlung(
+        trace="Wie Gü",
+        groups="Lautschrift|Wie Gü",
+        kreis="Wie",
+        ort="Gü",
+    )
+    LAUT_WIE_HB = Sammlung(
+        trace="Wie Hb",
+        groups="Lautschrift|Wie Hb",
+        kreis="Wie",
+        ort="Hb",
+    )
+    LAUT_WIE_HD = Sammlung(
+        trace="Wie Hd",
+        groups="Lautschrift|Wie Hd",
+        kreis="Wie",
+        ort="Hd",
+    )
+    LAUT_WIE_HO = Sammlung(
+        trace="Wie Ho",
+        groups="Lautschrift|Wie Ho",
+        kreis="Wie",
+        ort="Ho",
+    )
+    LAUT_WIE_KL = Sammlung(
+        trace="Wie Kl",
+        groups="Lautschrift|Wie Kl",
+        kreis="Wie",
+        ort="Kl",
+    )
+    LAUT_WIE_KS = Sammlung(
+        trace="Wie Ks",
+        groups="Lautschrift|Wie Ks",
+        kreis="Wie",
+        ort="Ks",
+    )
+    LAUT_WIE_KZ = Sammlung(
+        trace="Wie Kz",
+        groups="Lautschrift|Wie Kz",
+        kreis="Wie",
+        ort="Kz",
+    )
+    LAUT_WIE_LB = Sammlung(
+        trace="Wie Lb",
+        groups="Lautschrift|Wie Lb",
+        kreis="Wie",
+        ort="Lb",
+    )
+    LAUT_WIE_LE = Sammlung(
+        trace="Wie Le",
+        groups="Lautschrift|Wie Le",
+        kreis="Wie",
+        ort="Le",
+    )
+    LAUT_WIE_LI = Sammlung(
+        trace="Wie Li",
+        groups="Lautschrift|Wie Li",
+        kreis="Wie",
+        ort="Li",
+    )
+    LAUT_WIE_LK = Sammlung(
+        trace="Wie Lk",
+        groups="Lautschrift|Wie Lk",
+        kreis="Wie",
+        ort="Lk",
+    )
+    LAUT_WIE_LT = Sammlung(
+        trace="Wie Lt",
+        groups="Lautschrift|Wie Lt",
+        kreis="Wie",
+        ort="Lt",
+    )
+    LAUT_WIE_MH = Sammlung(
+        trace="Wie Mh",
+        groups="Lautschrift|Wie Mh",
+        kreis="Wie",
+        ort="Mh",
+    )
+    LAUT_WIE_MÖ = Sammlung(
+        trace="Wie Mö",
+        groups="Lautschrift|Wie Mö",
+        kreis="Wie",
+        ort="Mö",
+    )
+    LAUT_WIE_NH = Sammlung(
+        trace="Wie Nh",
+        groups="Lautschrift|Wie Nh",
+        kreis="Wie",
+        ort="Nh",
+    )
+    LAUT_WIE_NK = Sammlung(
+        trace="Wie Nk",
+        groups="Lautschrift|Wie Nk",
+        kreis="Wie",
+        ort="Nk",
+    )
+    LAUT_WIE_NR = Sammlung(
+        trace="Wie Nr",
+        groups="Lautschrift|Wie Nr",
+        kreis="Wie",
+        ort="Nr",
+    )
+    LAUT_WIE_ÖW = Sammlung(
+        trace="Wie Öw",
+        groups="Lautschrift|Wie Öw",
+        kreis="Wie",
+        ort="Öw",
+    )
+    LAUT_WIE_PA = Sammlung(
+        trace="Wie Pa",
+        groups="Lautschrift|Wie Pa",
+        kreis="Wie",
+        ort="Pa",
+    )
+    LAUT_WIE_PI = Sammlung(
+        trace="Wie Pi",
+        groups="Lautschrift|Wie Pi",
+        kreis="Wie",
+        ort="Pi",
+    )
+    LAUT_WIE_QH = Sammlung(
+        trace="Wie Qh",
+        groups="Lautschrift|Wie Qh",
+        kreis="Wie",
+        ort="Qh",
+    )
+    LAUT_WIE_RB = Sammlung(
+        trace="Wie Rb",
+        groups="Lautschrift|Wie Rb",
+        kreis="Wie",
+        ort="Rb",
+    )
+    LAUT_WIE_RH = Sammlung(
+        trace="Wie Rh",
+        groups="Lautschrift|Wie Rh",
+        kreis="Wie",
+        ort="Rh",
+    )
+    LAUT_WIE_RÖ = Sammlung(
+        trace="Wie Rö",
+        groups="Lautschrift|Wie Rö",
+        kreis="Wie",
+        ort="Rö",
+    )
+    LAUT_WIE_SA = Sammlung(
+        trace="Wie Sa",
+        groups="Lautschrift|Wie Sa",
+        kreis="Wie",
+        ort="Sa",
+    )
+    LAUT_WIE_SE = Sammlung(
+        trace="Wie Se",
+        groups="Lautschrift|Wie Se",
+        kreis="Wie",
+        ort="Se",
+    )
+    LAUT_WIE_SH = Sammlung(
+        trace="Wie Sh",
+        groups="Lautschrift|Wie Sh",
+        kreis="Wie",
+        ort="Sh",
+    )
+    LAUT_WIE_SP = Sammlung(
+        trace="Wie Sp",
+        groups="Lautschrift|Wie Sp",
+        kreis="Wie",
+        ort="Sp",
+    )
+    LAUT_WIE_SU = Sammlung(
+        trace="Wie Su",
+        groups="Lautschrift|Wie Su",
+        kreis="Wie",
+        ort="Su",
+    )
+    LAUT_WIE_SV = Sammlung(
+        trace="Wie Sv",
+        groups="Lautschrift|Wie Sv",
+        kreis="Wie",
+        ort="Sv",
+    )
+    LAUT_WIE_VL = Sammlung(
+        trace="Wie Vl",
+        groups="Lautschrift|Wie Vl",
+        kreis="Wie",
+        ort="Vl",
+    )
+    LAUT_WIE_VS = Sammlung(
+        trace="Wie Vs",
+        groups="Lautschrift|Wie Vs",
+        kreis="Wie",
+        ort="Vs",
+    )
+    LAUT_WIE_WB = Sammlung(
+        trace="Wie Wb",
+        groups="Lautschrift|Wie Wb",
+        kreis="Wie",
+        ort="Wb",
+    )
+    LAUT_WIE_WH = Sammlung(
+        trace="Wie Wh",
+        groups="Lautschrift|Wie Wh",
+        kreis="Wie",
+        ort="Wh",
+    )
+    LAUT_WIE_WW = Sammlung(
+        trace="Wie Ww",
+        groups="Lautschrift|Wie Ww",
+        kreis="Wie",
+        ort="Ww",
+    )
+    LAUT_WIT_BO = Sammlung(
+        trace="Wit Bo",
+        groups="Lautschrift|Wit Bo",
+        kreis="Wit",
+        ort="Bo",
+    )
+    LAUT_WIT_HE = Sammlung(
+        trace="Wit He",
+        groups="Lautschrift|Wit He",
+        kreis="Wit",
+        ort="He",
+    )
+    LAUT_WIT_RH = Sammlung(
+        trace="Wit Rh",
+        groups="Lautschrift|Wit Rh",
+        kreis="Wit",
+        ort="Rh",
+    )
+    LAUT_WIT_ST = Sammlung(
+        trace="Wit St",
+        groups="Lautschrift|Wit St",
+        kreis="Wit",
+        ort="St",
+    )
+    LAUT_WIT_WI = Sammlung(
+        trace="Wit Wi",
+        groups="Lautschrift|Wit Wi",
+        kreis="Wit",
+        ort="Wi",
+    )
+    LAUT_WLG_BH = Sammlung(
+        trace="Wlg Bh",
+        groups="Lautschrift|Wlg Bh",
+        kreis="Wlg",
+        ort="Bh",
+    )
+    LAUT_WLG_BO = Sammlung(
+        trace="Wlg Bo",
+        groups="Lautschrift|Wlg Bo",
+        kreis="Wlg",
+        ort="Bo",
+    )
+    LAUT_WLG_BR = Sammlung(
+        trace="Wlg Br",
+        groups="Lautschrift|Wlg Br",
+        kreis="Wlg",
+        ort="Br",
+    )
+    LAUT_WLG_BX = Sammlung(
+        trace="Wlg Bx",
+        groups="Lautschrift|Wlg Bx",
+        kreis="Wlg",
+        ort="Bx",
+    )
+    LAUT_WLG_ES = Sammlung(
+        trace="Wlg Es",
+        groups="Lautschrift|Wlg Es",
+        kreis="Wlg",
+        ort="Es",
+    )
+    LAUT_WLG_HA = Sammlung(
+        trace="Wlg Ha",
+        groups="Lautschrift|Wlg Ha",
+        kreis="Wlg",
+        ort="Ha",
+    )
+    LAUT_WLG_HB = Sammlung(
+        trace="Wlg Hb",
+        groups="Lautschrift|Wlg Hb",
+        kreis="Wlg",
+        ort="Hb",
+    )
+    LAUT_WLG_HH = Sammlung(
+        trace="Wlg Hh",
+        groups="Lautschrift|Wlg Hh",
+        kreis="Wlg",
+        ort="Hh",
+    )
+    LAUT_WLG_HI = Sammlung(
+        trace="Wlg Hi",
+        groups="Lautschrift|Wlg Hi",
+        kreis="Wlg",
+        ort="Hi",
+    )
+    LAUT_WLG_LI = Sammlung(
+        trace="Wlg Li",
+        groups="Lautschrift|Wlg Li",
+        kreis="Wlg",
+        ort="Li",
+    )
+    LAUT_WLG_LN = Sammlung(
+        trace="Wlg Ln",
+        groups="Lautschrift|Wlg Ln",
+        kreis="Wlg",
+        ort="Ln",
+    )
+    LAUT_WLG_LO = Sammlung(
+        trace="Wlg Lo",
+        groups="Lautschrift|Wlg Lo",
+        kreis="Wlg",
+        ort="Lo",
+    )
+    LAUT_WLG_ME = Sammlung(
+        trace="Wlg Me",
+        groups="Lautschrift|Wlg Me",
+        kreis="Wlg",
+        ort="Me",
+    )
+    LAUT_WLG_NW = Sammlung(
+        trace="Wlg Nw",
+        groups="Lautschrift|Wlg Nw",
+        kreis="Wlg",
+        ort="Nw",
+    )
+    LAUT_WLG_OC = Sammlung(
+        trace="Wlg Oc",
+        groups="Lautschrift|Wlg Oc",
+        kreis="Wlg",
+        ort="Oc",
+    )
+    LAUT_WLG_RA = Sammlung(
+        trace="Wlg Ra",
+        groups="Lautschrift|Wlg Ra",
+        kreis="Wlg",
+        ort="Ra",
+    )
+    LAUT_WLG_SW = Sammlung(
+        trace="Wlg Sw",
+        groups="Lautschrift|Wlg Sw",
+        kreis="Wlg",
+        ort="Sw",
+    )
+    LAUT_WLG_VE = Sammlung(
+        trace="Wlg Ve",
+        groups="Lautschrift|Wlg Ve",
+        kreis="Wlg",
+        ort="Ve",
+    )
+    LAUT_WLG_WD = Sammlung(
+        trace="Wlg Wd",
+        groups="Lautschrift|Wlg Wd",
+        kreis="Wlg",
+        ort="Wd",
+    )
+    LAUT_WLG_WE = Sammlung(
+        trace="Wlg We",
+        groups="Lautschrift|Wlg We",
+        kreis="Wlg",
+        ort="We",
+    )
+    LAUT_WLG_WI = Sammlung(
+        trace="Wlg Wi",
+        groups="Lautschrift|Wlg Wi",
+        kreis="Wlg",
+        ort="Wi",
+    )
+    LAUT_WOL_AH = Sammlung(
+        trace="Wol Ah",
+        groups="Lautschrift|Wol Ah",
+        kreis="Wol",
+        ort="Ah",
+    )
+    LAUT_WOL_BH = Sammlung(
+        trace="Wol Bh",
+        groups="Lautschrift|Wol Bh",
+        kreis="Wol",
+        ort="Bh",
+    )
+    LAUT_WOL_EH = Sammlung(
+        trace="Wol Eh",
+        groups="Lautschrift|Wol Eh",
+        kreis="Wol",
+        ort="Eh",
+    )
+    LAUT_WOL_ER = Sammlung(
+        trace="Wol Er",
+        groups="Lautschrift|Wol Er",
+        kreis="Wol",
+        ort="Er",
+    )
+    LAUT_WOL_IP = Sammlung(
+        trace="Wol Ip",
+        groups="Lautschrift|Wol Ip",
+        kreis="Wol",
+        ort="Ip",
+    )
+    LAUT_WOL_NE = Sammlung(
+        trace="Wol Ne",
+        groups="Lautschrift|Wol Ne",
+        kreis="Wol",
+        ort="Ne",
+    )
+    LAUT_WOL_NF = Sammlung(
+        trace="Wol Nf",
+        groups="Lautschrift|Wol Nf",
+        kreis="Wol",
+        ort="Nf",
+    )
+    LAUT_WOL_NL = Sammlung(
+        trace="Wol Nl",
+        groups="Lautschrift|Wol Nl",
+        kreis="Wol",
+        ort="Nl",
+    )
+    LAUT_WOL_OE = Sammlung(
+        trace="Wol Oe",
+        groups="Lautschrift|Wol Oe",
+        kreis="Wol",
+        ort="Oe",
+    )
+    LAUT_WOL_ÖL = Sammlung(
+        trace="Wol Öl",
+        groups="Lautschrift|Wol Öl",
+        kreis="Wol",
+        ort="Öl",
+    )
+    LAUT_WOL_VB = Sammlung(
+        trace="Wol Vb",
+        groups="Lautschrift|Wol Vb",
+        kreis="Wol",
+        ort="Vb",
+    )
+    LAUT_WOL_VO = Sammlung(
+        trace="Wol Vo",
+        groups="Lautschrift|Wol Vo",
+        kreis="Wol",
+        ort="Vo",
+    )
+    LAUT_WOL_WE = Sammlung(
+        trace="Wol We",
+        groups="Lautschrift|Wol We",
+        kreis="Wol",
+        ort="We",
+    )
+    LAUT_WOL_WH = Sammlung(
+        trace="Wol Wh",
+        groups="Lautschrift|Wol Wh",
+        kreis="Wol",
+        ort="Wh",
+    )
+    LAUT_WOL_WO = Sammlung(
+        trace="Wol Wo",
+        groups="Lautschrift|Wol Wo",
+        kreis="Wol",
+        ort="Wo",
+    )
+    LAUT_WTG_LW = Sammlung(
+        trace="Wtg Lw",
+        groups="Lautschrift|Wtg Lw",
+        kreis="Wtg",
+        ort="Lw",
+    )
+    LAUT_WTG_NA = Sammlung(
+        trace="Wtg Na",
+        groups="Lautschrift|Wtg Na",
         kreis="Wtg",
         ort="Na",
     )

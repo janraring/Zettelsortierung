@@ -27,6 +27,7 @@ def main():
         if value.sammlung.name not in [
             "SKIPPED",
             "OA",
+            "LAUTSCHRIFT_SONST",
         ]:
             ids.append(key)
             labels.append(value.sammlung.name)

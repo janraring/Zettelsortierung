@@ -1,17 +1,20 @@
 from pathlib import Path
-from dataclasses import dataclass, field
 import time
+import os
+from dotenv import load_dotenv
 
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader, random_split
+from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
+import numpy as np
 
 from ..models.base import BaseModel
 from ..datasets.base import BaseDocumentDataset
 from ..config import TrainingConfig
-from .metrics import compute_metrics
+
+load_dotenv()
 
 
 class Trainer:
@@ -31,15 +34,17 @@ class Trainer:
         self.train_loader = self._get_dataloader(train_set, config, train=True)
         self.test_loader = self._get_dataloader(test_set, config, train=False)
 
-        self.criterion = nn.CrossEntropyLoss()
+        self.criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
         self.optimizer = torch.optim.AdamW(
             filter(lambda p: p.requires_grad, model.parameters()),
             lr=config.learning_rate,
+            weight_decay=0.05,
         )
         self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
             self.optimizer, T_max=config.num_epochs
         )
 
+        self.best_val_acc = 0.0
         self.writer: SummaryWriter = SummaryWriter()
         self.history: list[dict] = []
 
@@ -60,7 +65,7 @@ class Trainer:
     def train(self):
         print("Phase 1: training head only")
         self.model.freeze_backbone()
-        self._run_epochs(self.config.num_epochs // 2)
+        self._run_epochs(0, self.config.num_epochs // 2)
 
         print("Phase 2: fine-tuning full model")
         self.model.unfreeze_backbone()
@@ -76,18 +81,26 @@ class Trainer:
                 },
             ]
         )
-        self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
-            self.optimizer, T_max=self.config.num_epochs // 2
+        warmup = torch.optim.lr_scheduler.LinearLR(
+            self.optimizer, start_factor=0.1, end_factor=1.0, total_iters=3
         )
-        self._run_epochs(self.config.num_epochs // 2)
+        cosine = torch.optim.lr_scheduler.CosineAnnealingLR(
+            self.optimizer, T_max=(self.config.num_epochs // 2) - 3
+        )
+        self.scheduler = torch.optim.lr_scheduler.SequentialLR(
+            self.optimizer, schedulers=[warmup, cosine], milestones=[3]
+        )
+
+        self._run_epochs(self.config.num_epochs // 2, self.config.num_epochs // 2)
         self.writer.flush()
         self.writer.close()
 
-    def _run_epochs(self, num_epochs: int):
+    def _run_epochs(self, start_epoch: int, num_epochs: int):
         for epoch in range(num_epochs):
             t0 = time.time()
 
             train_loss, train_acc = self._train_epoch()
+            # val_loss, val_acc, _, _, _ = self._eval_epoch(self.test_loader)
             val_loss, val_acc = self._eval_epoch(self.test_loader)
             self.scheduler.step()
 
@@ -100,85 +113,63 @@ class Trainer:
                     "val_acc": val_acc,
                 }
             )
-            self.writer.add_scalar("loss/train", train_loss, epoch + 1)
-            self.writer.add_scalar("loss/val", val_loss, epoch + 1)
-            self.writer.add_scalar("acc/train", train_acc, epoch + 1)
-            self.writer.add_scalar("acc/val", val_acc, epoch + 1)
+            self.writer.add_scalar("loss/train", train_loss, start_epoch + epoch + 1)
+            self.writer.add_scalar("loss/val", val_loss, start_epoch + epoch + 1)
+            self.writer.add_scalar("acc/train", train_acc, start_epoch + epoch + 1)
+            self.writer.add_scalar("acc/val", val_acc, start_epoch + epoch + 1)
 
             print(
-                f"Epoch {epoch+1}/{num_epochs} — "
+                f"Epoch {start_epoch + epoch + 1}/{start_epoch + num_epochs} — "
                 f"train loss: {train_loss:.4f}, acc: {train_acc:.3f} | "
                 f"val loss: {val_loss:.4f}, acc: {val_acc:.3f} | "
                 f"{elapsed:.1f}s"
             )
 
-    def _train_epoch(self) -> tuple[float, float]:
+            if val_acc > self.best_val_acc:
+                root = os.getenv("PROJECT_ROOT")
+                name = f"mobile_net_v3_small_{len(self.train_set.get_classes())}_classes_{self.config.num_epochs}_epochs_best"
+                self.best_val_acc = val_acc
+                self.save(f"{root}/models/{name}")
+
+    def _mixup_batch(self, images, labels, alpha=0.3):
+        lam = np.random.beta(alpha, alpha)
+        idx = torch.randperm(images.size(0), device=images.device)
+        mixed = lam * images + (1 - lam) * images[idx]
+        return mixed, labels, labels[idx], lam
+
+    def _train_epoch(self):
         self.model.train()
         total_loss, correct, total = 0.0, 0.0, 0
-
         for images, labels in tqdm(self.train_loader):
             images, labels = images.to(self.device), labels.to(self.device)
-
+            mixed, labels_a, labels_b, lam = self._mixup_batch(images, labels)
             self.optimizer.zero_grad()
-            logits = self.model(images)
-            loss = self.criterion(logits, labels)
+            logits = self.model(mixed)
+            loss = lam * self.criterion(logits, labels_a) + (1 - lam) * self.criterion(
+                logits, labels_b
+            )
             loss.backward()
             self.optimizer.step()
-
             total_loss += loss.item() * len(labels)
-            correct += (logits.argmax(dim=1) == labels).sum().item()
+            # Accuracy under mixup is approximate; use the dominant label
+            correct += (logits.argmax(dim=1) == labels_a).sum().item()
             total += len(labels)
-
         return total_loss / total, correct / total
 
     # --------------------------------------------------------------------
 
-    def evaluate(self) -> dict:
-        loss, acc = self._eval_epoch(self.test_loader)
-
-        all_preds, all_labels, all_probs = [], [], []
-        self.model.eval()
-        with torch.no_grad():
-            for images, labels in self.test_loader:
-                images = images.to(self.device)
-                logits = self.model(images)
-                probs = torch.softmax(logits / self.config.temperature, dim=1)
-
-                all_probs.append(probs.cpu())
-                all_preds.append(probs.argmax(dim=1).cpu())
-                all_labels.append(labels)
-
-        all_preds = torch.cat(all_preds)
-        all_labels = torch.cat(all_labels)
-        all_probs = torch.cat(all_probs)
-
-        # Flag low-confidence predicitons as unknown
-        max_probs = all_probs.max(dim=1).values
-        unknown_mask = max_probs < self.config.confidence_threshold
-
-        metrics = compute_metrics(
-            all_preds,
-            all_labels,
-            unknown_mask,
-            idx_to_class=self.test_set.get_idx_to_class(),
-        )
-        metrics.update({"loss": loss, "accuracy": acc})
-        return metrics
-
     def _eval_epoch(self, loader: DataLoader) -> tuple[float, float]:
         self.model.eval()
+        eval_criterion = nn.CrossEntropyLoss()
         total_loss, correct, total = 0.0, 0.0, 0
-
         with torch.no_grad():
-            for images, labels in loader:
+            for images, labels in tqdm(loader):
                 images, labels = images.to(self.device), labels.to(self.device)
                 logits = self.model(images)
-                loss = self.criterion(logits, labels)
-
+                loss = eval_criterion(logits, labels)
                 total_loss += loss.item() * len(labels)
                 correct += (logits.argmax(dim=1) == labels).sum().item()
                 total += len(labels)
-
         return total_loss / total, correct / total
 
     # --------------------------------------------------------------------

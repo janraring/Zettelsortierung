@@ -4,7 +4,7 @@ import pandas as pd
 from PIL import Image
 
 from zettelsortierung.nn.datasets.base import BaseDocumentDataset
-from zettelsortierung.nn.datasets.transforms import mobile_net_train_transform
+from zettelsortierung.nn.datasets.transforms import mobile_net_aggr_transform
 from zettelsortierung.db import DataBase
 
 from dotenv import load_dotenv
@@ -14,9 +14,9 @@ db = DataBase()
 
 class ParquetDataset(BaseDocumentDataset):
     def __init__(self, path: str, train: bool):
-        full_df = pd.read_parquet(path)
-        self.df = full_df[full_df["train"] == train]
-        self.transform = mobile_net_train_transform
+        self.full_df = pd.read_parquet(path)
+        self.df = self.full_df[self.full_df["train"] == train]
+        self.transform = mobile_net_aggr_transform
         self.classes = self.get_classes()
         self.class_to_idx = {c: i for i, c in enumerate(self.classes)}
         self.idx_to_class = {i: c for i, c in enumerate(self.classes)}
@@ -33,7 +33,7 @@ class ParquetDataset(BaseDocumentDataset):
         return transformed, class_idx
 
     def get_classes(self) -> list[str]:
-        classes_col = self.df["class"]
+        classes_col = self.full_df["class"]
         classes_set = set(classes_col)
         classes_lst = list(classes_set)
         return sorted(classes_lst)

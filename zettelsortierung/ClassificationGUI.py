@@ -99,7 +99,7 @@ class ManualClassification:
                         on_click=lambda e, c=category: self.classify_image(c),
                     ).style("padding: 0 5px; font-size: 16px")
                     for category in classes
-                    if category.name[:4].upper() != "ANON"
+                    if category.name[:4].upper() not in {"ANON", "LAUT"}
                 ]
 
             # -- Top prediction buttons --

@@ -99,9 +99,7 @@ def get_unclassified() -> list[Zettel]:
 
 def get_previously_classified(sammlung: Enum) -> list[Zettel]:
     classifications = db.get_classifications(Classifiers.MANUELL)
-    zettel_ids = {
-        zid for zid, label in classifications.items() if label.sammlung == sammlung
-    }
+    zettel_ids = {zid for zid, label in classifications.items() if label.sammlung == sammlung}
     return db.get_zettels_by_ids(list(zettel_ids))
 
 
@@ -122,9 +120,7 @@ def get_random_sample(n: int = 10000) -> list[Zettel]:
 def load_model(path_str: str, config: TrainingConfig) -> MobileNetV3ModelSmall:
     path = Path(path_str)
     model = MobileNetV3ModelSmall(num_classes=config.num_classes)
-    model.load_state_dict(
-        torch.load(path / "model_weights.pt", map_location=config.device)
-    )
+    model.load_state_dict(torch.load(path / "model_weights.pt", map_location=config.device))
     model.to(config.device)
     model.eval()
     return model
@@ -149,13 +145,16 @@ def predict(model, image: Image.Image, config: TrainingConfig) -> dict:
     }
 
 
-n_classes = 204
+n_classes = 429
 n_epochs = 50
 root = os.getenv("PROJECT_ROOT")
 dataset = ParquetDataset(f"{root}/data/interim/{n_classes}_classes.parquet", train=True)
 config = TrainingConfig(num_classes=len(dataset.get_classes()))
+# model = load_model(
+#    f"{root}/models/mobile_net_v3_small_{n_epochs}ep_on_{n_classes}_classes", config
+# )
 model = load_model(
-    f"{root}/models/mobile_net_v3_small_{n_epochs}ep_on_{n_classes}_classes", config
+    f"{root}/models/mobile_net_v3_small_{n_classes}_classes_{n_epochs}_epochs", config
 )
 
 
@@ -173,7 +172,7 @@ def main():
     queries = {
         "Classified": partial(db.get_classified, Classifiers.MANUELL),
         "Unclassified": get_unclassified,
-        "Random_Sample": partial(get_random_sample, n=1000),
+        "Random_Sample": partial(get_random_sample, n=100),
     }
     for sammlung in Sammlungen:
         queries[sammlung.name.title()] = partial(get_previously_classified, sammlung)
@@ -192,5 +191,5 @@ def main():
     )
 
 
-if __name__ == "__main__":
+if __name__ in {"__main__", "__main_mp__"}:
     main()

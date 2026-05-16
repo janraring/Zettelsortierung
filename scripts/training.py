@@ -31,27 +31,19 @@ def run_training(dataset_name: str, num_epochs: int | None = None):
     )
     trainer.train()
 
-    name = f"mobile_net_v3_small_{config.num_epochs}ep_on_{dataset_name}"
+    name = f"mobile_net_v3_small_{dataset_name}_{config.num_epochs}_epochs"
     trainer.save(f"{root}/models/{name}")
-
-    metrics = trainer.evaluate()
-
-    print(metrics["classification_report"])
-    print("Loss:", metrics["loss"])
-    print("Accuracy:", metrics["accuracy"])
-    print("Unknown rate:", metrics["unknown_rate"])
-    print("Known accuracy:", metrics["known_accuracy"])
 
 
 def main():
     parser = argparse.ArgumentParser(
         description="Trains a MobileNetV3ModelSmall on the specified dataset with the given parameters."
     )
-    parser.add_argument("--dataset", required=True, type=str)
+    parser.add_argument("--classes", required=True, type=str)
     parser.add_argument("--epochs", required=False, type=int, default=None)
     args = parser.parse_args()
 
-    dataset_name = args.dataset
+    dataset_name = f"{args.classes}_classes"
     num_epochs = args.epochs
 
     run_training(dataset_name, num_epochs)

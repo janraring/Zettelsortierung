@@ -1,8 +1,10 @@
 # Data... should mostly not be ignored
-#/data/
 /data/raw/zettelsammlung
 /data/interim/
 /data/processed/zettel.db
+
+# tests
+/tests/
 
 # experimental data
 /notebooks/

@@ -1,7 +1,5 @@
-import torch
 from torchvision import transforms
 from PIL import ImageOps
-from PIL.Image import Image
 
 from zettelsortierung.nn.config import TrainingConfig
 
@@ -59,14 +57,16 @@ mobile_net_aggr_transform = transforms.Compose(
         ),  # slight mis-centering
         # Photometric
         transforms.ColorJitter(brightness=0.3, contrast=0.3, saturation=0.15, hue=0.02),
-        transforms.RandomGrayscale(p=0.1),  # some scans are effectively greyscale anyway
+        transforms.RandomGrayscale(
+            p=0.1
+        ),  # some scans are effectively greyscale anyway
         transforms.GaussianBlur(kernel_size=3, sigma=(0.1, 1.5)),  # scanner softness
         # To Tensor
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         # Tensor-space augmentations
         transforms.RandomErasing(
-            p=0.25, scale=(0.02, 0.08), value=1.0
+            p=0.25, scale=(0.02, 0.08), value=1
         ),  # simulate scan artifacts / stamps
     ]
 )

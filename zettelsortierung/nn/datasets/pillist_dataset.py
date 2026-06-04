@@ -1,6 +1,6 @@
+from PIL import Image
 from torch.utils.data import Dataset
 from torchvision import transforms
-from PIL import Image
 from zettelsortierung.DataTypes import Zettel
 
 

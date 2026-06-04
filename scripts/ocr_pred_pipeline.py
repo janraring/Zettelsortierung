@@ -1,20 +1,20 @@
+from multiprocessing import freeze_support
+
 import pandas as pd
 import regex as re
-from multiprocessing import freeze_support
 from tqdm import tqdm
-
-from zettelsortierung.DataTypes import Zettel, Classification, Label
-from zettelsortierung import DataBase
 from zettelsortierung import (
-    Sammlungen,
     Classifiers,
+    DataBase,
+    Sammlungen,
 )
+from zettelsortierung.DataTypes import Classification, Label, Zettel
 
 
 def print_res(results: list[Classification]):
     for classification in results:
         print(
-            f"{classification.zettel.id}  ->  {classification.label.sammlung.name}\t\t({classification.classifier.name}, {classification.label.confidence*100:.2f})"  # type: ignore
+            f"{classification.zettel.id}  ->  {classification.label.sammlung.name}\t\t({classification.classifier.name}, {classification.label.confidence * 100:.2f})"  # type: ignore
         )
     return results
 
@@ -55,9 +55,7 @@ def ocr_based_classification():
     texts = db.get_ocr_concat()
 
     regions = pd.read_csv("data/processed/Orte.csv", sep="\t")
-    kreis_ort_list = list(
-        zip(regions["Kreis"].str.strip(), regions["Abkuerzung"].str.strip())
-    )
+    kreis_ort_list = list(zip(regions["Kreis"].str.strip(), regions["Abkuerzung"].str.strip()))
     regions["Kreis"].unique()
     for kreis in regions["Kreis"].unique():
         kreis_ort_list.append((kreis, "Xy"))

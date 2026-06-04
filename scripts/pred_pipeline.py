@@ -1,21 +1,21 @@
+from multiprocessing import freeze_support
 import os
+
 import dotenv
 import pandas as pd
-from multiprocessing import freeze_support
-
-from zettelsortierung import DataBase
-from zettelsortierung.nn.datasets.parquet_dataset import ParquetDataset
 from zettelsortierung import (
-    ToDataBase,
-    Composition,
     Batch,
-    SequentialApp,
-    Flatten,
-    PredictionModel,
-    MobileNetV3ModelSmall,
     Classifiers,
+    Composition,
+    DataBase,
+    Flatten,
+    MobileNetV3ModelSmall,
+    PredictionModel,
     Scan,
+    SequentialApp,
+    ToDataBase,
 )
+from zettelsortierung.nn.datasets.parquet_dataset import ParquetDataset
 
 dotenv.load_dotenv()
 

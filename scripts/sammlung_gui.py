@@ -1,5 +1,5 @@
 from enum import Enum
-from functools import partial, cache
+from functools import cache, partial
 import os
 from typing import Optional
 
@@ -8,7 +8,6 @@ from PIL import Image
 import regex as re
 import torch
 from tqdm import tqdm
-
 from zettelsortierung import Classifiers, DataBase, Label, Sammlungen, Zettel
 from zettelsortierung.ClassificationGUI import run_classification
 from zettelsortierung.nn import MobileNetV3ModelSmall, ParquetDataset
@@ -91,9 +90,7 @@ def get_unclassified() -> list[Zettel]:
 
 def get_previously_classified(sammlung: Enum) -> list[Zettel]:
     classifications = db.get_classifications(Classifiers.MANUELL)
-    zettel_ids = {
-        zid for zid, label in classifications.items() if label.sammlung == sammlung
-    }
+    zettel_ids = {zid for zid, label in classifications.items() if label.sammlung == sammlung}
     return db.get_zettels_by_ids(list(zettel_ids))
 
 
@@ -138,8 +135,7 @@ def get_predictions(
     top_indices = torch.topk(results["all_probs"], k=K).indices.cpu().numpy()
     top_probs = results["all_probs"][top_indices].cpu().numpy()
     predictions = [
-        Label(Sammlungen[classes[idx]], prob)
-        for idx, prob in zip(top_indices, top_probs)
+        Label(Sammlungen[classes[idx]], prob) for idx, prob in zip(top_indices, top_probs)
     ]
     return predictions
 
@@ -149,9 +145,7 @@ def main():
     num_epochs = 60
     root = os.getenv("PROJECT_ROOT")
 
-    dataset = ParquetDataset(
-        f"{root}/data/interim/{num_classes}_classes.parquet", train=True
-    )
+    dataset = ParquetDataset(f"{root}/data/interim/{num_classes}_classes.parquet", train=True)
     model = MobileNetV3ModelSmall.from_pretrained(
         path_str=f"{root}/models/mobile_net_v3_small_{num_classes}_classes_{num_epochs}_epochs_best",
         num_classes=num_classes,

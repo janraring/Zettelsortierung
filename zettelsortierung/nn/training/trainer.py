@@ -1,18 +1,18 @@
+import os
 from pathlib import Path
 import time
-import os
-from dotenv import load_dotenv
 
+from dotenv import load_dotenv
+import numpy as np
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
-import numpy as np
 
-from ..models.base import BaseModel
-from ..datasets.base import BaseDocumentDataset
 from ..config import TrainingConfig
+from ..datasets.base import BaseDocumentDataset
+from ..models.base import BaseModel
 
 load_dotenv()
 
@@ -49,9 +49,7 @@ class Trainer:
         self.history: list[dict] = []
 
     @staticmethod
-    def _get_dataloader(
-        dataset: BaseDocumentDataset, config, *, train: bool
-    ) -> DataLoader:
+    def _get_dataloader(dataset: BaseDocumentDataset, config, *, train: bool) -> DataLoader:
         return DataLoader(
             dataset,
             batch_size=config.batch_size,

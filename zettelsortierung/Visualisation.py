@@ -1,15 +1,14 @@
-from zettelsortierung.DataTypes import DataPoint, DataPointBatch, BoundingBox, Scan
-from zettelsortierung.db import DataBase
 import cv2
+
+from zettelsortierung.DataTypes import BoundingBox, DataPoint, DataPointBatch, Scan
+from zettelsortierung.db import DataBase
 
 
 def vis_boundingbox(dp: DataPoint):
     image = cv2.imread(dp.scan.full_path)
 
     x, y, w, h = dp.feature
-    image = cv2.rectangle(
-        img=image, pt1=(x, y), pt2=(x + w, y + h), color=(0, 0, 0), thickness=10
-    )
+    image = cv2.rectangle(img=image, pt1=(x, y), pt2=(x + w, y + h), color=(0, 0, 0), thickness=10)
 
     image = cv2.resize(image, (1500, 1000))
     cv2.imshow(winname="region", mat=image)

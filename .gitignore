@@ -8,14 +8,14 @@
 /notebooks/input/
 /notebooks/output/
 
+# typst files
+*.typ
+
 # models
 /models/
 
 # VS Code settings
-.vscode/
-
-# Mac OS-specific storage files
-.DS_Store
+/.vscode/
 
 # vim
 *.swp
@@ -138,9 +138,9 @@ ipython_config.py
 #   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
 #   in version control.
 #   https://pdm.fming.dev/latest/usage/project/#working-with-version-control
-.pdm.toml
-.pdm-python
-.pdm-build/
+# .pdm.toml
+# .pdm-python
+# .pdm-build/
 
 # pixi
 #   pixi.lock should be committed to version control for reproducibility

@@ -1,10 +1,11 @@
 from dataclasses import dataclass
-from typing import Any, NamedTuple, Self, Protocol
 from enum import Enum
 import os
+from typing import Any, NamedTuple, Protocol, Self
+
 import cv2
-import regex as re
 import pandas as pd
+import regex as re
 
 #####################################################################
 # Scan
@@ -49,9 +50,7 @@ class Scan:
     def relative_path(self) -> str:
         relative_path = self._relative_path
         if relative_path is None:
-            relative_path = re.findall(r"((?:[^/]+?/){3})[^/]+?\.jpg", self.full_path)[
-                0
-            ]
+            relative_path = re.findall(r"((?:[^/]+?/){3})[^/]+?\.jpg", self.full_path)[0]
             self._relative_path = relative_path
         return relative_path
 

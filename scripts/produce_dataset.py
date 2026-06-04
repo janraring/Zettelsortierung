@@ -1,13 +1,11 @@
-import os
 from collections import Counter
+import os
 
-import pandas as pd
 from dotenv import load_dotenv
+import pandas as pd
 from sklearn.model_selection import train_test_split
-
-from zettelsortierung.db import DataBase
 from zettelsortierung import Classifiers
-from zettelsortierung import Sammlungen
+from zettelsortierung.db import DataBase
 
 load_dotenv()
 

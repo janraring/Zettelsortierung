@@ -1,5 +1,5 @@
-import regex as re
 import pandas as pd
+import regex as re
 
 regions = pd.read_csv("data/processed/Landschaften.csv", sep="\t")
 region_tuples = list(

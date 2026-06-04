@@ -3,9 +3,9 @@ from functools import partial
 from random import shuffle
 from typing import Callable, Optional
 
-from nicegui import ui, app, run
+from nicegui import app, run, ui
 
-from zettelsortierung.DataTypes import Zettel, Label, Classifiers
+from zettelsortierung.DataTypes import Classifiers, Label, Zettel
 
 
 class ManualClassification:
@@ -15,9 +15,7 @@ class ManualClassification:
         on_classify: Optional[Callable[[Zettel, Label], None]] = None,
         queries: Optional[dict[str, Callable[..., list[Zettel]]]] = None,
         get_stats: Optional[Callable[[], dict[str, int]]] = None,
-        search_ocr_results: Optional[
-            Callable[[str, Optional[bool]], list[Zettel]]
-        ] = None,
+        search_ocr_results: Optional[Callable[[str, Optional[bool]], list[Zettel]]] = None,
         get_status: Optional[Callable[[Zettel], bool]] = None,
         get_predictions: Optional[Callable[[Zettel], list[Label]]] = None,
     ):
@@ -36,12 +34,8 @@ class ManualClassification:
 
         # -- Top row --
         with ui.row().classes("items-center w-full"):
-            self.prev_button = ui.button(
-                "Prev", on_click=lambda: self.decrement_index()
-            )
-            self.next_button = ui.button(
-                "Next", on_click=lambda: self.increment_index()
-            )
+            self.prev_button = ui.button("Prev", on_click=lambda: self.decrement_index())
+            self.next_button = ui.button("Next", on_click=lambda: self.increment_index())
             self.stop_button = ui.button("Finish", on_click=lambda: app.shutdown())
             self.shuffle_button = ui.button("Shuffle", on_click=self.shuffle_zettels)
 
@@ -52,25 +46,19 @@ class ManualClassification:
             # -- Query selection --
             classifiers_names = [classifier.name for classifier in Classifiers]
             sammlungen_names = [sammlung.name for sammlung in self.sammlungen]
-            self.select_classifier = ui.select(
-                classifiers_names, value=Classifiers.MANUELL.name
-            )
+            self.select_classifier = ui.select(classifiers_names, value=Classifiers.MANUELL.name)
             # -- Filter for a collection --
             ui.input("Sammlung", autocomplete=sammlungen_names).on(
                 "keydown.enter", lambda e: self.on_enter_filter(e)
             )
 
             # -- Search bar --
-            self.input = ui.input(label="Klartext").on(
-                "keydown.enter", self.on_enter_search
-            )
+            self.input = ui.input(label="Klartext").on("keydown.enter", self.on_enter_search)
             self.fuzzy_cb = ui.checkbox("Fuzzy", value=False)
 
             # -- Progress bar --
-            self.progress_bar = ui.linear_progress(value=0, show_value=False).classes(
-                "w-md h-9"
-            )
-            self.progress_label = ui.label(f"").classes("text-base font-bold")
+            self.progress_bar = ui.linear_progress(value=0, show_value=False).classes("w-md h-9")
+            self.progress_label = ui.label("").classes("text-base font-bold")
 
             # -- Total stats --
             self.total_stats_label = ui.label("")
@@ -78,13 +66,13 @@ class ManualClassification:
             ui.space()
 
             # -- Zettel status --
-            self.zettel_label = ui.label(f"").classes("text-base font-bold")
+            self.zettel_label = ui.label("").classes("text-base font-bold")
 
         with ui.grid(columns="auto auto"):
             # -- Images --
             with ui.column():
-                self.recto_image = ui.image().props(f"width=750px height=500px")
-                self.verso_image = ui.image().props(f"width=750px height=500px")
+                self.recto_image = ui.image().props("width=750px height=500px")
+                self.verso_image = ui.image().props("width=750px height=500px")
 
                 with ui.row().classes("items-center w-full"):
                     # -- Class selector --
@@ -261,9 +249,7 @@ class ManualClassification:
         # Colorize buttons
         for button in self.class_buttons + top_buttons_1 + top_buttons_2:
             category = button.text.split(" ")[0]
-            confidence = next(
-                (conf for cat, conf in predictions if cat.name == category), None
-            )
+            confidence = next((conf for cat, conf in predictions if cat.name == category), None)
             if confidence is not None:
                 color = self.confidence_to_color(confidence)
                 button.style(f"background-color: {color} !important; color: white;")

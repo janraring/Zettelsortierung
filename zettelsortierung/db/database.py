@@ -1,16 +1,28 @@
-import os
-import dotenv
-from typing import Sequence
 from collections import Counter
 from enum import Enum
+import os
+from typing import Sequence
+
+import dotenv
+from sqlalchemy import create_engine, exists, func, select, update
+from sqlalchemy.orm import sessionmaker
 from tqdm import tqdm
 
-from sqlalchemy import create_engine, select, exists, func, update
-from sqlalchemy.orm import sessionmaker
-
 from zettelsortierung.DataTypes import Classification, Label, Probe, Scan, Zettel
+from zettelsortierung.db.models import (
+    Base,
+    ClassificationModel,
+    ClassifierModel,
+    ClassModel,
+    KreisModel,
+    LandschaftModel,
+    OCRResultModel,
+    OrtModel,
+    ScanModel,
+    SourceModel,
+    ZettelModel,
+)
 from zettelsortierung.Sammlungen import Sammlungen
-from zettelsortierung.db.models import *
 
 dotenv.load_dotenv()
 
@@ -70,9 +82,7 @@ class DataBase:
 
     def add_zettel(self, zettels: list[Zettel]) -> None:
         self._bulk_add(
-            ZettelModel(
-                id=zettel.id, recto_id=zettel.recto.id, verso_id=zettel.verso.id
-            )
+            ZettelModel(id=zettel.id, recto_id=zettel.recto.id, verso_id=zettel.verso.id)
             for zettel in zettels
         )
 
@@ -114,9 +124,7 @@ class DataBase:
         i = 0
         for i, (zettel_id, lemma) in enumerate(lemmas.items(), 1):
             self.session.execute(
-                update(ZettelModel)
-                .where(ZettelModel.id == zettel_id)
-                .values(lemma=lemma)
+                update(ZettelModel).where(ZettelModel.id == zettel_id).values(lemma=lemma)
             )
             if i % batch_size == 0:
                 self.session.commit()
@@ -137,9 +145,7 @@ class DataBase:
 
     def add_landschaften(self, landschaften: list[tuple[str, str, str]]) -> None:
         for abbr, name, desc in landschaften:
-            self.session.add(
-                LandschaftModel(abbreviation=abbr, name=name, description=desc)
-            )
+            self.session.add(LandschaftModel(abbreviation=abbr, name=name, description=desc))
         self.session.commit()
 
     def add_kreise(self, kreise: list[tuple[str, str]]) -> None:
@@ -154,8 +160,7 @@ class DataBase:
 
     def add_source(self, sources: list[tuple[str, str]]) -> None:
         self._bulk_add(
-            SourceModel(sigle=sigle, description=description)
-            for sigle, description in sources
+            SourceModel(sigle=sigle, description=description) for sigle, description in sources
         )
 
     # ---- Bounding Boxes & OCR ----
@@ -178,9 +183,7 @@ class DataBase:
 
     def merge_classifiers(self, classifiers: type[Enum]) -> None:
         self._bulk_merge(
-            ClassifierModel(
-                name=classifier.name, description=classifier.value.description
-            )
+            ClassifierModel(name=classifier.name, description=classifier.value.description)
             for classifier in classifiers
         )
 
@@ -214,9 +217,7 @@ class DataBase:
             for c in classifications
         )
 
-    def save_classification(
-        self, zettel: Zettel, label: Label, classifier: Enum
-    ) -> None:
+    def save_classification(self, zettel: Zettel, label: Label, classifier: Enum) -> None:
         """Save a single classification — used as GUI callback."""
         self.session.merge(
             ClassificationModel(
@@ -304,8 +305,6 @@ class DataBase:
     def get_label_counts(self, classifier: Enum | None = None) -> Counter:
         query = self.session.query(ClassificationModel.label, func.count().label("n"))
         if classifier is not None:
-            query = query.filter(
-                ClassificationModel.classifier == classifier.value.title
-            )
+            query = query.filter(ClassificationModel.classifier == classifier.value.title)
         rows = query.group_by(ClassificationModel.label).all()
         return Counter({label: n for label, n in rows})

@@ -1,7 +1,9 @@
+from abc import ABC, abstractmethod
+
 import cv2
 import numpy as np
+
 from zettelsortierung.DataTypes import BoundingBox
-from abc import ABC, abstractmethod
 
 
 class RegionDetector(ABC):
@@ -46,9 +48,7 @@ class OpenCVRegionDetector(RegionDetector):
         return cv2.connectedComponentsWithStats(grouped, connectivity=8)
 
     @staticmethod
-    def filter_geometrically(
-        num_labels, stats, h_img: int, w_img: int
-    ) -> list[BoundingBox]:
+    def filter_geometrically(num_labels, stats, h_img: int, w_img: int) -> list[BoundingBox]:
         regions = []
 
         for i in range(1, num_labels):  # skip background
@@ -115,6 +115,4 @@ class OpenCVRegionDetector(RegionDetector):
 def resize_region(im_region: np.ndarray, h_new: int) -> np.ndarray:
     h, w, d = im_region.shape
     w_new = int(w * 48 / h)
-    return cv2.resize(
-        im_region, (w_new, h_new)
-    )  # TODO: try different methodes for interpolation
+    return cv2.resize(im_region, (w_new, h_new))  # TODO: try different methodes for interpolation

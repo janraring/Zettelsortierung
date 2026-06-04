@@ -1,6 +1,5 @@
-from torchvision import transforms
 from PIL import ImageOps
-
+from torchvision import transforms
 from zettelsortierung.nn.config import TrainingConfig
 
 
@@ -57,9 +56,7 @@ mobile_net_aggr_transform = transforms.Compose(
         ),  # slight mis-centering
         # Photometric
         transforms.ColorJitter(brightness=0.3, contrast=0.3, saturation=0.15, hue=0.02),
-        transforms.RandomGrayscale(
-            p=0.1
-        ),  # some scans are effectively greyscale anyway
+        transforms.RandomGrayscale(p=0.1),  # some scans are effectively greyscale anyway
         transforms.GaussianBlur(kernel_size=3, sigma=(0.1, 1.5)),  # scanner softness
         # To Tensor
         transforms.ToTensor(),

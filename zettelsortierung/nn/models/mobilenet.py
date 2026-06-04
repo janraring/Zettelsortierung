@@ -1,14 +1,15 @@
+import os
 from pathlib import Path
 from typing import Self, Sequence
-from torchvision import models
+
 from dotenv import load_dotenv
-import os
+from PIL.Image import Image
 import torch
 import torch.nn as nn
-from PIL.Image import Image
-from .base import BaseModel
+from torchvision import models
+
 from ..datasets.transforms import mobile_net_infer_transform
-from zettelsortierung import Sammlungen
+from .base import BaseModel
 
 load_dotenv()
 
@@ -16,9 +17,7 @@ load_dotenv()
 class MobileNetV3ModelSmall(BaseModel):
     def __init__(self, num_classes: int):
         super().__init__()
-        self.model = models.mobilenet_v3_small(
-            weights=models.MobileNet_V3_Small_Weights.DEFAULT
-        )
+        self.model = models.mobilenet_v3_small(weights=models.MobileNet_V3_Small_Weights.DEFAULT)
         self.model.classifier[3] = nn.Linear(1024, num_classes)
 
     def forward(self, x):
@@ -84,9 +83,7 @@ class MobileNetV3ModelSmall(BaseModel):
         path = Path(path_str)
         model = cls(num_classes=num_classes)
         device = os.getenv("TORCH_DEVICE")
-        model.load_state_dict(
-            torch.load(path / "model_weights.pt", map_location=device)
-        )
+        model.load_state_dict(torch.load(path / "model_weights.pt", map_location=device))
         model.to(device)
         model.eval()
         return model

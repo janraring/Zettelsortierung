@@ -1,28 +1,32 @@
 from abc import ABC, abstractmethod
-from enum import Enum
-from typing import Iterable, overload, List, Iterator
-from itertools import chain
 from dataclasses import replace
-from multiprocessing import Pool, cpu_count
+from enum import Enum
+from itertools import chain
 import multiprocessing as mp
+from multiprocessing import Pool, cpu_count
+from typing import Iterable, Iterator, List, overload
+
 import cv2
 import numpy as np
+import torch
+from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-from zettelsortierung import Sammlungen
-from zettelsortierung.nn.models.mobilenet import MobileNetV3ModelSmall
-from zettelsortierung.RegionDetection import RegionDetector
+from zettelsortierung import Classification, Sammlungen, Zettel
 from zettelsortierung.DataTypes import (
+    BoundingBox,
     Collection,
-    Zettelsammlung,
     DataPoint,
     DataPointBatch,
-    Probe,
-    BoundingBox,
-    Scan,
-    Classification,
     Label,
+    Probe,
+    Scan,
+    Zettelsammlung,
 )
+from zettelsortierung.nn.datasets.pillist_dataset import PILListDataset
+from zettelsortierung.nn.datasets.transforms import mobile_net_infer_transform
+from zettelsortierung.nn.models.mobilenet import MobileNetV3ModelSmall
+from zettelsortierung.RegionDetection import RegionDetector
 
 mp.set_start_method("spawn", force=True)
 # cv2.setNumThreads(0)
@@ -179,8 +183,7 @@ class PatchDetect(Transformation):
         full_im = cv2.imread(scan.full_path)
         boundingboxes = self.detector.detect_regions(full_im)  # type: ignore
         data_points = [
-            DataPoint(scan, feature_id, bbox)
-            for feature_id, bbox in enumerate(boundingboxes)
+            DataPoint(scan, feature_id, bbox) for feature_id, bbox in enumerate(boundingboxes)
         ]
         return data_points
 
@@ -256,12 +259,6 @@ class ResolveDPBatch(Transformation):
 # Model Predictions
 #####################################################################
 
-import torch
-from torch.utils.data import DataLoader
-from zettelsortierung import Zettel, Classification
-from zettelsortierung.nn.datasets.pillist_dataset import PILListDataset
-from zettelsortierung.nn.datasets.transforms import mobile_net_infer_transform
-
 
 class PredictionModel(Transformation):
     def __init__(
@@ -280,9 +277,7 @@ class PredictionModel(Transformation):
 
     def transform(self, paths) -> list[Classification]:
         dataset = PILListDataset(paths, mobile_net_infer_transform)
-        loader = DataLoader(
-            dataset, batch_size=self.batch_size, num_workers=12, pin_memory=True
-        )
+        loader = DataLoader(dataset, batch_size=self.batch_size, num_workers=12, pin_memory=True)
 
         path_batches = []
         logit_batches = []
@@ -294,7 +289,7 @@ class PredictionModel(Transformation):
                 logits_batch = self.model(img_batch)
                 logit_batches.append(logits_batch)
 
-        probs = [torch.softmax(l, dim=1) for l in logit_batches]
+        probs = [torch.softmax(logit, dim=1) for logit in logit_batches]
         probs_flat = list(chain.from_iterable(probs))
         paths_flat = list(chain.from_iterable(path_batches))
         classifications = [

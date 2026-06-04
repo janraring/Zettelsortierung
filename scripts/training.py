@@ -1,11 +1,12 @@
-import os
 import argparse
+import os
+
 from dotenv import load_dotenv
 from zettelsortierung.nn import (
-    ParquetDataset,
-    TrainingConfig,
-    Trainer,
     MobileNetV3ModelSmall,
+    ParquetDataset,
+    Trainer,
+    TrainingConfig,
 )
 
 load_dotenv()
@@ -26,9 +27,7 @@ def run_training(dataset_name: str, num_epochs: int | None = None):
     if num_epochs is not None:
         config.num_epochs = num_epochs
 
-    trainer = Trainer(
-        model=model, train_set=train_set, test_set=test_set, config=config
-    )
+    trainer = Trainer(model=model, train_set=train_set, test_set=test_set, config=config)
     trainer.train()
 
     name = f"mobile_net_v3_small_{dataset_name}_{config.num_epochs}_epochs"

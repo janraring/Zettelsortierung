@@ -1,14 +1,11 @@
 import os
 
+from dotenv import load_dotenv
 import pandas as pd
 from PIL import Image
-
+from zettelsortierung.db import DataBase
 from zettelsortierung.nn.datasets.base import BaseDocumentDataset
 from zettelsortierung.nn.datasets.transforms import mobile_net_train_transform
-from zettelsortierung.Sammlungen import Sammlungen
-from zettelsortierung.db import DataBase
-
-from dotenv import load_dotenv
 
 db = DataBase()
 

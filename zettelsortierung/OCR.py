@@ -1,12 +1,14 @@
+from dataclasses import replace
 import os
+from typing import Protocol
+
+from dotenv import load_dotenv
 import numpy as np
 import openvino as ov
 import openvino.properties.hint as hints
-from typing import Protocol
-from dotenv import load_dotenv
-from dataclasses import replace
-from zettelsortierung.Transformation import Transformation, Composition, ResolveDPBatch
+
 from zettelsortierung.DataTypes import DataPoint, DataPointBatch
+from zettelsortierung.Transformation import Composition, ResolveDPBatch, Transformation
 
 load_dotenv()
 

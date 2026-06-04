@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Iterator
+
 import torch.nn as nn
 from torch.nn.parameter import Parameter
 

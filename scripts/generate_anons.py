@@ -1,10 +1,7 @@
-import regex as re
 import pandas as pd
 
 regions = pd.read_csv("data/processed/Orte.csv", sep="\t")
-region_tuples = list(
-    zip(regions["Kreis"].str.strip(), regions["Abkuerzung"].str.strip())
-)
+region_tuples = list(zip(regions["Kreis"].str.strip(), regions["Abkuerzung"].str.strip()))
 
 categories = ""
 for rt in region_tuples:

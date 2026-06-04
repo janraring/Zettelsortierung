@@ -27,16 +27,13 @@ def main():
         if value.sammlung.name not in [
             "SKIPPED",
             "OA",
-            "LAUTSCHRIFT_SONST",
         ]:
             ids.append(key)
             labels.append(value.sammlung.name)
 
     # Filter out those categories that only contain one Zettel
     counts = Counter(labels)
-    ids, labels = zip(
-        *((id_, label) for id_, label in zip(ids, labels) if counts[label] > 1)
-    )
+    ids, labels = zip(*((id_, label) for id_, label in zip(ids, labels) if counts[label] > 1))
 
     # Create train/test split
     x_train, x_test, y_train, y_test = train_test_split(

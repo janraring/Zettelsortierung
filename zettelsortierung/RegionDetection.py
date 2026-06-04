@@ -59,8 +59,6 @@ class OpenCVRegionDetector(RegionDetector):
             # Typical handwritten 5-letter code heuristics
             if area < 1000:  # too small
                 continue
-            # if area > 20000:        # too big
-            #    continue
             if aspect_ratio < 1.0:  # too narrow
                 continue
             if aspect_ratio > 15.0:  # too wide

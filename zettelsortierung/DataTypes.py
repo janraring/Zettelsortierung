@@ -93,7 +93,6 @@ class Scan:
 #####################################################################
 
 
-# @dataclass(frozen=True)
 class Zettel:
     __slots__ = ("id", "recto", "verso")
 
@@ -166,8 +165,6 @@ class Collection(Protocol):
 
 
 class Zettelsammlung(set[Zettel]):
-    # __slots__ = ('sammlung',)
-
     def __init__(self, sammlung: set[Zettel] | list[Zettel] | None = None) -> None:
         if sammlung is None:
             sammlung = set()
@@ -179,19 +176,7 @@ class Zettelsammlung(set[Zettel]):
         return cls(sammlung)
 
     @classmethod
-    def from_disc(cls, root: str = "", k: int = -1) -> Self:
-        """
-        Given a root directory, this function collects all .jpg
-        files found in the subdirectories of root. Those files
-        are returned as a Zettelsammlung.
-        Optionally, one can specify a maximum number of Zettel k
-        that should be collected.
-
-        Args:
-            root (str): Path to the root directory.
-            k (int): Limit on number of Zettel to be collected.
-        """
-        # root = os.getenv('ZETTELSAMMLUNG_ROOT')
+    def from_disc(cls, root: str, k: int = -1) -> Self:
         file_paths: list[str] = []
         for path, _, files in os.walk(root):
             for name in files:
@@ -253,10 +238,28 @@ class Probe(list[DataPoint]):
 #####################################################################
 
 
-# class TopCategory(Enum):
-# SKIP = "skipped"
-# LAUTSCHRIFT = "Lautschrift"
-# FRAGEBOGEN = "Fragebogen"
-# WORTSCHATZ = "Wortschatz"
-# EXZERPT = "Exzerpt"
-# SONSTIGE = "Sonstige"
+class Label(NamedTuple):
+    sammlung: Enum
+    confidence: float
+
+
+@dataclass(frozen=True, slots=True)
+class Classifier:
+    title: str
+    description: str
+
+
+class Classifiers(Enum):
+    MANUELL = Classifier("MANUELL", "Händisch gelabelt")
+    OCR = Classifier("OCR", "Mittels OCR-Ergebnissen sortiert")
+    MODEL_V20083 = Classifier("MODEL_V20083", "Auf 20083 Zetteln trainiertes Modell")
+    MODEL_V25002 = Classifier("MODEL_V25002", "Auf 25002 Zetteln trainiertes Modell")
+    MODEL_V25002_50 = Classifier(
+        "MODEL_V25002_50", "Auf 25002 Zetteln für 50 Epchen trainiertes Modell"
+    )
+
+
+class Classification(NamedTuple):
+    zettel: Zettel
+    classifier: Enum
+    label: Label

@@ -1,30 +1,18 @@
-# pyright: reportArgumentType=false
-
 import os
+import dotenv
 from typing import Sequence
+from collections import Counter
 from enum import Enum
 from tqdm import tqdm
 
-from sqlalchemy import create_engine, select, exists, func
+from sqlalchemy import create_engine, select, exists, func, update
 from sqlalchemy.orm import sessionmaker
 
-from zettelsortierung.DataTypes import Scan, Zettel, DataPoint, Probe
-from zettelsortierung.Sammlungen import Sammlungen, Label
-from zettelsortierung.db.models import (
-    Base,
-    ScanModel,
-    ZettelModel,
-    LandschaftModel,
-    KreisModel,
-    OrtModel,
-    BoundingBoxModel,
-    OCRResultModel,
-    ClassificationModel,
-)
+from zettelsortierung.DataTypes import Classification, Label, Probe, Scan, Zettel
+from zettelsortierung.Sammlungen import Sammlungen
+from zettelsortierung.db.models import *
 
-from dotenv import load_dotenv
-
-load_dotenv()
+dotenv.load_dotenv()
 
 
 class DataBase:
@@ -47,9 +35,19 @@ class DataBase:
             self.session.add(item)
             if i % batch_size == 0:
                 self.session.commit()
-                print(i)
+                print(f"Added {i} elements")
         self.session.commit()
-        print(f"Done: {i} items")
+        print(f"Done: {i} items added")
+
+    def _bulk_merge(self, items, batch_size: int = 10000) -> None:
+        i = 0
+        for i, item in enumerate(items, 1):
+            self.session.merge(item)
+            if i % batch_size == 0:
+                self.session.commit()
+                print(f"Merged {i} elements")
+        self.session.commit()
+        print(f"Done: {i} items merged")
 
     # ---- Scans ----
 
@@ -66,7 +64,7 @@ class DataBase:
 
     def get_scans(self) -> list[Scan]:
         rows = self.session.query(ScanModel).all()
-        return [Scan(row.full_path) for row in rows]
+        return [Scan(str(row.full_path)) for row in rows]
 
     # ---- Zettel ----
 
@@ -98,6 +96,35 @@ class DataBase:
         return [Zettel(full_path) for _, full_path in rows]
 
     def get_zettels_by_ids(self, ids: list[str]) -> list[Zettel]:
+        from itertools import islice
+
+        results = []
+        it = iter(ids)
+        while chunk := list(islice(it, 999)):
+            rows = (
+                self.session.query(ZettelModel, ScanModel.full_path)
+                .join(ScanModel, ZettelModel.recto_id == ScanModel.id)
+                .where(ZettelModel.id.in_(chunk))
+                .all()
+            )
+            results.extend(Zettel(full_path) for _, full_path in rows)
+        return results
+
+    def update_lemmas(self, lemmas: dict[str, str], batch_size: int = 10000) -> None:
+        i = 0
+        for i, (zettel_id, lemma) in enumerate(lemmas.items(), 1):
+            self.session.execute(
+                update(ZettelModel)
+                .where(ZettelModel.id == zettel_id)
+                .values(lemma=lemma)
+            )
+            if i % batch_size == 0:
+                self.session.commit()
+                print(f"Updated {i} lemmas")
+        self.session.commit()
+        print(f"Done: {i} lemmas updated")
+
+    def get_zettels_by_ids_old(self, ids: list[str]) -> list[Zettel]:
         rows = (
             self.session.query(ZettelModel, ScanModel.full_path)
             .join(ScanModel, ZettelModel.recto_id == ScanModel.id)
@@ -125,30 +152,67 @@ class DataBase:
             self.session.add(OrtModel(kreis=kreis, abbreviation=abbr, name=name))
         self.session.commit()
 
+    def add_source(self, sources: list[tuple[str, str]]) -> None:
+        self._bulk_add(
+            SourceModel(sigle=sigle, description=description)
+            for sigle, description in sources
+        )
+
     # ---- Bounding Boxes & OCR ----
 
     def add_bounding_boxes(self, probe: Probe) -> None:
         self._bulk_add(
-            BoundingBoxModel(
+            OCRResultModel(
                 scan_id=dp.scan.id,
                 feature_id=dp.feature_id,
                 x=int(dp.feature[0]),
                 y=int(dp.feature[1]),
                 w=int(dp.feature[2]),
                 h=int(dp.feature[3]),
+                text=dp.feature[4],
             )
             for dp in probe
         )
 
-    def add_ocr_results(self, probe: Probe) -> None:
-        self._bulk_add(
-            OCRResultModel(
-                scan_id=dp.scan.id, feature_id=dp.feature_id, text=dp.feature
+    # ---- Classifiers ----
+
+    def merge_classifiers(self, classifiers: type[Enum]) -> None:
+        self._bulk_merge(
+            ClassifierModel(
+                name=classifier.name, description=classifier.value.description
             )
-            for dp in probe
+            for classifier in classifiers
+        )
+
+    # ---- Classes ----
+
+    def merge_classes(self, classes: type[Enum]) -> None:
+        self._bulk_merge(
+            ClassModel(
+                name=cls.name,
+                trace=cls.value.trace,
+                groups=cls.value.groups,
+                sigle=cls.value.sigle,
+                description=cls.value.description,
+                landschaft=cls.value.landschaft,
+                kreis=cls.value.kreis,
+                ort=cls.value.ort,
+            )
+            for cls in classes
         )
 
     # ---- Classifications ----
+
+    def merge_classifications(self, classifications: list[Classification]) -> None:
+        self._bulk_merge(
+            ClassificationModel(
+                zettel_id=c.zettel.id,
+                classifier=c.classifier.name,
+                label=c.label.sammlung.name,
+                confidence=c.label.confidence,
+            )
+            for c in classifications
+        )
 
     def save_classification(
         self, zettel: Zettel, label: Label, classifier: Enum
@@ -172,17 +236,7 @@ class DataBase:
             .distinct()
         )
         result_ids = set(self.session.execute(stmt).scalars().all())
-        return self.get_zettels_by_ids(result_ids)
-
-    #    def get_classified_ids(self, classifier: Enum, enum_class: type[Enum]) -> set[str]:
-    #        """Return already-classified zettel IDs (for resuming)."""
-    #        stmt = (
-    #            select(ClassificationModel.zettel_id)
-    #            .where(ClassificationModel.scheme == enum_class.__name__)
-    #            .where(ClassificationModel.classifier == classifier.value)
-    #            .distinct()
-    #        )
-    #        return set(self.session.execute(stmt).scalars().all())
+        return self.get_zettels_by_ids(list(result_ids))
 
     def get_classifications(self, classifier: Enum) -> dict[str, Label]:
         """Load all classifications back as {zettel_id: label}."""
@@ -193,8 +247,25 @@ class DataBase:
         )
         result: dict[str, Label] = {}
         for row in rows:
-            label = Label(Sammlungen[row.label], row.confidence)
-            result[row.zettel_id] = label
+            label = Label(Sammlungen[str(row.label)], row.confidence)  # type: ignore
+            result[str(row.zettel_id)] = label
+        return result
+
+    def filter_classifications(
+        self, classifier: Enum, class_label: Enum, min_conf: float = 0.0
+    ) -> dict[str, Label]:
+        """Load all zettels classified as `label` by `classifier` as {zettel_id: label}."""
+        rows = (
+            self.session.query(ClassificationModel)
+            .filter(ClassificationModel.classifier == classifier.name)
+            .filter(ClassificationModel.label == class_label.name)
+            .filter(ClassificationModel.confidence >= min_conf)
+            .all()
+        )
+        result: dict[str, Label] = {}
+        for row in rows:
+            label = Label(Sammlungen[str(row.label)], row.confidence)  # type: ignore
+            result[str(row.zettel_id)] = label
         return result
 
     def get_predicted_label(self, zettel: Zettel, classifier: Enum) -> Label | None:
@@ -229,3 +300,12 @@ class DataBase:
             func.group_concat(OCRResultModel.text, " | ").label("combined_text"),
         ).group_by(OCRResultModel.scan_id)
         return self.session.execute(stmt).all()
+
+    def get_label_counts(self, classifier: Enum | None = None) -> Counter:
+        query = self.session.query(ClassificationModel.label, func.count().label("n"))
+        if classifier is not None:
+            query = query.filter(
+                ClassificationModel.classifier == classifier.value.title
+            )
+        rows = query.group_by(ClassificationModel.label).all()
+        return Counter({label: n for label, n in rows})

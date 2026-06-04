@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Float
+from sqlalchemy import Column, Integer, String, ForeignKey, Float, ForeignKeyConstraint
 from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
@@ -80,4 +80,8 @@ class ClassModel(Base):
     description = Column(String)
     landschaft = Column(String, ForeignKey("landschaften.abbreviation"))
     kreis = Column(String, ForeignKey("kreise.abbreviation"))
-    ort = Column(String, ForeignKey("orte.abbreviation"))
+    ort = Column(String)
+
+    __table_args__ = (
+        ForeignKeyConstraint(["kreis", "ort"], ["orte.kreis", "orte.abbreviation"]),
+    )

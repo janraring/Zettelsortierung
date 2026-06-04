@@ -11,6 +11,9 @@
 # models
 /models/
 
+# VS Code settings
+.vscode/
+
 # Mac OS-specific storage files
 .DS_Store
 

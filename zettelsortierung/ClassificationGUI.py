@@ -1,13 +1,11 @@
 from enum import Enum
-from typing import Callable, Optional
-from random import shuffle
 from functools import partial
+from random import shuffle
+from typing import Callable, Optional
 
 from nicegui import ui, app, run
-import asyncio
 
-from zettelsortierung.DataTypes import Zettel
-from zettelsortierung.Sammlungen import Label
+from zettelsortierung.DataTypes import Zettel, Label, Classifiers
 
 
 class ManualClassification:
@@ -15,17 +13,17 @@ class ManualClassification:
         self,
         classes: type[Enum],
         on_classify: Optional[Callable[[Zettel, Label], None]] = None,
-        queries: Optional[dict[str, Callable[[], list[Zettel]]]] = None,
+        queries: Optional[dict[str, Callable[..., list[Zettel]]]] = None,
         get_stats: Optional[Callable[[], dict[str, int]]] = None,
         search_ocr_results: Optional[
             Callable[[str, Optional[bool]], list[Zettel]]
         ] = None,
         get_status: Optional[Callable[[Zettel], bool]] = None,
-        get_predictions: Optional[Callable[[Zettel], list[tuple[str, float]]]] = None,
+        get_predictions: Optional[Callable[[Zettel], list[Label]]] = None,
     ):
 
         self.queries = queries
-        self.classes = classes
+        self.sammlungen = classes
         self.on_classify = on_classify
         self.get_stats = get_stats
         self.search_ocr_results = search_ocr_results
@@ -47,18 +45,28 @@ class ManualClassification:
             self.stop_button = ui.button("Finish", on_click=lambda: app.shutdown())
             self.shuffle_button = ui.button("Shuffle", on_click=self.shuffle_zettels)
 
-            if queries is not None:
-                options = [name for name, _ in queries.items()]
-                ui.input("Sammlung", autocomplete=options).on(
-                    "keydown.enter", self.on_enter_sammlung
-                )
+            # -- Random sampling --
+            self.select_n = ui.select([100, 1000, 10000], value=100)
+            ui.button("Sample", on_click=self.sample_randomly)
+
+            # -- Query selection --
+            classifiers_names = [classifier.name for classifier in Classifiers]
+            sammlungen_names = [sammlung.name for sammlung in self.sammlungen]
+            self.select_classifier = ui.select(
+                classifiers_names, value=Classifiers.MANUELL.name
+            )
+            # -- Filter for a collection --
+            ui.input("Sammlung", autocomplete=sammlungen_names).on(
+                "keydown.enter", lambda e: self.on_enter_filter(e)
+            )
 
             # -- Search bar --
-            self.input = ui.input(label="OCR-Suche").on(
+            self.input = ui.input(label="Klartext").on(
                 "keydown.enter", self.on_enter_search
             )
-            self.fuzzy_cb = ui.checkbox("Fuzzy", value=True)
+            self.fuzzy_cb = ui.checkbox("Fuzzy", value=False)
 
+            # -- Progress bar --
             self.progress_bar = ui.linear_progress(value=0, show_value=False).classes(
                 "w-md h-9"
             )
@@ -110,16 +118,7 @@ class ManualClassification:
         self.next_button.disable()
 
         if self.get_stats:
-            asyncio.create_task(self.update_stats())
-
-        # -- Initial Zettel --
-        self.set_zettels(
-            [
-                Zettel(
-                    "/home/jan/Dokumente/IT-Beratung Raring/Zettelsortierung/data/raw/zettelsammlung/T11_Tref-I-Triasel/2/14_Trekkeharmonika/00726531_1#T11_2_14_Trekkeharmonika.jpg"
-                )
-            ]
-        )
+            ui.timer(0, self.update_stats, once=True)
 
     def set_selector_class(self, value):
         self.selector_class = value
@@ -152,6 +151,28 @@ class ManualClassification:
         zettels = await run.io_bound(callback)
         self.set_zettels(zettels)
 
+    async def on_enter_filter(self, e):
+        if self.queries is None:
+            return
+        if self.queries.get("Filter", None) is None:
+            return
+        input = e.sender.value.upper()
+        callback = self.queries["Filter"]
+        classifier = Classifiers[self.select_classifier.value]  # type: ignore
+        query = partial(callback, classifier, self.sammlungen[input])
+        zettels = await run.io_bound(query)
+        self.set_zettels(zettels)
+
+    async def sample_randomly(self):
+        if self.queries is None:
+            return
+        if self.queries.get("Random", None) is None:
+            return
+        callback = self.queries["Random"]
+        query = partial(callback, self.select_n.value)
+        zettels = await run.io_bound(query)
+        self.set_zettels(zettels)
+
     async def on_enter_sammlung(self, e):
         if self.queries is None:
             return
@@ -172,10 +193,10 @@ class ManualClassification:
     async def update_stats(self):
         if not self.get_stats:
             return
-        stats = self.get_stats()
+        stats = await run.io_bound(self.get_stats)
         self.total_stats_label.set_text(f"Total: {stats.get('Total', 0)}")
         for button in self.class_buttons:
-            category = button.text.split(" ")[0]  # Remove count from text
+            category = button.text.split(" ")[0]
             count = stats.get(category, 0)
             button.set_text(f"{category} ({count})")
 
@@ -218,7 +239,7 @@ class ManualClassification:
 
         self.top_predictions_buttons.clear()
         with self.top_predictions_buttons.style("column-gap: 5px; row-gap: 5px"):
-            classes = [self.classes[cat] for cat, _ in predictions]
+            classes = [cat for cat, _ in predictions]
 
             with ui.row().style("column-gap: 5px; row-gap: 5px"):
                 top_buttons_1 = [
@@ -241,7 +262,7 @@ class ManualClassification:
         for button in self.class_buttons + top_buttons_1 + top_buttons_2:
             category = button.text.split(" ")[0]
             confidence = next(
-                (conf for cat, conf in predictions if cat == category), None
+                (conf for cat, conf in predictions if cat.name == category), None
             )
             if confidence is not None:
                 color = self.confidence_to_color(confidence)
@@ -302,7 +323,7 @@ def run_classification(
     get_stats: Optional[Callable[[], dict[str, int]]] = None,
     search_ocr_results: Optional[Callable[[str, Optional[bool]], list[Zettel]]] = None,
     get_status: Optional[Callable[[Zettel], bool]] = None,
-    get_predictions: Optional[Callable[[Zettel], list[tuple[str, float]]]] = None,
+    get_predictions: Optional[Callable[[Zettel], list[Label]]] = None,
 ) -> None:
     @ui.page("/")
     async def _():

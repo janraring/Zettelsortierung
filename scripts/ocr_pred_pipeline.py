@@ -1,4 +1,3 @@
-import dotenv
 import pandas as pd
 import regex as re
 from multiprocessing import freeze_support
@@ -10,8 +9,6 @@ from zettelsortierung import (
     Sammlungen,
     Classifiers,
 )
-
-dotenv.load_dotenv()
 
 
 def print_res(results: list[Classification]):
@@ -74,7 +71,6 @@ def ocr_based_classification():
 if __name__ == "__main__":
     freeze_support()
 
-    connection_string = "sqlite:////home/jan/Dokumente/IT-Beratung Raring/Zettelsortierung/data/interim/pre-zettel.db"
-    db = DataBase(connection_string=connection_string)
+    db = DataBase()
 
     ocr_based_classification()

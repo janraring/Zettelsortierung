@@ -1,20 +1,27 @@
 from abc import ABC, abstractmethod
-from typing import Iterable
+from enum import Enum
+from typing import Iterable, overload, List, Iterator
 from itertools import chain
+from dataclasses import replace
 from multiprocessing import Pool, cpu_count
 import multiprocessing as mp
-from dataclasses import replace
 import cv2
 import numpy as np
+from tqdm import tqdm
 
+from zettelsortierung import Sammlungen
+from zettelsortierung.nn.models.mobilenet import MobileNetV3ModelSmall
 from zettelsortierung.RegionDetection import RegionDetector
 from zettelsortierung.DataTypes import (
     Collection,
+    Zettelsammlung,
     DataPoint,
     DataPointBatch,
     Probe,
     BoundingBox,
     Scan,
+    Classification,
+    Label,
 )
 
 mp.set_start_method("spawn", force=True)
@@ -32,7 +39,7 @@ class Composition:
     def __call__(self, collection: Collection) -> Iterable[Scan | DataPoint]:
         for app in self.sequence:
             collection = app(collection)
-        return collection
+        return collection  # type: ignore
 
 
 #####################################################################
@@ -54,7 +61,7 @@ class SequentialApp(Application):
         self.sequence = Composition(*transformations)
 
     def apply(self, collection: Collection) -> Probe:
-        return [self.sequence(item) for item in collection]
+        return [self.sequence(item) for item in tqdm(collection)]  # type: ignore
 
 
 class ParallelApp(Application):
@@ -64,7 +71,7 @@ class ParallelApp(Application):
 
     def apply(self, collection: Collection) -> Probe:
         with Pool(self.processes) as pool:
-            return Probe(pool.imap_unordered(self.sequence, collection))
+            return Probe(pool.imap_unordered(self.sequence, collection))  # type: ignore
 
 
 class Print(Application):
@@ -96,24 +103,49 @@ class Sort(Application):
         self.key = key
 
     def apply(self, collection: Collection) -> Probe:
-        return Probe(sorted(collection, key=self.key))
+        return Probe(sorted(collection, key=self.key))  # type: ignore
 
 
 class Flatten(Application):
     @staticmethod
-    def apply(collection: Collection) -> Probe:
-        return Probe(chain.from_iterable(collection))
+    @overload
+    def apply(collection: list[list]) -> list: ...
+
+    @staticmethod
+    @overload
+    def apply(collection: Probe) -> Probe: ...
+
+    @staticmethod
+    def apply(collection):
+        if isinstance(collection, Probe):
+            return Probe(chain.from_iterable(collection))  # type: ignore
+        if isinstance(collection, List):
+            return list(chain.from_iterable(collection))
 
 
 class Batch(Application):
     def __init__(self, batch_size: int):
         self.batch_size = batch_size
 
-    def apply(self, collection: Collection) -> Iterable[Collection]:
+    @overload
+    def apply(self, collection: Zettelsammlung) -> Iterator[Zettelsammlung]: ...
+
+    @overload
+    def apply(self, collection: Probe) -> Iterator[Probe]: ...
+
+    @overload
+    def apply(self, collection: list) -> Iterator[list]: ...
+
+    def apply(self, collection: Zettelsammlung | Probe | list) -> Iterator:
         collection_len = len(collection)
         subcollection = type(collection)()
         for count, scan in enumerate(collection, 1):
-            subcollection.add(scan)
+            if isinstance(subcollection, Zettelsammlung) and isinstance(scan, Zettel):
+                subcollection.add(scan)
+            if isinstance(subcollection, Probe) and isinstance(scan, DataPoint):
+                subcollection.append(scan)
+            if isinstance(subcollection, List):
+                subcollection.append(scan)  # type: ignore
             if count % self.batch_size == 0 or count == collection_len:
                 yield subcollection
                 subcollection.clear()
@@ -145,7 +177,7 @@ class PatchDetect(Transformation):
 
     def transform(self, scan: Scan) -> list[DataPoint]:
         full_im = cv2.imread(scan.full_path)
-        boundingboxes = self.detector.detect_regions(full_im)
+        boundingboxes = self.detector.detect_regions(full_im)  # type: ignore
         data_points = [
             DataPoint(scan, feature_id, bbox)
             for feature_id, bbox in enumerate(boundingboxes)
@@ -218,3 +250,62 @@ class ResolveDPBatch(Transformation):
             )
             for i in range(len(dp_batch.scan_batch))
         ]
+
+
+#####################################################################
+# Model Predictions
+#####################################################################
+
+import torch
+from torch.utils.data import DataLoader
+from zettelsortierung import Zettel, Classification
+from zettelsortierung.nn.datasets.pillist_dataset import PILListDataset
+from zettelsortierung.nn.datasets.transforms import mobile_net_infer_transform
+
+
+class PredictionModel(Transformation):
+    def __init__(
+        self,
+        model: MobileNetV3ModelSmall,
+        device: str,
+        batch_size: int,
+        classes: list[str],
+        classifier: Enum,
+    ):
+        self.model = model
+        self.device = device
+        self.batch_size = batch_size
+        self.classes = classes
+        self.classifier = classifier
+
+    def transform(self, paths) -> list[Classification]:
+        dataset = PILListDataset(paths, mobile_net_infer_transform)
+        loader = DataLoader(
+            dataset, batch_size=self.batch_size, num_workers=12, pin_memory=True
+        )
+
+        path_batches = []
+        logit_batches = []
+        with torch.inference_mode():
+            for path_batch, img_batch in tqdm(loader):
+                path_batches.append(path_batch)
+                img_batch = img_batch.xpu(non_blocking=True)
+                img_batch.to(self.device)
+                logits_batch = self.model(img_batch)
+                logit_batches.append(logits_batch)
+
+        probs = [torch.softmax(l, dim=1) for l in logit_batches]
+        probs_flat = list(chain.from_iterable(probs))
+        paths_flat = list(chain.from_iterable(path_batches))
+        classifications = [
+            Classification(
+                zettel=Zettel(path),
+                classifier=self.classifier,
+                label=Label(
+                    sammlung=Sammlungen[self.classes[int(prob.argmax().item())]],
+                    confidence=prob.max().item(),
+                ),
+            )
+            for path, prob in zip(paths_flat, probs_flat)
+        ]
+        return classifications

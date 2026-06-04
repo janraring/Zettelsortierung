@@ -1,6 +1,16 @@
+from pathlib import Path
+from typing import Self, Sequence
 from torchvision import models
+from dotenv import load_dotenv
+import os
+import torch
 import torch.nn as nn
+from PIL.Image import Image
 from .base import BaseModel
+from ..datasets.transforms import mobile_net_infer_transform
+from zettelsortierung import Sammlungen
+
+load_dotenv()
 
 
 class MobileNetV3ModelSmall(BaseModel):
@@ -30,3 +40,53 @@ class MobileNetV3ModelSmall(BaseModel):
     def unfreeze_backbone(self):
         for param in self.model.features.parameters():
             param.requires_grad = True
+
+    def predict(self, images: list[Image] | Sequence[Image]) -> list[dict]:
+        device = os.getenv("TORCH_DEVICE")
+        tensor = torch.stack(
+            [mobile_net_infer_transform(img) for img in images]  # type: ignore
+        ).to(device)
+
+        with torch.no_grad():
+            logits = self(tensor)
+            probs = torch.softmax(logits, dim=1)
+
+        return [
+            {
+                "class": p.argmax().item(),
+                "confidence": p.max().item(),
+                "all_probs": p,
+            }
+            for p in probs
+        ]
+
+    def predict_old(self, images: list[Image] | Sequence[Image]) -> list[dict]:
+        device = os.getenv("TORCH_DEVICE")
+        tensor = torch.stack(
+            [mobile_net_infer_transform(img) for img in images]  # type: ignore
+        ).to(device)
+
+        with torch.no_grad():
+            logits = self(tensor)
+            probs = torch.softmax(logits, dim=1)
+
+        return [
+            {
+                "class": p.argmax().item(),
+                "confidence": p.max().item(),
+                "all_probs": p,
+            }
+            for p in probs
+        ]
+
+    @classmethod
+    def from_pretrained(cls, path_str: str, num_classes) -> Self:
+        path = Path(path_str)
+        model = cls(num_classes=num_classes)
+        device = os.getenv("TORCH_DEVICE")
+        model.load_state_dict(
+            torch.load(path / "model_weights.pt", map_location=device)
+        )
+        model.to(device)
+        model.eval()
+        return model

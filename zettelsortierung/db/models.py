@@ -15,6 +15,7 @@ class ScanModel(Base):
 class ZettelModel(Base):
     __tablename__ = "zettel"
     id = Column(String, primary_key=True)
+    lemma = Column(String)
     recto_id = Column(String, ForeignKey("scans.id"))
     verso_id = Column(String, ForeignKey("scans.id"))
 
@@ -39,26 +40,54 @@ class OrtModel(Base):
     name = Column(String)
 
 
-class BoundingBoxModel(Base):
-    __tablename__ = "bounding_boxes"
-    scan_id = Column(String, ForeignKey("scans.id"), primary_key=True)
-    feature_id = Column(Integer, primary_key=True)
-    x = Column(Integer)
-    y = Column(Integer)
-    w = Column(Integer)
-    h = Column(Integer)
+class SourceModel(Base):
+    __tablename__ = "sources"
+    sigle = Column(String, primary_key=True)
+    description = Column(String)
+
+
+# class BoundingBoxModel(Base):
+#    __tablename__ = "bounding_boxes"
+#    scan_id = Column(String, ForeignKey("scans.id"), primary_key=True)
+#    feature_id = Column(Integer, primary_key=True)
+#    x = Column(Integer)
+#    y = Column(Integer)
+#    w = Column(Integer)
+#    h = Column(Integer)
 
 
 class OCRResultModel(Base):
     __tablename__ = "ocr_results"
     scan_id = Column(String, ForeignKey("scans.id"), primary_key=True)
     feature_id = Column(Integer, primary_key=True)
+    x = Column(Integer)
+    y = Column(Integer)
+    w = Column(Integer)
+    h = Column(Integer)
     text = Column(String)
 
 
 class ClassificationModel(Base):
     __tablename__ = "classifications"
     zettel_id = Column(String, ForeignKey("zettel.id"), primary_key=True)
-    classifier = Column(String, primary_key=True)
-    label = Column(String)
+    classifier = Column(String, ForeignKey("classifiers.name"), primary_key=True)
+    label = Column(String, ForeignKey("classes.name"))
     confidence = Column(Float, default=0.0)
+
+
+class ClassifierModel(Base):
+    __tablename__ = "classifiers"
+    name = Column(String, primary_key=True)
+    description = Column(String)
+
+
+class ClassModel(Base):
+    __tablename__ = "classes"
+    name = Column(String, primary_key=True)
+    trace = Column(String)
+    groups = Column(String)
+    sigle = Column(String, ForeignKey("sources.sigle"))
+    description = Column(String)
+    landschaft = Column(String, ForeignKey("landschaften.abbreviation"))
+    kreis = Column(String, ForeignKey("kreise.abbreviation"))
+    ort = Column(String, ForeignKey("orte.abbreviation"))

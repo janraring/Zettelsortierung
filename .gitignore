@@ -5,8 +5,7 @@
 /data/processed/zettel.db
 
 # experimental data
-/notebooks/input/
-/notebooks/output/
+/notebooks/
 
 # typst files
 *.typ

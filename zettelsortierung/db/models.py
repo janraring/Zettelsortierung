@@ -46,16 +46,6 @@ class SourceModel(Base):
     description = Column(String)
 
 
-# class BoundingBoxModel(Base):
-#    __tablename__ = "bounding_boxes"
-#    scan_id = Column(String, ForeignKey("scans.id"), primary_key=True)
-#    feature_id = Column(Integer, primary_key=True)
-#    x = Column(Integer)
-#    y = Column(Integer)
-#    w = Column(Integer)
-#    h = Column(Integer)
-
-
 class OCRResultModel(Base):
     __tablename__ = "ocr_results"
     scan_id = Column(String, ForeignKey("scans.id"), primary_key=True)

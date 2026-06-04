@@ -1,18 +1,22 @@
 import regex as re
 import pandas as pd
 
-regions = pd.read_csv("data/processed/Orte.csv", sep="\t")
+regions = pd.read_csv("data/processed/Landschaften.csv", sep="\t")
 region_tuples = list(
-    zip(regions["Kreis"].str.strip(), regions["Abkuerzung"].str.strip())
+    zip(
+        regions["Abkuerzung"].str.strip(),
+        regions["Name"].str.strip(),
+        regions["Beschreibung"].str.strip(),
+    )
 )
 
 categories = ""
-for kreis in regions["Kreis"].unique():
-    category = f"""ANON_{kreis.upper()}_XY = Sammlung(
-        trace="{kreis.title()} Xy",
-        groups="Wortschatz|Anonym|{kreis.title()} Xy",
-        kreis="{kreis.title()}",
-        ort="Xy",
+for abk, name, beschr in region_tuples:
+    category = f"""ANON_{abk.upper()} = Sammlung(
+        trace="{abk}|{name}",
+        groups="Wortschatz|Anonym|{re.sub(" ", "", name)}",
+        description="{beschr}",
+        landschaft="{abk}",
     )
     """
     categories += category

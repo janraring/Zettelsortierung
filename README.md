@@ -1,8 +1,10 @@
 # Projekt Zettelsortierung
 
+![Bildschirmfoto des Klassifizierungstools.](/reports/figures/Screeshot_ClassificationGUI.png)
+
 ## Ausgangslage
 
-Das Westfälische Wörterbuch (WWb) ist auf Grundlage eines umfangreichen Zettelarchivs entstanden. Das Archiv besteht aus ca. 1,35 Millionen Karteikarten (im Folgenden meist _Zettel_ genannt), die sich auf ein lautschriftliches Archiv (ca. 100.000 Zettel) und das eigentliche Belegearchiv (ca. 1,25 Millionen Zettel) aufteilen. Letzteres lässt sich in weitere Kategorien und Untersammlungen unterteilen. Eine genauere Erklärung hierüber liefert der zum WWb erschienene Beiband. Die vier wichtigsten Oberkategorien sind demnach die folgenden:
+Das [Westfälische Wörterbuch}(https://www.mundart-kommission.lwl.org/de/forschung/westfaelisches-woerterbuch/) (WWb) ist auf Grundlage eines umfangreichen Zettelarchivs entstanden. Das Archiv besteht aus ca. 1,35 Millionen Karteikarten (im Folgenden meist _Zettel_ genannt), die sich auf ein lautschriftliches Archiv (ca. 100.000 Zettel) und das eigentliche Belegearchiv (ca. 1,25 Millionen Zettel) aufteilen. Letzteres lässt sich in weitere Kategorien und Untersammlungen unterteilen. Eine genauere Erklärung hierüber liefert der zum WWb erschienene Beiband. Die vier wichtigsten Oberkategorien sind demnach die folgenden:
 1. Kopien von Belegen aus dem lautschriftlichen Archiv,
 2. Fragebogenabschrift,
 3. Exzerpt aus schriftlichen Quellen,

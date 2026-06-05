@@ -1,6 +1,6 @@
 # Projekt Zettelsortierung
 
-![Bildschirmfoto des Klassifizierungstools.](/reports/figures/Screeshot_ClassificationGUI.png)
+![Bildschirmfoto des Klassifizierungstools.](/reports/figures/Screenshot_ClassificationGUI.png)
 
 ## Ausgangslage
 
